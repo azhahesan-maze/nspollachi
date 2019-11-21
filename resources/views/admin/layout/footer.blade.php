@@ -54,7 +54,7 @@
 });
 
 $('.only_allow_digit').keypress(function (e) {
-    var regex = new RegExp("^[0-9]+$");
+    var regex  = new RegExp("^[0-9]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
     if (regex.test(str)) {
         return true;
