@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+/* header */
+body {
+    font-family: 'Muli', sans-serif;
+}
+h1,h2,h3,h4,h5,h6,p {
+    margin-bottom: 0;
+}
+.bg-green {
+    background: #85c227;
+}
+.header .navbar-light .navbar-nav .nav-link, .header .navbar-light .navbar-nav .active>.nav-link {
+    color: #fff;
+}
+.header .navbar-brand img {
+    max-width: 90px;
+}
+.login .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+/* body section */
+.body-sec {
+    padding: 12px 0;
+}
+.h-right-btn {text-align: end;}
+.h-right-btn li {
+    display: inline-block;
+}
+.body-sec h3 {
+    margin-bottom: 0;
+    font-size: 18px;
+}
+.h-right-btn li button {
+    padding: 0;
+}
+.h-right-btn li button a {
+    padding: 3px 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.body-sec .card-header {
+    margin: auto 0;
+    padding: 12px 0px;
+    background: #f9f9f9;
+    border: 0;
+}
+.h-right-btn li button a {
+    color: #fff;
+}
+.h-right-btn li button:hover a {
+    text-decoration: none;
+}
+.foot {
+    background: #5b5b5b;
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.foot p {
+    margin-bottom: 0;
+    padding: 8px 12px;
+    font-size: 15px;
+}
+.foot {
+    background: #5b5b5b;
+    color: #fff;
+}
+.body-sec .card-body {
+    padding: 12px;
+}
+/* data tables options */
+table.dataTable thead th, table.dataTable tbody td {
+    padding: 5px 8px;
+}
+table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:after {
+    bottom: 5px;
+}
+div.dataTables_wrapper div.dataTables_length label, table.dataTable thead th, table.dataTable tbody td, 
+div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_info {
+    font-size: 14px;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 5px;
+}
+.page-link {
+    padding: 5px 6px;
+    font-size: 14px;
+}
+div.dt-buttons {
+    position: relative;
+    float: unset !important;
+    text-align: center;
+}
+#master_length {
+    position: absolute !important;
+    top: 0px !important;
+}
+#master_wrapper {
+    position: relative;
+}
+button.dt-button {
+    padding: 1px 12px !important;
+    font-size: 12px !important;
+}
+table.dataTable {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+.amount {
+    text-align: right;
+}
+div.dt-buttons {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+}
+.dt-buttons .btn {
+    padding: 3px 15px;
+    font-size: 14px;
+    background: white;
+    color: #000;
+}
+.custom-range::-webkit-slider-thumb {
+    background: green !important;
+  }
+  
+  .custom-range::-moz-range-thumb {
+    background: green !important;
+  }
+  
+  .custom-range::-ms-thumb {
+    background: green !important;
+  }
+
+  .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #008000;
+    background-color: #008000;
+}
+.mandatory {
+    color: red;
+}
