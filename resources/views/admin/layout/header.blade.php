@@ -5,6 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
@@ -18,6 +20,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/fixedHeader.dataTables.min.css')}}">
     <!-- font-awasome -->
     <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
+    <!-- main js -->
+    <script src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
     
     
 

@@ -1,4 +1,4 @@
-<section class="foot">
+<section class="foot1">
 
       <div class="col-12 px-0">
       <div class="row mx-0">
@@ -14,8 +14,7 @@
 </section>
     
 </div>
-    <!-- main js -->
-     <script src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
+    
     <!-- select 2 -->
     <script src="{{asset('assets/js/select2.min.js')}}"></script>
     <!-- date picker -->
@@ -42,8 +41,26 @@
 
 
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+$('.dob').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'dd-mm-yyyy',
+    icons: {
+        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
+    }
+});
+
+
+
     $('.only_allow_alp_num_dot_com_amp').keypress(function (e) {
-    var regex = new RegExp("^[a-zA-Z0-9.,&]+$");
+    var regex = new RegExp("^[a-zA-Z0-9.,& ]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
     if (regex.test(str)) {
         return true;

@@ -22,15 +22,15 @@ class StateController extends Controller
 
     public function create()
     {
-        return view('admin.master.state.Add');
+        return view('admin.master.state.add');
     }
 
     public function store(StateRequest $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|unique:states,name,NULL,id,deleted_at,NULL',
-        //     'code' => 'required|unique:states,code,NULL,id,deleted_at,NULL',
-        // ]);
+            // $validator = Validator::make($request->all(), [
+            //     'name' => 'required|unique:states,name,NULL,id,deleted_at,NULL',
+            //     'code' => 'required|unique:states,code,NULL,id,deleted_at,NULL',
+            // ]);
 
             $state = new State;
             $state->name       = Input::get('name');
@@ -39,12 +39,7 @@ class StateController extends Controller
             $state->country_id = 1; /* Only India's States   */
             $state->created_by = 0;
             $state->updated_by = 0;
-
-            // State::insert([
-            //     'name' => $request->name,
-            // ]);
-
-            if ($state->save()) {
+          if ($state->save()) {
                 return Redirect::back()->with('success', 'Successfully created');
             } else {
                 return Redirect::back()->with('failure', 'Something Went Wrong..!');
