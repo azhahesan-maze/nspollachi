@@ -69,7 +69,7 @@
   <div class="form-group row">
     <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
     <div class="col-sm-8">
-      <input type="text" class="form-control phone_no " placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone)}}" required>
+      <input type="text" class="form-control phone_no " placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone_no)}}" required>
       <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
       <div class="invalid-feedback">
         Enter valid Phone No
@@ -113,7 +113,7 @@
     <select class="js-example-basic-multiple col-12 custom-select department_id" placeholder="Choose Department" name="department_id" required>
         <option value="">Choose Department</option>
         @foreach($department as $value)
-        <option value="{{ $value->id}}" {{ old('department_id') == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
+        <option value="{{ $value->id}}" {{ old('department_id',$employee->department_id) == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
         @endforeach
        
     </select>
@@ -135,7 +135,7 @@
   <div class="form-group row">
     <label for="validationCustom01" class="col-sm-4 col-form-label">Father's Name <span class="mandatory">*</span></label>
     <div class="col-sm-8">
-      <input type="text" class="form-control father_name" placeholder="Father's Name" name="father_name" value="{{old('father_name')}}">
+      <input type="text" class="form-control father_name" placeholder="Father's Name" name="father_name" value="{{old('father_name',$employee->father_name)}}">
       <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
       <div class="invalid-feedback">
         Enter valid Father's Name
@@ -148,7 +148,7 @@
   <div class="form-group row">
     <label for="validationCustom01" class="col-sm-4 col-form-label">Blood Group <span class="mandatory">*</span></label>
     <div class="col-sm-8">
-      <input type="text" class="form-control blood_group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group')}}" >
+      <input type="text" class="form-control blood_group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group',$employee->blood_group)}}" >
       <span class="mandatory"> {{ $errors->first('blood_group')  }} </span>
       <div class="invalid-feedback">
         Enter valid Blood Group
@@ -163,9 +163,9 @@
     <div class="col-sm-8">
     <select class="js-example-basic-multiple col-12 custom-select material_status" placeholder="Choose Material Status" name="material_status" >
         <option value="">Choose Material Status</option>
-        <option value="Married"  {{ old('material_status') == 'Married' ? 'selected' : '' }}>Married</option>
-        <option value="Single" {{ old('material_status') == 'Single' ? 'selected' : '' }}>Single</option>
-        <option value="Divorced" {{ old('material_status') == 'Divorced' ? 'selected' : '' }}>Divorced</option>
+        <option value="Married"  {{ old('material_status','Married') == 'Married' ? 'selected' : '' }}>Married</option>
+        <option value="Single" {{ old('material_status','Single') == 'Single' ? 'selected' : '' }}>Single</option>
+        <option value="Divorced" {{ old('material_status','Divorced') == 'Divorced' ? 'selected' : '' }}>Divorced</option>
        
      </select>
      
@@ -194,10 +194,10 @@
   <div class="form-group row">
     <label for="validationCustom01" class="col-sm-4 col-form-label">Access No <span class="mandatory">*</span></label>
     <div class="col-sm-8">
-      <input type="text" class="form-control father_name" placeholder="Father's Name" name="father_name" value="{{old('father_name')}}" >
-      <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
+      <input type="text" class="form-control access_no" placeholder="Access No" name="access_no" value="{{old('access_no',$employee->access_no)}}" >
+      <span class="mandatory"> {{ $errors->first('access_no')  }} </span>
       <div class="invalid-feedback">
-        Enter valid Father's Name
+        Enter valid Access No
       </div>
     </div>
   </div>
