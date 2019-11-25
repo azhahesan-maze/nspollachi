@@ -9,7 +9,10 @@ h1,h2,h3,h4,h5,h6,p {
     margin-bottom: 0;
 }
 .bg-green {
-    background: #85c227;
+    background: #28a745;
+}
+.form-control {
+    border: 1px solid #aaa !important;
 }
 .header .navbar-light .navbar-nav .nav-link, .header .navbar-light .navbar-nav .active>.nav-link {
     color: #fff;
@@ -31,7 +34,11 @@ h1,h2,h3,h4,h5,h6,p {
 }
 .body-sec h3 {
     margin-bottom: 0;
+    font-size: 16px;
+}
+.body-sec h4 {
     font-size: 18px;
+    font-weight: 500;
 }
 .h-right-btn li button {
     padding: 0;
@@ -43,9 +50,10 @@ h1,h2,h3,h4,h5,h6,p {
 }
 .body-sec .card-header {
     margin: auto 0;
-    padding: 12px 0px;
-    background: #f9f9f9;
+    padding: 6px 0px;
+    background: #a3d072;
     border: 0;
+    color: #fff;
 }
 .h-right-btn li button a {
     color: #fff;
@@ -56,9 +64,9 @@ h1,h2,h3,h4,h5,h6,p {
 .foot {
     background: #5b5b5b;
     color: #fff;
-    position: absolute;
+    
     width: 100%; 
-    bottom: 0; 
+    
 }
 .foot p {
     margin-bottom: 0;
@@ -68,9 +76,27 @@ h1,h2,h3,h4,h5,h6,p {
 .foot {
     background: #5b5b5b;
     color: #fff;
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1005;
 }
 .body-sec .card-body {
     padding: 12px;
+}
+.form-group {
+    margin-bottom: 14px;
+}
+#cus-btn {
+    font-size: 12px;
+    position: absolute;
+    top: 0px;
+    padding: 7px 8px;
+    border-radius: 5px;
+    border: 0;
+    background: #85c227;
+    color: #fff;
 }
 /* data tables options */
 table.dataTable thead th, table.dataTable tbody td {
@@ -144,4 +170,66 @@ div.dt-buttons {
 }
 .mandatory {
     color: red;
+}
+#master .form-control {
+    height: 32px;
+    padding: 4px 3px;
+    font-size: 14px;
+}
+#master a i {
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+}
+.form-horizontal .form-control {
+    height: 32px;
+    padding: 5px 6px;
+    font-size: 14px;
+}
+.form-horizontal .col-form-label {
+    font-size: 14px;
+}
+.form-horizontal .btn{
+    padding: 2px 15px;
+    font-size: 14px;
+}
+
+.is-valid + .select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    height: 34px !important;
+    padding: 5px 6px;
+    font-size: 14px;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 0 !important;  
+    padding-right: 0 !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444 !important;
+    line-height: 22px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #575757;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #cecece ;
+    border-radius: 4px;
+}
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #dc3545 !important;
+    background-image:none !important;
+}
+.form-control.is-valid, .was-validated .form-control:valid {
+    border-color: #28a745 !important;
+    background-image:none !important;
 }

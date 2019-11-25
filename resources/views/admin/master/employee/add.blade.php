@@ -18,20 +18,21 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/employee/store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" 
+      novalidate action="{{url('master/employee/store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
      
         <div class="form-row">
 
           <div class="col-md-8">
-          <h3> <u>Professional details :</u> </h3>
+          <h4>Professional details:</h4>
           </div>
-          <div class="col-md-8">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
+          <div class="col-md-6">
+            <!-- <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-3 col-form-label">Employee Name <span class="mandatory">*</span></label>
               <div class="col-sm-2">
               <select class="js-example-basic-multiple col-12 custom-select salutation required_for_valid"  error-data="Salutation field is required" placeholder="Choose Salutation" name="salutation">
-                  <option value="">Choose Salutation</option>
+                  
                   <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
                   <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }} >Mrs</option>
                 </select>
@@ -47,7 +48,22 @@
                   Enter valid Employee Name
                 </div>
               </div>
+            </div> -->
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
+              <div class="col-sm-8">
+            <div class="input-group">
+            <div class="input-group-prepend">
+              <select class="form-control">
+                  <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
+                  <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }} >Mrs</option>
+              </select>
             </div>
+            <input type="text" class="form-control required_for_valid" aria-label="Text input with dropdown button">
+          </div>
+          </div>
+          </div>
+
           </div>
 
 
@@ -109,8 +125,8 @@
               <label for="validationCustom01" class="col-sm-4 col-form-label">Department <span class="mandatory">*</span></label>
               <div class="col-sm-8">
 
-              <select class="js-example-basic-multiple col-12 custom-select department_id required_for_valid" error-data="Enter valid Department" placeholder="Choose Department" name="department_id" >
-                  <option value="">Choose Department</option>
+              <select class="js-example-basic-multiple col-12 form-control custom-select department_id required_for_valid" 
+              error-data="Enter valid Department" data-placeholder="Choose Department" name="department_id" >
                   @foreach($department as $value)
                   <option value="{{ $value->id}}" {{ old('department_id') == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
                   @endforeach
@@ -125,9 +141,9 @@
             </div>
           </div>
  </div>
- <div class="row">
+ <div class="form-row">
  <div class="col-md-8">
-          <h3> <u>Personal Details :</u> </h3>
+          <h4>Personal Details :</h4>
           </div>
 
           <div class="col-md-6">
@@ -160,18 +176,17 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Material Status <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-              <select class="js-example-basic-multiple col-12 custom-select material_status required_for_valid" error-data="Enter valid Material Status" placeholder="Choose Material Status" name="material_status" >
-                  <option value="">Choose Material Status</option>
-                  <option value="Married"  {{ old('material_status') == 'Married' ? 'selected' : '' }}>Married</option>
+              <select class="js-example-basic-multiple col-12 form-control material_status select custom-select required_for_valid" 
+              error-data="Enter valid Material Status" data-placeholder="Choose Material" name="material_status" >
+                  <!-- <option value="Married"  {{ old('material_status') == 'Married' ? 'selected' : '' }}>Married</option>
                   <option value="Single" {{ old('material_status') == 'Single' ? 'selected' : '' }}>Single</option>
-                  <option value="Divorced" {{ old('material_status') == 'Divorced' ? 'selected' : '' }}>Divorced</option>
-                 
+                  <option value="Divorced" {{ old('material_status') == 'Divorced' ? 'selected' : '' }}>Divorced</option> -->
                </select>
                
-                <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Material Status
-                </div>
+                  <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
+                  <div class="invalid-feedback">
+                    Enter valid Material Status
+                  </div>
               </div>
             </div>
           </div>
@@ -180,11 +195,12 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Photo <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="file" class="form-control profile" placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
+                <input type="file" class="form-control profile required_for_valid" placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
+                <button type="button" id="cus-btn">CHOOSE A FILE</button>
                 <span class="mandatory"> {{ $errors->first('profile')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid profile
-                </div>
+                </div>  
               </div>
             </div>
           </div>
