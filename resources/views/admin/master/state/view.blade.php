@@ -36,9 +36,9 @@
               <td>{{ $value->code}}</td>
               <td>{{ $value->remark}}</td>
               <td> 
-                <a href="{{url('master/state/show/'.$value->id )}}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                <a href="{{url('master/state/edit/'.$value->id )}}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                <a onclick="return confirm('Are you sure ?')" href="{{url('master/state/delete/'.$value->id )}}" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="{{url('master/state/show/'.$value->id )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                <a href="{{url('master/state/edit/'.$value->id )}}" class="px-1 py-0 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a onclick="return confirm('Are you sure ?')" href="{{url('master/state/delete/'.$value->id )}}" class="px-1 py-0 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
               </td>
             </tr>
           @endforeach
