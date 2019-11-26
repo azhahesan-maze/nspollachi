@@ -57,6 +57,15 @@ $('.dob').datepicker({
     }
 });
 
+$('.valid_from').datepicker({
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'dd-mm-yyyy',
+    icons: {
+        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
+    }
+});
+
 
 
     $('.only_allow_alp_num_dot_com_amp').keypress(function (e) {

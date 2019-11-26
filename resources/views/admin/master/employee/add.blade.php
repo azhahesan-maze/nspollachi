@@ -20,17 +20,18 @@
     
       <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/employee/store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
+
      
         <div class="form-row">
 
           <div class="col-md-8">
-          <h3> <u>Professional details :</u> </h3>
+          <h3> <u>Professional details :</u></h3>
           </div>
           <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
               <div class="col-sm-2">
-              <select class="js-example-basic-multiple col-12 custom-select salutation required_for_valid"  error-data="Salutation field is required" placeholder="Choose Salutation" name="salutation">
+              <select class="js-example-basic-multiple col-12 custom-select "  error-data="Salutation field is required" placeholder="Choose Salutation" name="salutation">
                   <option value="">Choose Salutation</option>
                   <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
                   <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }} >Mrs</option>
@@ -49,6 +50,11 @@
               </div>
             </div>
           </div>
+
+          @if($errors->has('city'))
+          dd($errors)
+          @endif
+
 
 
 
@@ -194,7 +200,7 @@
               <label for="validationCustom01" class="col-sm-4 col-form-label">Access No <span class="mandatory">*</span></label>
               <div class="col-sm-8">
                 <input type="text" class="form-control father_name required_for_valid" error-data="Enter valid Access No" placeholder="Father's Name" name="father_name" value="{{old('father_name')}}" >
-                <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
+                <span class="mandatory"> {{ $errors->first('city')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Access No
                 </div>
@@ -208,29 +214,133 @@
  </div>
 
  <div class="form-row">
-
-          <div class="col-md-8">
-            
+ <div class="col-md-8">
           <div class="form-group row">
           <div class="col-md-4">
           <label for="validationCustom01" class=" col-form-label">Address details : </label>
               <label for="validationCustom01" class="btn-sm btn-success add_address">Add Address</label>  
           </div>
-              
-              
             </div>
-
+ </div>
           
-          
-          </div>
-          
-         
-
           </div>
           <div class="common_address_div">
-          
+            
+            
+              @if (old('address_line_1'))
+                
+              @foreach (old('address_line_1') as $key=>$item)
+                            <div class="form-row address_div">
+      <div class="col-md-8">
+      <h3 class="address_label"></h3>
+      </div>
+                <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <select class="js-example-basic-multiple col-12 custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type">
+                    <option value="">Choose Address Type</option>
+                    @foreach($address_type as $value)
+                    <option value="{{ $value->id }}" >{{ $value->name }}</option>
+                    @endforeach
+                  </select>
+                 <div class="invalid-feedback">
+                    Enter valid Address Type
+                  </div>
+                </div>
+              </div>
+            </div>
+      <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="" >
+                 <div class="invalid-feedback">
+                  Enter valid Address
+                  </div>
+                </div>
+              </div>
+            </div>
+  <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control address_line_2" placeholder="Address Line 2" name="address_line_2[]" value="">
+                  <div class="invalid-feedback">
+                  Enter valid Address
+                  </div>
+                </div>
+              </div>
+            </div>
+    <div class="col-md-6">
+              <div class="form-group row">
+                <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="">
+                 <div class="invalid-feedback">
+                  Enter valid Land Mark
+                  </div>
+                </div>
+              </div>
+            </div>
+  <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <select class="js-example-basic-multiple col-12 custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >
+                    <option value="">Choose State</option>
+                    @foreach($state as $value)
+                    <option value="{{ $value->id }}" >{{ $value->name }}</option>
+                    @endforeach
+                  </select>
+                <div class="invalid-feedback">
+                    Enter valid State 
+                  </div>
+                </div>
+              </div>
+            </div>
+  <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
+                <div class="col-sm-8">
+                  <select class="js-example-basic-multiple col-12 custom-select district_id" name="district_id[]">
+                    <option value="">Choose District</option>
+                   </select>
+                   <div class="invalid-feedback">
+                    Enter valid District
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
+                <div class="col-sm-8">
+                  <select class="js-example-basic-multiple col-12 custom-select city_id" name="city_id[]" >
+                    <option value="">Choose City</option>
+                  </select>
+                  <span class="mandatory"> {{ $errors->first('city_id.'.$key)  }} </span>
+                 <div class="invalid-feedback">
+                    Enter valid City
+                  </div>
+                </div>
+              </div>
+            </div>
+   <div class="col-md-6">
+              <div class="form-group row">
+                <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >
+                <div class="invalid-feedback">
+                    Enter valid Postal Code
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div><hr>
+              @endforeach
+              @endif
 
-      
           </div>
         <div class="col-md-7 text-right">
           <button class="btn btn-success submit" name="add" type="button">Submit</button>
@@ -276,7 +386,10 @@ function validation(){
    }
 
    $(document).on("click",".submit",function(){
-    validation();
+    var error_count=validation();
+    if(error_count == 0){
+$("form").submit();
+    }
 
    });
 

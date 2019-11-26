@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeCreateRequest;
 use App\Models\AddressType;
 use App\Models\Department;
 use App\Models\Employee;
@@ -30,24 +31,16 @@ class EmployeeController extends Controller
     }
 
    
-    public function store(Request $request)
+    public function store(EmployeeCreateRequest $request)
     {
-        echo "<pre>";print_r($request->all());exit;
+        // dd(count($request->address_line_1));
+       // echo "<pre>";print_r($request->all());exit;
        
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:employees,name,NULL,id,deleted_at,NULL',
-            'code' => 'required|unique:employees,code,NULL,id,deleted_at,NULL',
-            'phone_no' => 'required|unique:employees,code,NULL,id,deleted_at,NULL',
-            'email' => 'required|unique:employees,code,NULL,id,deleted_at,NULL',
-            'salutation'=>'required',
-            'dob'=>'required',
-            /*'department'=>'required',
-            'father_name'=>'required',
-            'blood_group'=>'required',
-            'material_status'=>'required',
-            'profile'=>'required', */
+        // $validator = Validator::make($request->all(), [
+            
+        // ])->validate();
 
-        ])->validate();
+        
 
         $employee = new Employee();
         $employee->salutation       = $request->salutation;

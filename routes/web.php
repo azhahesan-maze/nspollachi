@@ -163,6 +163,54 @@ Route::group(['prefix' => 'master/employee'], function () {
 });
 /* Employee Master  End Here  */
 
+/* Expense Type Master  Start Here  */
+Route::group(['prefix' => 'master/expense-type'], function () {
+    Route::any('/', 'ExpenseTypeController@index');
+    Route::any('create', 'ExpenseTypeController@create');
+    Route::any('store', 'ExpenseTypeController@store');
+    Route::any('show/{id}', 'ExpenseTypeController@show');
+    Route::any('edit/{id}', 'ExpenseTypeController@edit');
+    Route::any('update/{id}', 'ExpenseTypeController@update');
+    Route::any('delete/{id}', 'ExpenseTypeController@destroy');
+});
+/* Expense Type Master End Here  */
+
+/* Income Type Master  Start Here  */
+Route::group(['prefix' => 'master/income-type'], function () {
+    Route::any('/', 'IncomeTypeController@index');
+    Route::any('create', 'IncomeTypeController@create');
+    Route::any('store', 'IncomeTypeController@store');
+    Route::any('show/{id}', 'IncomeTypeController@show');
+    Route::any('edit/{id}', 'IncomeTypeController@edit');
+    Route::any('update/{id}', 'IncomeTypeController@update');
+    Route::any('delete/{id}', 'IncomeTypeController@destroy');
+});
+/* Income Type Master End Here  */
+
+/* Gift Voucher Master  Start Here  */
+Route::group(['prefix' => 'master/gift-voucher'], function () {
+    Route::any('/', 'GiftvoucherController@index');
+    Route::any('create', 'GiftvoucherController@create');
+    Route::any('store', 'GiftvoucherController@store');
+    Route::any('show/{id}', 'GiftvoucherController@show');
+    Route::any('edit/{id}', 'GiftvoucherController@edit');
+    Route::any('update/{id}', 'GiftvoucherController@update');
+    Route::any('delete/{id}', 'GiftvoucherController@destroy');
+});
+/* Gift Voucher Master End Here  */
+
+/* Gst Type Master  Start Here  */
+Route::group(['prefix' => 'master/gst-type'], function () {
+    Route::any('/', 'GstTypeController@index');
+    Route::any('create', 'GstTypeController@create');
+    Route::any('store', 'GstTypeController@store');
+    Route::any('show/{id}', 'GstTypeController@show');
+    Route::any('edit/{id}', 'GstTypeController@edit');
+    Route::any('update/{id}', 'GstTypeController@update');
+    Route::any('delete/{id}', 'GstTypeController@destroy');
+});
+/* Gst Type Master End Here  */
+
 
 
 

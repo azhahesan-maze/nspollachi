@@ -73,10 +73,18 @@
               Masters
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="{{url('master/state')}}">State</a>
+              <a class="dropdown-item" href="{{url('master/district')}}">District</a>
+              <a class="dropdown-item" href="{{url('master/city')}}">City</a>
+              <a class="dropdown-item" href="{{url('master/location')}}">Location</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="{{url('master/bank')}}">Bank</a>
+              <a class="dropdown-item" href="{{url('master/bank-branch')}}">Bank Branch</a>
+              <a class="dropdown-item" href="{{url('master/denomination')}}">Denomination</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{url('master/department')}}">Department</a>
+              <a class="dropdown-item" href="{{url('master/designation')}}">Desigination</a>
+              <a class="dropdown-item" href="{{url('master/denomination')}}">Employee</a>
             </div>
           </li>
           <li class="nav-item dropdown">
