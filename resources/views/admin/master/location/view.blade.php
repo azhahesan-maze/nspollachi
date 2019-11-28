@@ -35,7 +35,32 @@
               <td>{{ $value->name}}</td>
               <td>{{ $value->location_type_id}}</td>
               <td>
+                  @if($value->address_line_1 != "")
+                  {{ $value->address_line_1 }},</br>
+                  @endif
+                  @if($value->address_line_2 != "")
+                  {{ $value->address_line_2 }},</br>
+                  @endif
                   
+                
+                  @if($value->land_mark != "")
+                  {{ $value->land_mark }},
+                  @endif
+                  @if(isset($value->city->name) && $value->city->name != "")
+                  {{ $value->city->name }},
+                  @endif
+
+                  @if(isset($value->district->name) && $value->district->name != "")
+                  {{ $value->district->name }},
+                  @endif
+</br>
+
+                  @if(isset($value->state->name) && $value->state->name != "")
+                  {{ $value->state->name }}
+                  @endif
+                  @if($value->postal_code != "")
+                 - {{ $value->postal_code }},</br>
+                  @endif
 
                 
 
