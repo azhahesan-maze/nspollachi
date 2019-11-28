@@ -160,6 +160,7 @@ Route::group(['prefix' => 'master/employee'], function () {
     Route::any('edit/{id}', 'EmployeeController@edit');
     Route::any('update/{id}', 'EmployeeController@update');
     Route::any('delete/{id}', 'EmployeeController@destroy');
+    Route::any('delete-employee-address-details', 'EmployeeController@delete_employee_address_details');
 });
 /* Employee Master  End Here  */
 
@@ -208,8 +209,22 @@ Route::group(['prefix' => 'master/gst-type'], function () {
     Route::any('edit/{id}', 'GstTypeController@edit');
     Route::any('update/{id}', 'GstTypeController@update');
     Route::any('delete/{id}', 'GstTypeController@destroy');
+   
 });
 /* Gst Type Master End Here  */
+
+/* Agent Master  Start Here  */
+Route::group(['prefix' => 'master/agent'], function () {
+    Route::any('/', 'AgentController@index');
+    Route::any('create', 'AgentController@create');
+    Route::any('store', 'AgentController@store');
+    Route::any('show/{id}', 'AgentController@show');
+    Route::any('edit/{id}', 'AgentController@edit');
+    Route::any('update/{id}', 'AgentController@update');
+    Route::any('delete/{id}', 'AgentController@destroy');
+   
+});
+/* Agent Master End Here  */
 
 
 

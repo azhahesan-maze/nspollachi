@@ -81,11 +81,18 @@
               <a class="dropdown-item" href="{{url('master/bank')}}">Bank</a>
               <a class="dropdown-item" href="{{url('master/bank-branch')}}">Bank Branch</a>
               <a class="dropdown-item" href="{{url('master/denomination')}}">Denomination</a>
+              <a class="dropdown-item" href="{{url('master/accounts-type')}}">Accounts Type</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{url('master/department')}}">Department</a>
               <a class="dropdown-item" href="{{url('master/designation')}}">Desigination</a>
               <a class="dropdown-item" href="{{url('master/denomination')}}">Employee</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{url('master/expense-type')}}">Expense</a>
+              <a class="dropdown-item" href="{{url('master/income-type')}}">Income</a>
+              <a class="dropdown-item" href="{{url('master/gst-type')}}">Gst</a>
+              <a class="dropdown-item" href="{{url('master/gift-voucher')}}">Gift Voucher</a>
             </div>
+            
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

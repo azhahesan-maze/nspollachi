@@ -11,4 +11,12 @@ class Employee extends Model
     public function department(){
         return $this->belongsTo('App\Models\Department','department_id','id');
     }
+
+    public function address_details(){
+        return $this->hasMany('App\Models\AddressDetails','address_ref_id','id');
+    }
+
+    public function delete(){
+        $this->address_details()->delete();
+    }
 }

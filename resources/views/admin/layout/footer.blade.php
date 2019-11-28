@@ -68,6 +68,29 @@ $('.valid_from').datepicker({
 
 
 
+
+
+
+
+$('.phone_no').keypress(function (e) {
+
+
+
+     var regex  = new RegExp("^[0-9]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    console.log("str == " + str);
+    if (regex.test(str)) {
+        return true;
+    }else{
+        return false;
+        e.preventDefault();
+    }
+
+    
+    
+});
+
+
     $('.only_allow_alp_num_dot_com_amp').keypress(function (e) {
     var regex = new RegExp("^[a-zA-Z0-9.,& ]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
