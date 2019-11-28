@@ -22,304 +22,157 @@
       {{csrf_field()}}
 
       <div class="form-row">
-         
 
-        <div class="col-md-8">
-        <h4>Professional details:</h4>
-        </div>
-        <div class="col-md-6">
-          
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Name <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-          <div class="input-group">
-          <div class="input-group-prepend">
-            <select class="form-control required_for_valid salutation" name="salutation" error-data="Enter valid Salutation" >
-                <option value="Mr" {{ old('salutation',$agent->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
-                <option value="Mrs" {{ old('salutation',$agent->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
-            </select>
-            <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
-          </div>
-          <input type="text" class="form-control required_for_valid name" name="name" error-data="Agent Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$agent->name)}}>
-          
-          <div class="invalid-feedback">
-            Enter valid Agent Name
-          </div>
-          
-        </div>
-        <span class="mandatory"> {{ $errors->first('name')  }} </span>
-        <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
-        </div>
-        </div>
-
-        </div>
-<div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Code <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control code only_allow_alp_num_dot_com_amp required_for_valid" error-data="Enter valid Agent Code" placeholder="Agent Code" name="code" value="{{old('code',$agent->code)}}" >
-              <span class="mandatory"> {{ $errors->first('code')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid Agent Code
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control  phone_no required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$agent->phone_no)}}" >
-              <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid Phone No
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$agent->email)}}" >
-              <span class="mandatory"> {{ $errors->first('email')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid Email
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control dob required_for_valid" error-data="Enter valid DOB" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob')}}" >
-              <span class="mandatory"> {{ $errors->first('dob')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid DOB
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
-</div>
-<div class="form-row">
 <div class="col-md-8">
-        <h4>Personal Details :</h4>
-        </div>
-<div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Father's Name <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control father_name required_for_valid" error-data="Enter valid Father's Name" placeholder="Father's Name" name="father_name" value="{{old('father_name',$agent->father_name)}}">
-              <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid Father's Name
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Blood Group <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control blood_group required_for_valid" error-data="Enter valid Blood Group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group',$agent->blood_group)}}" >
-              <span class="mandatory"> {{ $errors->first('blood_group')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid Blood Group
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Material Status <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-            <select class="js-example-basic-multiple col-12 form-control material_status select custom-select required_for_valid" 
-            error-data="Enter valid Material Status" data-placeholder="Choose Material " name="material_status" >
-            <option value=""></option>
-               <option value="Married"  {{ old('material_status',$agent->material_status) == 'Married' ? 'selected' : '' }}>Married</option>
-                <option value="Single" {{ old('material_status',$agent->material_status) == 'Single' ? 'selected' : '' }}>Single</option>
-                <option value="Divorced" {{ old('material_status',$agent->material_status) == 'Divorced' ? 'selected' : '' }}>Divorced</option> 
-             </select>
-             
-                <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Material Status
-                </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Photo <span class="mandatory">*</span></label>
-            <div class="col-sm-8">
-              <input type="file" class="form-control profile " placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
-              <button type="button" id="cus-btn">CHOOSE A FILE</button>
-              <span class="mandatory"> {{ $errors->first('profile')  }} </span>
-              <div class="invalid-feedback">
-                Enter valid profile
-              </div>  
-            </div>
-          </div>
-        </div>
+<h3> <u>Professional details :</u> </h3>
+</div>
+<div class="col-md-8">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Name <span class="mandatory">*</span></label>
+    <div class="col-sm-2">
+    <select class="js-example-basic-multiple col-12 custom-select salutation" placeholder="Choose Salutation" name="salutation" required>
+        <option value="">Choose Salutation</option>
+        <option value="Mr" {{ old('salutation' ,$agent->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
+        <option value="Mrs" {{ old('salutation',$agent->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
+      </select>
+      <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+      <div class="invalid-feedback">
+      Salutation field is required
       </div>
-
-      
- <div class="form-row">
-  <div class="col-md-8">
-           <div class="form-group row">
-           <div class="col-md-4">
-           <label for="validationCustom01" class=" col-form-label">Address details : </label>
-               <label for="validationCustom01" class="btn-sm btn-success add_address">Add Address</label>  
-           </div>
-             </div>
+    </div>
+    <div class="col-sm-6">
+      <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Agent Name" name="name" value="{{old('name',$agent->name)}}" required>
+      <span class="mandatory"> {{ $errors->first('name')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Agent Name
+      </div>
+    </div>
   </div>
-           </div>
-           <div class="common_address_div">
-             <!-- Exist Address Details Grid Start Here -->
-            @foreach($agent_address_details as $key=>$values)
-            <div class="form-row address_div">
-                <div class="col-md-8">
-                <h3 class="address_label"></h3>
-                </div>
-                          <div class="col-md-6">
-                        <div class="form-group row">
-                        <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                          <div class="col-sm-8">
-                          <select class="js-example-basic-multiple col-12 form-control custom-select old_address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="old_address_type_id[]">
-                              <option value="">Choose Address Type</option>
-                              @foreach($address_type as $value)
-                              <option value="{{ $value->id }}" {{ old('old_address_type_id.'.$key,$value->address_type_id) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
-                              @endforeach
-                            </select>
-                            <span class="mandatory"> {{ $errors->first('old_address_type_id.'.$key)  }} </span>
-                           <div class="invalid-feedback">
-                              Enter valid Address Type
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
-                          <div class="col-sm-8">
-                          <input type="text" class="form-control old_address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="old_address_line_1[]" value="{{ old('old_address_line_1.'.$key) }}" >
-                            <span class="mandatory"> {{ $errors->first('old_address_line_1.'.$key)  }} </span>
-                            <div class="invalid-feedback">
-                            Enter valid Address
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-            <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control old_address_line_2" placeholder="Address Line 2" name="old_address_line_2[]" value="{{ old('old_address_line_2.'.$key,$values) }}">
-                            <span class="mandatory"> {{ $errors->first('old_address_line_2.'.$key)  }} </span>
-                            <div class="invalid-feedback">
-                            Enter valid Address
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-              <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control old_land_mark" placeholder="Land Mark" name="old_land_mark[]" value="{{ old('old_land_mark.'.$key,$values->land_mark) }}">
-                            <span class="mandatory"> {{ $errors->first('old_land_mark.'.$key)  }} </span>
-                            <div class="invalid-feedback">
-                            Enter valid Land Mark
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                       <!-- Old Values For Dropdown Start Here  -->
-              <input type="hidden" class="form-control address_details_id" name="address_details_id[]" value="{{ old('address_details_id.'.$key,$values->id)}}">
-              <input type="hidden" class="form-control exist_old_state_id" value="{{ old('old_state_id.'.$key,$values->state_id)}}">
-              <input type="hidden" class="form-control exist_old_district_id" value="{{ old('old_district_id.'.$key,$values->district_id)}}">
-              <input type="hidden" class="form-control exist_old_city_id" value="{{ old('old_city_id.'.$key,$values->city_id)}}">
-                <!-- Old Values For Dropdown End Here  -->
-            <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                          <div class="col-sm-8">
-                            <select class="js-example-basic-multiple col-12 form-control custom-select state_id old_state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="old_state_id[]" >
-                              <option value="">Choose State</option>
-                              @foreach($state as $value)
-                              <option value="{{ $value->id }}" {{ old('old_state_id.'.$key,$values->state_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                              @endforeach
-                            </select>
-                            <span class="mandatory"> {{ $errors->first('old_state_id.'.$key)  }} </span>
-                          <div class="invalid-feedback">
-                              Enter valid State 
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-            <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                          <div class="col-sm-8">
-                            <select class="js-example-basic-multiple col-12 form-control custom-select district_id old_district_id" name="old_district_id[]">
-                              <option value="">Choose District</option>
-                              </select>
-                             <span class="mandatory"> {{ $errors->first('old_district_id.'.$key)  }} </span>
-                             <div class="invalid-feedback">
-                              Enter valid District
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                       <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                          <div class="col-sm-8">
-                            <select class="js-example-basic-multiple col-12 form-control custom-select city_id old_city_id" name="old_city_id[]" >
-                              <option value="">Choose City</option>
-                            </select>
-                            <span class="mandatory"> {{ $errors->first('old_city_id.'.$key)  }} </span>
-                           <div class="invalid-feedback">
-                              Enter valid City
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-             <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
-                          <div class="col-sm-8">
-                          <input type="text" class="form-control old_postal_code  only_allow_digit required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="old_postal_code[]" value="{{ old('old_postal_code.'.$key,$values->postal_code) }}" >
-                            <span class="mandatory"> {{ $errors->first('old_postal_code.'.$key)  }} </span>
-                            <div class="invalid-feedback">
-                              Enter valid Postal Code
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      </div><hr>
-
-            @endif
-            <!-- Exist Address Details Grid End Here -->
-
-           </div>
+</div>
 
 
 
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Code <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control code only_allow_alp_num_dot_com_amp" placeholder="Agent Code" name="code" value="{{old('code',$agent->code)}}" required>
+      <span class="mandatory"> {{ $errors->first('code')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Agent Code
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control phone_no " placeholder="Phone No" name="phone_no" value="{{old('phone_no',$agent->phone_no)}}" required>
+      <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Phone No
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control email" placeholder="Email" name="email" value="{{old('email',$agent->email)}}" required>
+      <span class="mandatory"> {{ $errors->first('email')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Email
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      
+      <input type="text" class="form-control dob" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob',$agent->dob)}}" required>
+      <span class="mandatory"> {{ $errors->first('dob')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid DOB
+      </div>
+    </div>
+  </div>
+</div>
 
 
+</div>
+<div class="row">
+<div class="col-md-8">
+<h3> <u>Personal Details :</u> </h3>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Father's Name <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control father_name" placeholder="Father's Name" name="father_name" value="{{old('father_name',$agent->father_name)}}">
+      <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Father's Name
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Blood Group <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control blood_group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group',$agent->blood_group)}}" >
+      <span class="mandatory"> {{ $errors->first('blood_group')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Blood Group
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Material Status <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+    <select class="js-example-basic-multiple col-12 custom-select material_status" placeholder="Choose Material Status" name="material_status" >
+        <option value="">Choose Material Status</option>
+        <option value="Married"  {{ old('material_status','Married') == 'Married' ? 'selected' : '' }}>Married</option>
+        <option value="Single" {{ old('material_status','Single') == 'Single' ? 'selected' : '' }}>Single</option>
+        <option value="Divorced" {{ old('material_status','Divorced') == 'Divorced' ? 'selected' : '' }}>Divorced</option>
+       
+     </select>
+     
+      <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid Material Status
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="form-group row">
+    <label for="validationCustom01" class="col-sm-4 col-form-label">Photo <span class="mandatory">*</span></label>
+    <div class="col-sm-8">
+      <input type="file" class="form-control profile" placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
+      <span class="mandatory"> {{ $errors->first('profile')  }} </span>
+      <div class="invalid-feedback">
+        Enter valid profile
+      </div>
+    </div>
+  </div>
+</div>
 
 
-
+</div>
 <div class="form-row">
     <div class="col-md-8">
              <div class="form-group row">

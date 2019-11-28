@@ -33,7 +33,7 @@
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name}}</td>
-              <td>{{ $value->location_type->name}}</td>
+              <td>{{ $value->location_type_id}}</td>
               <td>
                   @if($value->address_line_1 != "")
                   {{ $value->address_line_1 }},</br>
@@ -42,20 +42,20 @@
                   {{ $value->address_line_2 }},</br>
                   @endif
                   
-                  @if($value->land_mark != "" || $value->city->name != ""  || $value->district->name != "" )
+                
                   @if($value->land_mark != "")
                   {{ $value->land_mark }},
                   @endif
-                  @if($value->city->name != "")
+                  @if(isset($value->city->name) && $value->city->name != "")
                   {{ $value->city->name }},
                   @endif
 
-                  @if($value->district->name != "")
+                  @if(isset($value->district->name) && $value->district->name != "")
                   {{ $value->district->name }},
                   @endif
 </br>
-@endif
-                  @if($value->state->name != "")
+
+                  @if(isset($value->state->name) && $value->state->name != "")
                   {{ $value->state->name }}
                   @endif
                   @if($value->postal_code != "")

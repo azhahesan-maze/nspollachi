@@ -56,15 +56,7 @@
           </div>
 
           </div>
-
-          @if($errors->has('city'))
-          dd($errors)
-          @endif
-
-
-
-
-          <div class="col-md-6">
+<div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -206,10 +198,8 @@
             
           
               @if (old('address_line_1'))
-                
               @foreach (old('address_line_1') as $key=>$item)
-            
-                            <div class="form-row address_div">
+            <div class="form-row address_div">
       <div class="col-md-8">
       <h3 class="address_label"></h3>
       </div>
@@ -320,7 +310,7 @@
               <div class="form-group row">
                 <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
                 <div class="col-sm-8">
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" >
+                <input type="text" class="form-control postal_code only_allow_digit required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" >
                   <span class="mandatory"> {{ $errors->first('postal_code.'.$key)  }} </span>
                   <div class="invalid-feedback">
                     Enter valid Postal Code
@@ -574,7 +564,7 @@ function validation(){
             <div class="form-group row">\
               <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
               <div class="col-sm-8">\
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
+                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid only_allow_digit" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
               <div class="invalid-feedback">\
                   Enter valid Postal Code\
                 </div>\
@@ -684,14 +674,7 @@ $(document).ready(function(){
     
   });
 
-  $('.phone_no').change(function(){
-    var no = $(this).val();
-    
-    if(no.length != 10){
-      alert('Invalid');
-      return false
-    }
-  });
+ 
 
 </script>
 @endsection
