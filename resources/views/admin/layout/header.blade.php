@@ -68,11 +68,50 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Masters
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Location</li>
+                            <li><a href="{{url('master/state')}}">State</a></li>
+                            <li><a href="{{url('master/district')}}">District</a></li>
+                            <li><a href="{{url('master/city')}}">City</a></li>
+                            <li><a href="{{url('master/location')}}">Location</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Bank</li>
+                            <li><a href="{{url('master/bank')}}">Bank</a></li>
+                            <li><a href="{{url('master/bank-branch')}}">Bank Branch</a></li>
+                            <li><a href="{{url('master/denomination')}}">Denomination</a></li>
+                            <li><a href="{{url('master/accounts-type')}}">Accounts Type</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Employee</li>
+                            <li><a href="{{url('master/department')}}">Department</a></li>
+                            <li><a href="{{url('master/designation')}}">Desigination</a></li>
+                            <li><a href="{{url('master/denomination')}}">Employee</a></li>
+                        </ul>
+                    </li>
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Accounts</li>
+                            <li><a href="{{url('master/expense-type')}}">Expense</a></li>
+                            <li><a href="{{url('master/income-type')}}">Income</a></li>
+                            <li><a href="{{url('master/gst-type')}}">Gst</a></li>
+                            <li><a href="{{url('master/gift-voucher')}}">Gift Voucher</a></li>
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{url('master/state')}}">State</a>
               <a class="dropdown-item" href="{{url('master/district')}}">District</a>
               <a class="dropdown-item" href="{{url('master/city')}}">City</a>
@@ -91,7 +130,7 @@
               <a class="dropdown-item" href="{{url('master/income-type')}}">Income</a>
               <a class="dropdown-item" href="{{url('master/gst-type')}}">Gst</a>
               <a class="dropdown-item" href="{{url('master/gift-voucher')}}">Gift Voucher</a>
-            </div>
+            </div> -->
             
           </li>
           <li class="nav-item dropdown">

@@ -3,7 +3,7 @@
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
 /* header */
 body {
-    font-family: 'Muli', sans-serif;
+    font-family: 'Muli', sans-serif !important;
 }
 h1,h2,h3,h4,h5,h6,p {
     margin-bottom: 0;
@@ -44,6 +44,15 @@ h1,h2,h3,h4,h5,h6,p {
     padding: 0;
 }
 .h-right-btn li button a {
+    vertical-align: text-top;
+}
+.body-sec .card-header .row {
+    margin: 0;
+}
+.body-sec .card-header .row .col-4 {
+    margin: auto 0;
+}
+.h-right-btn li button a {
     padding: 3px 10px;
     font-size: 14px;
     font-weight: 600;
@@ -73,6 +82,9 @@ h1,h2,h3,h4,h5,h6,p {
     padding: 8px 12px;
     font-size: 15px;
 }
+.body-sec {
+    height: 100%;
+}
 .foot {
     background: #5b5b5b;
     color: #fff;
@@ -81,6 +93,7 @@ h1,h2,h3,h4,h5,h6,p {
     right: 0;
     left: 0;
     z-index: 1005;
+    bottom: 0;
 }
 .body-sec .card-body {
     padding: 12px;
@@ -98,6 +111,43 @@ h1,h2,h3,h4,h5,h6,p {
     background: #85c227;
     color: #fff;
 }
+/* mega menu options */
+.menu-large .dropdown-menu {
+    border:0 !important;
+}
+.menu-large {
+    position: static !important;
+}
+.megamenu {
+    position: absolute;
+    padding: 20px 20px;
+    width: 100%;
+    box-shadow: 0px 2px 4px 3px rgba(0, 0, 0, 0.15);
+}
+.megamenu .dropdown-item:hover {
+    background: transparent;
+}
+.megamenu .dropdown-item li {
+    list-style-type: none;
+}
+.megamenu .dropdown-item li a {
+    color: #000000;
+}
+.megamenu .dropdown-item li a:hover {
+    color: #28a745;
+}
+.megamenu .dropdown-header {
+    padding: 8px 0px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #28a745;
+    transition: 1s;
+}
+.header .nav-item .nav-link:hover, .menu-large.show, .header .dropdown.show {
+    background: white !important;
+    color: #000 !important;
+}
+
 /* data tables options */
 table.dataTable thead th, table.dataTable tbody td {
     padding: 5px 8px;
@@ -192,6 +242,10 @@ div.dt-buttons {
 .form-horizontal .btn{
     padding: 2px 15px;
     font-size: 14px;
+    line-height: 2;
+}
+#master_wrapper .dropdown-item.active, .dropdown-item:active {
+    background-color: #28a745;
 }
 
 .is-valid + .select2-container--default .select2-selection--single {
@@ -226,6 +280,9 @@ div.dt-buttons {
     background-color: #fff;
     border: 1px solid #cecece ;
     border-radius: 4px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 4px !important;
 }
 .form-control.is-invalid, .was-validated .form-control:invalid {
     border-color: #dc3545 !important;
