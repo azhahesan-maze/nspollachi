@@ -96,7 +96,11 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control dob required_for_valid" error-data="Enter valid DOB" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob')}}" >
+              <?php 
+                $dob=isset($agent->dob) && $agent->dob !="" ? date('d-m-Y',strtotime($agent->dob)) : "" ;
+                
+                ?>
+              <input type="text" class="form-control dob required_for_valid" error-data="Enter valid DOB" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob',$dob)}}" >
               <span class="mandatory"> {{ $errors->first('dob')  }} </span>
               <div class="invalid-feedback">
                 Enter valid DOB
@@ -187,9 +191,16 @@
              <!-- Exist Address Details Grid Start Here -->
             @foreach($agent_address_details as $key=>$values)
             <div class="form-row address_div">
-                <div class="col-md-8">
-                <h3 class="address_label"></h3>
-                </div>
+                <div class="col-md-7">
+                    <div class="form-group row">
+                    <div class="col-md-7">
+                    <h3 class="address_label"></h3>
+                    </div>
+                    <div class="col-md-4">
+                    <h3 class="address_delete_label"><label class="btn btn-danger remove_address" attr-id="{{$values->id}}"> Delete </label></h3>
+                        </div>
+                    </div>
+                    </div>
                           <div class="col-md-6">
                         <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
@@ -197,7 +208,7 @@
                           <select class="js-example-basic-multiple col-12 form-control custom-select old_address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="old_address_type_id[]">
                               <option value="">Choose Address Type</option>
                               @foreach($address_type as $value)
-                              <option value="{{ $value->id }}" {{ old('old_address_type_id.'.$key,$value->address_type_id) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
+                              <option value="{{ $value->id }}" {{ old('old_address_type_id.'.$key,$values->address_type_id) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
                               @endforeach
                             </select>
                             <span class="mandatory"> {{ $errors->first('old_address_type_id.'.$key)  }} </span>
@@ -211,7 +222,7 @@
                         <div class="form-group row">
                           <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
                           <div class="col-sm-8">
-                          <input type="text" class="form-control old_address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="old_address_line_1[]" value="{{ old('old_address_line_1.'.$key) }}" >
+                          <input type="text" class="form-control old_address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="old_address_line_1[]" value="{{ old('old_address_line_1.'.$key,$values->address_line_1) }}" >
                             <span class="mandatory"> {{ $errors->first('old_address_line_1.'.$key)  }} </span>
                             <div class="invalid-feedback">
                             Enter valid Address
@@ -223,7 +234,7 @@
                         <div class="form-group row">
                           <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control old_address_line_2" placeholder="Address Line 2" name="old_address_line_2[]" value="{{ old('old_address_line_2.'.$key,$values) }}">
+                            <input type="text" class="form-control old_address_line_2" placeholder="Address Line 2" name="old_address_line_2[]" value="{{ old('old_address_line_2.'.$key,$values->address_line_2) }}">
                             <span class="mandatory"> {{ $errors->first('old_address_line_2.'.$key)  }} </span>
                             <div class="invalid-feedback">
                             Enter valid Address
@@ -308,296 +319,140 @@
                       </div>
                       </div><hr>
 
-            @endif
+            @endforeach
             <!-- Exist Address Details Grid End Here -->
 
-           </div>
-
-
-
-
-
-
-
-
-<div class="form-row">
-    <div class="col-md-8">
-             <div class="form-group row">
-             <div class="col-md-4">
-             <label for="validationCustom01" class=" col-form-label">Address details : </label>
-                 <label for="validationCustom01" class="btn-sm btn-success add_address">Add Address</label>  
-             </div>
-               </div>
-    </div>
-    <div class="common_address_div">
-      @foreach($agent_address_details as $key=>$values)
-      <div class="form-row address_div">
-          <div class="col-md-7">
-          <div class="form-group row">
-          <div class="col-md-7">
-          <h3 class="address_label"></h3>
-          </div>
-          <div class="col-md-4">
-          <h3 class="address_delete_label"><label class="btn btn-danger remove_address" attr-id="{{$values->id}}"> Delete </label></h3>
-              </div>
-          </div>
-          </div>
-                    <div class="col-md-6">
-                  <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
-                    <select class="js-example-basic-multiple col-12 form-control custom-select old_address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="old_address_type_id[]">
-                        <option value="">Choose Address Type</option>
-                        @foreach($address_type as $value)
-                        <option value="{{ $value->id }}" {{ old('old_address_type_id.'.$key,$values->address_type_id) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
-                        @endforeach
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('old_address_type_id.'.$key)  }} </span>
-                     <div class="invalid-feedback">
-                        Enter valid Address Type
-                      </div>
-                    </div>
-                  </div>
+            <!-- Set Old Values for Address Details Grid Newly Added Row Start Here -->
+            @if (old('address_line_1'))
+            @foreach (old('address_line_1') as $key=>$item)
+            <div class="form-row address_div">
+                <div class="col-md-8">
+                <h3 class="address_label"></h3>
                 </div>
-          <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
-                    <input type="text" class="form-control old_address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="old_address_line_1[]" value="{{ old('old_address_line_1.'.$key,$values->address_line_1) }}" >
-                      <span class="mandatory"> {{ $errors->first('old_address_line_1.'.$key)  }} </span>
-                      <div class="invalid-feedback">
-                      Enter valid Address
+                          <div class="col-md-6">
+                        <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
+                          <div class="col-sm-8">
+                          <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">
+                              <option value="">Choose Address Type</option>
+                              @foreach($address_type as $value)
+                              <option value="{{ $value->id }}" {{ old('address_type_id.'.$key) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
+                              @endforeach
+                            </select>
+                            <span class="mandatory"> {{ $errors->first('address_type_id.'.$key)  }} </span>
+                           <div class="invalid-feedback">
+                              Enter valid Address Type
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-      <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control old_address_line_2" placeholder="Address Line 2" name="old_address_line_2[]" value="{{ old('old_address_line_2.'.$key,$values->address_line_2) }}">
-                      <span class="mandatory"> {{ $errors->first('old_address_line_2.'.$key)  }} </span>
-                      <div class="invalid-feedback">
-                      Enter valid Address
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control land_mark" placeholder="Land Mark" name="old_land_mark[]" value="{{ old('old_land_mark.'.$key,$values->land_mark) }}">
-                      <span class="mandatory"> {{ $errors->first('old_land_mark.'.$key)  }} </span>
-                      <div class="invalid-feedback">
-                      Enter valid Land Mark
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Old Values For Dropdown Start Here  -->
-              <input type="hidden" class="form-control address_details_id" name="address_details_id[]" value="{{ old('address_details_id.'.$key,$values->id)}}">
-              <input type="hidden" class="form-control exist_old_state_id" value="{{ old('old_state_id.'.$key,$values->state_id)}}">
-              <input type="hidden" class="form-control exist_old_district_id" value="{{ old('old_district_id.'.$key,$values->district_id)}}">
-              <input type="hidden" class="form-control exist_old_city_id" value="{{ old('old_city_id.'.$key,$values->city_id)}}">
-                <!-- Old Values For Dropdown End Here  -->
-      <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select state_id old_state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="old_state_id[]" >
-                        <option value="">Choose State</option>
-                        @foreach($state as $value)
-                        <option value="{{ $value->id }}" {{ old('old_state_id.'.$key,$values->state_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                        @endforeach
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('old_state_id.'.$key)  }} </span>
-                    <div class="invalid-feedback">
-                        Enter valid State 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-      <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                    <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select district_id old_district_id" name="old_district_id[]">
-                        <option value="">Choose District</option>
-                        </select>
-                       <span class="mandatory"> {{ $errors->first('old_district_id.'.$key)  }} </span>
-                       <div class="invalid-feedback">
-                        Enter valid District
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                 <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                    <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select city_id old_city_id" name="old_city_id[]" >
-                        <option value="">Choose City</option>
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('old_city_id.'.$key)  }} </span>
-                     <div class="invalid-feedback">
-                        Enter valid City
-                      </div>
-                    </div>
-                  </div>
-                </div>
-       <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
-                    <input type="text" class="form-control old_postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="old_postal_code[]" value="{{ old('old_postal_code.'.$key,$values->postal_code) }}" >
-                      <span class="mandatory"> {{ $errors->first('old_postal_code.'.$key)  }} </span>
-                      <div class="invalid-feedback">
-                        Enter valid Postal Code
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div><hr>
-      @endforeach
-
-      @if (old('address_line_1'))
-                
-              @foreach (old('address_line_1') as $key=>$item)
-            
-                            <div class="form-row address_div">
-      <div class="col-md-8">
-      <h3 class="address_label"></h3>
-      </div>
                 <div class="col-md-6">
-              <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">
-                    <option value="">Choose Address Type</option>
-                    @foreach($address_type as $value)
-                    <option value="{{ $value->id }}" {{ old('address_type_id.'.$key) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
-                    @endforeach
-                  </select>
-                  <span class="mandatory"> {{ $errors->first('address_type_id.'.$key)  }} </span>
-                 <div class="invalid-feedback">
-                    Enter valid Address Type
-                  </div>
-                </div>
-              </div>
-            </div>
-      <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
-                <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="{{ old('address_line_1.'.$key) }}" >
-                  <span class="mandatory"> {{ $errors->first('address_line_1.'.$key)  }} </span>
-                  <div class="invalid-feedback">
-                  Enter valid Address
-                  </div>
-                </div>
-              </div>
-            </div>
-  <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control address_line_2" placeholder="Address Line 2" name="address_line_2[]" value="{{ old('address_line_2.'.$key) }}">
-                  <span class="mandatory"> {{ $errors->first('address_line_2.'.$key)  }} </span>
-                  <div class="invalid-feedback">
-                  Enter valid Address
-                  </div>
-                </div>
-              </div>
-            </div>
-    <div class="col-md-6">
-              <div class="form-group row">
-                <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="{{ old('land_mark.'.$key) }}">
-                  <span class="mandatory"> {{ $errors->first('land_mark.'.$key)  }} </span>
-                  <div class="invalid-feedback">
-                  Enter valid Land Mark
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Old Values For Dropdown Start Here  -->
+                        <div class="form-group row">
+                          <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>
+                          <div class="col-sm-8">
+                          <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="{{ old('address_line_1.'.$key) }}" >
+                            <span class="mandatory"> {{ $errors->first('address_line_1.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                            Enter valid Address
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control address_line_2" placeholder="Address Line 2" name="address_line_2[]" value="{{ old('address_line_2.'.$key) }}">
+                            <span class="mandatory"> {{ $errors->first('address_line_2.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                            Enter valid Address
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+              <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="{{ old('land_mark.'.$key) }}">
+                            <span class="mandatory"> {{ $errors->first('land_mark.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                            Enter valid Land Mark
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                <!-- Old Values For Dropdown Start Here  -->
           <input type="hidden" class="form-control new_old_state_id" value="{{ old('state_id.'.$key)}}">
           <input type="hidden" class="form-control new_old_district_id" value="{{ old('district_id.'.$key)}}">
           <input type="hidden" class="form-control new_old_city_id" value="{{ old('city_id.'.$key)}}">
             <!-- Old Values For Dropdown End Here  -->
-  <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
-                  <select class="js-example-basic-multiple col-12 form-control custom-select state_id new_state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >
-                    <option value="">Choose State</option>
-                    @foreach($state as $value)
-                    <option value="{{ $value->id }}" {{ old('state_id.'.$key) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                    @endforeach
-                  </select>
-                  <span class="mandatory"> {{ $errors->first('state_id.'.$key)  }} </span>
-                <div class="invalid-feedback">
-                    Enter valid State 
-                  </div>
-                </div>
-              </div>
-            </div>
-  <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                <div class="col-sm-8">
-                  <select class="js-example-basic-multiple col-12 form-control custom-select new_district_id district_id" name="district_id[]">
-                    <option value="">Choose District</option>
-                    </select>
-                   <span class="mandatory"> {{ $errors->first('district_id.'.$key)  }} </span>
-                   <div class="invalid-feedback">
-                    Enter valid District
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
+                          <div class="col-sm-8">
+                            <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >
+                              <option value="">Choose State</option>
+                              @foreach($state as $value)
+                              <option value="{{ $value->id }}" {{ old('state_id.'.$key) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                              @endforeach
+                            </select>
+                            <span class="mandatory"> {{ $errors->first('state_id.'.$key)  }} </span>
+                          <div class="invalid-feedback">
+                              Enter valid State 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
+                          <div class="col-sm-8">
+                            <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">
+                              <option value="">Choose District</option>
+                              </select>
+                             <span class="mandatory"> {{ $errors->first('district_id.'.$key)  }} </span>
+                             <div class="invalid-feedback">
+                              Enter valid District
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                       <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
+                          <div class="col-sm-8">
+                            <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >
+                              <option value="">Choose City</option>
+                            </select>
+                            <span class="mandatory"> {{ $errors->first('city_id.'.$key)  }} </span>
+                           <div class="invalid-feedback">
+                              Enter valid City
+                            </div>
+                          </div>
+                        </div>
+                      </div>
              <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                <div class="col-sm-8">
-                  <select class="js-example-basic-multiple col-12 form-control custom-select new_city_id city_id" name="city_id[]" >
-                    <option value="">Choose City</option>
-                  </select>
-                  <span class="mandatory"> {{ $errors->first('city_id.'.$key)  }} </span>
-                 <div class="invalid-feedback">
-                    Enter valid City
-                  </div>
-                </div>
-              </div>
-            </div>
-   <div class="col-md-6">
-              <div class="form-group row">
-                <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" >
-                  <span class="mandatory"> {{ $errors->first('postal_code.'.$key)  }} </span>
-                  <div class="invalid-feedback">
-                    Enter valid Postal Code
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div><hr>
-              @endforeach
-              @endif
+                        <div class="form-group row">
+                          <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
+                          <div class="col-sm-8">
+                          <input type="text" class="form-control postal_code only_allow_digit required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" >
+                            <span class="mandatory"> {{ $errors->first('postal_code.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                              Enter valid Postal Code
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div><hr>
+            @endforeach
+            @endif
 
+            <!-- Set Old Values for Address Details Grid Newly Added Row End Here -->
 
-
-
-
-
-    </div>
-             
-             </div>
-        <div class="col-md-7 text-right">
-          <button class="btn btn-success" type="submit">Submit</button>
+           </div>
+<div class="col-md-7 text-right">
+          <button class="btn btn-success submit" type="button">Submit</button>
         </div>
       </form>
     </div>
@@ -606,6 +461,107 @@
 </div>
 
 <script>
+
+$(document).on("blur change",".required_for_valid",function(){
+       $(this).removeClass("is-invalid");
+        $(this).removeClass("is-valid");
+           if($(this).val() !=""){
+            $(this).removeClass("is-invalid");
+            $(this).addClass("is-valid");
+            if($(this).attr('input-type') == "phone_no"){
+               var phone_no=$(this).val();
+                if(phone_no_validation(phone_no) == 0){
+                 $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+                }
+                 }
+
+                 if($(this).attr('input-type') == "email"){
+               var email=$(this).val();
+               
+               if(!email_validation(email)){
+               
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+               }
+               
+                 }
+}else{
+             $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+        }
+ });
+
+function email_validation(email){
+  var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+   return emailPattern.test(email); 
+}
+function phone_no_validation(phone_no){
+  if(phone_no.length != 10){
+                return 0
+                }else{
+                  return 1;
+                }
+}
+
+function validation(){
+  
+       var error_count=0;
+       $(".required_for_valid").each(function(){
+        $(this).removeClass("is-invalid");
+           if($(this).val() !=""){
+            $(this).removeClass("is-invalid");
+            $(this).addClass("is-valid");
+            if($(this).attr('input-type') == "phone_no"){
+               var phone_no=$(this).val();
+                if(phone_no_validation(phone_no) == 0){
+                  error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+                }
+                 }
+
+                 if($(this).attr('input-type') == "email"){
+               var email=$(this).val();
+               if(!email_validation(email)){
+                error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+               }
+               
+                 }
+
+
+        }else{
+           error_count++;
+           $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+        }
+       });
+       return error_count;
+   }
+
+
+   $(document).on("click",".submit",function(){
+    var error_count=validation();
+    var address_error_count=address_details_validation();
+    var common_error_count=parseInt(error_count)+parseInt(address_error_count);
+    if(common_error_count == 0){
+      if($(".required_for_address_valid").length >0){
+      
+    }else{
+      common_error_count++;
+      alert("Please Add Atleast One Address ");
+     
+    }
+    if(common_error_count == 0){
+
+      $("form").submit();
+    }
+
+    }
+
+   });
   
 function state_based_district_for_edit(){
     $(".old_state_id").each(function(key,index){
@@ -897,7 +853,7 @@ if($(".remove_address").length >1){
 
     $.ajax({
                       type: "post",
-                      url: "{{ url('master/agent/delete-employee-address-details')}}",
+                      url: "{{ url('master/agent/delete-agent-address-details')}}",
                       data: {address_details_id: address_details_id},
                       success: function (res)
                       {

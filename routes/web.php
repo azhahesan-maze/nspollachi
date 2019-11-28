@@ -222,6 +222,7 @@ Route::group(['prefix' => 'master/agent'], function () {
     Route::any('edit/{id}', 'AgentController@edit');
     Route::any('update/{id}', 'AgentController@update');
     Route::any('delete/{id}', 'AgentController@destroy');
+    Route::any('delete-agent-address-details', 'AgentController@delete_agent_address_details');
    
 });
 /* Agent Master End Here  */

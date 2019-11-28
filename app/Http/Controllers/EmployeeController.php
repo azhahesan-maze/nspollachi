@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Image;
+use Storage;
 
 class EmployeeController extends Controller
 {
@@ -36,15 +38,14 @@ class EmployeeController extends Controller
     public function store(EmployeeCreateRequest $request)
     {
         $employee = new Employee();
-
         $profile_name="";
+        $destinationPath = 'storage/employee_profile/';
         if ($request->hasFile('profile')) {
             $profile = $request->file('profile');
-            $profile_name = time().'.'.$profile->getClientOriginalExtension();
-            $destinationPath = public_path('/storage/employee_profile/');
+            $profile_name = date('Y-m-d').time().'.'.$profile->getClientOriginalExtension();
             $profile->move($destinationPath, $profile_name);
-            //$profile->save();
            }
+
         $employee->salutation       = $request->salutation;
         $employee->name       = $request->name;
         $employee->code      =  $request->code;
@@ -108,7 +109,7 @@ class EmployeeController extends Controller
    
     public function edit(Employee $employee,$id)
     {
-        $employee=Employee::find($id);
+       $employee=Employee::find($id);
         $department=Department::all();
         $state=State::all();
         $address_type =AddressType::all();
@@ -119,9 +120,22 @@ class EmployeeController extends Controller
     
     public function update(EmployeeCreateRequest $request, Employee $employee,$id)
     { 
-       
+        
+        $employee = Employee::find($id);
+        $profile_name=$employee->profile;
+        $destinationPath = 'storage/employee_profile/';
+        if ($request->hasFile('profile')) {
+            if(file_exists($destinationPath.$profile_name)){
+                @unlink($destinationPath.$profile_name);
+            }
+            $profile = $request->file('profile');
+            $profile_name = date('Y-m-d').time().'.'.$profile->getClientOriginalExtension();
+           
+            $profile->move($destinationPath, $profile_name);
+          
+           }
 
-    $employee = Employee::find($id);
+   
     $employee->salutation       = $request->salutation;
     $employee->name       = $request->name;
     $employee->code      =  $request->code;
@@ -133,6 +147,7 @@ class EmployeeController extends Controller
     $employee->blood_group      =  $request->blood_group;
     $employee->material_status      =  $request->material_status;
     $employee->access_no      =  $request->access_no;
+    $employee->profile      =  $profile_name;
     $employee->created_by = 0;
     $employee->updated_by = 0;
     $now = Carbon::now('Asia/Kolkata')->toDateTimeString();
@@ -218,7 +233,7 @@ class EmployeeController extends Controller
     public function delete_employee_address_details(Request $request){
         $address_details_id=$request->address_details_id;
         $address_details=AddressDetails::find($address_details_id);
-        if($address_details->forceDelete()){
+        if($address_details->delete()){
              echo 1;
         }else{
             echo 0;
