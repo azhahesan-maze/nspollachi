@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Request;
+
+class AgentRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(Request $request)
+    {
+        $rule=[];
+        if($request->has('add')){
+            $rule=array(
+                'name' => 'required|unique:agents,name,NULL,id,deleted_at,NULL',
+                'code' => 'required|unique:agents,code,NULL,id,deleted_at,NULL',
+                'phone_no' => 'required|unique:agents,phone_no,NULL,id,deleted_at,NULL',
+                'email' => 'required|unique:agents,email,NULL,id,deleted_at,NULL',
+                'salutation'=>'required',
+                'dob'=>'required',
+                'address_type_id .*' => 'required',
+                'address_line_1.*' => 'required',
+                'state_id.*' => 'required',
+                'postal_code.*' => 'required',
+            );
+
+        }else{
+
+            $rule=array(
+                'name' => 'required|unique:agents,name,'.$this->id.',id,deleted_at,NULL',
+                'code' => 'required|unique:agents,code,'.$this->id.',id,deleted_at,NULL',
+                'phone_no' => 'required|unique:agents,phone_no,'.$this->id.',id,deleted_at,NULL',
+                'email' => 'required|unique:agents,email,'.$this->id.',id,deleted_at,NULL',
+                'salutation'=>'required',
+                'dob'=>'required',
+                'address_type_id .*' => 'required',
+                
+            );
+            if($request->has('address_type_id')){
+                $rule['address_type_id .*']='required';
+                $rule['address_line_1.*'] = 'required';
+                $rule['state_id.*'] = 'required';
+                $rule['postal_code.*'] = 'required';
+
+            }
+
+            if($request->has('old_address_type_id')){
+                $rule['old_address_type_id .*']='required';
+                $rule['old_address_line_1.*'] = 'required';
+                $rule['old_state_id.*'] = 'required';
+                $rule['old_postal_code.*'] = 'required';
+
+            }
+            
+
+
+        }
+        
+
+        return $rule;
+    }
+
+    public function messages()
+    {
+        return [
+            'city_id.*.required' => 'City field is required',
+            'address_type_id.*.required' => 'Address Type  field is required',
+            'address_line_1.*.required' => 'Address Line  field is required',
+            'state_id.*.required' => 'State field is required',
+            'postal_code.*.required' => 'Postal Code field is required',
+            'old_city_id.*.required' => 'City field is required',
+            'old_address_type_id.*.required' => 'Address Type  field is required',
+            'old_address_line_1.*.required' => 'Address Line  field is required',
+            'old_state_id.*.required' => 'State field is required',
+            'old_postal_code.*.required' => 'Postal Code field is required',
+        ];
+    }
+}
