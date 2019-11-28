@@ -1,4 +1,4 @@
-<section class="foot">
+<footer class="foot">
 
       <div class="col-12 px-0">
       <div class="row mx-0">
@@ -11,7 +11,7 @@
       </div>
     
 </div>
-</section>
+</footer>
     
 </div>
     
