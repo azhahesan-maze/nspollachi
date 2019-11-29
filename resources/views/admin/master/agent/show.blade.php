@@ -109,8 +109,36 @@
                         </div>
     </div>
     <hr>
-        
     @endforeach
+    <div class="form-row">
+        <div class="col-md-8">
+        <h4> Proof Details :</h4>
+        </div>
+      </div>
+    <div class="form-row">
+        <table class="table">
+            <thead>
+              <th> S.no </th>
+              <th> Proof Name</th>
+              <th> Proof Number</th>
+              
+              <th> Files </th>
+             
+            </thead>
+            <tbody class="">
+              @foreach ($agent_proof_details as $key=>$item)
+              <tr>
+              <td>{{$key+1}}</td>
+              <td>{{$item->name}}</td>
+              <td>{{$item->number}}</td>
+              <td> <a href="{{asset('storage/agent_proof_details/'.$item->file)}}" download><img src="{{asset('storage/agent_proof_details/'.$item->file)}}" class="img-fluid" style="max-width:60px;" alt="logo" /></a></td>
+              </tr>
+                  
+              @endforeach
+             
+            </tbody>
+        </table>
+    </div>
     </div>
     <!-- card body end@ -->
   </div>

@@ -70,13 +70,7 @@ h1,h2,h3,h4,h5,h6,p {
 .h-right-btn li button:hover a {
     text-decoration: none;
 }
-.foot {
-    background: #5b5b5b;
-    color: #fff;
-    
-    width: 100%; 
-    
-}
+
 .foot p {
     margin-bottom: 0;
     padding: 8px 12px;
@@ -89,11 +83,12 @@ h1,h2,h3,h4,h5,h6,p {
     background: #5b5b5b;
     color: #fff;
     display: block;
-    position: absolute;
+    /* position: absolute; */
     right: 0;
     left: 0;
     z-index: 1005;
     bottom: 0;
+    width: 100%; 
 }
 .body-sec .card-body {
     padding: 12px;

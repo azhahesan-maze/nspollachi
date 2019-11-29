@@ -97,7 +97,7 @@
                             <li class="dropdown-header">Employee</li>
                             <li><a href="{{url('master/department')}}">Department</a></li>
                             <li><a href="{{url('master/designation')}}">Desigination</a></li>
-                            <li><a href="{{url('master/denomination')}}">Employee</a></li>
+                            <li><a href="{{url('master/employee')}}">Employee</a></li>
                         </ul>
                     </li>
                     <li class="col-md-3 dropdown-item">
@@ -107,6 +107,15 @@
                             <li><a href="{{url('master/income-type')}}">Income</a></li>
                             <li><a href="{{url('master/gst-type')}}">Gst</a></li>
                             <li><a href="{{url('master/gift-voucher')}}">Gift Voucher</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header"></li>
+                            <li><a href="{{url('master/agent')}}">Agent</a></li>
+                            <li><a href="{{url('master/customer')}}">customer</a></li>
+                          
                         </ul>
                     </li>
                     

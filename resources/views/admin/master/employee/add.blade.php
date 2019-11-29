@@ -392,358 +392,362 @@
     <!-- card body end@ -->
   </div>
 </div>
-<script>
+<div style="clear:both;"></div>
+
+<script type="text/javascript">
 
 
 
-$(document).on("blur change",".required_for_valid",function(){
-       $(this).removeClass("is-invalid");
-        $(this).removeClass("is-valid");
-           if($(this).val() !=""){
-            $(this).removeClass("is-invalid");
-            $(this).addClass("is-valid");
-            if($(this).attr('input-type') == "phone_no"){
-               var phone_no=$(this).val();
-                if(phone_no_validation(phone_no) == 0){
-                 $(this).removeClass("is-valid");
-                 $(this).addClass("is-invalid");
-                }
-                 }
-
-                 if($(this).attr('input-type') == "email"){
-               var email=$(this).val();
-               
-               if(!email_validation(email)){
-               
-                $(this).removeClass("is-valid");
-                 $(this).addClass("is-invalid");
-               }
-               
-                 }
-}else{
-             $(this).removeClass("is-valid");
-            $(this).addClass("is-invalid");
-        }
- });
-
-function email_validation(email){
-  var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-   return emailPattern.test(email); 
-}
-function phone_no_validation(phone_no){
-  if(phone_no.length != 10){
-                return 0
-                }else{
-                  return 1;
-                }
-}
-
-function validation(){
+  $(document).on("blur change",".required_for_valid",function(){
+         $(this).removeClass("is-invalid");
+          $(this).removeClass("is-valid");
+             if($(this).val() !=""){
+              $(this).removeClass("is-invalid");
+              $(this).addClass("is-valid");
+              if($(this).attr('input-type') == "phone_no"){
+                 var phone_no=$(this).val();
+                  if(phone_no_validation(phone_no) == 0){
+                   $(this).removeClass("is-valid");
+                   $(this).addClass("is-invalid");
+                  }
+                   }
   
-       var error_count=0;
-       $(".required_for_valid").each(function(){
-        $(this).removeClass("is-invalid");
-           if($(this).val() !=""){
-            $(this).removeClass("is-invalid");
-            $(this).addClass("is-valid");
-            if($(this).attr('input-type') == "phone_no"){
-               var phone_no=$(this).val();
-                if(phone_no_validation(phone_no) == 0){
-                  error_count++;
-                $(this).removeClass("is-valid");
-                 $(this).addClass("is-invalid");
-                }
+                   if($(this).attr('input-type') == "email"){
+                 var email=$(this).val();
+                 
+                 if(!email_validation(email)){
+                 
+                  $(this).removeClass("is-valid");
+                   $(this).addClass("is-invalid");
                  }
-
-                 if($(this).attr('input-type') == "email"){
-               var email=$(this).val();
-               if(!email_validation(email)){
-                error_count++;
-                $(this).removeClass("is-valid");
-                 $(this).addClass("is-invalid");
-               }
-               
-                 }
-
-
-        }else{
-           error_count++;
-           $(this).removeClass("is-valid");
-            $(this).addClass("is-invalid");
-        }
-       });
-       return error_count;
-   }
-
-
-   $(document).on("click",".submit",function(){
-    var error_count=validation();
-    var address_error_count=address_details_validation();
-    var common_error_count=parseInt(error_count)+parseInt(address_error_count);
-    if(common_error_count == 0){
-      if($(".required_for_address_valid").length >0){
-      
-    }else{
-      common_error_count++;
-      alert("Please Add Atleast One Address ");
-     
-    }
-    if(common_error_count == 0){
-
-      $("form").submit();
-    }
-
-    }
-
+                 
+                   }
+  }else{
+               $(this).removeClass("is-valid");
+              $(this).addClass("is-invalid");
+          }
    });
-
-
-  $(document).on("click",".add_address",function(){
-    add_address();
-    });
-   
-
-  function address_details_validation(){
-    var error_count=0;
-      $(".required_for_address_valid").each(function(){
-        $(this).removeClass("is-invalid");
-           if($(this).val() !=""){
-             
-            $(this).removeClass("is-invalid");
-            $(this).addClass("is-valid");
-        }else{
-           error_count++;
-           $(this).removeClass("is-valid");
-            $(this).addClass("is-invalid");
-        }
-       });
-       return error_count;
+  
+  function email_validation(email){
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+     return emailPattern.test(email); 
   }
-
-  function add_address(id="",text=""){
-    var address_details_validation_count=address_details_validation();
-    if(address_details_validation_count == 0){
-
+  function phone_no_validation(phone_no){
+    if(phone_no.length != 10){
+                  return 0
+                  }else{
+                    return 1;
+                  }
+  }
+  
+  function validation(){
     
-  var address='';
-    address+='<div class="form-row address_div">\
-    <div class="col-md-8">\
-    <h3 class="address_label"></h3>\
-    </div>\
-              <div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
-                <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">\
-                  <option value="">Choose Address Type</option>\
-                  @foreach($address_type as $value)\
-                  <option value="{{ $value->id }}" >{{ $value->name }}</option>\
-                  @endforeach\
-                </select>\
-               <div class="invalid-feedback">\
-                  Enter valid Address Type\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-    <div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
-                <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="" >\
-               <div class="invalid-feedback">\
-                Enter valid Address\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-<div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>\
-              <div class="col-sm-8">\
-                <input type="text" class="form-control address_line_2" placeholder="Address Line 2" name="address_line_2[]" value="">\
-                <div class="invalid-feedback">\
-                Enter valid Address\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-  <div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>\
-              <div class="col-sm-8">\
-                <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="">\
-               <div class="invalid-feedback">\
-                Enter valid Land Mark\
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-<div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
-                <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >\
-                  <option value="">Choose State</option>\
-                  @foreach($state as $value)\
-                  <option value="{{ $value->id }}" >{{ $value->name }}</option>\
-                  @endforeach\
-                </select>\
-              <div class="invalid-feedback">\
-                  Enter valid State \
-                </div>\
-              </div>\
-            </div>\
-          </div>\
-<div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>\
-              <div class="col-sm-8">\
-                <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">\
-                  <option value="">Choose District</option>\
-                 </select>\
+         var error_count=0;
+         $(".required_for_valid").each(function(){
+          $(this).removeClass("is-invalid");
+             if($(this).val() !=""){
+              $(this).removeClass("is-invalid");
+              $(this).addClass("is-valid");
+              if($(this).attr('input-type') == "phone_no"){
+                 var phone_no=$(this).val();
+                  if(phone_no_validation(phone_no) == 0){
+                    error_count++;
+                  $(this).removeClass("is-valid");
+                   $(this).addClass("is-invalid");
+                  }
+                   }
+  
+                   if($(this).attr('input-type') == "email"){
+                 var email=$(this).val();
+                 if(!email_validation(email)){
+                  error_count++;
+                  $(this).removeClass("is-valid");
+                   $(this).addClass("is-invalid");
+                 }
+                 
+                   }
+  
+  
+          }else{
+             error_count++;
+             $(this).removeClass("is-valid");
+              $(this).addClass("is-invalid");
+          }
+         });
+         return error_count;
+     }
+  
+  
+     $(document).on("click",".submit",function(){
+      var error_count=validation();
+      var address_error_count=address_details_validation();
+      var common_error_count=parseInt(error_count)+parseInt(address_error_count);
+      if(common_error_count == 0){
+        if($(".required_for_address_valid").length >0){
+        
+      }else{
+        common_error_count++;
+        alert("Please Add Atleast One Address ");
+       
+      }
+      if(common_error_count == 0){
+  
+        $("form").submit();
+      }
+  
+      }
+  
+     });
+  
+  
+    $(document).on("click",".add_address",function(){
+      add_address();
+      });
+     
+  
+    function address_details_validation(){
+      var error_count=0;
+        $(".required_for_address_valid").each(function(){
+          $(this).removeClass("is-invalid");
+             if($(this).val() !=""){
+               
+              $(this).removeClass("is-invalid");
+              $(this).addClass("is-valid");
+          }else{
+             error_count++;
+             $(this).removeClass("is-valid");
+              $(this).addClass("is-invalid");
+          }
+         });
+         return error_count;
+    }
+  
+    function add_address(id="",text=""){
+      var address_details_validation_count=address_details_validation();
+      if(address_details_validation_count == 0){
+  
+      
+    var address='';
+      address+='<div class="form-row address_div">\
+      <div class="col-md-8">\
+      <h3 class="address_label"></h3>\
+      </div>\
+                <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\
+                <div class="col-sm-8">\
+                  <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">\
+                    <option value="">Choose Address Type</option>\
+                    @foreach($address_type as $value)\
+                    <option value="{{ $value->id }}" >{{ $value->name }}</option>\
+                    @endforeach\
+                  </select>\
                  <div class="invalid-feedback">\
-                  Enter valid District\
+                    Enter valid Address Type\
+                  </div>\
                 </div>\
               </div>\
             </div>\
-          </div>\
-           <div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>\
-              <div class="col-sm-8">\
-                <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >\
-                  <option value="">Choose City</option>\
-                </select>\
-               <div class="invalid-feedback">\
-                  Enter valid City\
+      <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>\
+                <div class="col-sm-8">\
+                  <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="" >\
+                 <div class="invalid-feedback">\
+                  Enter valid Address\
+                  </div>\
                 </div>\
               </div>\
             </div>\
-          </div>\
- <div class="col-md-6">\
-            <div class="form-group row">\
-              <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
-              <div class="invalid-feedback">\
-                  Enter valid Postal Code\
+  <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 </label>\
+                <div class="col-sm-8">\
+                  <input type="text" class="form-control address_line_2" placeholder="Address Line 2" name="address_line_2[]" value="">\
+                  <div class="invalid-feedback">\
+                  Enter valid Address\
+                  </div>\
                 </div>\
               </div>\
             </div>\
-          </div>\
-          </div><hr>';
-
-
-          $(".common_address_div").append(address);
-    $(".address_label").each(function(key,index){
-$(this).html("Address Details - " + (key+1));
-});
-          $("select").select2();
-    }
- }
-
-
-function state_based_district(){
+    <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="land_mark" class="col-sm-4 col-form-label">Land Mark </label>\
+                <div class="col-sm-8">\
+                  <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="">\
+                 <div class="invalid-feedback">\
+                  Enter valid Land Mark\
+                  </div>\
+                </div>\
+              </div>\
+            </div>\
+  <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>\
+                <div class="col-sm-8">\
+                  <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >\
+                    <option value="">Choose State</option>\
+                    @foreach($state as $value)\
+                    <option value="{{ $value->id }}" >{{ $value->name }}</option>\
+                    @endforeach\
+                  </select>\
+                <div class="invalid-feedback">\
+                    Enter valid State \
+                  </div>\
+                </div>\
+              </div>\
+            </div>\
+  <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>\
+                <div class="col-sm-8">\
+                  <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">\
+                    <option value="">Choose District</option>\
+                   </select>\
+                   <div class="invalid-feedback">\
+                    Enter valid District\
+                  </div>\
+                </div>\
+              </div>\
+            </div>\
+             <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>\
+                <div class="col-sm-8">\
+                  <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >\
+                    <option value="">Choose City</option>\
+                  </select>\
+                 <div class="invalid-feedback">\
+                    Enter valid City\
+                  </div>\
+                </div>\
+              </div>\
+            </div>\
+   <div class="col-md-6">\
+              <div class="form-group row">\
+                <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
+                <div class="col-sm-8">\
+                  <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
+                <div class="invalid-feedback">\
+                    Enter valid Postal Code\
+                  </div>\
+                </div>\
+              </div>\
+            </div>\
+            </div><hr>';
   
   
-
-$(".state_id").each(function(key,index){
+            $(".common_address_div").append(address);
+      $(".address_label").each(function(key,index){
+  $(this).html("Address Details - " + (key+1));
+  });
+            $("select").select2();
+      }
+   }
   
-    var $tr=$(this).closest(".address_div");
-    $tr.find(".city_id").html("<option value=''>Choose City</option>");
-   var state_id=$tr.find(".old_state_id").val();
-  var district_id=$tr.find(".old_district_id").val();
- $.ajax({
-              type: "post",
-              url: "{{ url('common/get-state-based-district')}}",
-              data: {state_id: state_id,district_id:district_id},
-              success: function (res)
-              {
-                 result = JSON.parse(res);
-               $tr.find(".district_id").html(result.option);
-               }
-          });
-});
-
-}
-
-
-function district_based_city(){
-$(".district_id").each(function(key,index){
-    var $tr=$(this).closest(".address_div");
+  
+  function state_based_district(){
+    
+    
+  
+  $(".state_id").each(function(key,index){
+    
+      var $tr=$(this).closest(".address_div");
+      $tr.find(".city_id").html("<option value=''>Choose City</option>");
+     var state_id=$tr.find(".old_state_id").val();
     var district_id=$tr.find(".old_district_id").val();
-  var city_id=$tr.find(".old_city_id").val();
-  $.ajax({
-              type: "post",
-              url: "{{ url('common/get-district-based-city')}}",
-              data: {district_id: district_id,city_id:city_id},
-              success: function (res)
-              {
-                result = JSON.parse(res);
-                $tr.find(".city_id").html(result.option);
-              }
-          });
-});
-
-}
-
-
-$(document).ready(function(){
-  state_based_district();
-  district_based_city();
-});
-
-
-
-
-  $(document).on("change",".state_id",function(){
-   var $tr=$(this).closest(".address_div");
-   var state_id=$(this).val();
-   $tr.find(".city_id").html("<option value=''>Choose City</option>");
+   $.ajax({
+                type: "post",
+                url: "{{ url('common/get-state-based-district')}}",
+                data: {state_id: state_id,district_id:district_id},
+                success: function (res)
+                {
+                   result = JSON.parse(res);
+                 $tr.find(".district_id").html(result.option);
+                 }
+            });
+  });
+  
+  }
+  
+  
+  function district_based_city(){
+  $(".district_id").each(function(key,index){
+      var $tr=$(this).closest(".address_div");
+      var district_id=$tr.find(".old_district_id").val();
+    var city_id=$tr.find(".old_city_id").val();
     $.ajax({
-              type: "post",
-              url: "{{ url('common/get-state-based-district')}}",
-              data: {state_id: state_id},
-              success: function (res)
-              {
-                result = JSON.parse(res);
-              //  alert($tr.find(".state_id").attr("class"));
-                $tr.find(".district_id").html(result.option);
-                
-              }
-          });
-});
-
-
-
-  $(document).on("change",".district_id",function(){
+                type: "post",
+                url: "{{ url('common/get-district-based-city')}}",
+                data: {district_id: district_id,city_id:city_id},
+                success: function (res)
+                {
+                  result = JSON.parse(res);
+                  $tr.find(".city_id").html(result.option);
+                }
+            });
+  });
+  
+  }
+  
+  
+  $(document).ready(function(){
+    state_based_district();
+    district_based_city();
+  });
+  
+  
+  
+  
+    $(document).on("change",".state_id",function(){
      var $tr=$(this).closest(".address_div");
-    var district_id=$(this).val();
-    $.ajax({
-              type: "post",
-              url: "{{ url('common/get-district-based-city')}}",
-              data: {district_id: district_id},
-              success: function (res)
-              {
-                result = JSON.parse(res);
-                $tr.find(".city_id").html(result.option);
-              }
-          });
-
-
-    
+     var state_id=$(this).val();
+     $tr.find(".city_id").html("<option value=''>Choose City</option>");
+      $.ajax({
+                type: "post",
+                url: "{{ url('common/get-state-based-district')}}",
+                data: {state_id: state_id},
+                success: function (res)
+                {
+                  result = JSON.parse(res);
+                //  alert($tr.find(".state_id").attr("class"));
+                  $tr.find(".district_id").html(result.option);
+                  
+                }
+            });
   });
+  
+  
+  
+    $(document).on("change",".district_id",function(){
+       var $tr=$(this).closest(".address_div");
+      var district_id=$(this).val();
+      $.ajax({
+                type: "post",
+                url: "{{ url('common/get-district-based-city')}}",
+                data: {district_id: district_id},
+                success: function (res)
+                {
+                  result = JSON.parse(res);
+                  $tr.find(".city_id").html(result.option);
+                }
+            });
+  
+  
+      
+    });
+  
+    $('.phone_no').change(function(){
+      var no = $(this).val();
+      
+      if(no.length != 10){
+        alert('Invalid');
+        return false
+      }
+    });
+  
+  </script>
 
-  $('.phone_no').change(function(){
-    var no = $(this).val();
-    
-    if(no.length != 10){
-      alert('Invalid');
-      return false
-    }
-  });
-
-</script>
 @endsection
+
 

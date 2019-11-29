@@ -6,6 +6,7 @@ use App\Http\Requests\AgentRequest;
 use App\Models\AddressDetails;
 use App\Models\AddressType;
 use App\Models\Agent;
+use App\Models\ProofDetails;
 use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,22 +14,14 @@ use Illuminate\Support\Facades\Redirect;
 
 class AgentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $agent=Agent::all();
         return view('admin.master.agent.view',compact('agent'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         
@@ -37,24 +30,18 @@ class AgentController extends Controller
         return view('admin.master.agent.add',compact('address_type','state'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(AgentRequest $request)
     {
         $agent = new Agent();
-
-        $profile_name="";
-        $destinationPath = 'storage/agent_profile/';
-        if ($request->hasFile('profile')) {
-          $profile = $request->file('profile');
+         $profile_name="";
+         $destinationPath = 'storage/agent_profile/';
+         if ($request->hasFile('profile')) {
+            $profile = $request->file('profile');
             $profile_name = date('Y-m-d').time().'.'.$profile->getClientOriginalExtension();
             $profile->move($destinationPath, $profile_name);
            }
-  $agent->salutation       = $request->salutation;
+        $agent->salutation       = $request->salutation;
         $agent->name       = $request->name;
         $agent->code      =  $request->code;
         $agent->phone_no      =  $request->phone_no;
@@ -66,7 +53,7 @@ class AgentController extends Controller
         $agent->profile      =  $profile_name;
         $agent->created_by = 0;
         $agent->updated_by = 0;
-        $now = Carbon::now('Asia/Kolkata')->toDateTimeString();
+        $now = Carbon::now()->toDateTimeString();
         if ($agent->save()) {
             $batch_insert_array=array();
             foreach($request->address_type_id as $key=>$value){
@@ -89,11 +76,43 @@ class AgentController extends Controller
                    );
                    $batch_insert_array[]=$data_to_store;
                 }
-                if(count($batch_insert_array)>0){
+                $batch_insert_for_proof_details=array();
+
+
+
+                if($request->hasfile('proof_file'))
+                {
+        
+                   foreach($request->file('proof_file') as $keys=>$image)
+                   {
+                       $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                       $image->move('storage/agent_proof_details', $name);  
+                       $proof_details=array(
+                        'proof_table'=>"Agent",
+                        'proof_ref_id'=>$agent->id,
+                        'name'=>$request->proof_name[$keys],
+                        'number'=>$request->proof_number[$keys],
+                        'file'=>$name,
+                        'created_by'=>0,
+                        'updated_by'=>0,
+                        'created_at'=>$now,
+                        'updated_at'=>$now,
+                       );
+
+                       $batch_insert_for_proof_details[]=$proof_details;
+                    }
+                }
+
+            if(count($batch_insert_array)>0){
                     AddressDetails::insert($batch_insert_array);
                 }
+
+                if(count($batch_insert_for_proof_details)>0){
+                  
+                   ProofDetails::insert($batch_insert_for_proof_details);
+                }
                
-    
+ 
     
                 return Redirect::back()->with('success', 'Successfully created');
             } else {
@@ -110,8 +129,9 @@ class AgentController extends Controller
     public function show(Agent $agent,$id)
     {
         $agent=Agent::find($id);
+        $agent_proof_details=ProofDetails::where('proof_ref_id',$id)->where('proof_table','Agent')->get();
         $agent_address_details=AddressDetails::where('address_ref_id',$id)->where('address_table','Agent')->get();
-         return view('admin.master.agent.show',compact('agent','agent_address_details'));
+         return view('admin.master.agent.show',compact('agent','agent_address_details','agent_proof_details'));
     }
 
     /**
@@ -126,7 +146,8 @@ class AgentController extends Controller
         $state=State::all();
         $agent=Agent::find($id);
         $agent_address_details=AddressDetails::where('address_ref_id',$id)->where('address_table','Agent')->get();
-         return view('admin.master.agent.edit',compact('agent','agent_address_details','address_type','state'));
+        $agent_proof_details=ProofDetails::where('proof_ref_id',$id)->where('proof_table','Agent')->get();
+         return view('admin.master.agent.edit',compact('agent','agent_address_details','address_type','state','agent_proof_details'));
     }
 
     /**
@@ -138,7 +159,8 @@ class AgentController extends Controller
      */
     public function update(AgentRequest $request, Agent $agent,$id)
     {
-        $agent = Agent::find($id);
+        //echo "<pre>";print_r($request->all());exit;
+       $agent = Agent::find($id);
         $profile_name=$agent->profile;
         $destinationPath = 'storage/agent_profile/';
         if ($request->hasFile('profile')) {
@@ -223,6 +245,71 @@ class AgentController extends Controller
                 
             }
          /* Update Existing Address Detils End Here */
+         $batch_insert_for_proof_details=[];
+         /* Insert New Proof Details Start Here */
+         if(isset($request->proof_name))
+         {
+         if($request->hasfile('proof_file'))
+                {
+        
+                   foreach($request->file('proof_file') as $keys=>$image)
+                   {
+                       $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                       $image->move('storage/agent_proof_details', $name);  
+                        $proof_details=array(
+                        'proof_table'=>"Agent",
+                        'proof_ref_id'=>$agent->id,
+                        'name'=>$request->proof_name[$keys],
+                        'number'=>$request->proof_number[$keys],
+                        'file'=>$name,
+                        'created_by'=>0,
+                        'updated_by'=>0,
+                        'created_at'=>$now,
+                        'updated_at'=>$now,
+                       );
+
+                       $batch_insert_for_proof_details[]=$proof_details;
+                    }
+                }
+            }
+
+            if(count($batch_insert_for_proof_details)>0){
+                  
+                ProofDetails::insert($batch_insert_for_proof_details);
+             }
+         /* Insert New Proof Details End Here */
+
+
+
+
+
+
+         /* Update Proof Details Start Here */
+         if(isset($request->old_proof_name))
+         {
+                foreach($request->old_proof_name as $proof_key=>$value)
+                {
+                    
+                    $proof_details=ProofDetails::find($request->proof_details_id[$proof_key]);
+                    $name=$proof_details->file;
+                    
+                    if(isset($request->old_proof_file[$proof_key]) && $request->old_proof_file[$proof_key] !="")
+                    {
+                        $image=$request->old_proof_file[$proof_key];
+                        $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                        $image->move('storage/agent_proof_details', $name);  
+                    }
+                    $proof_details->proof_table="Agent";
+                    $proof_details->proof_ref_id=$agent->id;
+                    $proof_details->name=$request->old_proof_name[$proof_key];
+                    $proof_details->number=$request->old_proof_number[$proof_key];
+                    $proof_details->file=$name;
+                    $proof_details->updated_by=0;
+                    $proof_details->save();
+                }
+            }
+         /* Update Proof Details End Here */
+
 
 
 
@@ -243,7 +330,8 @@ class AgentController extends Controller
      */
     public function destroy(Agent $agent,$id)
     {
-        $agent = Agent::where('id',$id)->delete();
+       
+        $agent = Agent::where('agents.id',$id)->delete();
         if ($agent) {
             return Redirect::back()->with('success', 'Deleted successfully');
          }else{
@@ -261,6 +349,22 @@ class AgentController extends Controller
             echo 0;
         }
 
+
+    }
+
+    public function delete_agent_proof_details(Request $request){
+        $proof_details_id=$request->proof_details_id;
+        $proof_details=ProofDetails::find($proof_details_id);
+        $destinationPath = 'storage/agent_proof_details/';
+        if(file_exists($destinationPath.$proof_details->file)){
+            @unlink($destinationPath.$proof_details->file);
+        }
+
+        if($proof_details->delete()){
+             echo 1;
+        }else{
+            echo 0;
+        }
 
     }
 }

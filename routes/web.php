@@ -24,6 +24,8 @@ Route::any('/', 'StateController@index');
 /* Common Functions Start Here */
 Route::any('common/get-state-based-district', 'CommonController@get_state_based_district');
 Route::any('common/get-district-based-city', 'CommonController@get_district_based_city');
+Route::any('common/get-bank-based-branch', 'CommonController@get_bank_based_branch');
+Route::any('common/get-branch-based-ifsc', 'CommonController@get_branch_based_ifsc');
 /* Common Functions End Here */
 
 
@@ -223,9 +225,24 @@ Route::group(['prefix' => 'master/agent'], function () {
     Route::any('update/{id}', 'AgentController@update');
     Route::any('delete/{id}', 'AgentController@destroy');
     Route::any('delete-agent-address-details', 'AgentController@delete_agent_address_details');
+    Route::any('delete-agent-proof-details', 'AgentController@delete_agent_proof_details');
    
 });
 /* Agent Master End Here  */
+/* Customer Master  Start Here  */
+Route::group(['prefix' => 'master/customer'], function () {
+    Route::any('/', 'CustomerController@index');
+    Route::any('create', 'CustomerController@create');
+    Route::any('store', 'CustomerController@store');
+    Route::any('show/{id}', 'CustomerController@show');
+    Route::any('edit/{id}', 'CustomerController@edit');
+    Route::any('update/{id}', 'CustomerController@update');
+    Route::any('delete/{id}', 'CustomerController@destroy');
+    Route::any('delete-customer-address-details', 'CustomerController@delete_customer_address_details');
+    Route::any('delete-customer-bank-details', 'CustomerController@delete_customer_bank_details');
+   
+});
+/* Customer Master End Here  */
 
 
 

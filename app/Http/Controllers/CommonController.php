@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bankbranch;
 use App\Models\City;
 use App\Models\District;
 use Illuminate\Http\Request;
@@ -34,7 +35,6 @@ class CommonController extends Controller
         )));
     }
 
-
     public function get_district_based_city(Request $request)
     { 
         $district_id = $request->district_id;
@@ -60,5 +60,47 @@ class CommonController extends Controller
             "option" => $option
         )));
     }
+
+    
+    public function get_bank_based_branch(Request $request)
+    { 
+        $bank_id = $request->bank_id;
+        $branch_id = "";
+        if ($request->has('branch_id')) {
+            $branch_id = $request->branch_id;
+        }
+
+        $branch = Bankbranch::where('bank_id', $bank_id)->get();
+        $option = "";
+        $option .= count($branch) > 0 ? "<option value=''> Choose Branch </option>" : "<option value=''> No Result Found </option>";
+        $select = "";
+        foreach ($branch as $value) {
+            if ($branch_id != "") {
+                $select = $branch_id == $value->id ? "Selected" : "";
+            } else {
+                $select = "";
+            }
+            $option .= "<option value=" . $value->id . "   " . $select . ">" . $value->branch . "</option>";
+        }
+
+        die(json_encode(array(
+            "option" => $option
+        )));
+    }
+
+    public function get_branch_based_ifsc(Request $request)
+    { 
+        $branch_id = $request->branch_id;
+         $ifsc_det = Bankbranch::where('id', $branch_id)->get();
+        
+         
+         $value=count($ifsc_det)>0 ? $ifsc_det[0]->ifsc : "";
+         die(json_encode(array(
+            "value" => $value
+        )));
+    }
+
+
+    
     
 }

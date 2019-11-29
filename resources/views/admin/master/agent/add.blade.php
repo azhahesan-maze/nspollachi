@@ -323,6 +323,139 @@
               @endif
 
           </div>
+          
+          <div class="form-row">
+              <div class="col-md-8">
+                       <div class="form-group row">
+                       <div class="col-md-4">
+                       <label for="validationCustom01" class=" col-form-label"><h4>Proof Details :</h4> </label>
+                           
+                       </div>
+                         </div>
+              </div>
+              <div class="col-md-12">
+                <table class="table">
+                  <thead>
+                    <th> S.no </th>
+                    <th> Proof Name</th>
+                    <th> Proof Number</th>
+                    <th> Files </th>
+                    <th>Action </th>
+                  </thead>
+                  <tbody class="append_proof_details">
+                    <tr>
+                      <td><span class="s_no"> 1 </span></td>
+                      <td>
+                        <div class="form-group row">
+                          <div class="col-sm-12">
+                          <input type="text" class="form-control proof_name only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="{{ old('proof_name.0') }}" >
+                            <span class="mandatory"> {{ $errors->first('proof_name.0')  }} </span>
+                            <div class="invalid-feedback">
+                              Enter valid Proof Name
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                   <td>
+                            <div class="form-group row">
+                              <div class="col-sm-12">
+                              <input type="text" class="form-control proof_number only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.0') }}" >
+                                <span class="mandatory"> {{ $errors->first('proof_number.0')  }} </span>
+                                <div class="invalid-feedback">
+                                  Enter valid Proof Number
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.0') }}" >
+                                  <span class="mandatory"> {{ $errors->first('proof_file.0')  }} </span>
+                                  <div class="invalid-feedback">
+                                    Enter valid Proof file
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group row">
+                                    <div class="col-sm-3">
+                                    <label class="btn btn-success add_proof_details">+</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <label class="btn btn-danger remove_proof_details">-</label>
+                                      </div>
+                                  </div>
+                            </td>
+
+                    </tr>
+
+                    @if (old('proof_name'))
+            @foreach (old('proof_name') as $key=>$value)
+            @if($key > 0)
+            <tr>
+                <td><span class="s_no"> 1 </span></td>
+                <td>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                    <input type="text" class="form-control proof_name required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="{{ old('proof_name.'.$key) }}" >
+                       <span class="mandatory"> {{ $errors->first('proof_name.'.$key)  }} </span>
+                      <div class="invalid-feedback">
+                        Enter valid Proof Name
+                      </div>
+                    </div>
+                  </div>
+                </td>
+             <td>
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                        <input type="text" class="form-control proof_number only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
+                          <span class="mandatory"> {{ $errors->first('proof_number.'.$key)  }} </span>
+                          <div class="invalid-feedback">
+                            Enter valid Proof Number
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group row">
+                          <div class="col-sm-12">
+                          <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.'.$key) }}" >
+                            <span class="mandatory"> {{ $errors->first('proof_file.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                              Enter valid Proof file
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                          <div class="form-group row">
+                              <div class="col-sm-3">
+                              <label class="btn btn-success add_proof_details">+</label>
+                              </div>
+                              <div class="col-sm-3">
+                                <label class="btn btn-danger remove_proof_details">-</label>
+                                </div>
+                            </div>
+                      </td>
+
+              </tr>
+              @endif
+            @endforeach
+            @endif
+                  </tbody>
+
+                </table>
+
+              </div>
+
+
+                       </div>
         <div class="col-md-7 text-right">
           <button class="btn btn-success submit" name="add" type="button">Submit</button>
         </div>
@@ -332,6 +465,75 @@
   </div>
 </div>
 <script>
+
+  $(document).ready(function(){
+    set_sno_for_proof_details();
+  });
+
+  function set_sno_for_proof_details(){
+    $(".s_no").each(function(key,index){
+      $(this).html((key+1));
+    });
+  }
+
+  /* Add Proof Details Start Here */
+  $(document).on("click",".add_proof_details",function(){
+
+    var proof_details='<tr>\
+                      <td><span class="s_no"> 1 </span></td>\
+                      <td>\
+                        <div class="form-group row">\
+                          <div class="col-sm-12">\
+                          <input type="text" class="form-control proof_name only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="" >\
+                           <div class="invalid-feedback">\
+                              Enter valid Proof Name\
+                            </div>\
+                          </div>\
+                        </div>\
+                      </td>\
+                       <td>\
+                            <div class="form-group row">\
+                              <div class="col-sm-12">\
+                              <input type="text" class="form-control proof_number only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="" >\
+                               <div class="invalid-feedback">\
+                                  Enter valid Proof Number\
+                                </div>\
+                              </div>\
+                            </div>\
+                          </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="" >\
+                                  <div class="invalid-feedback">\
+                                    Enter valid Proof file\
+                                  </div>\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                                <div class="form-group row">\
+                                    <div class="col-sm-3">\
+                                    <label class="btn btn-success add_proof_details">+</label>\
+                                    </div>\
+                                    <div class="col-sm-3">\
+                                      <label class="btn btn-danger remove_proof_details">-</label>\
+                                      </div>\
+                                  </div>\
+                            </td>\
+                          </tr>';
+
+    $(".append_proof_details").append(proof_details);
+    set_sno_for_proof_details();
+
+  });
+  /* Add Proof Details End Here */
+  /* Remove Proof Details Start Here */
+  $(document).on("click",".remove_proof_details",function(){
+    $(this).closest("tr").remove();
+    set_sno_for_proof_details();
+  });
+  /* Remove Proof Details End Here */
 
 
 

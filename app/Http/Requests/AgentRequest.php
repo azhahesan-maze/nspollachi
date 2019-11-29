@@ -37,7 +37,17 @@ class AgentRequest extends FormRequest
                 'address_line_1.*' => 'required',
                 'state_id.*' => 'required',
                 'postal_code.*' => 'required',
+                
             );
+
+            if($request->has('proof_name')){
+                $rule['proof_name.*'] = 'required';
+                $rule['proof_number.*'] = 'required';
+                $rule['proof_file.*'] = 'required';
+            }
+
+            
+
 
         }else{
 
@@ -56,8 +66,7 @@ class AgentRequest extends FormRequest
                 $rule['address_line_1.*'] = 'required';
                 $rule['state_id.*'] = 'required';
                 $rule['postal_code.*'] = 'required';
-
-            }
+                 }
 
             if($request->has('old_address_type_id')){
                 $rule['old_address_type_id .*']='required';
@@ -65,6 +74,18 @@ class AgentRequest extends FormRequest
                 $rule['old_state_id.*'] = 'required';
                 $rule['old_postal_code.*'] = 'required';
 
+            }
+
+            if($request->has('proof_name')){
+                $rule['proof_name.*'] = 'required';
+                $rule['proof_number.*'] = 'required';
+                $rule['proof_file.*'] = 'required';
+            }
+
+            if($request->has('old_proof_name')){
+                $rule['old_proof_name.*'] = 'required';
+                $rule['old_proof_number.*'] = 'required';
+                $rule['old_proof_file.*'] = 'required';
             }
             
 
@@ -88,6 +109,9 @@ class AgentRequest extends FormRequest
             'old_address_line_1.*.required' => 'Address Line  field is required',
             'old_state_id.*.required' => 'State field is required',
             'old_postal_code.*.required' => 'Postal Code field is required',
+            'proof_name.*.required' => 'Proof Number field is required',
+            'proof_number.*.required' => 'Proof Number field is required',
+            'proof_file.*.required' => 'Proof File field is required',
         ];
     }
 }

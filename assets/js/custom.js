@@ -77,4 +77,41 @@ $('#datepicker').datepicker({
     }
 });
 
+
+function validation(){
+  
+    var error_count=0;
+    $(".required_for_valid").each(function(){
+     $(this).removeClass("is-invalid");
+        if($(this).val() !=""){
+         $(this).removeClass("is-invalid");
+         $(this).addClass("is-valid");
+         if($(this).attr('input-type') == "phone_no"){
+            var phone_no=$(this).val();
+             if(phone_no_validation(phone_no) == 0){
+               error_count++;
+             $(this).removeClass("is-valid");
+              $(this).addClass("is-invalid");
+             }
+              }
+
+              if($(this).attr('input-type') == "email"){
+            var email=$(this).val();
+            if(!email_validation(email)){
+             error_count++;
+             $(this).removeClass("is-valid");
+              $(this).addClass("is-invalid");
+            }
+            
+              }
+
+
+     }else{
+        error_count++;
+        $(this).removeClass("is-valid");
+         $(this).addClass("is-invalid");
+     }
+    });
+    return error_count;
+}
  

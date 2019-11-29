@@ -12,7 +12,12 @@ class Agent extends Model
         return $this->hasMany('App\Models\AddressDetails','address_ref_id','id');
     }
 
+    public function proof_details(){
+        return $this->hasMany('App\Models\ProofDetails','proof_ref_id','id');
+    }
+
     public function delete(){
         $this->address_details()->delete();
+        $this->proof_details()->delete();
     }
 }
