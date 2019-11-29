@@ -40,10 +40,10 @@
     
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+         <li class="nav-item active">
             <a class="nav-link" href="#">Dashboard</a>
           </li>
-          <li class="nav-item">
+        <!--  <li class="nav-item">
             <a class="nav-link" href="#">Favourties</a>
           </li>
           <li class="nav-item dropdown">
@@ -67,7 +67,7 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Masters
@@ -120,29 +120,10 @@
                     </li>
                     
             </ul>        
-            <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{url('master/state')}}">State</a>
-              <a class="dropdown-item" href="{{url('master/district')}}">District</a>
-              <a class="dropdown-item" href="{{url('master/city')}}">City</a>
-              <a class="dropdown-item" href="{{url('master/location')}}">Location</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{url('master/bank')}}">Bank</a>
-              <a class="dropdown-item" href="{{url('master/bank-branch')}}">Bank Branch</a>
-              <a class="dropdown-item" href="{{url('master/denomination')}}">Denomination</a>
-              <a class="dropdown-item" href="{{url('master/accounts-type')}}">Accounts Type</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{url('master/department')}}">Department</a>
-              <a class="dropdown-item" href="{{url('master/designation')}}">Desigination</a>
-              <a class="dropdown-item" href="{{url('master/denomination')}}">Employee</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{url('master/expense-type')}}">Expense</a>
-              <a class="dropdown-item" href="{{url('master/income-type')}}">Income</a>
-              <a class="dropdown-item" href="{{url('master/gst-type')}}">Gst</a>
-              <a class="dropdown-item" href="{{url('master/gift-voucher')}}">Gift Voucher</a>
-            </div> -->
+            
             
           </li>
-          <li class="nav-item dropdown">
+          <!--<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
             </a>
@@ -155,7 +136,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link  " href="#">Disabled</a>
-          </li>
+          </li> -->
         </ul>
         <ul class="navbar-nav ml-auto login">
         <li class="nav-item dropdown">
