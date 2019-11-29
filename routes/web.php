@@ -11,15 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('Masters.Sample.Add');
+Route::any('/', function () {
+    return view('admin.master.empty');
 });
 
 Route::get('/view', function () {
     return view('Masters.Sample.View');
 });
 
-Route::any('/', 'StateController@index');
 
 /* Common Functions Start Here */
 Route::any('common/get-state-based-district', 'CommonController@get_state_based_district');
@@ -243,6 +242,21 @@ Route::group(['prefix' => 'master/customer'], function () {
    
 });
 /* Customer Master End Here  */
+
+/* Supplier Master  Start Here  */
+Route::group(['prefix' => 'master/supplier'], function () {
+    Route::any('/', 'SupplierController@index');
+    Route::any('create', 'SupplierController@create');
+    Route::any('store', 'SupplierController@store');
+    Route::any('show/{id}', 'SupplierController@show');
+    Route::any('edit/{id}', 'SupplierController@edit');
+    Route::any('update/{id}', 'SupplierController@update');
+    Route::any('delete/{id}', 'SupplierController@destroy');
+    Route::any('delete-customer-address-details', 'SupplierController@delete_customer_address_details');
+    Route::any('delete-customer-bank-details', 'SupplierController@delete_customer_bank_details');
+   
+});
+/* Supplier Master End Here  */
 
 
 

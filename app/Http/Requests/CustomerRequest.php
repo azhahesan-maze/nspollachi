@@ -23,8 +23,7 @@ class CustomerRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        //echo "<pre>";print_r($request->all());exit;
-        $rule=[];
+         $rule=[];
         if($request->has('name')){
             $rule=array(
                 'name' => 'required|unique:customers,name,NULL,id,deleted_at,NULL',

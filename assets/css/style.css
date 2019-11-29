@@ -78,6 +78,7 @@ h1,h2,h3,h4,h5,h6,p {
 }
 .body-sec {
     height: 100%;
+    min-height: 575px;
 }
 .foot {
     background: #5b5b5b;
