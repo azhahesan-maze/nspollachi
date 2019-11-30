@@ -27,7 +27,7 @@
                 <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Category 1 <span class="mandatory">*</span></label>
                   <div class="col-sm-8">
-                  <select class="js-example-basic-multiple col-12 form-control custom-select category_one_id required_for_valid" error-data="Enter valid Category 1" name="category_one_id">
+                  <select class="js-example-basic-multiple col-12 form-control custom-select category_one_id required_for_valid" error-data="Enter valid Category 1" name="category_one_id" required>
                       <option value="">Choose Category 1</option>
                       @foreach($category_one as $value)
                       <option value="{{ $value->id }}" {{ old('category_one_id') == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
@@ -35,7 +35,7 @@
                     </select>
                     <span class="mandatory"> {{ $errors->first('category_one_id')  }} </span>
                    <div class="invalid-feedback">
-                      Enter valid Category 1
+                      Enter valid Category 
                     </div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
 
             <div class="col-md-7">
                 <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label"> Remark <span class="mandatory">*</span></label>
+                  <label for="validationCustom01" class="col-sm-4 col-form-label"> Remark </label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control remark only_allow_alp_num_dot_com_amp" placeholder="Remark" name="remark" value="{{old('remark')}}">
                     <span class="mandatory"> {{ $errors->first('remark')  }} </span>

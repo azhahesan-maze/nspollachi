@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AddressType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class AddressTypeController extends Controller
 {
@@ -14,7 +16,8 @@ class AddressTypeController extends Controller
      */
     public function index()
     {
-        //
+        $address_type=AddressType::all();
+        return view('admin.master.address_type.view',compact('address_type'));
     }
 
     /**
@@ -24,7 +27,7 @@ class AddressTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.master.state.add');
+        return view('admin.master.address_type.add');
         
     }
 
@@ -36,20 +39,19 @@ class AddressTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $address_type=array("Permanent Address","Temporary Address","Shipping Address","Delivery Address");
-        $data=array();
-        foreach($address_type as $value){
-            $data_array=array(
-                'name'=>$value,
-                'created_by' => 0,
-                'updated_by' => 0,
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:address_types,name,NULL,id,deleted_at,NULL',
+         ])->validate();
 
-            );
-            $data[]=$data_array;
-
-        }
-
-        AddressType::insert($data);
+        $address_type = new AddressType();
+        $address_type->name       = $request->name;
+        $address_type->remark       = $request->remark;
+        $address_type->created_by = 0;
+        if ($address_type->save()) {
+                return Redirect::back()->with('success', 'Successfully created');
+            } else {
+                return Redirect::back()->with('failure', 'Something Went Wrong..!');
+            }
     }
 
     /**
@@ -58,9 +60,10 @@ class AddressTypeController extends Controller
      * @param  \App\Models\AddressType  $addressType
      * @return \Illuminate\Http\Response
      */
-    public function show(AddressType $addressType)
+    public function show(AddressType $addressType,$id)
     {
-        //
+        $address_type=AddressType::find($id);
+        return view('admin.master.address_type.show',compact('address_type'));
     }
 
     /**
@@ -69,9 +72,10 @@ class AddressTypeController extends Controller
      * @param  \App\Models\AddressType  $addressType
      * @return \Illuminate\Http\Response
      */
-    public function edit(AddressType $addressType)
+    public function edit(AddressType $addressType,$id)
     {
-        //
+         $address_type=AddressType::find($id);
+        return view('admin.master.address_type.edit',compact('address_type'));
     }
 
     /**
@@ -81,9 +85,21 @@ class AddressTypeController extends Controller
      * @param  \App\Models\AddressType  $addressType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AddressType $addressType)
+    public function update(Request $request, AddressType $addressType,$id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:address_types,name,'.$id.',id,deleted_at,NULL',
+         ])->validate();
+
+        $address_type = AddressType::find($id);
+        $address_type->name       = $request->name;
+        $address_type->remark       = $request->remark;
+        $address_type->updated_by = 0;
+        if ($address_type->save()) {
+                return Redirect::back()->with('success', 'Updated Successfully');
+            } else {
+                return Redirect::back()->with('failure', 'Something Went Wrong..!');
+            }
     }
 
     /**
@@ -92,8 +108,13 @@ class AddressTypeController extends Controller
      * @param  \App\Models\AddressType  $addressType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AddressType $addressType)
+    public function destroy(AddressType $addressType,$id)
     {
-        //
+        $address_type = AddressType::find($id);
+        if ($address_type->delete()) {
+            return Redirect::back()->with('success', 'Deleted Successfully');
+        } else {
+            return Redirect::back()->with('failure', 'Something Went Wrong..!');
+        }
     }
 }

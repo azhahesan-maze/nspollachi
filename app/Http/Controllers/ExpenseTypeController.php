@@ -102,7 +102,7 @@ class ExpenseTypeController extends Controller
        $expense_type->created_by = 0;
         $expense_type->updated_by = 0;
       if ($expense_type->save()) {
-            return Redirect::back()->with('success', 'Successfully created');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }
@@ -118,7 +118,7 @@ class ExpenseTypeController extends Controller
     {
         $expense_type = AppExpenseType::find($id);
         if ($expense_type->delete()) {
-            return Redirect::back()->with('success', 'Successfully created');
+            return Redirect::back()->with('success', 'Deleted Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }

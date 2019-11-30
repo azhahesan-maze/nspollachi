@@ -33,16 +33,14 @@
         <tbody>
           
           @foreach($category_three as $key=>$value)
+        
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->category_one->name}}</td>
-              <td>{{ $value->category_two->name}}</td>
+              <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ $value->name}}</td>
-              
               <td>{{ $value->remark}}</td>
-              
-           
-              <td> 
+               <td> 
                 <a href="{{url('master/category-three/show/'.$value->id )}}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{url('master/category-three/edit/'.$value->id )}}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a onclick="return confirm('Are you sure ?')" href="{{url('master/category-three/delete/'.$value->id )}}" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>

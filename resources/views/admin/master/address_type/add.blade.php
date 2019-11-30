@@ -24,17 +24,17 @@
         <div class="form-row">
           <div class="col-md-7">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type Name <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Address Type Name" name="name" value="{{old('name')}}" required>
+                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Address Type" name="name" value="{{old('name')}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
-                  Enter valid State Name
+                  Enter valid Address Type
                 </div>
               </div>
             </div>
           </div>
-          
+   
           <div class="col-md-7">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Remark </label>

@@ -66,6 +66,17 @@ Route::group(['prefix' => 'master/city'], function () {
     Route::any('delete/{id}', 'CityController@destroy');
 });
 /* City Master Group End Here  */
+/* Location Type Group Start Here  */
+Route::group(['prefix' => 'master/location-type'], function () {
+    Route::any('/', 'LocationTypeController@index');
+    Route::any('create', 'LocationTypeController@create');
+    Route::any('store', 'LocationTypeController@store');
+    Route::any('show/{id}', 'LocationTypeController@show');
+    Route::any('edit/{id}', 'LocationTypeController@edit');
+    Route::any('update/{id}', 'LocationTypeController@update');
+    Route::any('delete/{id}', 'LocationTypeController@destroy');
+});
+/* Location Type Master  End Here  */
 
 /* Location Master Group Start Here  */
 Route::group(['prefix' => 'master/location'], function () {
@@ -152,6 +163,17 @@ Route::group(['prefix' => 'master/designation'], function () {
 });
 /* Denomination Master  End Here  */
 
+/* Denomination Master  Start Here  */
+Route::group(['prefix' => 'master/address-type'], function () {
+    Route::any('/', 'AddressTypeController@index');
+    Route::any('create', 'AddressTypeController@create');
+    Route::any('store', 'AddressTypeController@store');
+    Route::any('show/{id}', 'AddressTypeController@show');
+    Route::any('edit/{id}', 'AddressTypeController@edit');
+    Route::any('update/{id}', 'AddressTypeController@update');
+    Route::any('delete/{id}', 'AddressTypeController@destroy');
+});
+/* Denomination Master  End Here  */
 
 /* Employee Master  Start Here  */
 Route::group(['prefix' => 'master/employee'], function () {
@@ -330,6 +352,31 @@ Route::group(['prefix' => 'master/category-three'], function () {
     Route::any('delete/{id}', 'CategoryThreeController@destroy');     
 });
 /* Category Three Master End Here  */
+
+/* Area Master  Start Here  */
+Route::group(['prefix' => 'master/area'], function () {
+    Route::any('/', 'AreaController@index');
+    Route::any('create', 'AreaController@create');
+    Route::any('store', 'AreaController@store');
+    Route::any('show/{id}', 'AreaController@show');
+    Route::any('edit/{id}', 'AreaController@edit');
+    Route::any('update/{id}', 'AreaController@update');
+    Route::any('delete/{id}', 'AreaController@destroy');     
+});
+/* Area Master End Here  */
+
+
+/* Agent Area Mapping Master  Start Here  */
+Route::group(['prefix' => 'master/agent-area-mapping'], function () {
+    Route::any('/', 'AgentAreaMappingController@index');
+    Route::any('create', 'AgentAreaMappingController@create');
+    Route::any('store', 'AgentAreaMappingController@store');
+    Route::any('show/{id}', 'AgentAreaMappingController@show');
+    Route::any('edit/{id}', 'AgentAreaMappingController@edit');
+    Route::any('update/{id}', 'AgentAreaMappingController@update');
+    Route::any('delete/{id}', 'AgentAreaMappingController@destroy');     
+});
+/* Agent Area Mapping Master End Here  */
 
 
 

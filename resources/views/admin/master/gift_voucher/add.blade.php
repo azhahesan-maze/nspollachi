@@ -1,4 +1,6 @@
 @extends('admin.layout.app')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.css" type="text/css" />
 @section('content')
 <div class="col-12 body-sec">
   <div class="card container px-0">
@@ -66,7 +68,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Valid From Date <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control valid_from" placeholder="dd-mm-yyyy" name="valid_from" value="{{old('valid_from')}}" required>
+                <input type="text" class="form-control from_date" placeholder="dd-mm-yyyy" name="valid_from" value="{{old('valid_from')}}" required>
                 <span class="mandatory"> {{ $errors->first('valid_from')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid From Date
@@ -79,7 +81,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Valid To Date <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control valid_to" placeholder="dd-mm-yyyy" name="valid_to" value="{{old('valid_to')}}" required>
+                <input type="text" class="form-control to_date" placeholder="dd-mm-yyyy" name="valid_to" value="{{old('valid_to')}}" required>
                 <span class="mandatory"> {{ $errors->first('valid_to')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid To Date
@@ -112,5 +114,29 @@
     <!-- card body end@ -->
   </div>
 </div>
+<script>
+ $(document).ready(function () {
+  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+       $('.from_date').datepicker({
+           uiLibrary: 'bootstrap4',
+           iconsLibrary: 'fontawesome',
+           format: 'dd-mm-yyyy',
+           //minDate: today,
+           maxDate: function () {
+               return $('.from_date').val();
+           }
+       });
+       $('.to_date').datepicker({
+           uiLibrary: 'bootstrap4',
+           iconsLibrary: 'fontawesome',
+           format: 'dd-mm-yyyy',
+           minDate: function () {
+               return $('.from_date').val();
+           }
+       });
+
+
+    });
+</script>
 @endsection
 

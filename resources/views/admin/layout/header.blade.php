@@ -80,6 +80,8 @@
                             <li><a href="{{url('master/state')}}">State</a></li>
                             <li><a href="{{url('master/district')}}">District</a></li>
                             <li><a href="{{url('master/city')}}">City</a></li>
+                            <li><a href="{{url('master/location-type')}}">Location Type</a></li>
+                            <li><a href="{{url('master/address-type')}}">Address Type</a></li>
                             <li><a href="{{url('master/location')}}">Location</a></li>
                         </ul>
                     </li>
@@ -110,14 +112,7 @@
                         </ul>
                     </li>
 
-                    <li class="col-md-3 dropdown-item">
-                        <ul>
-                            <li class="dropdown-header"></li>
-                            <li><a href="{{url('master/agent')}}">Agent</a></li>
-                            <li><a href="{{url('master/customer')}}">customer</a></li>
-                          
-                        </ul>
-                    </li>
+                   
 
                     <li class="col-md-3 dropdown-item">
                         <ul>
@@ -128,6 +123,15 @@
                             <li><a href="{{url('master/category-one')}}">Category 1</a></li>
                             <li><a href="{{url('master/category-two')}}">Category 2</a></li>
                             <li><a href="{{url('master/category-three')}}">Category 3</a></li>
+                          
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header"></li>
+                            <li><a href="{{url('master/agent')}}">Agent</a></li>
+                            <li><a href="{{url('master/customer')}}">customer</a></li>
                           
                         </ul>
                     </li>

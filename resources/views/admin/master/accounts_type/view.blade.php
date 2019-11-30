@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>List Bank</h3>
+          <h3>List Account Type</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/accounts-type/create')}}">Add State</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/accounts-type/create')}}">Add Account Type</a></button></li>
           </ul>
         </div>
       </div>

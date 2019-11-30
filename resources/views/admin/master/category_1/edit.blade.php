@@ -34,21 +34,22 @@
                   </div>
                 </div>
               </div>
-    
-              
-    
-                <div class="col-md-7">
-                    <div class="form-group row">
-                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Remark <span class="mandatory">*</span></label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control remark only_allow_alp_num_dot_com_amp" placeholder="Remark" name="remark" value="{{old('remark',$category_one->remark)}}">
-                        <span class="mandatory"> {{ $errors->first('remark')  }} </span>
-                        <div class="invalid-feedback">
-                          Enter valid Remark
-                        </div>
+
+              <div class="col-md-7">
+                  <div class="form-group row">
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">Remark</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control remark" placeholder="Remark" name="remark" value="{{old('remark',$category_one->remark)}}">
+                      <span class="mandatory"> {{ $errors->first('remark')  }} </span>
+                      <div class="invalid-feedback">
+                        Enter valid Remark
                       </div>
                     </div>
                   </div>
+                </div>
+    
+              
+    
           
          
         </div>

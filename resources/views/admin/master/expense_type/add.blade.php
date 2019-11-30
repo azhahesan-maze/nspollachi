@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Expense Type <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select type" data-placeholder="Choose Expense Type" name="type">
+                <select class="js-example-basic-multiple form-control col-12 custom-select type" data-placeholder="Choose Expense Type" name="type" required>
                 <option value="">Choose Expense Type</option>
                  <option value="Direct" {{ old('type') == 'Direct' ? 'selected' : '' }}>Direct</option>
                   <option value="Indirect" {{ old('type') == 'Indirect' ? 'selected' : '' }}>Indirect</option>

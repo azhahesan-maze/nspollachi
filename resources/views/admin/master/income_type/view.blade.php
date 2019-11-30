@@ -21,8 +21,8 @@
         <thead>
           <tr>
             <th>S.No</th>
-            <th>Expense Name</th>
-            <th>Expense Type</th>
+            <th>Income Name</th>
+            <th>Income Type</th>
             <th>Remark</th>
            <th>Action </th>
           </tr>

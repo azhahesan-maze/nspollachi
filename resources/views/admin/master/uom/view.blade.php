@@ -11,7 +11,7 @@
         <div class="col-8 mr-auto">
          
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/uom/create')}}">Add Language</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/uom/create')}}">Add Uom</a></button></li>
           </ul>
          
         </div>

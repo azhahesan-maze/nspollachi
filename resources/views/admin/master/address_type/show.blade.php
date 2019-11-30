@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>View State</h3>
+          <h3>View Address Type</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/state')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/address-type')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -20,20 +20,15 @@
       <div class="form-row">
         <div class="col-md-7">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">State Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $state->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $address_type->name }}</label>
           </div>
         </div>
-        <div class="col-md-7">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">State Code :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $state->code }} </label>
-          </div>
-        </div>
+        
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Remark :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $state->remark }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $address_type->remark }} </label>
           </div>
         </div>
       </div>

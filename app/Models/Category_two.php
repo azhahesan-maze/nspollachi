@@ -12,9 +12,5 @@ class Category_two extends Model
         return $this->belongsTo(Category_one::class,'category_one_id','id');
     }
 
-    public function category_threes()
-    {
-        return $this->hasmany(Category_three::class);
-
-    }
+    
 }

@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Expense Type <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select type" data-placeholder="Choose Expense Type" name="type">
+                <select class="js-example-basic-multiple col-12 form-control custom-select type" data-placeholder="Choose Expense Type" name="type" required>
                 <option value="">Choose Expense Type</option>
                  <option value="Direct" {{ old('type',$expense_type->type) == 'Direct' ? 'selected' : '' }}>Direct</option>
                   <option value="Indirect" {{ old('type',$expense_type->type) == 'Indirect' ? 'selected' : '' }}>Indirect</option>
@@ -42,7 +42,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Expense Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Expense Name" name="name" value="{{old('name',$expense_type->name)}}" required>
+                <input type="text" class="form-control name  only_allow_alp_num_dot_com_amp" placeholder="Expense Name" name="name" value="{{old('name',$expense_type->name)}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Expense Name

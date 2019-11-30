@@ -37,7 +37,7 @@
 
           <div class="col-md-7">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Short Name </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Short Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
                 <input type="text" class="form-control short_name" placeholder="Short Name" name="short_name" value="{{old('short_name')}}" required >
                 <span class="mandatory"> {{ $errors->first('short_name')  }} </span>

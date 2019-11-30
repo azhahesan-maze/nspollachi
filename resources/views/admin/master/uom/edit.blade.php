@@ -50,7 +50,7 @@
     
                 <div class="col-md-7">
                     <div class="form-group row">
-                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Remark <span class="mandatory">*</span></label>
+                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Remark </label>
                       <div class="col-sm-8">
                         <input type="text" class="form-control remark only_allow_alp_num_dot_com_amp" placeholder="Remark" name="remark" value="{{old('remark',$uom->remark)}}">
                         <span class="mandatory"> {{ $errors->first('remark')  }} </span>

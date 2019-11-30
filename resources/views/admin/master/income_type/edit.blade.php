@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Income Type <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select type" data-placeholder="Choose Income Type" name="type">
+                <select class="js-example-basic-multiple col-12 form-control custom-select type" data-placeholder="Choose Income Type" name="type" required>
                 <option value="">Choose Income Type</option>
                  <option value="Direct" {{ old('type',$incomeType->type) == 'Direct' ? 'selected' : '' }}>Direct</option>
                   <option value="Indirect" {{ old('type',$incomeType->type) == 'Indirect' ? 'selected' : '' }}>Indirect</option>

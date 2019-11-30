@@ -28,7 +28,7 @@
                 <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="District Name" name="name" value="{{old('name',$district->name)}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
-                  Enter valid State Name
+                  Enter valid District Name
                 </div>
               </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select" name="state_id">
+                <select class="js-example-basic-multiple form-control col-12 custom-select" name="state_id" required>
                   <option value="">Choose States</option>
                   @foreach($state as $value)
 
@@ -47,7 +47,7 @@
                 </select>
                 <span class="mandatory"> {{ $errors->first('state_id')  }} </span>
                 <div class="invalid-feedback">
-                  Enter valid State Code
+                  Enter valid State 
                 </div>
               </div>
             </div>
