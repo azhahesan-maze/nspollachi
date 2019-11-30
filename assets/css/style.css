@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik:500&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
 /* header */
@@ -287,4 +287,36 @@ div.dt-buttons {
 .form-control.is-valid, .was-validated .form-control:valid {
     border-color: #28a745 !important;
     background-image:none !important;
+}
+.single_view label, .single_view h4, .single_view h6 {
+    font-weight: bold;
+}
+.single_view .form-group {
+    margin-bottom: 8px !important;
+}
+.single_view h4 {
+    width: 180px;
+    text-align: center;
+    background: #ccc;
+    color: #000;
+    padding: 5px 7px;
+    margin: 40px 0 0px 0px;
+}
+.single_view h5 {
+    color: #1d0c0c;
+    font-size: 15px;
+    font-weight: 600;
+}
+.single_view h6 {
+    text-align: left;
+    width: 177px;
+    margin: 25px 0px 15px 0;
+    padding: 9px 0;
+    font-size: 19px;
+    color: #828282;
+}
+.single_view b {
+    border: 0.5px solid gainsboro;
+    width: 100%;
+    margin: 15px 0 0 0;
 }

@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
-<div class="col-12 body-sec">
+<div class="col-12 body-sec single_view">
   <div class="card container px-0">
     <!-- card header start@ -->
     <div class="card-header px-2">
@@ -21,30 +21,30 @@
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $agent->salutation }}. {{ $agent->name }}</label>
+            <h5 for="validationCustom01" class="col-sm-4 col-form-label"> {{ $agent->salutation }}. {{ $agent->name }}</h5>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Agent Code :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->code }} </label>
+            <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->code }} </h5>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->phone_no }} </label>
+            <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->phone_no }} </h5>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Email :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->email }} </label>
+            <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $agent->email }} </h5>
           </div>
         </div>
-
+        <b></b>
         
     </div>
     
@@ -53,58 +53,58 @@
         <h4> Address Details :</h4>
         </div>
       </div>
-      <hr>
+      
     @foreach ($agent_address_details as $key=>$values)
     <div class="form-row">
         <div class="col-md-8">
-            <h4> Address Details  - {{ ($key+1 )}} </h4>
+            <h6> Address Details  - {{ ($key+1 )}} </h6>
             </div>
         <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_type->name }} </label>
+              <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_type->name }} </h5>
             </div>
           </div>
           <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1:</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_line_1 }} </label>
+                <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_line_1 }} </h5>
               </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group row">
                   <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 2 :</label>
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_line_2 }} </label>
+                  <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_line_2 }} </h5>
                 </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group row">
                     <label for="validationCustom01" class="col-sm-4 col-form-label">Land Mark:</label>
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->land_mark }} </label>
+                    <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->land_mark }} </h5>
                   </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">State :</label>
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{$values->state->name }} </label>
+                      <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{$values->state->name }} </h5>
                     </div>
                   </div>
                   <div class="col-md-6">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">District :</label>
-                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{$values->district->name }} </label>
+                        <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{$values->district->name }} </h5>
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
                           <label for="validationCustom01" class="col-sm-4 col-form-label">City :</label>
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($values->city->name) ? $values->city->name : "" }} </label>
+                          <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($values->city->name) ? $values->city->name : "" }} </h5>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group row">
                             <label for="validationCustom01" class="col-sm-4 col-form-label">Postal Code :</label>
-                            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->postal_code }} </label>
+                            <h5 for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->postal_code }} </h5>
                           </div>
                         </div>
     </div>
