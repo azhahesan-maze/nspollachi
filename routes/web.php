@@ -25,6 +25,7 @@ Route::any('common/get-state-based-district', 'CommonController@get_state_based_
 Route::any('common/get-district-based-city', 'CommonController@get_district_based_city');
 Route::any('common/get-bank-based-branch', 'CommonController@get_bank_based_branch');
 Route::any('common/get-branch-based-ifsc', 'CommonController@get_branch_based_ifsc');
+Route::any('common/get-category-one-based-category-two', 'CommonController@get_category_one_based_category_two');
 /* Common Functions End Here */
 
 
@@ -257,6 +258,78 @@ Route::group(['prefix' => 'master/supplier'], function () {
    
 });
 /* Supplier Master End Here  */
+
+/* Category Name Master  Start Here  */
+Route::group(['prefix' => 'master/category-name'], function () {
+    Route::any('/', 'CategoryNameController@index');
+    Route::any('create', 'CategoryNameController@create');
+    Route::any('store', 'CategoryNameController@store');
+    Route::any('show/{id}', 'CategoryNameController@show');
+    Route::any('edit/{id}', 'CategoryNameController@edit');
+    Route::any('update/{id}', 'CategoryNameController@update');
+    Route::any('delete/{id}', 'CategoryNameController@destroy');     
+});
+/* Category Name Master End Here  */
+
+/* Language Master  Start Here  */
+Route::group(['prefix' => 'master/uom'], function () {
+    Route::any('/', 'UomController@index');
+    Route::any('create', 'UomController@create');
+    Route::any('store', 'UomController@store');
+    Route::any('show/{id}', 'UomController@show');
+    Route::any('edit/{id}', 'UomController@edit');
+    Route::any('update/{id}', 'UomController@update');
+    Route::any('delete/{id}', 'UomController@destroy');     
+});
+/* Language Master End Here  */
+
+/* UOM Master  Start Here  */
+Route::group(['prefix' => 'master/language'], function () {
+    Route::any('/', 'LanguageController@index');
+    Route::any('create', 'LanguageController@create');
+    Route::any('store', 'LanguageController@store');
+    Route::any('show/{id}', 'LanguageController@show');
+    Route::any('edit/{id}', 'LanguageController@edit');
+    Route::any('update/{id}', 'LanguageController@update');
+    Route::any('delete/{id}', 'LanguageController@destroy');     
+});
+/* Uom Master End Here  */
+
+/* Category One Master  Start Here  */
+Route::group(['prefix' => 'master/category-one'], function () {
+    Route::any('/', 'CategoryOneController@index');
+    Route::any('create', 'CategoryOneController@create');
+    Route::any('store', 'CategoryOneController@store');
+    Route::any('show/{id}', 'CategoryOneController@show');
+    Route::any('edit/{id}', 'CategoryOneController@edit');
+    Route::any('update/{id}', 'CategoryOneController@update');
+    Route::any('delete/{id}', 'CategoryOneController@destroy');     
+});
+/* Category One Master End Here  */
+
+/* Category Two Master  Start Here  */
+Route::group(['prefix' => 'master/category-two'], function () {
+    Route::any('/', 'CategoryTwoController@index');
+    Route::any('create', 'CategoryTwoController@create');
+    Route::any('store', 'CategoryTwoController@store');
+    Route::any('show/{id}', 'CategoryTwoController@show');
+    Route::any('edit/{id}', 'CategoryTwoController@edit');
+    Route::any('update/{id}', 'CategoryTwoController@update');
+    Route::any('delete/{id}', 'CategoryTwoController@destroy');     
+});
+/* Category Two Master End Here  */
+
+/* Category Three Master  Start Here  */
+Route::group(['prefix' => 'master/category-three'], function () {
+    Route::any('/', 'CategoryThreeController@index');
+    Route::any('create', 'CategoryThreeController@create');
+    Route::any('store', 'CategoryThreeController@store');
+    Route::any('show/{id}', 'CategoryThreeController@show');
+    Route::any('edit/{id}', 'CategoryThreeController@edit');
+    Route::any('update/{id}', 'CategoryThreeController@update');
+    Route::any('delete/{id}', 'CategoryThreeController@destroy');     
+});
+/* Category Three Master End Here  */
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bankbranch;
+use App\Models\Category_two;
 use App\Models\City;
 use App\Models\District;
 use Illuminate\Http\Request;
@@ -98,6 +99,33 @@ class CommonController extends Controller
          die(json_encode(array(
             "value" => $value
         )));
+    }
+
+    public function get_category_one_based_category_two(Request $request)
+    {
+        $category_one_id = $request->category_one_id;
+        $category_two_id = "";
+        if ($request->has('category_two_id')) {
+            $category_two_id = $request->category_two_id;
+        }
+
+        $category_two = Category_two::where('category_one_id', $category_one_id)->get();
+        $option = "";
+        $option .= count($category_two) > 0 ? "<option value=''> Choose Category 2  </option>" : "<option value=''> No Result Found </option>";
+        $select = "";
+        foreach ($category_two as $value) {
+            if ($category_two_id != "") {
+                $select = $category_two_id == $value->id ? "Selected" : "";
+            } else {
+                $select = "";
+            }
+            $option .= "<option value=" . $value->id . "   " . $select . ">" . $value->name . "</option>";
+        }
+
+        die(json_encode(array(
+            "option" => $option
+        )));
+
     }
 
 
