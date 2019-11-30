@@ -118,6 +118,19 @@
                           
                         </ul>
                     </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Item</li>
+                            <li><a href="{{url('master/uom')}}">Uom</a></li>
+                            <li><a href="{{url('master/language')}}">Language</a></li>
+                            <li><a href="{{url('master/category-name')}}">Category Name</a></li>
+                            <li><a href="{{url('master/category-one')}}">Category 1</a></li>
+                            <li><a href="{{url('master/category-two')}}">Category 2</a></li>
+                            <li><a href="{{url('master/category-three')}}">Category 3</a></li>
+                          
+                        </ul>
+                    </li>
                     
             </ul>        
             
