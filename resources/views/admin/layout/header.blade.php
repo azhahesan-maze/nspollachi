@@ -112,6 +112,8 @@
                         </ul>
                     </li>
 
+
+
                    
 
                     <li class="col-md-3 dropdown-item">
@@ -132,6 +134,7 @@
                             <li class="dropdown-header"></li>
                             <li><a href="{{url('master/agent')}}">Agent</a></li>
                             <li><a href="{{url('master/customer')}}">customer</a></li>
+                            <li><a href="{{url('master/area')}}">Area</a></li>
                           
                         </ul>
                     </li>
