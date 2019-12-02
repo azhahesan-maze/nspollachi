@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Edit Customer </h3>
+          <h3>Edit Supplier </h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/customer')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/supplier')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -18,7 +18,7 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/customer/update/'.$customer->id)}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/supplier/update/'.$supplier->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
 
@@ -31,20 +31,20 @@
           <div class="col-md-6">
             
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
             <div class="input-group">
             <div class="input-group-prepend">
               <select class="form-control required_for_valid salutation" name="salutation" error-data="Enter valid Salutation" >
-                  <option value="Mr" {{ old('salutation',$customer->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
-                  <option value="Mrs" {{ old('salutation',$customer->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
+                  <option value="Mr" {{ old('salutation',$supplier->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
+                  <option value="Mrs" {{ old('salutation',$supplier->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
               </select>
               <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
             </div>
-            <input type="text" class="form-control required_for_valid name" name="name" error-data="Customer Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$customer->name)}}>
+            <input type="text" class="form-control required_for_valid name" name="name" error-data="Supplier Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$supplier->name)}}>
             
             <div class="invalid-feedback">
-              Enter valid Customer Name
+              Enter valid Supplier Name
             </div>
             
           </div>
@@ -60,7 +60,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  phone_no only_allow_digit required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$customer->phone_no)}}" >
+                <input type="text" class="form-control  phone_no only_allow_digit required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$supplier->phone_no)}}" >
                 <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Phone No
@@ -73,7 +73,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Whatsapp No </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control whatsapp_no only_allow_digit" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Whatsapp No" placeholder="Whatsapp No" name="whatsapp_no" value="{{old('whatsapp_no',$customer->whatsapp_no)}}" >
+                <input type="text" class="form-control whatsapp_no only_allow_digit" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Whatsapp No" placeholder="Whatsapp No" name="whatsapp_no" value="{{old('whatsapp_no',$supplier->whatsapp_no)}}" >
                 <span class="mandatory"> {{ $errors->first('whatsapp_no')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Whatsapp No
@@ -86,7 +86,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$customer->email)}}" >
+                <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$supplier->email)}}" >
                 <span class="mandatory"> {{ $errors->first('email')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Email
@@ -95,24 +95,13 @@
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Pan Card No <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control pan_card required_for_valid" input-type="pan_card" error_data="Enter valid Pancard No" placeholder="Pan Card No" name="pan_card" value="{{old('pan_card',$customer->pan_card)}}" >
-                <span class="mandatory"> {{ $errors->first('pan_card')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Pan Card
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Gst No <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control gst_no required_for_valid" input-type="gst_no" error_data="Enter valid Gst No" placeholder="Gst No" name="gst_no" value="{{old('gst_no',$customer->gst_no)}}" >
+                <input type="text" class="form-control gst_no required_for_valid" input-type="gst_no" error_data="Enter valid Gst No" placeholder="Gst No" name="gst_no" value="{{old('gst_no',$supplier->gst_no)}}" >
                 <span class="mandatory"> {{ $errors->first('gst_no')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Gst No
@@ -121,37 +110,15 @@
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Maximum Credit Limit  <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control max_credit_limit only_allow_digit required_for_valid"  error_data="Enter valid Maximum Credit Limit" placeholder="Maximum Credit Limit" name="max_credit_limit" value="{{old('max_credit_limit',$customer->max_credit_limit)}}" >
-                <span class="mandatory"> {{ $errors->first('max_credit_limit')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Maximum Credit Limit
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Maximum Credit Days  <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control max_credit_days only_allow_digit required_for_valid"  error_data="Enter valid Maximum Credit Days" placeholder="Maximum Credit Days" name="max_credit_days" value="{{old('max_credit_days',$customer->max_credit_days)}}" >
-                <span class="mandatory"> {{ $errors->first('max_credit_days')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Maximum Credit Days
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$customer->opening_balance)}}" >
+                <input type="text" class="form-control  required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$supplier->opening_balance)}}" >
                 <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Opening Balance
@@ -164,7 +131,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Remark</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control remark" input-type="remark" error_data="Enter valid Remark" placeholder="Remark" name="remark" value="{{old('remark',$customer->remark)}}" >
+                <input type="text" class="form-control remark" input-type="remark" error_data="Enter valid Remark" placeholder="Remark" name="remark" value="{{old('remark',$supplier->remark)}}" >
                 <span class="mandatory"> {{ $errors->first('remark')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Remark
@@ -174,25 +141,7 @@
           </div>
 
 
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Price Level <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-              <select class="js-example-basic-multiple col-12 form-control price_level select custom-select required_for_valid" 
-              error-data="Enter valid Price Level" data-placeholder="Choose Price Level " name="price_level" >
-              <option value=""></option>
-                 <option value="1"  {{ old('price_level',$customer->price_level) == '1' ? 'selected' : '' }}>Price Level 1</option>
-                  <option value="2" {{ old('price_level',$customer->price_level) == '2' ? 'selected' : '' }}>Price Level 2</option>
-                  <option value="3" {{ old('price_level',$customer->price_level) == '3' ? 'selected' : '' }}>Price Level 3</option> 
-               </select>
-               
-                  <span class="mandatory"> {{ $errors->first('price_level')  }} </span>
-                  <div class="invalid-feedback">
-                    Enter valid Price Level
-                  </div>
-              </div>
-            </div>
-          </div>
+       
 </div>
 
 
@@ -213,7 +162,7 @@
            </div>
            <div class="common_address_div">
              <!-- Exist Address Details Grid Start Here -->
-            @foreach($customer_address_details as $key=>$values)
+            @foreach($supplier_address_details as $key=>$values)
             <div class="form-row address_div">
                 <div class="col-md-7">
                     <div class="form-group row">
@@ -499,7 +448,7 @@
                  </thead>
                  <tbody class="append_bank_details">
 
-                  @foreach ($customer_bank_details as $bank_key=>$bank_value)
+                  @foreach ($supplier_bank_details as $bank_key=>$bank_value)
                     <tr>
                       <td><span class="bank_s_no"> {{ $bank_key+1}} </span>
                       <input type="hidden" name="bank_details_id[]" value="{{$bank_value->id }}">
@@ -758,6 +707,7 @@
 
 
 <div class="col-md-7 text-right">
+  <input type="hidden" name="edit" >
           <button class="btn btn-success submit" type="button">Submit</button>
         </div>
       </form>
@@ -777,7 +727,7 @@ $(document).on("click",".perment_proof_details",function(){
   if(confirm('Are You Sure Want to Delete this ?')){
    $.ajax({
                       type: "post",
-                      url: "{{ url('master/customer/delete-agent-proof-details')}}",
+                      url: "{{ url('master/supplier/delete-agent-proof-details')}}",
                       data: {proof_details_id: proof_details_id},
                       success: function (res)
                       {
@@ -1196,7 +1146,7 @@ if($(".remove_address").length >1){
 
     $.ajax({
                       type: "post",
-                      url: "{{ url('master/customer/delete-customer-address-details')}}",
+                      url: "{{ url('master/supplier/delete-supplier-address-details')}}",
                       data: {address_details_id: address_details_id},
                       success: function (res)
                       {
@@ -1337,7 +1287,7 @@ if($(".perment_delete_bank").length >1){
 
     $.ajax({
                       type: "post",
-                      url: "{{ url('master/customer/delete-customer-bank-details')}}",
+                      url: "{{ url('master/supplier/delete-supplier-bank-details')}}",
                       data: {bank_details_id: bank_details_id},
                       success: function (res)
                       {

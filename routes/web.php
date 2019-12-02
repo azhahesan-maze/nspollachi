@@ -275,8 +275,8 @@ Route::group(['prefix' => 'master/supplier'], function () {
     Route::any('edit/{id}', 'SupplierController@edit');
     Route::any('update/{id}', 'SupplierController@update');
     Route::any('delete/{id}', 'SupplierController@destroy');
-    Route::any('delete-customer-address-details', 'SupplierController@delete_customer_address_details');
-    Route::any('delete-customer-bank-details', 'SupplierController@delete_customer_bank_details');
+    Route::any('delete-supplier-address-details', 'SupplierController@delete_supplier_address_details');
+    Route::any('delete-supplier-bank-details', 'SupplierController@delete_supplier_bank_details');
    
 });
 /* Supplier Master End Here  */

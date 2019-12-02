@@ -163,8 +163,6 @@ class CustomerController extends Controller
             /* Insert New Address Details Start Here */
             $batch_insert_array=array();
             if($request->has('address_type_id')){
-
-            
             foreach($request->address_type_id as $key=>$value){
                 $data_to_store=array(
                     'address_table'=>"Cus",

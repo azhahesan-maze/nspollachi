@@ -24,7 +24,7 @@ class CustomerRequest extends FormRequest
     public function rules(Request $request)
     {
          $rule=[];
-        if($request->has('name')){
+        if($request->has('add')){
             $rule=array(
                 'name' => 'required|unique:customers,name,NULL,id,deleted_at,NULL',
                 'phone_no' => 'required|unique:customers,phone_no,NULL,id,deleted_at,NULL',

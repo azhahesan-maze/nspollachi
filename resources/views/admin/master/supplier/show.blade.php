@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row ">
         <div class="col-4">
-          <h3>View Customer</h3>
+          <h3>View Supplier</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/customer/')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/supplier/')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -20,8 +20,8 @@
       <div class="form-row">
         <div class="col-md-6">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $customer->salutation }}. {{ $customer->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $supplier->salutation }}. {{ $supplier->name }}</label>
           </div>
         </div>
        
@@ -29,69 +29,46 @@
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->phone_no }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->phone_no }} </label>
           </div>
         </div>
         <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Whatsapp No :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->whatsapp_no }} </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->whatsapp_no }} </label>
             </div>
           </div>
 
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Email :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->email }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->email }} </label>
           </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Pancard :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->pan_card }} </label>
-            </div>
-          </div>
 
           <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Gst :</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->gst_no }} </label>
+                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->gst_no }} </label>
               </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">Maximum Credit Limit :</label>
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->max_credit_limit }} </label>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">Maximum Credit Days :</label>
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->max_credit_days }} </label>
-                  </div>
-                </div>
+           
 
                 <div class="col-md-6">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance :</label>
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->opening_balance }} </label>
+                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->opening_balance }} </label>
                     </div>
                   </div>
                   
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">Price Level :</label>
-                          <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->price_level }} </label>
-                        </div>
-                      </div>
+                   
 
                       <div class="col-md-6">
                           <div class="form-group row">
                             <label for="validationCustom01" class="col-sm-4 col-form-label">Remark :</label>
-                            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $customer->remark }} </label>
+                            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $supplier->remark }} </label>
                           </div>
                         </div>
                      
@@ -105,7 +82,7 @@
         </div>
       </div>
       <hr>
-    @foreach ($customer_address_details as $key=>$values)
+    @foreach ($supplier_address_details as $key=>$values)
     <div class="form-row">
         <div class="col-md-8">
             <h4> Address Details  - {{ ($key+1 )}} </h4>
@@ -179,7 +156,7 @@
               
             </thead>
             <tbody>
-              @foreach ($customer_bank_details as $key=>$value)
+              @foreach ($supplier_bank_details as $key=>$value)
               <tr>
                 <td>{{$key+1}}</td>
               <td>{{$value->bank->name}}</td>
