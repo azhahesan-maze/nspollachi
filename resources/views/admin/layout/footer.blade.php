@@ -17,8 +17,7 @@
     
     <!-- select 2 -->
     <script src="{{asset('assets/js/select2.min.js')}}"></script>
-    <!-- date picker -->
-    <script src="{{asset('assets/js/gijgo.min.js')}}"></script>
+   
     <!-- Optional JavaScript -->
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
@@ -36,10 +35,20 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{{asset('assets/js/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-
+    <!-- date picker -->
+    <script src="{{asset('assets/js/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>    
 
     <script>
-
+$(function () {
+    var sd = new Date(), ed = new Date();
+  
+    
+    $('.valid_froms1').datetimepicker({ 
+      pickTime: false, 
+      format: "DD-MM-YYYY"
+    });
+});
 
 
 $.ajaxSetup({

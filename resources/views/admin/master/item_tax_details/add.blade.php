@@ -96,9 +96,9 @@
         <thead>
           <tr>
             <th scope="col" style="width:6%">S.no</th>
-            <th scope="col" style="width:20%">CGST (%) </th>
             <th scope="col" style="width:20%">IGST (%) </th>
-            <th scope="col" style="width:20%">SGST (%) </th>
+            <th scope="col" style="width:20%">CGST (%) </th>
+             <th scope="col" style="width:20%">SGST (%) </th>
             <th scope="col" style="width:20%">Effective From </th>
             <th scope="col" style="width:14%">Action</th>
           </tr>
@@ -109,6 +109,15 @@
                 <th scope="row" class="s_no">1</th>
                 <td>
                     <div class="col-sm-12">
+                    <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.0')}}" required>
+                     <span class="mandatory"> {{ $errors->first('igst.0')  }} </span>
+                      <div class="invalid-feedback">
+                        Enter valid IGST
+                      </div>
+                    </div>
+                  </td>
+                <td>
+                    <div class="col-sm-12">
                     <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="{{old('cgst.0')}}" required>
                      <span class="mandatory"> {{ $errors->first('cgst.0')  }} </span>
                       <div class="invalid-feedback">
@@ -117,15 +126,7 @@
                     </div>
                   </td>
 
-                  <td>
-                      <div class="col-sm-12">
-                      <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.0')}}" required>
-                       <span class="mandatory"> {{ $errors->first('igst.0')  }} </span>
-                        <div class="invalid-feedback">
-                          Enter valid IGST
-                        </div>
-                      </div>
-                    </td>
+                  
 
                     <td>
                         <div class="col-sm-12">
@@ -169,6 +170,15 @@
                   <th scope="row" class="s_no">1</th>
                   <td>
                       <div class="col-sm-12">
+                      <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.'.$old_key)}}" required>
+                       <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
+                        <div class="invalid-feedback">
+                          Enter valid IGST
+                        </div>
+                      </div>
+                    </td>
+                  <td>
+                      <div class="col-sm-12">
                       <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="{{old('cgst.'.$old_key)}}" required>
                        <span class="mandatory"> {{ $errors->first('cgst.'.$old_key)  }} </span>
                         <div class="invalid-feedback">
@@ -177,15 +187,7 @@
                       </div>
                     </td>
   
-                    <td>
-                        <div class="col-sm-12">
-                        <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.'.$old_key)}}" required>
-                         <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
-                          <div class="invalid-feedback">
-                            Enter valid IGST
-                          </div>
-                        </div>
-                      </td>
+                    
   
                       <td>
                           <div class="col-sm-12">
@@ -198,9 +200,11 @@
                         </td>
   
                         <td>
-                        
+                            @php
+                            $old_value_new=old('valid_from.'.$old_key) !="" ? date('d-m-Y',strtotime(old('valid_from.'.$old_key))) : "";
+                        @endphp
                             <div class="col-sm-12">
-                            <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{old('valid_from.'.$old_key)}}" required>
+                            <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ $old_value_new }}" required>
                              <span class="mandatory"> {{ $errors->first('valid_from.'.$old_key)  }} </span>
                               <div class="invalid-feedback">
                                 Enter valid Effective From Date
@@ -233,6 +237,7 @@
       </form>
     </div>
     <!-- card body end@ -->
+
   </div>
 </div>
 
@@ -241,14 +246,36 @@
 
 $(document).ready(function () {
   var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-       $('.valid_from').datepicker({
-           uiLibrary: 'bootstrap4',
-           iconsLibrary: 'fontawesome',
-           format: 'dd-mm-yyyy',
-           minDate: today
-       });
-      
-       });
+  $('.valid_from').datetimepicker({ 
+      pickTime: false, 
+      format: "DD-MM-YYYY"
+    });
+/* Set Dropdown Values for onload  */
+var category_one_id=$(".category_1").val();
+var category_two_id="{{ old('category_2') }}";
+var category_three_id="{{ old('category_3') }}";
+var item_id="{{ old('item_id') }}";
+
+if(category_one_id != "")
+{
+    get_category_one_based_category_two(category_one_id,category_two_id);
+}
+
+if(category_two_id != "")
+{
+  get_category_two_based_category_three(category_two_id,category_three_id);
+}
+
+
+if(category_one_id !="" || category_two_id !="" || category_three_id != "")
+{
+  get_category_based_item(category_one_id,category_two_id,category_three_id,item_id);
+}
+  });
+
+
+
+
 
       
 
@@ -335,15 +362,7 @@ function add_tax_details()
 {
   var append='<tr>\
                 <th scope="row" class="s_no">1</th>\
-                <td>\
-                    <div class="col-sm-12">\
-                    <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="" required>\
-                    <div class="invalid-feedback">\
-                        Enter valid CGST\
-                      </div>\
-                    </div>\
-                  </td>\
-                    <td>\
+               <td>\
                       <div class="col-sm-12">\
                       <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="" required>\
                         <div class="invalid-feedback">\
@@ -351,6 +370,14 @@ function add_tax_details()
                         </div>\
                       </div>\
                     </td>\
+                    <td>\
+                    <div class="col-sm-12">\
+                    <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="" required>\
+                    <div class="invalid-feedback">\
+                        Enter valid CGST\
+                      </div>\
+                    </div>\
+                  </td>\
                     <td>\
                       <div class="col-sm-12">\
                       <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" placeholder="SGST" value="" required>\
@@ -379,12 +406,12 @@ function add_tax_details()
                   </td>\
 </tr>';
               $(".append_row").append(append);
-              $('.valid_from').datepicker({
-           uiLibrary: 'bootstrap4',
-           iconsLibrary: 'fontawesome',
-           format: 'dd-mm-yyyy',
-           minDate: today
-       });
+              $('.valid_from').datetimepicker({ 
+      pickTime: false, 
+      format: "DD-MM-YYYY",
+      minDate: 0,
+
+    });
            
               
 

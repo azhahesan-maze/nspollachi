@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
     <!-- select 2 -->
     <link rel="stylesheet" href="{{asset('assets/css/select2.min.css')}}">
-    <!-- date picker -->
-    <link rel="stylesheet" href="{{asset('assets/css/gijgo.min.css')}}">
     <!-- data -->
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/buttons.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/fixedHeader.dataTables.min.css')}}">
     <!-- font-awasome -->
     <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
+    <!--date picker -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css')}}">
     <!-- main js -->
     <script src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
     

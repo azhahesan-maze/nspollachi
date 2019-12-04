@@ -59,7 +59,6 @@ class ItemTaxDetailsController extends Controller
         $category_one=Category_one::all();
         $category_two=Category_two::all();
         $category_three=Category_three::all();
-       
        return view('admin.master.item_tax_details.add',compact('category_one','category_two','category_three','category_1','category_2','category_3'));
   
     }
@@ -154,9 +153,20 @@ class ItemTaxDetailsController extends Controller
      * @param  \App\Models\ItemTaxDetails  $itemTaxDetails
      * @return \Illuminate\Http\Response
      */
-    public function show(ItemTaxDetails $itemTaxDetails)
+    public function show(ItemTaxDetails $itemTaxDetails,$id)
     {
-        //
+        $category_1=$this->category_1;
+        $category_2=$this->category_2;
+        $category_3=$this->category_3;
+       
+        $category_one=Category_one::all();
+        $category_two=Category_two::all();
+        $category_three=Category_three::all();
+        $item_tax_details=ItemTaxDetails::find($id);
+       
+       return view('admin.master.item_tax_details.show',compact('item_tax_details','category_one','category_two','category_three','category_1','category_2','category_3'));
+  
+        
     }
 
     /**
@@ -165,9 +175,19 @@ class ItemTaxDetailsController extends Controller
      * @param  \App\Models\ItemTaxDetails  $itemTaxDetails
      * @return \Illuminate\Http\Response
      */
-    public function edit(ItemTaxDetails $itemTaxDetails)
+    public function edit(ItemTaxDetails $itemTaxDetails,$id)
     {
-        //
+        exit;
+        $category_1=$this->category_1;
+        $category_2=$this->category_2;
+        $category_3=$this->category_3;
+       
+        $category_one=Category_one::all();
+        $category_two=Category_two::all();
+        $category_three=Category_three::all();
+        $item_tax_details=ItemTaxDetails::find($id);
+        return view('admin.master.item_tax_details.edit',compact('item_tax_details','category_one','category_two','category_three','category_1','category_2','category_3'));
+  
     }
 
     /**
@@ -188,8 +208,14 @@ class ItemTaxDetailsController extends Controller
      * @param  \App\Models\ItemTaxDetails  $itemTaxDetails
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ItemTaxDetails $itemTaxDetails)
+    public function destroy(ItemTaxDetails $itemTaxDetails,$id)
     {
-        //
+        $item_tax_details=ItemTaxDetails::find($id);
+        if($item_tax_details->delete())
+        {
+            return Redirect::back()->with('success', 'Deleted Successfully');
+        } else {
+            return Redirect::back()->with('failure', 'Something Went Wrong..!');
+        }
     }
 }
