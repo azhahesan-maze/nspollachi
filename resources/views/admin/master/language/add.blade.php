@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Language 1<span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control language_1 only_allow_alp_num_dot_com_amp" placeholder="Language 1" name="language_1" value="{{old('language_1')}}" required>
+                <input type="text" class="form-control language_1 language only_allow_alp_num_dot_com_amp" placeholder="Language 1" name="language_1" value="{{old('language_1')}}" required>
                 <span class="mandatory"> {{ $errors->first('language_1')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Language 1
@@ -39,7 +39,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Language 2<span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control language_2 only_allow_alp_num_dot_com_amp" placeholder="Language 2" name="language_2" value="{{old('language_2')}}" required>
+                <input type="text" class="form-control language_2 language only_allow_alp_num_dot_com_amp" placeholder="Language 2" name="language_2" value="{{old('language_2')}}" required>
                 <span class="mandatory"> {{ $errors->first('language_2')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Language 2
@@ -51,7 +51,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Language 3<span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control language_3 only_allow_alp_num_dot_com_amp" placeholder="Language 3" name="language_3" value="{{old('language_3')}}" required>
+                <input type="text" class="form-control language_3 language only_allow_alp_num_dot_com_amp" placeholder="Language 3" name="language_3" value="{{old('language_3')}}" required>
                 <span class="mandatory"> {{ $errors->first('language_3')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Language 3
@@ -64,12 +64,88 @@
           
         </div>
         <div class="col-md-7 text-right">
-          <button class="btn btn-success" name="add" type="submit">Submit</button>
+          <button class="btn btn-success submit" name="add" type="button">Submit</button>
         </div>
       </form>
     </div>
     <!-- card body end@ -->
   </div>
 </div>
+<script>
+
+  $(document).on("click",".submit",function(){
+   
+    address_details_validation();
+  });
+ 
+  function address_details_validation(){
+    var error_count=0;
+      $(".language").each(function(){
+        $(this).removeClass("is-invalid");
+           if($(this).val() !=""){
+             var name=$(this).attr('name');
+             var value=$(this).val();
+
+
+            $(this).removeClass("is-invalid");
+            $(this).addClass("is-valid");
+
+
+$(".language").each(function(){
+  if($(this).attr('name') != name){
+
+    if($(this).val() != value)
+    {
+     
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+
+    }else{
+      $(this).closest("div").find(".mandatory").html("This Value is already Exist In current Input ");
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  }
+
+});
+
+
+
+
+
+
+
+            if($(this).attr('input-type') == "phone_no"){
+               var phone_no=$(this).val();
+                if(phone_no_validation(phone_no) == 0){
+                  error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+                 $(this).closest("div").find(".mandatory").html("this field is required");
+                }
+                 }
+
+                 if($(this).attr('input-type') == "email"){
+               var email=$(this).val();
+               if(!email_validation(email)){
+                error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+               }
+               
+                 }
+         }else{
+           error_count++;
+           $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+        }
+       });
+       return error_count;
+  }
+
+ 
+
+
+  </script>
 @endsection
 

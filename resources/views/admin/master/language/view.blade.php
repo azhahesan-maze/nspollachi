@@ -9,7 +9,7 @@
           <h3>List Language</h3>
         </div>
         <div class="col-8 mr-auto">
-          @if(count($language) == 0)
+          @if(count($language) > 0)
           <ul class="h-right-btn mb-0 pl-0">
             <li><button type="button" class="btn btn-success"><a href="{{url('master/language/create')}}">Add Language</a></button></li>
           </ul>

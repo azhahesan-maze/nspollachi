@@ -1,9 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:500&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
-/* header */
+@font-face {
+    font-family: 'Rubik Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/rubik/Rubik-Medium.ttf') format('woff');
+}
+@font-face {
+    font-family: 'Muli Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/Muli/static/Muli-Medium.ttf') format('woff');
+}
+@font-face {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/FontAwesome.otf') format('woff');
+}
+
 body {
-    font-family: 'Muli', sans-serif !important;
+    font-family: 'Muli Medium' !important;
 }
 h1,h2,h3,h4,h5,h6,p {
     margin-bottom: 0;
@@ -319,4 +334,14 @@ div.dt-buttons {
     border: 0.5px solid gainsboro;
     width: 100%;
     margin: 15px 0 0 0;
+}
+.single_view .table td {
+    border: 1px solid #b7b7b7;
+}
+div.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+table.dataTable {
+    width: 1400px !important;
 }

@@ -1,0 +1,56 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateItemsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('items', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 500)->nullable();
+            $table->string('code', 100)->nullable();
+            $table->integer('category_1')->nullable();
+            $table->integer('category_2')->nullable();
+            $table->integer('category_3')->nullable();
+            $table->string('print_name_in_english',500)->nullable();
+            $table->string('print_name_in_language_1',500)->nullable();
+            $table->string('print_name_in_language_2',500)->nullable();
+            $table->string('print_name_in_language_3',500)->nullable();
+            $table->string('ptc',500)->nullable();
+            $table->string('ean',500)->nullable();
+            $table->string('hsn',500)->nullable();
+            $table->float('mrp')->nullable();
+            $table->float('default_selling_price')->nullable();
+            $table->integer('uom_id')->nullable();
+            $table->integer('opening_stock')->nullable();
+            $table->boolean('is_expiry_date')->default(false)->comment = '0=>Not Applicable,1=>Applicable ';
+            $table->date('expiry_date')->nullable();	
+            $table->string('image',500)->nullable();
+            $table->string('remark',500)->nullable();
+            $table->boolean('active_status')->default(true)->comment = '1=>Active,0=>DeActive ';
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('items');
+    }
+}

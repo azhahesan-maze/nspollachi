@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+  
     // Setup - add a text input to each footer cell
     $('#master thead tr').clone(true).appendTo( '#master thead' );
     $('#master thead tr:eq(1) th').each( function (i) {
@@ -20,6 +21,7 @@ $(document).ready(function() {
         fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
+        "scrollX": true,
         buttons: [
           {
               extend: 'copyHtml5',
@@ -115,3 +117,4 @@ function validation(){
     return error_count;
 }
  
+// 

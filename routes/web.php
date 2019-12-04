@@ -25,7 +25,9 @@ Route::any('common/get-state-based-district', 'CommonController@get_state_based_
 Route::any('common/get-district-based-city', 'CommonController@get_district_based_city');
 Route::any('common/get-bank-based-branch', 'CommonController@get_bank_based_branch');
 Route::any('common/get-branch-based-ifsc', 'CommonController@get_branch_based_ifsc');
+Route::any('common/get-category-based-item', 'CommonController@get_category_based_item');
 Route::any('common/get-category-one-based-category-two', 'CommonController@get_category_one_based_category_two');
+Route::any('common/get-category-two-based-category-three', 'CommonController@get_category_two_based_category_three');
 /* Common Functions End Here */
 
 
@@ -377,6 +379,49 @@ Route::group(['prefix' => 'master/agent-area-mapping'], function () {
     Route::any('delete/{id}', 'AgentAreaMappingController@destroy');     
 });
 /* Agent Area Mapping Master End Here  */
+
+/* Item Master  Start Here  */
+Route::group(['prefix' => 'master/item'], function () {
+    Route::any('/', 'ItemController@index');
+    Route::any('create', 'ItemController@create');
+    Route::any('store', 'ItemController@store');
+    Route::any('show/{id}', 'ItemController@show');
+    Route::any('edit/{id}', 'ItemController@edit');
+    Route::any('update/{id}', 'ItemController@update');
+    Route::any('delete/{id}', 'ItemController@destroy');    
+    Route::any('uom-factor-convertion-for-item/{id}', 'ItemController@uomfactorconvertionforitem');     
+    Route::any('store-uom-factor-convertion-for-item', 'ItemController@store_uom_factor_convertion_for_item');     
+    Route::any('delete-uom-factor-convertion-for-item', 'ItemController@delete_uom_factor_convertion_for_item');     
+});
+/* Item Master End Here  */
+
+
+/* Item Master  Start Here  */
+Route::group(['prefix' => 'master/item-tax-details'], function () {
+    Route::any('/', 'ItemTaxDetailsController@index');
+    Route::any('create', 'ItemTaxDetailsController@create');
+    Route::any('store', 'ItemTaxDetailsController@store');
+    Route::any('show/{id}', 'ItemTaxDetailsController@show');
+    Route::any('edit/{id}', 'ItemTaxDetailsController@edit');
+    Route::any('update/{id}', 'ItemTaxDetailsController@update');
+    Route::any('delete/{id}', 'ItemTaxDetailsController@destroy');    
+   
+});
+/* Item Master End Here  */
+
+
+
+/* Item   Start Here  */
+Route::group(['prefix' => 'master/uom-factor-convertion-for-item'], function () {
+    Route::any('/', 'UomFactorConvertionForItemController@index');
+    Route::any('create', 'UomFactorConvertionForItemController@create');
+    Route::any('store', 'UomFactorConvertionForItemController@store');
+    Route::any('show/{id}', 'UomFactorConvertionForItemController@show');
+    Route::any('edit/{id}', 'UomFactorConvertionForItemController@edit');
+    Route::any('update/{id}', 'UomFactorConvertionForItemController@update');
+    Route::any('delete/{id}', 'UomFactorConvertionForItemController@destroy');     
+});
+/* Item Master End Here  */
 
 
 

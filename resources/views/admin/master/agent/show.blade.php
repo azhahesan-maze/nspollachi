@@ -112,12 +112,12 @@
     @endforeach
     <div class="form-row">
         <div class="col-md-8">
-        <h4> Proof Details :</h4>
+        <h4 class="mb-4"> Proof Details :</h4>
         </div>
       </div>
     <div class="form-row">
         <table class="table">
-            <thead>
+            <thead class="bg-green text-white">
               <th> S.no </th>
               <th> Proof Name</th>
               <th> Proof Number</th>

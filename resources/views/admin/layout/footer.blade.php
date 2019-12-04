@@ -66,6 +66,18 @@ $('.valid_from').datepicker({
         rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
     }
 });
+var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+
+$('.expiry_date').datepicker({
+    
+    uiLibrary: 'bootstrap4',
+    iconsLibrary: 'fontawesome',
+    format: 'dd-mm-yyyy',
+    minDate:today,
+    icons: {
+        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
+    }
+});
 
 
 
@@ -81,6 +93,20 @@ $(document).on("keypress",".only_allow_alp_num_dot_com_amp",function(e)
     return false;
 
 });
+
+$(document).on("keypress",".only_allow_digit_and_dot",function(e)
+{
+    var regex  = new RegExp("^[0-9.]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+    e.preventDefault();
+    return false;
+
+});
+
+
 
 $(document).on("keypress",".only_allow_digit",function(e)
 {
