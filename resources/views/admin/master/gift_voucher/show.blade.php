@@ -39,13 +39,13 @@
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Gift Voucher Valid From :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $giftvoucher->valid_from }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $giftvoucher->valid_from !="" ? date('d-m-Y',strtotime($giftvoucher->valid_from)) : "" }} </label>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Gift Voucher Valid To :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $giftvoucher->valid_to }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $giftvoucher->valid_to !="" ? date('d-m-Y',strtotime($giftvoucher->valid_to)) : "" }} </label>
           </div>
         </div>
         <div class="col-md-6">

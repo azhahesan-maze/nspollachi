@@ -115,25 +115,35 @@
   </div>
 </div>
 <script>
- $(document).ready(function () {
-  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-       $('.from_date').datepicker({
-           uiLibrary: 'bootstrap4',
-           iconsLibrary: 'fontawesome',
-           format: 'dd-mm-yyyy',
-           //minDate: today,
-           maxDate: function () {
-               return $('.from_date').val();
-           }
-       });
-       $('.to_date').datepicker({
-           uiLibrary: 'bootstrap4',
-           iconsLibrary: 'fontawesome',
-           format: 'dd-mm-yyyy',
-           minDate: function () {
-               return $('.from_date').val();
-           }
-       });
+    $(document).ready(function () {
+        var date1 = new Date();
+        $(".from_date").datepicker({
+          format: 'dd-mm-yyyy',
+          todayHighlight: true,
+           autoclose: true, 
+           startDate: date1,
+           endDate: '',
+          setDate: date1
+          }).on('changeDate', function (selected) {
+            var startDate = new Date(selected.date.valueOf());
+
+            $('.to_date').datepicker('setStartDate', startDate);
+        }).on('clearDate', function (selected) {
+            $('.to_date').datepicker('setStartDate', null);
+        });
+        $(".to_date").datepicker({
+          format: 'dd-mm-yyyy', 
+          todayHighlight: true,
+          autoclose: true,
+          endDate: '',
+          startDate: date1,
+          setDate: date1, 
+          }).on('changeDate', function (selected) {
+            var endDate = new Date(selected.date.valueOf());
+            $('.from_date').datepicker('setEndDate', endDate);
+        }).on('clearDate', function (selected) {
+            $('.from_date').datepicker('setEndDate', null);
+        });
 
 
     });

@@ -412,7 +412,7 @@
              <td>
                       <div class="form-group row">
                         <div class="col-sm-12">
-                        <input type="text" class="form-control proof_number only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
+                        <input type="text" class="form-control proof_number   required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
                           <span class="mandatory"> {{ $errors->first('proof_number.'.$key)  }} </span>
                           <div class="invalid-feedback">
                             Enter valid Proof Number
@@ -478,8 +478,10 @@
 
   /* Add Proof Details Start Here */
   $(document).on("click",".add_proof_details",function(){
-alert("hgfbhgh");
-    var proof_details='<tr>\
+    var validation_count=proof_details_validation();
+    if(validation_count == 0)
+    {
+        var proof_details='<tr>\
                       <td><span class="s_no"> 1 </span></td>\
                       <td>\
                         <div class="form-group row">\
@@ -525,19 +527,25 @@ alert("hgfbhgh");
 
     $(".append_proof_details").append(proof_details);
     set_sno_for_proof_details();
+                        }
 
   });
   /* Add Proof Details End Here */
   /* Remove Proof Details Start Here */
   $(document).on("click",".remove_proof_details",function(){
-    $(this).closest("tr").remove();
+    if($(".remove_proof_details").length > 1){
+      $(this).closest("tr").remove();
     set_sno_for_proof_details();
+    }else{
+      alert("Atleast One Row Present");
+    }
+    
   });
   /* Remove Proof Details End Here */
 
 
 
-$(document).on("blur change",".required_for_valid",function(){
+$(document).on("blur change",".required_for_valid,.required_for_proof_valid",function(){
        $(this).removeClass("is-invalid");
         $(this).removeClass("is-valid");
            if($(this).val() !=""){
@@ -577,6 +585,25 @@ function phone_no_validation(phone_no){
                 }else{
                   return 1;
                 }
+}
+
+function proof_details_validation(){
+  
+  var error_count=0;
+  $(".required_for_proof_valid").each(function(){
+   $(this).removeClass("is-invalid");
+      if($(this).val() !="")
+      {
+        $(this).removeClass("is-invalid");
+        $(this).addClass("is-valid");
+      }else
+      {
+        error_count++;
+        $(this).removeClass("is-valid");
+        $(this).addClass("is-invalid");
+      }
+  });
+  return error_count;
 }
 
 function validation(){
@@ -620,7 +647,8 @@ function validation(){
    $(document).on("click",".submit",function(){
     var error_count=validation();
     var address_error_count=address_details_validation();
-    var common_error_count=parseInt(error_count)+parseInt(address_error_count);
+    var proof_details_count=proof_details_validation();
+    var common_error_count=parseInt(error_count)+parseInt(address_error_count)+parseInt(proof_details_count);
     if(common_error_count == 0){
       if($(".required_for_address_valid").length >0){
       

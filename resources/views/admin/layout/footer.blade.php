@@ -37,18 +37,13 @@
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <!-- date picker -->
     <script src="{{asset('assets/js/moment.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>    
+     
+
+    <script src="{{asset('assets/datepicker/bootstrap-datepicker.js')}}"></script>
+    
 
     <script>
-$(function () {
-    var sd = new Date(), ed = new Date();
-  
-    
-    $('.valid_froms1').datetimepicker({ 
-      pickTime: false, 
-      format: "DD-MM-YYYY"
-    });
-});
+
 
 
 $.ajaxSetup({
@@ -58,35 +53,26 @@ $.ajaxSetup({
 });
 
 
-$('.dob').datepicker({
-    uiLibrary: 'bootstrap4',
-    iconsLibrary: 'fontawesome',
-    format: 'dd-mm-yyyy',
-    icons: {
-        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
-    }
-});
 
-$('.valid_from').datepicker({
-    uiLibrary: 'bootstrap4',
-    iconsLibrary: 'fontawesome',
-    format: 'dd-mm-yyyy',
-    icons: {
-        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
-    }
-});
-var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    var currentDate = new Date();
+    $('.expiry_date').datepicker({
+    format: "dd-mm-yyyy",
+    todayHighlight: true,
+    startDate: currentDate,
+    endDate: '',
+    setDate: currentDate,
+    autoclose: true
+    });
 
-$('.expiry_date').datepicker({
-    
-    uiLibrary: 'bootstrap4',
-    iconsLibrary: 'fontawesome',
-    format: 'dd-mm-yyyy',
-    minDate:today,
-    icons: {
-        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
-    }
-});
+    $('.dob').datepicker({
+    format: "dd-mm-yyyy",
+    todayHighlight: true,
+    //startDate: '-29d',
+    endDate:currentDate,
+    setDate: currentDate,
+    autoclose: true
+    });
+
 
 
 

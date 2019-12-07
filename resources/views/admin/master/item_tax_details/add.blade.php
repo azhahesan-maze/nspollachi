@@ -245,11 +245,16 @@
 <script>
 
 $(document).ready(function () {
-  var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-  $('.valid_from').datetimepicker({ 
-      pickTime: false, 
-      format: "DD-MM-YYYY"
+  var currentDate = new Date();
+    $('.valid_from').datepicker({
+    format: "dd-mm-yyyy",
+    todayHighlight: true,
+    startDate: currentDate,
+    endDate: '',
+    setDate: currentDate,
+    autoclose: true
     });
+
 /* Set Dropdown Values for onload  */
 var category_one_id=$(".category_1").val();
 var category_two_id="{{ old('category_2') }}";
@@ -406,12 +411,16 @@ function add_tax_details()
                   </td>\
 </tr>';
               $(".append_row").append(append);
-              $('.valid_from').datetimepicker({ 
-      pickTime: false, 
-      format: "DD-MM-YYYY",
-      minDate: 0,
-
+              var currentDate = new Date();
+    $('.valid_from').datepicker({
+    format: "dd-mm-yyyy",
+    todayHighlight: true,
+    startDate: currentDate,
+    endDate: '',
+    setDate: currentDate,
+    autoclose: true
     });
+
            
               
 

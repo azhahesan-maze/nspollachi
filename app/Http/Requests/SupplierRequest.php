@@ -29,10 +29,11 @@ class SupplierRequest extends FormRequest
         {
             $rule=array(
                 'name' => 'required|unique:suppliers,name,NULL,id,deleted_at,NULL',
-                'phone_no' => 'required|unique:suppliers,phone_no,NULL,id,deleted_at,NULL',
-                'email' => 'required|unique:suppliers,email,NULL,id,deleted_at,NULL',
+                'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,NULL,id,deleted_at,NULL',
+                'email' => 'required|email|unique:suppliers,email,NULL,id,deleted_at,NULL',
+                'whatsapp_no' => 'nullable|numeric|digits:10',
                 'gst_no' => 'required|unique:suppliers,gst_no,NULL,id,deleted_at,NULL',
-                'opening_balance'=>'required',
+                'opening_balance'=>'required|numeric',
                 'address_type_id .*' => 'required',
                 'address_line_1.*' => 'required',
                 'state_id.*' => 'required',
@@ -49,10 +50,11 @@ class SupplierRequest extends FormRequest
          {
             $rule=array(
                 'name' => 'required|unique:suppliers,name,'.$this->id.',id,deleted_at,NULL',
-                'phone_no' => 'required|unique:suppliers,phone_no,'.$this->id.',id,deleted_at,NULL',
-                'email' => 'required|unique:suppliers,email,'.$this->id.',id,deleted_at,NULL',
+                'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,'.$this->id.',id,deleted_at,NULL',
+                'email' => 'required|email|unique:suppliers,email,'.$this->id.',id,deleted_at,NULL',
+                'whatsapp_no' => 'nullable|numeric|digits:10',
                 'gst_no' => 'required|unique:suppliers,gst_no,'.$this->id.',id,deleted_at,NULL',
-                'opening_balance'=>'required',
+                'opening_balance'=>'required|numeric|min:1',
                 );
 
                 if($request->has('address_type_id'))
@@ -60,7 +62,7 @@ class SupplierRequest extends FormRequest
                     $rule['address_type_id .*']='required';
                     $rule['address_line_1.*'] = 'required';
                     $rule['state_id.*'] = 'required';
-                    $rule['postal_code.*'] = 'required';
+                    $rule['postal_code.*'] = 'required|numeric|min:5';
                 }
     
                 if($request->has('old_address_type_id'))
@@ -68,7 +70,7 @@ class SupplierRequest extends FormRequest
                     $rule['old_address_type_id .*']='required';
                     $rule['old_address_line_1.*'] = 'required';
                     $rule['old_state_id.*'] = 'required';
-                    $rule['old_postal_code.*'] = 'required';
+                    $rule['old_postal_code.*'] = 'required|numeric|min:5';
     
                 }
 

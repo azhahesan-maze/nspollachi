@@ -140,7 +140,7 @@ class CustomerController extends Controller
     }
 
     
-    public function update(Request $request, Customer $customer,$id)
+    public function update(CustomerRequest $request, Customer $customer,$id)
     {
         $customer = Customer::find($id);
         $customer->name=$request->name;

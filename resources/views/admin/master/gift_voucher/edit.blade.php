@@ -66,7 +66,14 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Valid From Date <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control valid_from" placeholder="dd-mm-yyyy" name="valid_from" value="{{old('valid_from',$giftvoucher->valid_from)}}" required>
+
+              @php
+
+                  $valid_from=$giftvoucher->valid_from !="" ? date('d-m-Y',strtotime($giftvoucher->valid_from)) : "";
+                  $valid_to=$giftvoucher->valid_to !="" ? date('d-m-Y',strtotime($giftvoucher->valid_to)) : "";
+              @endphp
+
+              <input type="text" class="form-control from_date" placeholder="dd-mm-yyyy" name="valid_from" value="{{old('valid_from',$valid_from)}}" required>
               <span class="mandatory"> {{ $errors->first('valid_from')  }} </span>
               <div class="invalid-feedback">
                 Enter valid From Date
@@ -79,7 +86,7 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Valid To Date <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control valid_to" placeholder="dd-mm-yyyy" name="valid_to" value="{{old('valid_to',$giftvoucher->valid_to)}}" required>
+              <input type="text" class="form-control to_date" placeholder="dd-mm-yyyy" name="valid_to" value="{{old('valid_to',$valid_to)}}" required>
               <span class="mandatory"> {{ $errors->first('valid_to')  }} </span>
               <div class="invalid-feedback">
                 Enter valid To Date
@@ -112,4 +119,41 @@
     <!-- card body end@ -->
   </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+      
+
+        var date1 = new Date();
+        $(".from_date").datepicker({
+          format: 'dd-mm-yyyy',
+         
+           autoclose: true, 
+           startDate: date1,
+           endDate: '',
+          setDate: date1
+          }).on('changeDate', function (selected) {
+            var startDate = new Date(selected.date.valueOf());
+
+            $('.to_date').datepicker('setStartDate', startDate);
+        }).on('clearDate', function (selected) {
+            $('.to_date').datepicker('setStartDate', null);
+        });
+        $(".to_date").datepicker({
+          format: 'dd-mm-yyyy', 
+          
+          autoclose: true,
+          endDate: '',
+          startDate: date1,
+          setDate: date1, 
+          }).on('changeDate', function (selected) {
+            var endDate = new Date(selected.date.valueOf());
+            $('.from_date').datepicker('setEndDate', endDate);
+        }).on('clearDate', function (selected) {
+            $('.from_date').datepicker('setEndDate', null);
+        });
+
+
+    });
+</script>
 @endsection

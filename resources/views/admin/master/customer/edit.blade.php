@@ -151,7 +151,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$customer->opening_balance)}}" >
+                <input type="text" class="form-control  only_allow_digit required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$customer->opening_balance)}}" >
                 <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Opening Balance
@@ -1169,7 +1169,7 @@ var address='';
             <div class="form-group row">\
               <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
               <div class="col-sm-8">\
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
+                <input type="text" class="form-control postal_code only_allow_digit required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
               <div class="invalid-feedback">\
                   Enter valid Postal Code\
                 </div>\

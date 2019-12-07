@@ -36,7 +36,7 @@
         
             <tr>
               <td>{{ $key+1 }}</td>
-              <td>{{ $value->category_one->name}}</td>
+              <td>{{ isset($value->category_one->name) ? $value->category_one->name : "" }}</td>
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ $value->name}}</td>
               <td>{{ $value->remark}}</td>

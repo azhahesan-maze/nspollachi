@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\CategoryName;
+use App\Models\LocationType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +18,12 @@ class BankController extends Controller
      */
     public function index()
     {
-        $bank=Bank::all();
+     //   $bank=Bank::all();
+
+        $bank=LocationType::all();
+
+        return $bank->toJson();
+
         return view('admin.master.bank.view',compact('bank'));
     }
 

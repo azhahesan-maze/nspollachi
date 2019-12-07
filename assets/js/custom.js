@@ -70,14 +70,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });
-// datepicker
-$('#datepicker').datepicker({
-    uiLibrary: 'bootstrap4',
-    iconsLibrary: 'fontawesome',
-    icons: {
-        rightIcon: '<i class="fa fa-calendar" aria-hidden="true"></i>'
-    }
-});
+
 
 
 function validation(){

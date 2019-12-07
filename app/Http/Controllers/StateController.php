@@ -14,6 +14,16 @@ use Session;
 class StateController extends Controller
 {
 
+    
+        function __construct()
+    {
+        //   $this->middleware('permission:state_list',['only' => ['index']]);
+        //   $this->middleware('permission:state_create', ['only' => ['create','store']]);
+        //   $this->middleware('permission:state_edit', ['only' => ['edit','update']]);
+        //   $this->middleware('permission:state_delete', ['only' => ['destroy']]);
+    }
+    
+
     public function index()
     {
         $state = State::all();

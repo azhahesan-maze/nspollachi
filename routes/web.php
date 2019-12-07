@@ -11,13 +11,24 @@
 |
 */
 
+use App\Spatie\Permission\Models\Permission;
+use App\Spatie\Permission\Models\Role;
+
 Route::any('/', function () {
     return view('admin.master.empty');
-});
+})->middleware('auth');
 
 Route::get('/view', function () {
     return view('Masters.Sample.View');
 });
+
+Route::any('import-item', 'ItemImportExportController@importExportView');
+Route::any('import', 'ItemImportExportController@import');
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('change-password', 'Auth\RegisterController@indexshow')->name('change.password')->middleware(['auth']);
+Route::any('update-password', 'Auth\RegisterController@updatePassword')->name('changePassword')->middleware(['auth']);
 
 
 /* Common Functions Start Here */
@@ -34,370 +45,370 @@ Route::any('common/get-category-two-based-category-three', 'CommonController@get
 
 
 /* State Master Group Start Here  */
-Route::group(['prefix' => 'master/state'], function () {
-    Route::any('/', 'StateController@index');
-    Route::any('create', 'StateController@create');
-    Route::any('store', 'StateController@store');
-    Route::any('show/{id}', 'StateController@show');
-    Route::any('edit/{id}', 'StateController@edit');
-    Route::any('update/{id}', 'StateController@update');
-    Route::any('delete/{id}', 'StateController@destroy');
+Route::group(['prefix' => 'master/state','middleware' => ['auth']], function () {
+    Route::any('/', 'StateController@index')->middleware('permission:state_list');
+    Route::any('create', 'StateController@create')->middleware('permission:state_create');
+    Route::any('store', 'StateController@store')->middleware('permission:state_create');
+    Route::any('show/{id}', 'StateController@show')->middleware('permission:state_list');
+    Route::any('edit/{id}', 'StateController@edit')->middleware('permission:state_edit');
+    Route::any('update/{id}', 'StateController@update')->middleware('permission:state_edit');
+    Route::any('delete/{id}', 'StateController@destroy')->middleware('permission:state_delete');
 });
 /* State Master Group End Here  */
 
 /* District Master Group Start Here  */
-Route::group(['prefix' => 'master/district'], function () {
-    Route::any('/', 'DistrictController@index');
-    Route::any('create', 'DistrictController@create');
-    Route::any('store', 'DistrictController@store');
-    Route::any('show/{id}', 'DistrictController@show');
-    Route::any('edit/{id}', 'DistrictController@edit');
-    Route::any('update/{id}', 'DistrictController@update');
-    Route::any('delete/{id}', 'DistrictController@destroy');
+Route::group(['prefix' => 'master/district','middleware' => ['auth']], function () {
+    Route::any('/', 'DistrictController@index')->middleware('permission:district_list');
+    Route::any('create', 'DistrictController@create')->middleware('permission:district_create');
+    Route::any('store', 'DistrictController@store')->middleware('permission:district_create');
+    Route::any('show/{id}', 'DistrictController@show')->middleware('permission:district_list');
+    Route::any('edit/{id}', 'DistrictController@edit')->middleware('permission:district_edit');
+    Route::any('update/{id}', 'DistrictController@update')->middleware('permission:district_edit');
+    Route::any('delete/{id}', 'DistrictController@destroy')->middleware('permission:district_delete');
 });
 /* District Master Group End Here  */
 
 /* City Master Group Start Here  */
-Route::group(['prefix' => 'master/city'], function () {
-    Route::any('/', 'CityController@index');
-    Route::any('create', 'CityController@create');
-    Route::any('store', 'CityController@store');
-    Route::any('show/{id}', 'CityController@show');
-    Route::any('edit/{id}', 'CityController@edit');
-    Route::any('update/{id}', 'CityController@update');
-    Route::any('delete/{id}', 'CityController@destroy');
+Route::group(['prefix' => 'master/city','middleware' => ['auth']], function () {
+    Route::any('/', 'CityController@index')->middleware('permission:city_list');
+    Route::any('create', 'CityController@create')->middleware('permission:city_create');
+    Route::any('store', 'CityController@store')->middleware('permission:city_create');
+    Route::any('show/{id}', 'CityController@show')->middleware('permission:city_list');
+    Route::any('edit/{id}', 'CityController@edit')->middleware('permission:city_edit');
+    Route::any('update/{id}', 'CityController@update')->middleware('permission:city_edit');
+    Route::any('delete/{id}', 'CityController@destroy')->middleware('permission:city_delete');
 });
 /* City Master Group End Here  */
 /* Location Type Group Start Here  */
-Route::group(['prefix' => 'master/location-type'], function () {
-    Route::any('/', 'LocationTypeController@index');
-    Route::any('create', 'LocationTypeController@create');
-    Route::any('store', 'LocationTypeController@store');
-    Route::any('show/{id}', 'LocationTypeController@show');
-    Route::any('edit/{id}', 'LocationTypeController@edit');
-    Route::any('update/{id}', 'LocationTypeController@update');
-    Route::any('delete/{id}', 'LocationTypeController@destroy');
+Route::group(['prefix' => 'master/location-type','middleware' => ['auth']], function () {
+    Route::any('/', 'LocationTypeController@index')->middleware('permission:location_type_list');
+    Route::any('create', 'LocationTypeController@create')->middleware('permission:location_type_create');
+    Route::any('store', 'LocationTypeController@store')->middleware('permission:location_type_create');
+    Route::any('show/{id}', 'LocationTypeController@show')->middleware('permission:location_type_list');
+    Route::any('edit/{id}', 'LocationTypeController@edit')->middleware('permission:location_type_edit');
+    Route::any('update/{id}', 'LocationTypeController@update')->middleware('permission:location_type_edit');
+    Route::any('delete/{id}', 'LocationTypeController@destroy')->middleware('permission:location_type_delete');
 });
 /* Location Type Master  End Here  */
 
 /* Location Master Group Start Here  */
-Route::group(['prefix' => 'master/location'], function () {
-    Route::any('/', 'LocationController@index');
-    Route::any('create', 'LocationController@create');
-    Route::any('store', 'LocationController@store');
-    Route::any('show/{id}', 'LocationController@show');
-    Route::any('edit/{id}', 'LocationController@edit');
-    Route::any('update/{id}', 'LocationController@update');
-    Route::any('delete/{id}', 'LocationController@destroy');
+Route::group(['prefix' => 'master/location','middleware' => ['auth']], function () {
+    Route::any('/', 'LocationController@index')->middleware('permission:location_list');
+    Route::any('create', 'LocationController@create')->middleware('permission:location_create');
+    Route::any('store', 'LocationController@store')->middleware('permission:location_create');
+    Route::any('show/{id}', 'LocationController@show')->middleware('permission:location_list');
+    Route::any('edit/{id}', 'LocationController@edit')->middleware('permission:location_edit');
+    Route::any('update/{id}', 'LocationController@update')->middleware('permission:location_edit');
+    Route::any('delete/{id}', 'LocationController@destroy')->middleware('permission:location_delete');
 });
 /* Location Master  End Here  */
 
 
 /* Bank Master  Start Here  */
-Route::group(['prefix' => 'master/bank'], function () {
-    Route::any('/', 'BankController@index');
-    Route::any('create', 'BankController@create');
-    Route::any('store', 'BankController@store');
-    Route::any('show/{id}', 'BankController@show');
-    Route::any('edit/{id}', 'BankController@edit');
-    Route::any('update/{id}', 'BankController@update');
-    Route::any('delete/{id}', 'BankController@destroy');
+Route::group(['prefix' => 'master/bank','middleware' => ['auth']], function () {
+    Route::any('/', 'BankController@index')->middleware('permission:bank_list');
+    Route::any('create', 'BankController@create')->middleware('permission:bank_create');
+    Route::any('store', 'BankController@store')->middleware('permission:bank_create');
+    Route::any('show/{id}', 'BankController@show')->middleware('permission:bank_list');
+    Route::any('edit/{id}', 'BankController@edit')->middleware('permission:bank_edit');
+    Route::any('update/{id}', 'BankController@update')->middleware('permission:bank_edit');
+    Route::any('delete/{id}', 'BankController@destroy')->middleware('permission:bank_list');
 });
 /* Bank Master  End Here  */
 
 /* Bank-Branch Master  Start Here  */
-Route::group(['prefix' => 'master/bank-branch'], function () {
-    Route::any('/', 'BankbranchController@index');
-    Route::any('create', 'BankbranchController@create');
-    Route::any('store', 'BankbranchController@store');
-    Route::any('show/{id}', 'BankbranchController@show');
-    Route::any('edit/{id}', 'BankbranchController@edit');
-    Route::any('update/{id}', 'BankbranchController@update');
-    Route::any('delete/{id}', 'BankbranchController@destroy');
+Route::group(['prefix' => 'master/bank-branch','middleware' => ['auth']], function () {
+    Route::any('/', 'BankbranchController@index')->middleware('permission:bank_branch_list');
+    Route::any('create', 'BankbranchController@create')->middleware('permission:bank_branch_create');
+    Route::any('store', 'BankbranchController@store')->middleware('permission:bank_branch_create');
+    Route::any('show/{id}', 'BankbranchController@show')->middleware('permission:bank_branch_list');
+    Route::any('edit/{id}', 'BankbranchController@edit')->middleware('permission:bank_branch_edit');
+    Route::any('update/{id}', 'BankbranchController@update')->middleware('permission:bank_branch_edit');
+    Route::any('delete/{id}', 'BankbranchController@destroy')->middleware('permission:bank_branch_delete');
 });
 /* Bank-Branch Master  End Here  */
 
 /* Accounts Type Master  Start Here  */
-Route::group(['prefix' => 'master/accounts-type'], function () {
-    Route::any('/', 'AccountTypeController@index');
-    Route::any('create', 'AccountTypeController@create');
-    Route::any('store', 'AccountTypeController@store');
-    Route::any('show/{id}', 'AccountTypeController@show');
-    Route::any('edit/{id}', 'AccountTypeController@edit');
-    Route::any('update/{id}', 'AccountTypeController@update');
-    Route::any('delete/{id}', 'AccountTypeController@destroy');
+Route::group(['prefix' => 'master/accounts-type','middleware' => ['auth']], function () {
+    Route::any('/', 'AccountTypeController@index')->middleware('permission:accounts_type_list');
+    Route::any('create', 'AccountTypeController@create')->middleware('permission:accounts_type_create');
+    Route::any('store', 'AccountTypeController@store')->middleware('permission:accounts_type_create');
+    Route::any('show/{id}', 'AccountTypeController@show')->middleware('permission:accounts_type_list');
+    Route::any('edit/{id}', 'AccountTypeController@edit')->middleware('permission:accounts_type_edit');
+    Route::any('update/{id}', 'AccountTypeController@update')->middleware('permission:accounts_type_edit');
+    Route::any('delete/{id}', 'AccountTypeController@destroy')->middleware('permission:accounts_type_delete');
 });
 /* Accounts Type Master  End Here  */
 
 /* Denomination Master  Start Here  */
-Route::group(['prefix' => 'master/denomination'], function () {
-    Route::any('/', 'DenominationController@index');
-    Route::any('create', 'DenominationController@create');
-    Route::any('store', 'DenominationController@store');
-    Route::any('show/{id}', 'DenominationController@show');
-    Route::any('edit/{id}', 'DenominationController@edit');
-    Route::any('update/{id}', 'DenominationController@update');
-    Route::any('delete/{id}', 'DenominationController@destroy');
+Route::group(['prefix' => 'master/denomination','middleware' => ['auth']], function () {
+    Route::any('/', 'DenominationController@index')->middleware('permission:denomination_list');
+    Route::any('create', 'DenominationController@create')->middleware('permission:denomination_create');
+    Route::any('store', 'DenominationController@store')->middleware('permission:denomination_create');
+    Route::any('show/{id}', 'DenominationController@show')->middleware('permission:denomination_list');
+    Route::any('edit/{id}', 'DenominationController@edit')->middleware('permission:denomination_edit');
+    Route::any('update/{id}', 'DenominationController@update')->middleware('permission:denomination_edit');
+    Route::any('delete/{id}', 'DenominationController@destroy')->middleware('permission:denomination_delete');
 });
 /* Denomination Master  End Here  */
 
 /* Department Master  Start Here  */
-Route::group(['prefix' => 'master/department'], function () {
-    Route::any('/', 'DepartmentController@index');
-    Route::any('create', 'DepartmentController@create');
-    Route::any('store', 'DepartmentController@store');
-    Route::any('show/{id}', 'DepartmentController@show');
-    Route::any('edit/{id}', 'DepartmentController@edit');
-    Route::any('update/{id}', 'DepartmentController@update');
-    Route::any('delete/{id}', 'DepartmentController@destroy');
+Route::group(['prefix' => 'master/department','middleware' => ['auth']], function () {
+    Route::any('/', 'DepartmentController@index')->middleware('permission:department_list');
+    Route::any('create', 'DepartmentController@create')->middleware('permission:department_create');
+    Route::any('store', 'DepartmentController@store')->middleware('permission:department_create');
+    Route::any('show/{id}', 'DepartmentController@show')->middleware('permission:department_list');
+    Route::any('edit/{id}', 'DepartmentController@edit')->middleware('permission:department_edit');
+    Route::any('update/{id}', 'DepartmentController@update')->middleware('permission:department_edit');
+    Route::any('delete/{id}', 'DepartmentController@destroy')->middleware('permission:department_delete');
 });
 /* Department Master  End Here  */
 
 /* Denomination Master  Start Here  */
-Route::group(['prefix' => 'master/designation'], function () {
-    Route::any('/', 'DesignationController@index');
-    Route::any('create', 'DesignationController@create');
-    Route::any('store', 'DesignationController@store');
-    Route::any('show/{id}', 'DesignationController@show');
-    Route::any('edit/{id}', 'DesignationController@edit');
-    Route::any('update/{id}', 'DesignationController@update');
-    Route::any('delete/{id}', 'DesignationController@destroy');
+Route::group(['prefix' => 'master/designation','middleware' => ['auth']], function () {
+    Route::any('/', 'DesignationController@index')->middleware('permission:desigination_list');
+    Route::any('create', 'DesignationController@create')->middleware('permission:desigination_create');
+    Route::any('store', 'DesignationController@store')->middleware('permission:desigination_create');
+    Route::any('show/{id}', 'DesignationController@show')->middleware('permission:desigination_list');
+    Route::any('edit/{id}', 'DesignationController@edit')->middleware('permission:desigination_edit');
+    Route::any('update/{id}', 'DesignationController@update')->middleware('permission:desigination_edit');
+    Route::any('delete/{id}', 'DesignationController@destroy')->middleware('permission:desigination_delete');
 });
 /* Denomination Master  End Here  */
 
 /* Denomination Master  Start Here  */
-Route::group(['prefix' => 'master/address-type'], function () {
-    Route::any('/', 'AddressTypeController@index');
-    Route::any('create', 'AddressTypeController@create');
-    Route::any('store', 'AddressTypeController@store');
-    Route::any('show/{id}', 'AddressTypeController@show');
-    Route::any('edit/{id}', 'AddressTypeController@edit');
-    Route::any('update/{id}', 'AddressTypeController@update');
-    Route::any('delete/{id}', 'AddressTypeController@destroy');
+Route::group(['prefix' => 'master/address-type','middleware' => ['auth']], function () {
+    Route::any('/', 'AddressTypeController@index')->middleware('permission:address_type_list');
+    Route::any('create', 'AddressTypeController@create')->middleware('permission:address_type_create');
+    Route::any('store', 'AddressTypeController@store')->middleware('permission:address_type_create');
+    Route::any('show/{id}', 'AddressTypeController@show')->middleware('permission:address_type_list');
+    Route::any('edit/{id}', 'AddressTypeController@edit')->middleware('permission:address_type_edit');
+    Route::any('update/{id}', 'AddressTypeController@update')->middleware('permission:address_type_edit');
+    Route::any('delete/{id}', 'AddressTypeController@destroy')->middleware('permission:address_type_delete');
 });
 /* Denomination Master  End Here  */
 
 /* Employee Master  Start Here  */
-Route::group(['prefix' => 'master/employee'], function () {
-    Route::any('/', 'EmployeeController@index');
-    Route::any('create', 'EmployeeController@create');
-    Route::any('store', 'EmployeeController@store');
-    Route::any('show/{id}', 'EmployeeController@show');
-    Route::any('edit/{id}', 'EmployeeController@edit');
-    Route::any('update/{id}', 'EmployeeController@update');
-    Route::any('delete/{id}', 'EmployeeController@destroy');
-    Route::any('delete-employee-address-details', 'EmployeeController@delete_employee_address_details');
+Route::group(['prefix' => 'master/employee','middleware' => ['auth']], function () {
+    Route::any('/', 'EmployeeController@index')->middleware('permission:employee_list');
+    Route::any('create', 'EmployeeController@create')->middleware('permission:employee_create');
+    Route::any('store', 'EmployeeController@store')->middleware('permission:employee_create');
+    Route::any('show/{id}', 'EmployeeController@show')->middleware('permission:employee_list');
+    Route::any('edit/{id}', 'EmployeeController@edit')->middleware('permission:employee_edit');
+    Route::any('update/{id}', 'EmployeeController@update')->middleware('permission:employee_edit');
+    Route::any('delete/{id}', 'EmployeeController@destroy')->middleware('permission:employee_delete');
+    Route::any('delete-employee-address-details', 'EmployeeController@delete_employee_address_details')->middleware('permission:employee_delete');
 });
 /* Employee Master  End Here  */
 
 /* Expense Type Master  Start Here  */
-Route::group(['prefix' => 'master/expense-type'], function () {
-    Route::any('/', 'ExpenseTypeController@index');
-    Route::any('create', 'ExpenseTypeController@create');
-    Route::any('store', 'ExpenseTypeController@store');
-    Route::any('show/{id}', 'ExpenseTypeController@show');
-    Route::any('edit/{id}', 'ExpenseTypeController@edit');
-    Route::any('update/{id}', 'ExpenseTypeController@update');
-    Route::any('delete/{id}', 'ExpenseTypeController@destroy');
+Route::group(['prefix' => 'master/expense-type','middleware' => ['auth']], function () {
+    Route::any('/', 'ExpenseTypeController@index')->middleware('permission:expense_list');
+    Route::any('create', 'ExpenseTypeController@create')->middleware('permission:expense_create');
+    Route::any('store', 'ExpenseTypeController@store')->middleware('permission:expense_create');
+    Route::any('show/{id}', 'ExpenseTypeController@show')->middleware('permission:expense_list');
+    Route::any('edit/{id}', 'ExpenseTypeController@edit')->middleware('permission:expense_edit');
+    Route::any('update/{id}', 'ExpenseTypeController@update')->middleware('permission:expense_edit');
+    Route::any('delete/{id}', 'ExpenseTypeController@destroy')->middleware('permission:expense_delete');
 });
 /* Expense Type Master End Here  */
 
 /* Income Type Master  Start Here  */
-Route::group(['prefix' => 'master/income-type'], function () {
-    Route::any('/', 'IncomeTypeController@index');
-    Route::any('create', 'IncomeTypeController@create');
-    Route::any('store', 'IncomeTypeController@store');
-    Route::any('show/{id}', 'IncomeTypeController@show');
-    Route::any('edit/{id}', 'IncomeTypeController@edit');
-    Route::any('update/{id}', 'IncomeTypeController@update');
-    Route::any('delete/{id}', 'IncomeTypeController@destroy');
+Route::group(['prefix' => 'master/income-type','middleware' => ['auth']], function () {
+    Route::any('/', 'IncomeTypeController@index')->middleware('permission:income_list');
+    Route::any('create', 'IncomeTypeController@create')->middleware('permission:income_create');
+    Route::any('store', 'IncomeTypeController@store')->middleware('permission:income_create');
+    Route::any('show/{id}', 'IncomeTypeController@show')->middleware('permission:income_list');
+    Route::any('edit/{id}', 'IncomeTypeController@edit')->middleware('permission:income_edit');
+    Route::any('update/{id}', 'IncomeTypeController@update')->middleware('permission:income_edit');
+    Route::any('delete/{id}', 'IncomeTypeController@destroy')->middleware('permission:income_delete');
 });
 /* Income Type Master End Here  */
 
 /* Gift Voucher Master  Start Here  */
-Route::group(['prefix' => 'master/gift-voucher'], function () {
-    Route::any('/', 'GiftvoucherController@index');
-    Route::any('create', 'GiftvoucherController@create');
-    Route::any('store', 'GiftvoucherController@store');
-    Route::any('show/{id}', 'GiftvoucherController@show');
-    Route::any('edit/{id}', 'GiftvoucherController@edit');
-    Route::any('update/{id}', 'GiftvoucherController@update');
-    Route::any('delete/{id}', 'GiftvoucherController@destroy');
+Route::group(['prefix' => 'master/gift-voucher','middleware' => ['auth']], function () {
+    Route::any('/', 'GiftvoucherController@index')->middleware('permission:gift_voucher_matser_list');
+    Route::any('create', 'GiftvoucherController@create')->middleware('permission:gift_voucher_matser_create');
+    Route::any('store', 'GiftvoucherController@store')->middleware('permission:gift_voucher_matser_create');
+    Route::any('show/{id}', 'GiftvoucherController@show')->middleware('permission:gift_voucher_matser_list');
+    Route::any('edit/{id}', 'GiftvoucherController@edit')->middleware('permission:gift_voucher_matser_edit');
+    Route::any('update/{id}', 'GiftvoucherController@update')->middleware('permission:gift_voucher_matser_edit');
+    Route::any('delete/{id}', 'GiftvoucherController@destroy')->middleware('permission:gift_voucher_matser_update');
 });
 /* Gift Voucher Master End Here  */
 
 /* Gst Type Master  Start Here  */
-Route::group(['prefix' => 'master/gst-type'], function () {
-    Route::any('/', 'GstTypeController@index');
-    Route::any('create', 'GstTypeController@create');
-    Route::any('store', 'GstTypeController@store');
-    Route::any('show/{id}', 'GstTypeController@show');
-    Route::any('edit/{id}', 'GstTypeController@edit');
-    Route::any('update/{id}', 'GstTypeController@update');
-    Route::any('delete/{id}', 'GstTypeController@destroy');
+Route::group(['prefix' => 'master/gst-type','middleware' => ['auth']], function () {
+    Route::any('/', 'GstTypeController@index')->middleware('permission:gst_master_list');
+    Route::any('create', 'GstTypeController@create')->middleware('permission:gst_master_create');
+    Route::any('store', 'GstTypeController@store')->middleware('permission:gst_master_create');
+    Route::any('show/{id}', 'GstTypeController@show')->middleware('permission:gst_master_list');
+    Route::any('edit/{id}', 'GstTypeController@edit')->middleware('permission:gst_master_edit');
+    Route::any('update/{id}', 'GstTypeController@update')->middleware('permission:gst_master_edit');
+    Route::any('delete/{id}', 'GstTypeController@destroy')->middleware('permission:gst_master_delete');
    
 });
 /* Gst Type Master End Here  */
 
 /* Agent Master  Start Here  */
-Route::group(['prefix' => 'master/agent'], function () {
-    Route::any('/', 'AgentController@index');
-    Route::any('create', 'AgentController@create');
-    Route::any('store', 'AgentController@store');
-    Route::any('show/{id}', 'AgentController@show');
-    Route::any('edit/{id}', 'AgentController@edit');
-    Route::any('update/{id}', 'AgentController@update');
-    Route::any('delete/{id}', 'AgentController@destroy');
-    Route::any('delete-agent-address-details', 'AgentController@delete_agent_address_details');
-    Route::any('delete-agent-proof-details', 'AgentController@delete_agent_proof_details');
+Route::group(['prefix' => 'master/agent','middleware' => ['auth']], function () {
+    Route::any('/', 'AgentController@index')->middleware('permission:agent_list');
+    Route::any('create', 'AgentController@create')->middleware('permission:agent_create');
+    Route::any('store', 'AgentController@store')->middleware('permission:agent_create');
+    Route::any('show/{id}', 'AgentController@show')->middleware('permission:agent_list');
+    Route::any('edit/{id}', 'AgentController@edit')->middleware('permission:agent_edit');
+    Route::any('update/{id}', 'AgentController@update')->middleware('permission:agent_edit');
+    Route::any('delete/{id}', 'AgentController@destroy')->middleware('permission:agent_delete');
+    Route::any('delete-agent-address-details', 'AgentController@delete_agent_address_details')->middleware('permission:agent_delete');
+    Route::any('delete-agent-proof-details', 'AgentController@delete_agent_proof_details')->middleware('permission:agent_delete');
    
 });
 /* Agent Master End Here  */
 /* Customer Master  Start Here  */
-Route::group(['prefix' => 'master/customer'], function () {
-    Route::any('/', 'CustomerController@index');
-    Route::any('create', 'CustomerController@create');
-    Route::any('store', 'CustomerController@store');
-    Route::any('show/{id}', 'CustomerController@show');
-    Route::any('edit/{id}', 'CustomerController@edit');
-    Route::any('update/{id}', 'CustomerController@update');
-    Route::any('delete/{id}', 'CustomerController@destroy');
-    Route::any('delete-customer-address-details', 'CustomerController@delete_customer_address_details');
-    Route::any('delete-customer-bank-details', 'CustomerController@delete_customer_bank_details');
+Route::group(['prefix' => 'master/customer','middleware' => ['auth']], function () {
+    Route::any('/', 'CustomerController@index')->middleware('permission:customer_list');
+    Route::any('create', 'CustomerController@create')->middleware('permission:customer_create');
+    Route::any('store', 'CustomerController@store')->middleware('permission:customer_create');
+    Route::any('show/{id}', 'CustomerController@show')->middleware('permission:customer_list');
+    Route::any('edit/{id}', 'CustomerController@edit')->middleware('permission:customer_edit');
+    Route::any('update/{id}', 'CustomerController@update')->middleware('permission:customer_edit');
+    Route::any('delete/{id}', 'CustomerController@destroy')->middleware('permission:customer_edit');
+    Route::any('delete-customer-address-details', 'CustomerController@delete_customer_address_details')->middleware('permission:customer_edit');
+    Route::any('delete-customer-bank-details', 'CustomerController@delete_customer_bank_details')->middleware('permission:customer_edit');
    
 });
 /* Customer Master End Here  */
 
 /* Supplier Master  Start Here  */
-Route::group(['prefix' => 'master/supplier'], function () {
-    Route::any('/', 'SupplierController@index');
-    Route::any('create', 'SupplierController@create');
-    Route::any('store', 'SupplierController@store');
-    Route::any('show/{id}', 'SupplierController@show');
-    Route::any('edit/{id}', 'SupplierController@edit');
-    Route::any('update/{id}', 'SupplierController@update');
-    Route::any('delete/{id}', 'SupplierController@destroy');
-    Route::any('delete-supplier-address-details', 'SupplierController@delete_supplier_address_details');
-    Route::any('delete-supplier-bank-details', 'SupplierController@delete_supplier_bank_details');
+Route::group(['prefix' => 'master/supplier','middleware' => ['auth']], function () {
+    Route::any('/', 'SupplierController@index')->middleware('permission:supplier_list');
+    Route::any('create', 'SupplierController@create')->middleware('permission:supplier_create');
+    Route::any('store', 'SupplierController@store')->middleware('permission:supplier_create');
+    Route::any('show/{id}', 'SupplierController@show')->middleware('permission:supplier_list');
+    Route::any('edit/{id}', 'SupplierController@edit')->middleware('permission:supplier_edit');
+    Route::any('update/{id}', 'SupplierController@update')->middleware('permission:supplier_edit');
+    Route::any('delete/{id}', 'SupplierController@destroy')->middleware('permission:supplier_delete');
+    Route::any('delete-supplier-address-details', 'SupplierController@delete_supplier_address_details')->middleware('permission:supplier_delete');
+    Route::any('delete-supplier-bank-details', 'SupplierController@delete_supplier_bank_details')->middleware('permission:supplier_delete');
    
 });
 /* Supplier Master End Here  */
 
 /* Category Name Master  Start Here  */
-Route::group(['prefix' => 'master/category-name'], function () {
-    Route::any('/', 'CategoryNameController@index');
-    Route::any('create', 'CategoryNameController@create');
-    Route::any('store', 'CategoryNameController@store');
-    Route::any('show/{id}', 'CategoryNameController@show');
-    Route::any('edit/{id}', 'CategoryNameController@edit');
-    Route::any('update/{id}', 'CategoryNameController@update');
-    Route::any('delete/{id}', 'CategoryNameController@destroy');     
+Route::group(['prefix' => 'master/category-name','middleware' => ['auth']], function () {
+    Route::any('/', 'CategoryNameController@index')->middleware('permission:category_name_master_list');
+    Route::any('create', 'CategoryNameController@create')->middleware('permission:category_name_master_create');
+    Route::any('store', 'CategoryNameController@store')->middleware('permission:category_name_master_create');
+    Route::any('show/{id}', 'CategoryNameController@show')->middleware('permission:category_name_master_list');
+    Route::any('edit/{id}', 'CategoryNameController@edit')->middleware('permission:category_name_master_edit');
+    Route::any('update/{id}', 'CategoryNameController@update')->middleware('permission:category_name_master_edit');
+    Route::any('delete/{id}', 'CategoryNameController@destroy')->middleware('permission:category_name_master_delete');
 });
 /* Category Name Master End Here  */
 
 /* Language Master  Start Here  */
-Route::group(['prefix' => 'master/uom'], function () {
-    Route::any('/', 'UomController@index');
-    Route::any('create', 'UomController@create');
-    Route::any('store', 'UomController@store');
-    Route::any('show/{id}', 'UomController@show');
-    Route::any('edit/{id}', 'UomController@edit');
-    Route::any('update/{id}', 'UomController@update');
-    Route::any('delete/{id}', 'UomController@destroy');     
+Route::group(['prefix' => 'master/uom','middleware' => ['auth']], function () {
+    Route::any('/', 'UomController@index')->middleware('permission:uom_list');
+    Route::any('create', 'UomController@create')->middleware('permission:uom_create');
+    Route::any('store', 'UomController@store')->middleware('permission:uom_create');
+    Route::any('show/{id}', 'UomController@show')->middleware('permission:uom_list');
+    Route::any('edit/{id}', 'UomController@edit')->middleware('permission:uom_edit');
+    Route::any('update/{id}', 'UomController@update')->middleware('permission:uom_edit');
+    Route::any('delete/{id}', 'UomController@destroy')->middleware('permission:uom_delete');
 });
 /* Language Master End Here  */
 
 /* UOM Master  Start Here  */
-Route::group(['prefix' => 'master/language'], function () {
-    Route::any('/', 'LanguageController@index');
-    Route::any('create', 'LanguageController@create');
-    Route::any('store', 'LanguageController@store');
-    Route::any('show/{id}', 'LanguageController@show');
-    Route::any('edit/{id}', 'LanguageController@edit');
-    Route::any('update/{id}', 'LanguageController@update');
-    Route::any('delete/{id}', 'LanguageController@destroy');     
+Route::group(['prefix' => 'master/language','middleware' => ['auth']], function () {
+    Route::any('/', 'LanguageController@index')->middleware('permission:language_master_list');
+    Route::any('create', 'LanguageController@create')->middleware('permission:language_master_create');
+    Route::any('store', 'LanguageController@store')->middleware('permission:language_master_create');
+    Route::any('show/{id}', 'LanguageController@show')->middleware('permission:language_master_list');
+    Route::any('edit/{id}', 'LanguageController@edit')->middleware('permission:language_master_edit');
+    Route::any('update/{id}', 'LanguageController@update')->middleware('permission:language_master_edit');
+    Route::any('delete/{id}', 'LanguageController@destroy')->middleware('permission:language_master_list_delete');
 });
 /* Uom Master End Here  */
 
 /* Category One Master  Start Here  */
-Route::group(['prefix' => 'master/category-one'], function () {
-    Route::any('/', 'CategoryOneController@index');
-    Route::any('create', 'CategoryOneController@create');
-    Route::any('store', 'CategoryOneController@store');
-    Route::any('show/{id}', 'CategoryOneController@show');
-    Route::any('edit/{id}', 'CategoryOneController@edit');
-    Route::any('update/{id}', 'CategoryOneController@update');
-    Route::any('delete/{id}', 'CategoryOneController@destroy');     
+Route::group(['prefix' => 'master/category-one','middleware' => ['auth']], function () {
+    Route::any('/', 'CategoryOneController@index')->middleware('permission:category_1_master_list');
+    Route::any('create', 'CategoryOneController@create')->middleware('permission:category_1_master_create');
+    Route::any('store', 'CategoryOneController@store')->middleware('permission:category_1_master_create');
+    Route::any('show/{id}', 'CategoryOneController@show')->middleware('permission:category_1_master_list');
+    Route::any('edit/{id}', 'CategoryOneController@edit')->middleware('permission:category_1_master_edit');
+    Route::any('update/{id}', 'CategoryOneController@update')->middleware('permission:category_1_master_edit');
+    Route::any('delete/{id}', 'CategoryOneController@destroy')->middleware('permission:category_1_master_delete');
 });
 /* Category One Master End Here  */
 
 /* Category Two Master  Start Here  */
-Route::group(['prefix' => 'master/category-two'], function () {
-    Route::any('/', 'CategoryTwoController@index');
-    Route::any('create', 'CategoryTwoController@create');
-    Route::any('store', 'CategoryTwoController@store');
-    Route::any('show/{id}', 'CategoryTwoController@show');
-    Route::any('edit/{id}', 'CategoryTwoController@edit');
-    Route::any('update/{id}', 'CategoryTwoController@update');
-    Route::any('delete/{id}', 'CategoryTwoController@destroy');     
+Route::group(['prefix' => 'master/category-two','middleware' => ['auth']], function () {
+    Route::any('/', 'CategoryTwoController@index')->middleware('permission:category_2_master_delete');
+    Route::any('create', 'CategoryTwoController@create')->middleware('permission:category_2_master_delete');
+    Route::any('store', 'CategoryTwoController@store')->middleware('permission:category_2_master_delete');
+    Route::any('show/{id}', 'CategoryTwoController@show')->middleware('permission:category_2_master_delete');
+    Route::any('edit/{id}', 'CategoryTwoController@edit')->middleware('permission:category_2_master_delete');
+    Route::any('update/{id}', 'CategoryTwoController@update')->middleware('permission:category_2_master_delete');
+    Route::any('delete/{id}', 'CategoryTwoController@destroy')->middleware('permission:category_2_master_delete');
 });
 /* Category Two Master End Here  */
 
 /* Category Three Master  Start Here  */
-Route::group(['prefix' => 'master/category-three'], function () {
-    Route::any('/', 'CategoryThreeController@index');
-    Route::any('create', 'CategoryThreeController@create');
-    Route::any('store', 'CategoryThreeController@store');
-    Route::any('show/{id}', 'CategoryThreeController@show');
-    Route::any('edit/{id}', 'CategoryThreeController@edit');
-    Route::any('update/{id}', 'CategoryThreeController@update');
-    Route::any('delete/{id}', 'CategoryThreeController@destroy');     
+Route::group(['prefix' => 'master/category-three','middleware' => ['auth']], function () {
+    Route::any('/', 'CategoryThreeController@index')->middleware('permission:category_3_master_list');
+    Route::any('create', 'CategoryThreeController@create')->middleware('permission:category_3_master_create');
+    Route::any('store', 'CategoryThreeController@store')->middleware('permission:category_3_master_create');
+    Route::any('show/{id}', 'CategoryThreeController@show')->middleware('permission:category_3_master_list');
+    Route::any('edit/{id}', 'CategoryThreeController@edit')->middleware('permission:category_3_master_edit');
+    Route::any('update/{id}', 'CategoryThreeController@update')->middleware('permission:category_3_master_edit');
+    Route::any('delete/{id}', 'CategoryThreeController@destroy')->middleware('permission:category_3_master_delete');
 });
 /* Category Three Master End Here  */
 
 /* Area Master  Start Here  */
-Route::group(['prefix' => 'master/area'], function () {
-    Route::any('/', 'AreaController@index');
-    Route::any('create', 'AreaController@create');
-    Route::any('store', 'AreaController@store');
-    Route::any('show/{id}', 'AreaController@show');
-    Route::any('edit/{id}', 'AreaController@edit');
-    Route::any('update/{id}', 'AreaController@update');
-    Route::any('delete/{id}', 'AreaController@destroy');     
+Route::group(['prefix' => 'master/area','middleware' => ['auth']], function () {
+    Route::any('/', 'AreaController@index')->middleware('permission:area_list');
+    Route::any('create', 'AreaController@create')->middleware('permission:area_create');
+    Route::any('store', 'AreaController@store')->middleware('permission:area_create');
+    Route::any('show/{id}', 'AreaController@show')->middleware('permission:area_list');
+    Route::any('edit/{id}', 'AreaController@edit')->middleware('permission:area_edit');
+    Route::any('update/{id}', 'AreaController@update')->middleware('permission:area_edit');
+    Route::any('delete/{id}', 'AreaController@destroy')->middleware('permission:area_delete');
 });
 /* Area Master End Here  */
 
 
 /* Agent Area Mapping Master  Start Here  */
-Route::group(['prefix' => 'master/agent-area-mapping'], function () {
-    Route::any('/', 'AgentAreaMappingController@index');
-    Route::any('create', 'AgentAreaMappingController@create');
-    Route::any('store', 'AgentAreaMappingController@store');
-    Route::any('show/{id}', 'AgentAreaMappingController@show');
-    Route::any('edit/{id}', 'AgentAreaMappingController@edit');
-    Route::any('update/{id}', 'AgentAreaMappingController@update');
-    Route::any('delete/{id}', 'AgentAreaMappingController@destroy');     
+Route::group(['prefix' => 'master/agent-area-mapping','middleware' => ['auth']], function () {
+    Route::any('/', 'AgentAreaMappingController@index')->middleware('permission:agent_area_mapping_list');
+    Route::any('create', 'AgentAreaMappingController@create')->middleware('permission:agent_area_mapping_create');
+    Route::any('store', 'AgentAreaMappingController@store')->middleware('permission:agent_area_mapping_create');
+    Route::any('show/{id}', 'AgentAreaMappingController@show')->middleware('permission:agent_area_mapping_list');
+    Route::any('edit/{id}', 'AgentAreaMappingController@edit')->middleware('permission:agent_area_mapping_edit');
+    Route::any('update/{id}', 'AgentAreaMappingController@update')->middleware('permission:agent_area_mapping_edit');
+    Route::any('delete/{id}', 'AgentAreaMappingController@destroy')->middleware('permission:agent_area_mapping_delete');
 });
 /* Agent Area Mapping Master End Here  */
 
 /* Item Master  Start Here  */
-Route::group(['prefix' => 'master/item'], function () {
-    Route::any('/', 'ItemController@index');
-    Route::any('create', 'ItemController@create');
-    Route::any('store', 'ItemController@store');
-    Route::any('show/{id}', 'ItemController@show');
-    Route::any('edit/{id}', 'ItemController@edit');
-    Route::any('update/{id}', 'ItemController@update');
-    Route::any('delete/{id}', 'ItemController@destroy');    
-    Route::any('uom-factor-convertion-for-item/{id}', 'ItemController@uomfactorconvertionforitem');     
-    Route::any('store-uom-factor-convertion-for-item', 'ItemController@store_uom_factor_convertion_for_item');     
-    Route::any('delete-uom-factor-convertion-for-item', 'ItemController@delete_uom_factor_convertion_for_item');     
+Route::group(['prefix' => 'master/item','middleware' => ['auth']], function () {
+    Route::any('/', 'ItemController@index')->middleware('permission:item_master_list');
+    Route::any('create', 'ItemController@create')->middleware('permission:item_master_create');
+    Route::any('store', 'ItemController@store')->middleware('permission:item_master_create');
+    Route::any('show/{id}', 'ItemController@show')->middleware('permission:item_master_list');
+    Route::any('edit/{id}', 'ItemController@edit')->middleware('permission:item_master_edit');
+    Route::any('update/{id}', 'ItemController@update')->middleware('permission:item_master_edit');
+    Route::any('delete/{id}', 'ItemController@destroy')->middleware('permission:item_master_delete');
+    Route::any('uom-factor-convertion-for-item/{id}', 'ItemController@uomfactorconvertionforitem')->middleware('permission:uom_factor_convertion_for_item_list');     
+    Route::any('store-uom-factor-convertion-for-item', 'ItemController@store_uom_factor_convertion_for_item')->middleware('permission:uom_factor_convertion_for_item_list');
+    Route::any('delete-uom-factor-convertion-for-item', 'ItemController@delete_uom_factor_convertion_for_item')->middleware('permission:uom_factor_convertion_for_item_delete');
 });
 /* Item Master End Here  */
 
 
 /* Item Master  Start Here  */
-Route::group(['prefix' => 'master/item-tax-details'], function () {
+Route::group(['prefix' => 'master/item-tax-details','middleware' => ['auth']], function () {
     Route::any('/', 'ItemTaxDetailsController@index');
     Route::any('create', 'ItemTaxDetailsController@create');
     Route::any('store', 'ItemTaxDetailsController@store');
@@ -412,7 +423,7 @@ Route::group(['prefix' => 'master/item-tax-details'], function () {
 
 
 /* Item   Start Here  */
-Route::group(['prefix' => 'master/uom-factor-convertion-for-item'], function () {
+Route::group(['prefix' => 'master/uom-factor-convertion-for-item','middleware' => ['auth']], function () {
     Route::any('/', 'UomFactorConvertionForItemController@index');
     Route::any('create', 'UomFactorConvertionForItemController@create');
     Route::any('store', 'UomFactorConvertionForItemController@store');
@@ -422,6 +433,33 @@ Route::group(['prefix' => 'master/uom-factor-convertion-for-item'], function () 
     Route::any('delete/{id}', 'UomFactorConvertionForItemController@destroy');     
 });
 /* Item Master End Here  */
+
+
+/* User Master Start Here  */
+Route::group(['prefix' => 'master/user','middleware' => ['auth']], function () {
+    Route::any('/', 'UserController@index');
+    Route::any('create', 'UserController@create');
+    Route::any('store', 'UserController@store');
+    Route::any('show/{id}', 'UserController@show');
+    Route::any('edit/{id}', 'UserController@edit');
+    Route::any('update/{id}', 'UserController@update');
+    Route::any('delete/{id}', 'UserController@destroy');     
+});
+/* User Master End Here  */
+
+
+/* Role Master Group Start Here  */
+Route::group(['prefix' => 'master/role','middleware' => ['auth'],'middleware' => ['auth']], function () {
+    Route::any('/', 'RoleController@index');
+    Route::any('create', 'RoleController@create');
+    Route::any('store', 'RoleController@store');
+    Route::any('show/{id}', 'RoleController@show');
+    Route::any('edit/{id}', 'RoleController@edit');
+    Route::any('update/{id}', 'RoleController@update');
+    Route::any('delete/{id}', 'RoleController@destroy');
+});
+/* Role Master Group End Here  */
+
 
 
 
@@ -442,3 +480,7 @@ Route::any('master/address_type/store', 'AddressTypeController@store');
 
 
 
+
+Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');

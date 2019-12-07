@@ -27,37 +27,41 @@ class CustomerRequest extends FormRequest
         if($request->has('add')){
             $rule=array(
                 'name' => 'required|unique:customers,name,NULL,id,deleted_at,NULL',
-                'phone_no' => 'required|unique:customers,phone_no,NULL,id,deleted_at,NULL',
-                'email' => 'required|unique:customers,email,NULL,id,deleted_at,NULL',
+                'phone_no' => 'required|numeric|digits:10|unique:customers,phone_no,NULL,id,deleted_at,NULL',
+                'whatsapp_no' => 'nullable|numeric|digits:10',
+                'email' => 'required|email|unique:customers,email,NULL,id,deleted_at,NULL',
                 'pan_card' => 'required|unique:customers,pan_card,NULL,id,deleted_at,NULL',
                 'gst_no' => 'required|unique:customers,gst_no,NULL,id,deleted_at,NULL',
-                'max_credit_limit'=>'required',
-                'max_credit_days'=>'required',
-                'opening_balance'=>'required',
+                'max_credit_limit'=>'required|numeric|min:1',
+                'max_credit_days'=>'required|numeric|min:1',
+                'opening_balance'=>'required|numeric|min:1',
                 'price_level'=>'required',
                 'address_type_id .*' => 'required',
                 'address_line_1.*' => 'required',
                 'state_id.*' => 'required',
-                'postal_code.*' => 'required',
+                'postal_code.*' => 'required|numeric|min:5',
                 'bank_id.*' => 'required',
                 'branch_id.*' => 'required',
                 'ifsc.*' => 'required',
                 'account_type_id.*' => 'required',
                 'account_holder_name.*' => 'required',
                 'account_no.*' => 'required',
+
+               
              );
 }else{
             
 
             $rule=array(
-                'name' => 'required|unique:customers,name,NULL,id,deleted_at,NULL',
-                'phone_no' => 'required|unique:customers,phone_no,NULL,id,deleted_at,NULL',
-                'email' => 'required|unique:customers,email,NULL,id,deleted_at,NULL',
-                'pan_card' => 'required|unique:customers,pan_card,NULL,id,deleted_at,NULL',
-                'gst_no' => 'required|unique:customers,gst_no,NULL,id,deleted_at,NULL',
-                'max_credit_limit'=>'required',
-                'max_credit_days'=>'required',
-                'opening_balance'=>'required',
+                'name' => 'required|unique:customers,name,'.$this->id.',id,deleted_at,NULL',
+                'phone_no' => 'required|numeric|digits:10|unique:customers,phone_no,'.$this->id.',id,deleted_at,NULL',
+                'whatsapp_no' => 'nullable|numeric|digits:10',
+                'email' => 'required|email|unique:customers,email,'.$this->id.',id,deleted_at,NULL',
+                'pan_card' => 'required|unique:customers,pan_card,'.$this->id.',id,deleted_at,NULL',
+                'gst_no' => 'required|unique:customers,gst_no,'.$this->id.',id,deleted_at,NULL',
+                'max_credit_limit'=>'required|numeric|min:1',
+                'max_credit_days'=>'required|numeric|min:1',
+                'opening_balance'=>'required|numeric|min:1',
                 'price_level'=>'required',
                 
             );
@@ -65,14 +69,14 @@ class CustomerRequest extends FormRequest
                 $rule['address_type_id .*']='required';
                 $rule['address_line_1.*'] = 'required';
                 $rule['state_id.*'] = 'required';
-                $rule['postal_code.*'] = 'required';
+                $rule['postal_code.*'] = 'required|numeric|min:5';
                  }
 
             if($request->has('old_address_type_id')){
                 $rule['old_address_type_id .*']='required';
                 $rule['old_address_line_1.*'] = 'required';
                 $rule['old_state_id.*'] = 'required';
-                $rule['old_postal_code.*'] = 'required';
+                $rule['old_postal_code.*'] = 'required|numeric|min:5';
 
             }
 

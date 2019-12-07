@@ -153,7 +153,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance')}}" >
+                <input type="text" class="form-control only_allow_digit required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance')}}" >
                 <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Opening Balance

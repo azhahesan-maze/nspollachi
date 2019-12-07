@@ -26,6 +26,10 @@
           <th>{{ $category_1 }}</th>
             <th>{{ $category_2 }}</th>
             <th>{{ $category_3 }}</th>
+            <th>Item Name in English</th>
+            <th>Item Name in Tamil</th>
+            <th>Item Name in Malayalam</th>
+            <th>Item Name in Hindi</th>
             <th>Default Selling Price</th>
             <th>Mrp</th>
             <th>Uom</th>
@@ -43,6 +47,10 @@
               <td>{{ isset($value->category_one->name) ? $value->category_one->name : ""}}</td>
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td>
+              <td>{{ $value->print_name_in_english}}</td>
+              <td>{{ $value->print_name_in_language_1}}</td>
+              <td>{{ $value->print_name_in_language_2}}</td>
+              <td>{{ $value->print_name_in_language_3}}</td>
               <td class="amount">{{ $value->default_selling_price}}</td>
               <td class="amount">{{ $value->mrp}}</td>
               <td>{{ $value->uom->name}}</td>

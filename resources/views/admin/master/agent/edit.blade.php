@@ -70,7 +70,7 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control  phone_no required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$agent->phone_no)}}" >
+              <input type="text" class="form-control  phone_no only_allow_digit required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$agent->phone_no)}}" >
               <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
               <div class="invalid-feedback">
                 Enter valid Phone No
@@ -550,7 +550,7 @@
              <td>
                       <div class="form-group row">
                         <div class="col-sm-12">
-                        <input type="text" class="form-control proof_number only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
+                        <input type="text" class="form-control proof_number  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
                           <span class="mandatory"> {{ $errors->first('proof_number.'.$key)  }} </span>
                           <div class="invalid-feedback">
                             Enter valid Proof Number
@@ -562,7 +562,7 @@
                     <td>
                         <div class="form-group row">
                           <div class="col-sm-12">
-                          <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.'.$key) }}" >
+                          <input type="file" class="form-control proof_file   required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.'.$key) }}" >
                             <span class="mandatory"> {{ $errors->first('proof_file.'.$key)  }} </span>
                             <div class="invalid-feedback">
                               Enter valid Proof file
@@ -649,7 +649,7 @@ alert("Something Went Worng");
 
   
 
-$(document).on("blur change",".required_for_valid",function(){
+$(document).on("blur change",".required_for_valid,.required_for_proof_valid",function(){
        $(this).removeClass("is-invalid");
         $(this).removeClass("is-valid");
            if($(this).val() !=""){
@@ -717,9 +717,7 @@ function validation(){
                }
                
                  }
-
-
-        }else{
+}else{
            error_count++;
            $(this).removeClass("is-valid");
             $(this).addClass("is-invalid");
@@ -728,11 +726,48 @@ function validation(){
        return error_count;
    }
 
+   function proof_details_validation(){
+  
+  var error_count=0;
+  $(".required_for_valid").each(function(){
+   $(this).removeClass("is-invalid");
+      if($(this).val() !=""){
+       $(this).removeClass("is-invalid");
+       $(this).addClass("is-valid");
+       if($(this).attr('input-type') == "phone_no"){
+          var phone_no=$(this).val();
+           if(phone_no_validation(phone_no) == 0){
+             error_count++;
+           $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+           }
+            }
+
+            if($(this).attr('input-type') == "email"){
+          var email=$(this).val();
+          if(!email_validation(email)){
+           error_count++;
+           $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+          }
+          
+            }
+}else{
+      error_count++;
+      $(this).removeClass("is-valid");
+       $(this).addClass("is-invalid");
+   }
+  });
+  return error_count;
+}
+
 
    $(document).on("click",".submit",function(){
     var error_count=validation();
     var address_error_count=address_details_validation();
-    var common_error_count=parseInt(error_count)+parseInt(address_error_count);
+    var proof_details_count=proof_details_validation();
+    var common_error_count=parseInt(error_count)+parseInt(address_error_count)+parseInt(proof_details_count);
+
     if(common_error_count == 0){
       if($(".required_for_address_valid").length >0){
       
@@ -1013,7 +1048,7 @@ var address='';
             <div class="form-group row">\
               <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
               <div class="col-sm-8">\
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
+                <input type="text" class="form-control postal_code only_allow_digit required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
               <div class="invalid-feedback">\
                   Enter valid Postal Code\
                 </div>\
@@ -1104,7 +1139,7 @@ $(".address_label").each(function(key,index){
                       <td>\
                         <div class="form-group row">\
                           <div class="col-sm-12">\
-                          <input type="text" class="form-control proof_name only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="" >\
+                          <input type="text" class="form-control proof_name  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="" >\
                            <div class="invalid-feedback">\
                               Enter valid Proof Name\
                             </div>\
@@ -1124,7 +1159,7 @@ $(".address_label").each(function(key,index){
                             <td>\
                               <div class="form-group row">\
                                 <div class="col-sm-12">\
-                                <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="" >\
+                                <input type="file" class="form-control proof_file  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="" >\
                                   <div class="invalid-feedback">\
                                     Enter valid Proof file\
                                   </div>\

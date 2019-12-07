@@ -19,7 +19,7 @@
     <!-- font-awasome -->
     <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
     <!--date picker -->
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/datepicker/datepicker3.css')}}" type="text/css" />
     <!-- main js -->
     <script src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
     
@@ -169,7 +169,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Logout</a>
+            @if (Auth::user())
+            <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
+            @endif
+          
           </div>
         </li>
       </ul>
