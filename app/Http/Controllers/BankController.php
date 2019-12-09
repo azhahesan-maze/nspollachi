@@ -18,12 +18,7 @@ class BankController extends Controller
      */
     public function index()
     {
-     //   $bank=Bank::all();
-
-        $bank=LocationType::all();
-
-        return $bank->toJson();
-
+       $bank=Bank::all();
         return view('admin.master.bank.view',compact('bank'));
     }
 
