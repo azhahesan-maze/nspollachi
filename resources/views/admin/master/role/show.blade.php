@@ -6,7 +6,7 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>View Bank</h3>
+          <h3>View Role</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
