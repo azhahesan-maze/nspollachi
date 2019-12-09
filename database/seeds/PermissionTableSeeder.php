@@ -170,6 +170,16 @@ class PermissionTableSeeder extends Seeder
             ['name'=>'item_tax_details_edit','label'=>'Item Tax Details Edit','guard_name'=>'web'],
             ['name'=>'item_tax_details_delete','label'=>'Item Tax Details Delete','guard_name'=>'web'],
 
+            ['name'=>'user_list','label'=>'User List','guard_name'=>'web'],
+            ['name'=>'user_create','label'=>'User Create','guard_name'=>'web'],
+            ['name'=>'user_edit','label'=>'User Edit','guard_name'=>'web'],
+            ['name'=>'user_delete','label'=>'User Delete','guard_name'=>'web'],
+
+            ['name'=>'role_list','label'=>'Role List','guard_name'=>'web'],
+            ['name'=>'role_create','label'=>'Role Create','guard_name'=>'web'],
+            ['name'=>'role_edit','label'=>'Role Edit','guard_name'=>'web'],
+            ['name'=>'role_delete','label'=>'Role Delete','guard_name'=>'web'],
+
             
 
            

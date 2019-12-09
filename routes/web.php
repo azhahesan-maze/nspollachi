@@ -409,13 +409,13 @@ Route::group(['prefix' => 'master/item','middleware' => ['auth']], function () {
 
 /* Item Master  Start Here  */
 Route::group(['prefix' => 'master/item-tax-details','middleware' => ['auth']], function () {
-    Route::any('/', 'ItemTaxDetailsController@index');
-    Route::any('create', 'ItemTaxDetailsController@create');
-    Route::any('store', 'ItemTaxDetailsController@store');
-    Route::any('show/{id}', 'ItemTaxDetailsController@show');
-    Route::any('edit/{id}', 'ItemTaxDetailsController@edit');
-    Route::any('update/{id}', 'ItemTaxDetailsController@update');
-    Route::any('delete/{id}', 'ItemTaxDetailsController@destroy');    
+    Route::any('/', 'ItemTaxDetailsController@index')->middleware('permission:item_tax_details_list');
+    Route::any('create', 'ItemTaxDetailsController@create')->middleware('permission:item_tax_details_create');
+    Route::any('store', 'ItemTaxDetailsController@store')->middleware('permission:item_tax_details_create');
+    Route::any('show/{id}', 'ItemTaxDetailsController@show')->middleware('permission:item_tax_details_list');
+    Route::any('edit/{id}', 'ItemTaxDetailsController@edit')->middleware('permission:item_tax_details_edit');
+    Route::any('update/{id}', 'ItemTaxDetailsController@update')->middleware('permission:item_tax_details_edit');
+    Route::any('delete/{id}', 'ItemTaxDetailsController@destroy')->middleware('permission:item_tax_details_delete');
    
 });
 /* Item Master End Here  */
@@ -437,26 +437,26 @@ Route::group(['prefix' => 'master/uom-factor-convertion-for-item','middleware' =
 
 /* User Master Start Here  */
 Route::group(['prefix' => 'master/user','middleware' => ['auth']], function () {
-    Route::any('/', 'UserController@index');
-    Route::any('create', 'UserController@create');
-    Route::any('store', 'UserController@store');
-    Route::any('show/{id}', 'UserController@show');
-    Route::any('edit/{id}', 'UserController@edit');
-    Route::any('update/{id}', 'UserController@update');
-    Route::any('delete/{id}', 'UserController@destroy');     
+    Route::any('/', 'UserController@index')->middleware('permission:user_list');
+    Route::any('create', 'UserController@create')->middleware('permission:user_create');
+    Route::any('store', 'UserController@store')->middleware('permission:user_create');
+    Route::any('show/{id}', 'UserController@show')->middleware('permission:user_list');
+    Route::any('edit/{id}', 'UserController@edit')->middleware('permission:user_edit');
+    Route::any('update/{id}', 'UserController@update')->middleware('permission:user_edit');
+    Route::any('delete/{id}', 'UserController@destroy')->middleware('permission:user_delete');
 });
 /* User Master End Here  */
 
 
 /* Role Master Group Start Here  */
 Route::group(['prefix' => 'master/role','middleware' => ['auth'],'middleware' => ['auth']], function () {
-    Route::any('/', 'RoleController@index');
-    Route::any('create', 'RoleController@create');
-    Route::any('store', 'RoleController@store');
-    Route::any('show/{id}', 'RoleController@show');
-    Route::any('edit/{id}', 'RoleController@edit');
-    Route::any('update/{id}', 'RoleController@update');
-    Route::any('delete/{id}', 'RoleController@destroy');
+    Route::any('/', 'RoleController@index')->middleware('permission:role_list');
+    Route::any('create', 'RoleController@create')->middleware('permission:role_create');
+    Route::any('store', 'RoleController@store')->middleware('permission:role_create');
+    Route::any('show/{id}', 'RoleController@show')->middleware('permission:role_list');
+    Route::any('edit/{id}', 'RoleController@edit')->middleware('permission:role_edit');
+    Route::any('update/{id}', 'RoleController@update')->middleware('permission:role_edit');
+    Route::any('delete/{id}', 'RoleController@destroy')->middleware('permission:role_delete');
 });
 /* Role Master Group End Here  */
 
@@ -466,7 +466,7 @@ Route::group(['prefix' => 'master/role','middleware' => ['auth'],'middleware' =>
 
 
 
-Route::any('master/address_type/store', 'AddressTypeController@store');
+//Route::any('master/address_type/store', 'AddressTypeController@store');
 
 
 

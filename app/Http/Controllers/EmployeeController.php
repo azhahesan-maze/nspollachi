@@ -93,9 +93,7 @@ class EmployeeController extends Controller
         }
 
         $batch_insert_for_proof_details=array();
-
-
-            if($request->hasfile('proof_file'))
+         if($request->hasfile('proof_file'))
                 {
                     foreach($request->file('proof_file') as $keys=>$image)
                    {
@@ -148,13 +146,14 @@ class EmployeeController extends Controller
         $state=State::all();
         $address_type =AddressType::all();
         $employee_address_details=AddressDetails::where('address_ref_id',$id)->where('address_table','Emp')->get();
-        return view('admin.master.employee.edit',compact('employee','department','state','employee_address_details','address_type'));
+        $employee_proof_details=ProofDetails::where('proof_ref_id',$id)->where('proof_table','Emp')->get();
+        return view('admin.master.employee.edit',compact('employee_proof_details','employee','department','state','employee_address_details','address_type'));
     }
 
     
     public function update(EmployeeCreateRequest $request, Employee $employee,$id)
     { 
-        
+       // echo "<pre>";print_r($request->all());exit;
         $employee = Employee::find($id);
         $profile_name=$employee->profile;
         $destinationPath = 'storage/employee_profile/';
@@ -216,6 +215,34 @@ class EmployeeController extends Controller
         }
          /* Insert New Address Details End Here */
 
+
+         $batch_insert_for_proof_details=array();
+         if($request->hasfile('proof_file'))
+                {
+                    foreach($request->file('proof_file') as $keys=>$image)
+                   {
+                       $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                       $image->move('storage/agent_proof_details', $name);  
+                       $proof_details=array(
+                        'proof_table'=>"Emp",
+                        'proof_ref_id'=>$employee->id,
+                        'name'=>$request->proof_name[$keys],
+                        'number'=>$request->proof_number[$keys],
+                        'file'=>$name,
+                        'created_by'=>0,
+                        'updated_by'=>0,
+                        'created_at'=>$now,
+                        'updated_at'=>$now,
+                       );
+
+                       $batch_insert_for_proof_details[]=$proof_details;
+                      }
+
+                      if(count($batch_insert_for_proof_details)>0){
+                        ProofDetails::insert($batch_insert_for_proof_details);
+                     }
+                }
+
          /* Update Existing Address Deatils Start Here */
          if(isset($request->old_address_type_id)){
             foreach($request->old_address_type_id as $key=>$value){
@@ -241,6 +268,33 @@ class EmployeeController extends Controller
                 
             }
          /* Update Existing Address Detils End Here */
+
+         /* Update Exsiting Proof Details Start Here */
+         if(isset($request->old_proof_name))
+         {
+                foreach($request->old_proof_name as $proof_key=>$value)
+                {
+                    
+                    $proof_details=ProofDetails::find($request->proof_details_id[$proof_key]);
+                    $name=$proof_details->file;
+                    
+                    if(isset($request->old_proof_file[$proof_key]) && $request->old_proof_file[$proof_key] !="")
+                    {
+                        $image=$request->old_proof_file[$proof_key];
+                        $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                        $image->move('storage/agent_proof_details', $name);  
+                    }
+                    $proof_details->proof_table="Emp";
+                    $proof_details->proof_ref_id=$employee->id;
+                    $proof_details->name=$request->old_proof_name[$proof_key];
+                    $proof_details->number=$request->old_proof_number[$proof_key];
+                    $proof_details->file=$name;
+                    $proof_details->updated_by=0;
+                    $proof_details->save();
+                }
+            }
+
+         /* Update Exsiting Proof Details End Here */
 
 
 

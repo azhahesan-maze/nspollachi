@@ -74,102 +74,180 @@
             </a>
             <ul class="dropdown-menu megamenu">
                     <div class="row mx-0">
+                   @if(Gate::check('state_list') || Gate::check('district_list') || Gate::check('city_list') || Gate::check('location_type_list') || Gate::check('address_type') || Gate::check('location_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Location</li>
+                            @can('state_list')
                             <li><a href="{{url('master/state')}}">State</a></li>
+                            @endcan
+                            @can('district_list')
                             <li><a href="{{url('master/district')}}">District</a></li>
+                            @endcan
+                            @can('city_list')
                             <li><a href="{{url('master/city')}}">City</a></li>
+                            @endcan
+                            @can('location_type_list')
                             <li><a href="{{url('master/location-type')}}">Location Type</a></li>
+                            @endcan
+                            @can('address_type')
                             <li><a href="{{url('master/address-type')}}">Address Type</a></li>
+                            @endcan
+                            @can('location_list')
                             <li><a href="{{url('master/location')}}">Location</a></li>
+                            @endcan
                         </ul>
                     </li>
+                    @endif
+                    @if(Gate::check('bank_list') || Gate::check('bank_branch_list') || Gate::check('denomination_list') || Gate::check('accounts_type_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Bank</li>
+                            @can('bank_list')
                             <li><a href="{{url('master/bank')}}">Bank</a></li>
+                            @endcan
+                            @can('bank_branch_list')
                             <li><a href="{{url('master/bank-branch')}}">Bank Branch</a></li>
+                            @endcan
+                            @can('denomination_list')
                             <li><a href="{{url('master/denomination')}}">Denomination</a></li>
+                            @endcan
+                            @can('accounts_type_list')
                             <li><a href="{{url('master/accounts-type')}}">Accounts Type</a></li>
+                            @endcan
                         </ul>
                     </li>
+                    @endif
+                    @if(Gate::check('department_list') || Gate::check('desigination_list') || Gate::check('employee_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Employee</li>
+                            @can('department_list')
                             <li><a href="{{url('master/department')}}">Department</a></li>
+                            @endcan
+                            @can('desigination_list')
                             <li><a href="{{url('master/designation')}}">Desigination</a></li>
+                            @endcan
+                            @can('employee_list')
                             <li><a href="{{url('master/employee')}}">Employee</a></li>
+                            @endcan
                         </ul>
                     </li>
-
+                    @endif
+                    @if(Gate::check('user_list') || Gate::check('role_list'))
                     <li class="col-md-3 dropdown-item">
                       <ul>
                           <li class="dropdown-header">User</li>
+                          @can('user_list')
                           <li><a href="{{url('master/user')}}">User</a></li>
+                          @endcan
+                          @can('role_list')
                           <li><a href="{{url('master/role')}}">Role</a></li>
+                          @endcan
                            </ul>
                   </li>
+                  @endif
+                  @if(Gate::check('expense_list') || Gate::check('income_list') || Gate::check('gst_master_list') || Gate::check('gift_voucher_matser_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
+                           
                             <li class="dropdown-header">Accounts</li>
+                            @can('expense_list')
                             <li><a href="{{url('master/expense-type')}}">Expense</a></li>
+                            @endcan
+                            @can('income_list')
                             <li><a href="{{url('master/income-type')}}">Income</a></li>
+                            @endcan
+                            @can('gst_master_list')
                             <li><a href="{{url('master/gst-type')}}">Gst</a></li>
+                            @endcan
+                            @can('gift_voucher_matser_list')
                             <li><a href="{{url('master/gift-voucher')}}">Gift Voucher</a></li>
+                            @endcan
                         </ul>
                     </li>
+                    @endif
 
 
 
 
                    
-
+                    @if(Gate::check('category_name_master_list') || Gate::check('category_1_master_list') || Gate::check('category_2_master_list') || Gate::check('category_3_master_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Category</li>
-                           
+                             @can('category_name_master_list')
                             <li><a href="{{url('master/category-name')}}">Category Name</a></li>
+                            @endcan
+                            @can('category_1_master_list')
                             <li><a href="{{url('master/category-one')}}">Category 1</a></li>
+                            @endcan
+                            @can('category_2_master_list')
                             <li><a href="{{url('master/category-two')}}">Category 2</a></li>
+                            @endcan
+                            @can('category_3_master_list')
                             <li><a href="{{url('master/category-three')}}">Category 3</a></li>
-                           
-                          
-                        </ul>
+                            @endcan
+                         </ul>
                     </li>
+                    @endif
 
+                    @if(Gate::check('language_master_list'))
                     <li class="col-md-3 dropdown-item">
                       <ul>
                           <li class="dropdown-header">Language</li>
+                          @can('language_master_list')
                            <li><a href="{{url('master/language')}}">Language</a></li>
+                           @endcan
                           </ul>
                   </li>
-
+                  @endif
+               
+                  @if(Gate::check('uom_list') || Gate::check('item_master_list') || Gate::check('item_tax_details_list'))
                     <li class="col-md-3 dropdown-item">
                       <ul>
                           <li class="dropdown-header">Item</li>
+                          @can('uom_list')
                           <li><a href="{{url('master/uom')}}">Uom</a></li>
+                          @endcan
+                          @can('item_master_list')
                           <li><a href="{{url('master/item')}}">Item</a></li>
+                          @endcan
+                          @can('item_tax_details_list')
                           <li><a href="{{url('master/item-tax-details')}}">Item Tax Details</a></li>
+                          @endcan
                         
                       </ul>
                   </li>
+                  @endif
 
+                  @if(Gate::check('agent_list') || Gate::check('customer_list') || Gate::check('supplier_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Vendor</li>
+                            @can('agent_list')
                             <li><a href="{{url('master/agent')}}">Agent</a></li>
+                            @endcan
+                          @can('customer_list')
                             <li><a href="{{url('master/customer')}}">Customer</a></li>
+                            @endcan
+                          @can('supplier_list')
                             <li><a href="{{url('master/supplier')}}">Supplier</a></li>
+                            @endcan
+                         
                           </ul>
                     </li>
-
+                    @endif
+                    @if(Gate::check('area_list'))
                     <li class="col-md-3 dropdown-item">
                       <ul>
                           <li class="dropdown-header">Area</li>
+                          @can('area_list')
                           <li><a href="{{url('master/area')}}">Area</a></li>
+                          @endcan
                            </ul>
                   </li>
+                  @endif
                     
             </ul>        
             
