@@ -15,17 +15,9 @@ class ItemImportExportController extends Controller
 
     public function import(Request $request) 
     {
-
-        $path = $request->file('file')->getRealPath();
-
-     $data = Excel::import(new ItemsImport,$path);
-
-     echo "<pre>";print_r($data);
-     
-     exit;
-
-     Excel::import(new ItemsImport,request()->file('file'));
-           
-        return back();
+        $path1 = $request->file('file')->store('temp'); 
+$path=storage_path('app').'/'.$path1;  
+ $data = Excel::import(new ItemsImport,$path);
+ return back();
     }
 }
