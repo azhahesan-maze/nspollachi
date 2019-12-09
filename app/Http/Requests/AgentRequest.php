@@ -40,7 +40,8 @@ class AgentRequest extends FormRequest
                 
             );
 
-            if($request->has('proof_name')){
+            if($request->has('proof_name'))
+            {
                 $rule['proof_name.*'] = 'required';
                 $rule['proof_number.*'] = 'required';
                 $rule['proof_file.*'] = 'required';
@@ -112,6 +113,9 @@ class AgentRequest extends FormRequest
             'proof_name.*.required' => 'Proof Number field is required',
             'proof_number.*.required' => 'Proof Number field is required',
             'proof_file.*.required' => 'Proof File field is required',
+            'old_proof_name.*.required' => 'Proof Number field is required',
+            'old_proof_number.*.required' => 'Proof Number field is required',
+            'old_proof_file.*.required' => 'Proof File field is required',
         ];
     }
 }

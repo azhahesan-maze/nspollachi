@@ -39,6 +39,13 @@ class EmployeeCreateRequest extends FormRequest
                 'postal_code.*' => 'required',
             );
 
+            if($request->has('proof_name'))
+            {
+                $rule['proof_name.*'] = 'required';
+                $rule['proof_number.*'] = 'required';
+                $rule['proof_file.*'] = 'required';
+            }
+
         }else{
 
             $rule=array(
@@ -66,6 +73,18 @@ class EmployeeCreateRequest extends FormRequest
                 $rule['old_postal_code.*'] = 'required';
 
             }
+
+            if($request->has('proof_name')){
+                $rule['proof_name.*'] = 'required';
+                $rule['proof_number.*'] = 'required';
+                $rule['proof_file.*'] = 'required';
+            }
+
+            if($request->has('old_proof_name')){
+                $rule['old_proof_name.*'] = 'required';
+                $rule['old_proof_number.*'] = 'required';
+                $rule['old_proof_file.*'] = 'required';
+            }
             
 
 
@@ -73,24 +92,7 @@ class EmployeeCreateRequest extends FormRequest
         
 
         return $rule;
-
-       
-        // return [
-           
-        //     //'city_id.*' => 'required',
-           
-        //     //'*.city'=>'required|array',
-        //     //'*.city'=>'required',
-        //     /*'department'=>'required',
-        //     'father_name'=>'required',
-        //     'blood_group'=>'required',
-        //     'material_status'=>'required',
-        //     'profile'=>'required', */
-
-        // ];
-
-
-    }
+}
 
     public function messages()
     {
@@ -105,6 +107,12 @@ class EmployeeCreateRequest extends FormRequest
             'old_address_line_1.*.required' => 'Address Line  field is required',
             'old_state_id.*.required' => 'State field is required',
             'old_postal_code.*.required' => 'Postal Code field is required',
+            'proof_name.*.required' => 'Proof Number field is required',
+            'proof_number.*.required' => 'Proof Number field is required',
+            'proof_file.*.required' => 'Proof File field is required',
+            'old_proof_name.*.required' => 'Proof Number field is required',
+            'old_proof_number.*.required' => 'Proof Number field is required',
+            'old_proof_file.*.required' => 'Proof File field is required',
         ];
     }
 }
