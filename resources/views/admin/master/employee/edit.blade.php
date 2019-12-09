@@ -38,7 +38,7 @@
              </select>
              <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
            </div>
-           <input type="text" class="form-control required_for_valid name" name="name" error-data="Employee Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$employee->name)}}>
+           <input type="text" class="form-control  required_for_valid name" name="name" error-data="Employee Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$employee->name)}}>
            
            <div class="invalid-feedback">
              Enter valid Employee Name
@@ -55,7 +55,7 @@
            <div class="form-group row">
              <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Code <span class="mandatory">*</span></label>
              <div class="col-sm-8">
-               <input type="text" class="form-control code only_allow_alp_num_dot_com_amp required_for_valid" error-data="Enter valid Employee Code" placeholder="Employee Code" name="code" value="{{old('code',$employee->code)}}" >
+               <input type="text" class="form-control code  required_for_valid" error-data="Enter valid Employee Code" placeholder="Employee Code" name="code" value="{{old('code',$employee->code)}}" >
                <span class="mandatory"> {{ $errors->first('code')  }} </span>
                <div class="invalid-feedback">
                  Enter valid Employee Code
@@ -68,7 +68,7 @@
            <div class="form-group row">
              <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
              <div class="col-sm-8">
-               <input type="text" class="form-control  phone_no required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone_no)}}" >
+               <input type="text" class="form-control only_allow_digit phone_no required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone_no)}}" >
                <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
                <div class="invalid-feedback">
                  Enter valid Phone No
@@ -271,7 +271,7 @@
                   <div class="form-group row">
                     <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control old_postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="old_postal_code[]" value="{{ old('old_postal_code.'.$key,$values->postal_code) }}" required>
+                    <input type="text" class="form-control only_allow_digit old_postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="old_postal_code[]" value="{{ old('old_postal_code.'.$key,$values->postal_code) }}" required>
                       <span class="mandatory"> {{ $errors->first('old_postal_code.'.$key)  }} </span>
                       <div class="invalid-feedback">
                         Enter valid Postal Code
@@ -397,7 +397,7 @@
               <div class="form-group row">
                 <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
                 <div class="col-sm-8">
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" required>
+                <input type="text" class="form-control only_allow_digit postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="{{ old('postal_code.'.$key) }}" required>
                   <span class="mandatory"> {{ $errors->first('postal_code.'.$key)  }} </span>
                   <div class="invalid-feedback">
                     Enter valid Postal Code
@@ -462,7 +462,7 @@
                           <td>
                               <div class="form-group row">
                                 <div class="col-sm-12">
-                                <input type="file" class="form-control old_proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="old_proof_file[]" value="" >
+                                <input type="file" class="form-control old_proof_file only_allow_digit " error-data="Enter valid Postal Code" placeholder="Proof Name" name="old_proof_file[]" value="" >
                                   <span class="mandatory"> {{ $errors->first('old_proof_file.'.$key)  }} </span>
                                   <div class="invalid-feedback">
                                     Enter valid Proof file
@@ -508,7 +508,7 @@
              <td>
                       <div class="form-group row">
                         <div class="col-sm-12">
-                        <input type="text" class="form-control proof_number  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
+                        <input type="text" class="form-control proof_number  only_allow_digit required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
                           <span class="mandatory"> {{ $errors->first('proof_number.'.$key)  }} </span>
                           <div class="invalid-feedback">
                             Enter valid Proof Number
@@ -1027,7 +1027,7 @@ var address='';
             <div class="form-group row">\
               <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>\
               <div class="col-sm-8">\
-                <input type="text" class="form-control postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
+                <input type="text" class="form-control only_allow_digit postal_code required_for_valid required_for_address_valid" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
               <div class="invalid-feedback">\
                   Enter valid Postal Code\
                 </div>\

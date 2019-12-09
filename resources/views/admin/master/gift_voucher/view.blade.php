@@ -39,9 +39,10 @@
               <td>{{ $value->name}}</td>
               <td>{{ $value->code}}</td>
               <td>{{ $value->value}}</td>
-              <td>{{ $value->remark}}</td>
+             
               <td>{{ $value->valid_from !="" ? date('d-m-Y',strtotime($value->valid_from)) : ""}}</td>
               <td>{{ $value->valid_to !="" ? date('d-m-Y',strtotime($value->valid_to)) : ""}}</td>
+               <td>{{ $value->remark}}</td>
               <td> 
                 <a href="{{url('master/gift-voucher/show/'.$value->id )}}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{url('master/gift-voucher/edit/'.$value->id )}}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>

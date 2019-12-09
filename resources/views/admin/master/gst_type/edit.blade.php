@@ -40,7 +40,7 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Gst Code <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control  code" placeholder="Gst Code" name="code" value="{{old('code',$gstType->code)}}" required>
+              <input type="text" class="form-control only_allow_alp_num_dot_com_amp  code" placeholder="Gst Code" name="code" value="{{old('code',$gstType->code)}}" required>
               <span class="mandatory"> {{ $errors->first('code')  }} </span>
               <div class="invalid-feedback">
                 Enter valid Gst Code
@@ -53,7 +53,7 @@
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Gst Value <span class="mandatory">*</span></label>
             <div class="col-sm-8">
-              <input type="text" class="form-control value" placeholder="Gst Value" name="value" value="{{old('value',$gstType->value)}}" required>
+              <input type="text" class="form-control value only_allow_digit" placeholder="Gst Value" name="value" value="{{old('value',$gstType->value)}}" required>
               <span class="mandatory"> {{ $errors->first('value')  }} </span>
               <div class="invalid-feedback">
                 Enter valid Gst Value

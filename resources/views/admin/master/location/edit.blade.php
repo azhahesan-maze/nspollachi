@@ -39,7 +39,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Location Type <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select location_type_id" name="location_type_id" required>
+                <select class="js-example-basic-multiple form-control col-12 custom-select location_type_id" name="location_type_id" required>
                   <option value="">Choose Location Type</option>
                   @foreach($location_type as $value)
                   <option value="{{ $value->id }}" {{ old('location_type_id',$location->location_type_id) == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
@@ -97,7 +97,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select state_id" name="state_id" required>
+                <select class="js-example-basic-multiple form-control col-12 custom-select state_id" name="state_id" required>
                   <option value="">Choose State</option>
                   @foreach($state as $value)
                   <option value="{{ $value->id }}" {{ old('state_id',$location->state_id) == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
@@ -115,7 +115,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select district_id" name="district_id">
+                <select class="js-example-basic-multiple form-control col-12 custom-select district_id" name="district_id">
                   <option value="">Choose District</option>
                   
                 </select>
@@ -133,7 +133,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 custom-select city_id" name="city_id" >
+                <select class="js-example-basic-multiple form-control col-12 custom-select city_id" name="city_id" >
                   <option value="">Choose City</option>
                   
                 </select>
@@ -150,7 +150,7 @@
             <div class="form-group row">
               <label for="land_mark" class="col-sm-4 col-form-label">Postal Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control postal_code" placeholder="Postal Code" name="postal_code" value="{{old('postal_code',$location->postal_code)}}" required>
+                <input type="text" class="form-control only_allow_digit postal_code" placeholder="Postal Code" name="postal_code" value="{{old('postal_code',$location->postal_code)}}" required>
                 <span class="mandatory"> {{ $errors->first('postal_code')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Postal Code

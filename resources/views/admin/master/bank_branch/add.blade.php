@@ -56,7 +56,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Ifsc Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name  ifsc" placeholder="IFSC Code" name="ifsc" value="{{old('ifsc')}}" required>
+                <input type="text" class="form-control  only_allow_alp_numeric  ifsc" placeholder="IFSC Code" name="ifsc" value="{{old('ifsc')}}" required>
                 <span class="mandatory"> {{ $errors->first('ifsc')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Ifsc Code

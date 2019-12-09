@@ -69,7 +69,7 @@ class EmployeeController extends Controller
         $now = Carbon::now('Asia/Kolkata')->toDateTimeString();
       if ($employee->save()) {
         $batch_insert_array=array();
-        if($request->hasfile('address_line_1')){
+        if($request->has('address_line_1')){
         foreach($request->address_type_id as $key=>$value){
             $data_to_store=array(
                 'address_table'=>"Emp",

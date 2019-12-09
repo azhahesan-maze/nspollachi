@@ -90,7 +90,7 @@
                   <select class="js-example-basic-multiple col-12 form-control custom-select role_id required_for_valid" error-data="Enter Role" name="role_id" >
                       <option value="">Choose Role</option>
                       @foreach ($role as $value)
-                  <option value="{{$value->id}}">{{$value->name}}</option>
+                  <option value="{{$value->id}}"  {{ old('role_id') == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
                       @endforeach
                       </select>
                     <span class="mandatory"> {{ $errors->first('role_id')  }} </span>

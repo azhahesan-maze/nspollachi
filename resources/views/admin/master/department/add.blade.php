@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Department Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Department Name" name="name" value="{{old('name')}}" required>
+                <input type="text" class="form-control name only_allow_alp_numeric" placeholder="Department Name" name="name" value="{{old('name')}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Name
@@ -39,7 +39,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Short Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control short_name" placeholder="Short Name" name="short_name" value="{{old('short_name')}}" required >
+                <input type="text" class="form-control only_allow_alp_numeric short_name" placeholder="Short Name" name="short_name" value="{{old('short_name')}}" required >
                 <span class="mandatory"> {{ $errors->first('short_name')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Short Name

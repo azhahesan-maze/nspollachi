@@ -42,7 +42,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Gift Voucher Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  code" placeholder="Gift Voucher Code" name="code" value="{{old('code')}}" required>
+                <input type="text" class="form-control only_allow_alp_num_dot_com_amp code" placeholder="Gift Voucher Code" name="code" value="{{old('code')}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Gift Voucher Code
@@ -55,7 +55,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Gift Voucher Value <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control value" placeholder="Gift Voucher Value" name="value" value="{{old('value')}}" required>
+                <input type="text" class="form-control only_allow_digit value" placeholder="Gift Voucher Value" name="value" value="{{old('value')}}" required>
                 <span class="mandatory"> {{ $errors->first('value')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Gift Voucher Value

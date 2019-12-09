@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Amount <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control Amount only_allow_alp_num_dot_com_amp" placeholder="Amount" name="amount" value="{{old('amount',$denomination->amount)}}" required>
+                <input type="text" class="form-control Amount only_allow_alp_numeric" placeholder="Amount" name="amount" value="{{old('amount',$denomination->amount)}}" required>
                 <span class="mandatory"> {{ $errors->first('amount')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Amount

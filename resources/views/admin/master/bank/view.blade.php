@@ -10,7 +10,7 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/bank/create')}}">Add State</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/bank/create')}}">Add Bank</a></button></li>
           </ul>
         </div>
       </div>

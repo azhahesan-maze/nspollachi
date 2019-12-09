@@ -33,7 +33,7 @@
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name}}</td>
-              <td>{{ $value->location_type_id}}</td>
+              <td>{{ $value->location_type->name}}</td>
               <td>
                   @if($value->address_line_1 != "")
                   {{ $value->address_line_1 }},</br>
