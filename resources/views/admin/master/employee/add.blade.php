@@ -25,33 +25,11 @@
 
      
         <div class="form-row">
-         
-
-          <div class="col-md-8">
+         <div class="col-md-8">
           <h4>Professional details:</h4>
           </div>
           <div class="col-md-6">
-            <!-- <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-3 col-form-label">Employee Name <span class="mandatory">*</span></label>
-              <div class="col-sm-2">
-              <select class="js-example-basic-multiple col-12 custom-select salutation required_for_valid"  error-data="Salutation field is required" placeholder="Choose Salutation" name="salutation">
-                  
-                  <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
-                  <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }} >Mrs</option>
-                </select>
-                <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
-                <div class="invalid-feedback">
-                Salutation field is required
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp required_for_valid" error-data="Enter valid Employee Name" placeholder="Employee Name" name="name" value="{{old('name')}}">
-                <span class="mandatory"> {{ $errors->first('name')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Employee Name
-                </div>
-              </div>
-            </div> -->
+            
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -76,15 +54,7 @@
           </div>
 
           </div>
-
-          @if($errors->has('city'))
-          dd($errors)
-          @endif
-
-
-
-
-          <div class="col-md-6">
+       <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -384,6 +354,140 @@
               @endif
 
           </div>
+
+          <div class="form-row">
+              <div class="col-md-8">
+                       <div class="form-group row">
+                       <div class="col-md-4">
+                       <label for="validationCustom01" class=" col-form-label"><h4>Proof Details :</h4> </label>
+                           
+                       </div>
+                         </div>
+              </div>
+              <div class="col-md-12">
+                <table class="table">
+                  <thead>
+                    <th> S.no </th>
+                    <th> Proof Name</th>
+                    <th> Proof Number</th>
+                    <th> Files </th>
+                    <th>Action </th>
+                  </thead>
+                  <tbody class="append_proof_details">
+                    <tr>
+                      <td><span class="s_no"> 1 </span></td>
+                      <td>
+                        <div class="form-group row">
+                          <div class="col-sm-12">
+                          <input type="text" class="form-control proof_name required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="{{ old('proof_name.0') }}" >
+                            <span class="mandatory"> {{ $errors->first('proof_name.0')  }} </span>
+                            <div class="invalid-feedback">
+                              Enter valid Proof Name
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                   <td>
+                            <div class="form-group row">
+                              <div class="col-sm-12">
+                              <input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.0') }}" >
+                                <span class="mandatory"> {{ $errors->first('proof_number.0')  }} </span>
+                                <div class="invalid-feedback">
+                                  Enter valid Proof Number
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="file" class="form-control proof_file  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.0') }}" >
+                                  <span class="mandatory"> {{ $errors->first('proof_file.0')  }} </span>
+                                  <div class="invalid-feedback">
+                                    Enter valid Proof file
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group row">
+                                    <div class="col-sm-3">
+                                    <label class="btn btn-success add_proof_details">+</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <label class="btn btn-danger remove_proof_details">-</label>
+                                      </div>
+                                  </div>
+                            </td>
+
+                    </tr>
+
+                    @if (old('proof_name'))
+            @foreach (old('proof_name') as $key=>$value)
+            @if($key > 0)
+            <tr>
+                <td><span class="s_no"> 1 </span></td>
+                <td>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                    <input type="text" class="form-control proof_name required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="{{ old('proof_name.'.$key) }}" >
+                       <span class="mandatory"> {{ $errors->first('proof_name.'.$key)  }} </span>
+                      <div class="invalid-feedback">
+                        Enter valid Proof Name
+                      </div>
+                    </div>
+                  </div>
+                </td>
+             <td>
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                        <input type="text" class="form-control proof_number   required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="{{ old('proof_number.'.$key) }}" >
+                          <span class="mandatory"> {{ $errors->first('proof_number.'.$key)  }} </span>
+                          <div class="invalid-feedback">
+                            Enter valid Proof Number
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group row">
+                          <div class="col-sm-12">
+                          <input type="file" class="form-control proof_file only_allow_digit  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="{{ old('proof_file.'.$key) }}" >
+                            <span class="mandatory"> {{ $errors->first('proof_file.'.$key)  }} </span>
+                            <div class="invalid-feedback">
+                              Enter valid Proof file
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                          <div class="form-group row">
+                              <div class="col-sm-3">
+                              <label class="btn btn-success add_proof_details">+</label>
+                              </div>
+                              <div class="col-sm-3">
+                                <label class="btn btn-danger remove_proof_details">-</label>
+                                </div>
+                            </div>
+                      </td>
+
+              </tr>
+              @endif
+            @endforeach
+            @endif
+                  </tbody>
+
+                </table>
+
+              </div>
+
+
+                       </div>
+
         <div class="col-md-7 text-right">
           <button class="btn btn-success submit" name="add" type="button">Submit</button>
         </div>
@@ -396,9 +500,106 @@
 
 <script type="text/javascript">
 
+function proof_details_validation()
+{
+  
+  var error_count=0;
+  $(".required_for_proof_valid").each(function(){
+   $(this).removeClass("is-invalid");
+      if($(this).val() !="")
+      {
+        $(this).removeClass("is-invalid");
+        $(this).addClass("is-valid");
+      }else
+      {
+        error_count++;
+        $(this).removeClass("is-valid");
+        $(this).addClass("is-invalid");
+      }
+  });
+  return error_count;
+}
+
+$(document).ready(function(){
+    set_sno_for_proof_details();
+  });
+
+  function set_sno_for_proof_details(){
+    $(".s_no").each(function(key,index){
+      $(this).html((key+1));
+    });
+  }
+
+  /* Add Proof Details Start Here */
+  $(document).on("click",".add_proof_details",function(){
+    var validation_count=proof_details_validation();
+    if(validation_count == 0)
+    {
+        var proof_details='<tr>\
+                      <td><span class="s_no"> 1 </span></td>\
+                      <td>\
+                        <div class="form-group row">\
+                          <div class="col-sm-12">\
+                          <input type="text" class="form-control proof_name  required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_name[]" value="" >\
+                           <div class="invalid-feedback">\
+                              Enter valid Proof Name\
+                            </div>\
+                          </div>\
+                        </div>\
+                      </td>\
+                       <td>\
+                            <div class="form-group row">\
+                              <div class="col-sm-12">\
+                              <input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="proof_number[]" value="" >\
+                               <div class="invalid-feedback">\
+                                  Enter valid Proof Number\
+                                </div>\
+                              </div>\
+                            </div>\
+                          </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="file" class="form-control proof_file   required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Name" name="proof_file[]" value="" >\
+                                  <div class="invalid-feedback">\
+                                    Enter valid Proof file\
+                                  </div>\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                                <div class="form-group row">\
+                                    <div class="col-sm-3">\
+                                    <label class="btn btn-success add_proof_details">+</label>\
+                                    </div>\
+                                    <div class="col-sm-3">\
+                                      <label class="btn btn-danger remove_proof_details">-</label>\
+                                      </div>\
+                                  </div>\
+                            </td>\
+                          </tr>';
+
+    $(".append_proof_details").append(proof_details);
+    set_sno_for_proof_details();
+                        }
+
+  });
+  /* Add Proof Details End Here */
+  /* Remove Proof Details Start Here */
+  $(document).on("click",".remove_proof_details",function(){
+    if($(".remove_proof_details").length > 1){
+      $(this).closest("tr").remove();
+    set_sno_for_proof_details();
+    }else{
+      alert("Atleast One Row Present");
+    }
+    
+  });
+  /* Remove Proof Details End Here */
 
 
-  $(document).on("blur change",".required_for_valid",function(){
+
+  $(document).on("blur change",".required_for_valid,.required_for_proof_valid",function(){
          $(this).removeClass("is-invalid");
           $(this).removeClass("is-valid");
              if($(this).val() !=""){

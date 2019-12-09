@@ -36,6 +36,8 @@ class ItemsImport implements ToCollection
                 $uom->save();
                 $uom_id=$uom->id;
             }
+
+            
            if($key >0 && $row[4] !="")
            {
 

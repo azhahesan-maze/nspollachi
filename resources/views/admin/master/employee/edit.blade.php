@@ -22,187 +22,198 @@
       {{csrf_field()}}
 
       <div class="form-row">
+        <div class="col-md-8">
+         <h4>Professional details:</h4>
+         </div>
+         <div class="col-md-6">
+           
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
+           <div class="input-group">
+           <div class="input-group-prepend">
+             <select class="form-control required_for_valid salutation" name="salutation" error-data="Enter valid Salutation" >
+                 <option value="Mr" {{ old('salutation',$employee->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
+                 <option value="Mrs" {{ old('salutation',$employee->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
+             </select>
+             <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+           </div>
+           <input type="text" class="form-control required_for_valid name" name="name" error-data="Employee Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$employee->name)}}>
+           
+           <div class="invalid-feedback">
+             Enter valid Employee Name
+           </div>
+           
+         </div>
+         <span class="mandatory"> {{ $errors->first('name')  }} </span>
+         <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+         </div>
+         </div>
 
-<div class="col-md-8">
-<h3> <u>Professional details :</u> </h3>
-</div>
-<div class="col-md-8">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Name <span class="mandatory">*</span></label>
-    <div class="col-sm-2">
-    <select class="js-example-basic-multiple col-12 custom-select salutation" placeholder="Choose Salutation" name="salutation" required>
-        <option value="">Choose Salutation</option>
-        <option value="Mr" {{ old('salutation' ,$employee->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
-        <option value="Mrs" {{ old('salutation',$employee->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
-      </select>
-      <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
-      <div class="invalid-feedback">
-      Salutation field is required
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Employee Name" name="name" value="{{old('name',$employee->name)}}" required>
-      <span class="mandatory"> {{ $errors->first('name')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Employee Name
-      </div>
-    </div>
-  </div>
-</div>
+         </div>
+      <div class="col-md-6">
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Code <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
+               <input type="text" class="form-control code only_allow_alp_num_dot_com_amp required_for_valid" error-data="Enter valid Employee Code" placeholder="Employee Code" name="code" value="{{old('code',$employee->code)}}" >
+               <span class="mandatory"> {{ $errors->first('code')  }} </span>
+               <div class="invalid-feedback">
+                 Enter valid Employee Code
+               </div>
+             </div>
+           </div>
+         </div>
 
+         <div class="col-md-6">
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
+               <input type="text" class="form-control  phone_no required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone_no)}}" >
+               <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
+               <div class="invalid-feedback">
+                 Enter valid Phone No
+               </div>
+             </div>
+           </div>
+         </div>
 
+         <div class="col-md-6">
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
+               <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$employee->email)}}" >
+               <span class="mandatory"> {{ $errors->first('email')  }} </span>
+               <div class="invalid-feedback">
+                 Enter valid Email
+               </div>
+             </div>
+           </div>
+         </div>
 
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Employee Code <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control code only_allow_alp_num_dot_com_amp" placeholder="Employee Code" name="code" value="{{old('code',$employee->code)}}" required>
-      <span class="mandatory"> {{ $errors->first('code')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Employee Code
-      </div>
-    </div>
-  </div>
-</div>
+         <div class="col-md-6">
+           @php
+           $dob="";
+               if(old('dob'))
+               {
+                $dob=old('dob');
+               }else{
+                $dob=$employee->dob !="" ? date('d-m-Y',strtotime($employee->dob)) : "";
+               }
+           @endphp
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
+               <input type="text" class="form-control dob required_for_valid" error-data="Enter valid DOB" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob',$dob)}}" >
+               <span class="mandatory"> {{ $errors->first('dob')  }} </span>
+               <div class="invalid-feedback">
+                 Enter valid DOB
+               </div>
+             </div>
+           </div>
+         </div>
 
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Phone No <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control phone_no " placeholder="Phone No" name="phone_no" value="{{old('phone_no',$employee->phone_no)}}" required>
-      <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Phone No
-      </div>
-    </div>
-  </div>
-</div>
+         <div class="col-md-6">
+           <div class="form-group row">
+             <label for="validationCustom01" class="col-sm-4 col-form-label">Department <span class="mandatory">*</span></label>
+             <div class="col-sm-8">
 
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control email" placeholder="Email" name="email" value="{{old('email',$employee->email)}}" required>
-      <span class="mandatory"> {{ $errors->first('email')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Email
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      
-      <input type="text" class="form-control dob" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob',$employee->dob)}}" required>
-      <span class="mandatory"> {{ $errors->first('dob')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid DOB
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Department <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-
-    <select class="js-example-basic-multiple col-12 custom-select department_id" placeholder="Choose Department" name="department_id" required>
-        <option value="">Choose Department</option>
-        @foreach($department as $value)
-        <option value="{{ $value->id}}" {{ old('department_id',$employee->department_id) == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
-        @endforeach
-       
-    </select>
-     
-      <span class="mandatory"> {{ $errors->first('department_id')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Department
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="row">
-<div class="col-md-8">
-<h3> <u>Personal Details :</u> </h3>
-</div>
-
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Father's Name <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control father_name" placeholder="Father's Name" name="father_name" value="{{old('father_name',$employee->father_name)}}">
-      <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Father's Name
-      </div>
-    </div>
-  </div>
+             <select class="js-example-basic-multiple col-12 form-control custom-select department_id required_for_valid" 
+             error-data="Enter valid Department" data-placeholder="Choose Department" name="department_id" >
+               <option value="">Choose Department</option>
+                 @foreach($department as $value)
+                 <option value="{{ $value->id}}" {{ old('department_id',$employee->department_id) == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
+                 @endforeach
+                
+             </select>
+              
+               <span class="mandatory"> {{ $errors->first('department_id')  }} </span>
+               <div class="invalid-feedback">
+                 Enter valid Department
+               </div>
+             </div>
+           </div>
+         </div>
 </div>
 
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Blood Group <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control blood_group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group',$employee->blood_group)}}" >
-      <span class="mandatory"> {{ $errors->first('blood_group')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Blood Group
-      </div>
-    </div>
-  </div>
-</div>
+<div class="form-row">
+    <div class="col-md-8">
+             <h4>Personal Details :</h4>
+             </div>
+   
+             <div class="col-md-6">
+               <div class="form-group row">
+                 <label for="validationCustom01" class="col-sm-4 col-form-label">Father's Name <span class="mandatory">*</span></label>
+                 <div class="col-sm-8">
+                   <input type="text" class="form-control father_name required_for_valid" error-data="Enter valid Father's Name" placeholder="Father's Name" name="father_name" value="{{old('father_name',$employee->father_name)}}">
+                   <span class="mandatory"> {{ $errors->first('father_name')  }} </span>
+                   <div class="invalid-feedback">
+                     Enter valid Father's Name
+                   </div>
+                 </div>
+               </div>
+             </div>
+   
+             <div class="col-md-6">
+               <div class="form-group row">
+                 <label for="validationCustom01" class="col-sm-4 col-form-label">Blood Group <span class="mandatory">*</span></label>
+                 <div class="col-sm-8">
+                   <input type="text" class="form-control blood_group required_for_valid" error-data="Enter valid Blood Group" placeholder="Blood Group" name="blood_group" value="{{old('blood_group',$employee->blood_group)}}" >
+                   <span class="mandatory"> {{ $errors->first('blood_group')  }} </span>
+                   <div class="invalid-feedback">
+                     Enter valid Blood Group
+                   </div>
+                 </div>
+               </div>
+             </div>
+   
+             <div class="col-md-6">
+               <div class="form-group row">
+                 <label for="validationCustom01" class="col-sm-4 col-form-label">Material Status <span class="mandatory">*</span></label>
+                 <div class="col-sm-8">
+                 <select class="js-example-basic-multiple col-12 form-control material_status select custom-select required_for_valid" 
+                 error-data="Enter valid Material Status" data-placeholder="Choose Material " name="material_status" >
+                 <option value=""></option>
+                    <option value="Married"  {{ old('material_status',$employee->material_status) == 'Married' ? 'selected' : '' }}>Married</option>
+                     <option value="Single" {{ old('material_status',$employee->material_status) == 'Single' ? 'selected' : '' }}>Single</option>
+                     <option value="Divorced" {{ old('material_status',$employee->material_status) == 'Divorced' ? 'selected' : '' }}>Divorced</option> 
+                  </select>
+                  
+                     <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
+                     <div class="invalid-feedback">
+                       Enter valid Material Status
+                     </div>
+                 </div>
+               </div>
+             </div>
+   
+             <div class="col-md-6">
+               <div class="form-group row">
+                 <label for="validationCustom01" class="col-sm-4 col-form-label">Photo <span class="mandatory">*</span></label>
+                 <div class="col-sm-8">
+                   <input type="file" class="form-control profile " placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
+                   <button type="button" id="cus-btn">CHOOSE A FILE</button>
+                   <span class="mandatory"> {{ $errors->first('profile')  }} </span>
+                   <div class="invalid-feedback">
+                     Enter valid profile
+                   </div>  
+                 </div>
+               </div>
+             </div>
+   
+             <div class="col-md-6">
+               <div class="form-group row">
+                 <label for="validationCustom01" class="col-sm-4 col-form-label">Access No <span class="mandatory">*</span></label>
+                 <div class="col-sm-8">
+                   <input type="text" class="form-control access_no required_for_valid" error-data="Enter valid Access No" placeholder="Access No" name="access_no" value="{{old('access_no',$employee->access_no)}}" >
+                   <span class="mandatory"> {{ $errors->first('access_no')  }} </span>
+                   <div class="invalid-feedback">
+                     Enter valid Access No
+                   </div>
+                 </div>
+               </div>
+             </div>
+   </div>
 
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Material Status <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-    <select class="js-example-basic-multiple col-12 custom-select material_status" placeholder="Choose Material Status" name="material_status" >
-        <option value="">Choose Material Status</option>
-        <option value="Married"  {{ old('material_status','Married') == 'Married' ? 'selected' : '' }}>Married</option>
-        <option value="Single" {{ old('material_status','Single') == 'Single' ? 'selected' : '' }}>Single</option>
-        <option value="Divorced" {{ old('material_status','Divorced') == 'Divorced' ? 'selected' : '' }}>Divorced</option>
-       
-     </select>
-     
-      <span class="mandatory"> {{ $errors->first('material_status')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Material Status
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Photo <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="file" class="form-control profile" placeholder="Father's Name" name="profile" value="{{old('profile')}}" >
-      <span class="mandatory"> {{ $errors->first('profile')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid profile
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-6">
-  <div class="form-group row">
-    <label for="validationCustom01" class="col-sm-4 col-form-label">Access No <span class="mandatory">*</span></label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control access_no" placeholder="Access No" name="access_no" value="{{old('access_no',$employee->access_no)}}" >
-      <span class="mandatory"> {{ $errors->first('access_no')  }} </span>
-      <div class="invalid-feedback">
-        Enter valid Access No
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 <div class="form-row">
     <div class="col-md-8">
              <div class="form-group row">

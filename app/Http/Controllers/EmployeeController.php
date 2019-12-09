@@ -8,6 +8,7 @@ use App\Models\AddressType;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\LocationType;
+use App\Models\ProofDetails;
 use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class EmployeeController extends Controller
    
     public function store(EmployeeCreateRequest $request)
     {
+
         $employee = new Employee();
         $profile_name="";
         $destinationPath = 'storage/employee_profile/';
@@ -67,6 +69,7 @@ class EmployeeController extends Controller
         $now = Carbon::now('Asia/Kolkata')->toDateTimeString();
       if ($employee->save()) {
         $batch_insert_array=array();
+        if($request->hasfile('address_line_1')){
         foreach($request->address_type_id as $key=>$value){
             $data_to_store=array(
                 'address_table'=>"Emp",
@@ -87,10 +90,41 @@ class EmployeeController extends Controller
                );
                $batch_insert_array[]=$data_to_store;
             }
+        }
+
+        $batch_insert_for_proof_details=array();
+
+
+            if($request->hasfile('proof_file'))
+                {
+                    foreach($request->file('proof_file') as $keys=>$image)
+                   {
+                       $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
+                       $image->move('storage/agent_proof_details', $name);  
+                       $proof_details=array(
+                        'proof_table'=>"Emp",
+                        'proof_ref_id'=>$employee->id,
+                        'name'=>$request->proof_name[$keys],
+                        'number'=>$request->proof_number[$keys],
+                        'file'=>$name,
+                        'created_by'=>0,
+                        'updated_by'=>0,
+                        'created_at'=>$now,
+                        'updated_at'=>$now,
+                       );
+
+                       $batch_insert_for_proof_details[]=$proof_details;
+                      }
+                }
             if(count($batch_insert_array)>0){
                 AddressDetails::insert($batch_insert_array);
             }
-           
+
+            if(count($batch_insert_for_proof_details)>0){
+                  
+                ProofDetails::insert($batch_insert_for_proof_details);
+             }
+            
 
 
             return Redirect::back()->with('success', 'Successfully created');

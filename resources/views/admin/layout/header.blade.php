@@ -102,6 +102,14 @@
                             <li><a href="{{url('master/employee')}}">Employee</a></li>
                         </ul>
                     </li>
+
+                    <li class="col-md-3 dropdown-item">
+                      <ul>
+                          <li class="dropdown-header">User</li>
+                          <li><a href="{{url('master/user')}}">User</a></li>
+                          <li><a href="{{url('master/role')}}">Role</a></li>
+                           </ul>
+                  </li>
                     <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Accounts</li>
@@ -114,31 +122,54 @@
 
 
 
+
                    
 
                     <li class="col-md-3 dropdown-item">
                         <ul>
-                            <li class="dropdown-header">Item</li>
-                            <li><a href="{{url('master/uom')}}">Uom</a></li>
-                            <li><a href="{{url('master/language')}}">Language</a></li>
+                            <li class="dropdown-header">Category</li>
+                           
                             <li><a href="{{url('master/category-name')}}">Category Name</a></li>
                             <li><a href="{{url('master/category-one')}}">Category 1</a></li>
                             <li><a href="{{url('master/category-two')}}">Category 2</a></li>
                             <li><a href="{{url('master/category-three')}}">Category 3</a></li>
+                           
                           
                         </ul>
                     </li>
 
                     <li class="col-md-3 dropdown-item">
+                      <ul>
+                          <li class="dropdown-header">Language</li>
+                           <li><a href="{{url('master/language')}}">Language</a></li>
+                          </ul>
+                  </li>
+
+                    <li class="col-md-3 dropdown-item">
+                      <ul>
+                          <li class="dropdown-header">Item</li>
+                          <li><a href="{{url('master/uom')}}">Uom</a></li>
+                          <li><a href="{{url('master/item')}}">Item</a></li>
+                          <li><a href="{{url('master/item-tax-details')}}">Item Tax Details</a></li>
+                        
+                      </ul>
+                  </li>
+
+                    <li class="col-md-3 dropdown-item">
                         <ul>
-                            <li class="dropdown-header"></li>
+                            <li class="dropdown-header">Vendor</li>
                             <li><a href="{{url('master/agent')}}">Agent</a></li>
                             <li><a href="{{url('master/customer')}}">Customer</a></li>
                             <li><a href="{{url('master/supplier')}}">Supplier</a></li>
-                            <li><a href="{{url('master/area')}}">Area</a></li>
-                          
-                        </ul>
+                          </ul>
                     </li>
+
+                    <li class="col-md-3 dropdown-item">
+                      <ul>
+                          <li class="dropdown-header">Area</li>
+                          <li><a href="{{url('master/area')}}">Area</a></li>
+                           </ul>
+                  </li>
                     
             </ul>        
             
