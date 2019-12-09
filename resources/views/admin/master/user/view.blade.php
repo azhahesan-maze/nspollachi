@@ -23,21 +23,23 @@
         <thead>
           <tr>
             <th>S.No</th>
-            <th>User Name </th>
-            <th> User Type </th>
+            <th>User</th>
+            <th> User Name</th>
             <th>Role</th>
              <th>Action </th>
           </tr>
         </thead>
         <tbody>
-          
+          @php
+              $i=0;
+          @endphp
           @foreach($users as $key=>$value)
           @if (isset($value->employee->name))
              <tr>
-              <td>{{ $key+1 }}</td>
+             <td>{{ $i+1 }} </td>
               <td>{{ isset($value->employee->name) ? $value->employee->name : ""}}</td>
-              <td>{{ $value->user_type_id}}</td>
-              <td>{{ $value->user_type_id}}</td>
+              <td>{{ $value->user_name}}</td>
+              <td>{{ $value->role->name}}</td>
               
               
            

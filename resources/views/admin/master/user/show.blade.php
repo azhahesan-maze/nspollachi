@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>View Category - 2 </h3>
+          <h3>View User </h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/category-two')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/user')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -20,22 +20,22 @@
       <div class="form-row">
         <div class="col-md-7">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Category 1 Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $category_two->category_one->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $user->employee->name }}</label>
           </div>
         </div>
 
         <div class="col-md-7">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $category_two->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">User Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $user->user_name }}</label>
           </div>
         </div>
 
           <div class="col-md-7">
               <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">Remark :</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $category_two->remark }}</label>
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Role :</label>
+                <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $user->role->name }}</label>
               </div>
             </div>
         

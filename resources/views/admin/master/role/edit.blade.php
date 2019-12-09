@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Edit Bank </h3>
+          <h3>Edit Role </h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/bank')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('master/role')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -18,9 +18,9 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/bank/update/'.$role->id)}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/role/update/'.$role->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
-
+      <span class="mandatory"> {{ $errors->first('permission')  }} </span>
         <div class="form-row">
           <div class="col-md-12">
             <div class="form-group row">
@@ -61,18 +61,7 @@
         </div>
 
 
-          <div class="col-md-7">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Bank Code <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                
-                <span class="mandatory"> {{ $errors->first('code')  }} </span>
-                <div class="invalid-feedback">
-                  Enter valid Bank Code
-                </div>
-              </div>
-            </div>
-          </div>
+ 
          
         </div>
         <div class="col-md-7 text-right">

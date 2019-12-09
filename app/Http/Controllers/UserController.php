@@ -51,6 +51,20 @@ class UserController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $user=User::find($id);
+        return view('admin.master.user.show',compact('user'));
+    }
+
+    public function edit($id)
+    {
+        $user=User::find($id);
+        $employee=Employee::all();
+        $role=Role::all();
+        return view('admin.master.user.edit',compact('user','employee','role'));
+    }
+
 
     public function destroy(User $user,$id)
     {
@@ -58,6 +72,28 @@ class UserController extends Controller
         if ($user->delete()) {
             return Redirect::back()->with('success', 'Deleted successfully');
          }else{
+            return Redirect::back()->with('failure', 'Something Went Wrong..!');
+        }
+    }
+
+
+    public function update(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(), [
+            'employee_id' => 'required|unique:users,employee_id,'.$id.',id,deleted_at,NULL',
+            'role_id' => 'required',
+            'user_name' => 'required|min:3|max:50|unique:users,user_name,'.$id.',id,deleted_at,NULL',
+           ])->validate();
+
+        $user =  User::find($id);
+        $user->employee_id       = $request->employee_id;
+        $user->user_name       = $request->user_name;
+       $user->role_id       = $request->role_id;
+        $user->updated_by = 0;
+      if ($user->save()) {
+        $user->assignRole($request->input('role_id'));
+            return Redirect::back()->with('success', 'Updated Successfully');
+        } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }
     }

@@ -198,6 +198,7 @@ Route::group(['prefix' => 'master/employee','middleware' => ['auth']], function 
     Route::any('update/{id}', 'EmployeeController@update')->middleware('permission:employee_edit');
     Route::any('delete/{id}', 'EmployeeController@destroy')->middleware('permission:employee_delete');
     Route::any('delete-employee-address-details', 'EmployeeController@delete_employee_address_details')->middleware('permission:employee_delete');
+    Route::any('delete-employee-proof-details', 'EmployeeController@delete_employee_proof_details')->middleware('permission:employee_delete');
 });
 /* Employee Master  End Here  */
 

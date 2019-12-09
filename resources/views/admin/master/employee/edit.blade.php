@@ -472,7 +472,7 @@
                               </div>
                             </td>
                             <td>
-                                <a href="{{asset('storage/agent_proof_details/'.$proof_value->file)}}" download><img src="{{asset('storage/agent_proof_details/'.$proof_value->file)}}" class="img-fluid" style="max-width:60px;" alt="logo" /></a>
+                                <a href="{{asset('storage/employee_proof_details/'.$proof_value->file)}}" download><img src="{{asset('storage/agent_proof_details/'.$proof_value->file)}}" class="img-fluid" style="max-width:60px;" alt="logo" /></a>
                             </td>
 
                             <td>
@@ -566,6 +566,38 @@
 </div>
 
 <script>
+
+  /* Address Perement Delete Start Here */
+$(document).on("click",".perment_proof_details",function(){
+  var proof_details_id=$(this).attr("attr-id");
+  var $tr=$(this).closest("tr");
+  if($(".perment_proof_details").length >1){
+  if(confirm('Are You Sure Want to Delete this ?')){
+   $.ajax({
+                      type: "post",
+                      url: "{{ url('master/employee/delete-employee-proof-details')}}",
+                      data: {proof_details_id: proof_details_id},
+                      success: function (res)
+                      {
+                       if(res == 1){
+                         $tr.remove();
+                         set_sno_for_proof_details();
+                          alert("Deleted Successfully ");
+
+                       }else{
+alert("Something Went Worng");
+                       }
+                      }
+                  });
+
+  }
+}else{
+  alert("Atleast One Address Details Present ");
+}
+  
+
+ });
+/* Proof Perment Details End Here */
 
 function proof_details_validation()
 {

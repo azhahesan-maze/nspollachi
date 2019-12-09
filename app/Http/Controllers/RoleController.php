@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -32,6 +33,11 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3|max:50|unique:role,name,NULL,id,deleted_at,NULL',
+            'permission' => 'required',
+          ])->validate();
 
 
         $role = Role::create(['name' => $request->input('name')]);
@@ -64,22 +70,19 @@ class RoleController extends Controller
     
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3|max:50|unique:roles,name,'.$id.',id',
             'permission' => 'required',
-        ]);
+          ])->validate();
 
 
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
+         $role->syncPermissions($request->input('permission'));
 
 
-        $role->syncPermissions($request->input('permission'));
-
-
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        return Redirect::back()->with('success', 'Updated Successfully');
     }
     
     public function destroy($id)

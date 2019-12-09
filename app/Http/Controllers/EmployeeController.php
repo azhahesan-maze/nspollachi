@@ -98,7 +98,7 @@ class EmployeeController extends Controller
                     foreach($request->file('proof_file') as $keys=>$image)
                    {
                        $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
-                       $image->move('storage/agent_proof_details', $name);  
+                       $image->move('storage/employee_proof_details', $name);  
                        $proof_details=array(
                         'proof_table'=>"Emp",
                         'proof_ref_id'=>$employee->id,
@@ -135,7 +135,8 @@ class EmployeeController extends Controller
     {
         $employee=Employee::find($id);
         $employee_address_details=AddressDetails::where('address_ref_id',$id)->where('address_table','Emp')->get();
-        return view('admin.master.employee.show',compact('employee','employee_address_details'));
+        $employee_proof_details=ProofDetails::where('proof_ref_id',$id)->where('proof_table','Emp')->get();
+        return view('admin.master.employee.show',compact('employee','employee_address_details','employee_proof_details'));
     }
 
    
@@ -222,7 +223,7 @@ class EmployeeController extends Controller
                     foreach($request->file('proof_file') as $keys=>$image)
                    {
                        $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
-                       $image->move('storage/agent_proof_details', $name);  
+                       $image->move('storage/employee_proof_details', $name);  
                        $proof_details=array(
                         'proof_table'=>"Emp",
                         'proof_ref_id'=>$employee->id,
@@ -282,7 +283,7 @@ class EmployeeController extends Controller
                     {
                         $image=$request->old_proof_file[$proof_key];
                         $name=date('Y-m-d').time().'.'.$image->getClientOriginalName();
-                        $image->move('storage/agent_proof_details', $name);  
+                        $image->move('storage/employee_proof_details', $name);  
                     }
                     $proof_details->proof_table="Emp";
                     $proof_details->proof_ref_id=$employee->id;
@@ -326,7 +327,23 @@ class EmployeeController extends Controller
         }else{
             echo 0;
         }
+    }
 
+    
+    public function delete_employee_proof_details(Request $request){
+        $proof_details_id=$request->proof_details_id;
+        $proof_details=ProofDetails::find($proof_details_id);
+        $destinationPath = 'storage/employee_proof_details/';
+        if(file_exists($destinationPath.$proof_details->file)){
+            @unlink($destinationPath.$proof_details->file);
+        }
+
+        if($proof_details->delete()){
+             echo 1;
+        }else{
+            echo 0;
+        }
 
     }
+
 }
