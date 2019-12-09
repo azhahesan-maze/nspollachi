@@ -29,14 +29,11 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required',
-        ]);
+       
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:50|unique:role,name,NULL,id,deleted_at,NULL',
-            'permission' => 'required',
+            'name' => 'required|min:3|max:50|unique:roles,name,NULL,id,deleted_at,NULL',
+            'permission.*' => 'required',
           ])->validate();
 
 

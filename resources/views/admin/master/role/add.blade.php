@@ -22,6 +22,7 @@
       {{csrf_field()}}
 
         <div class="form-row">
+            <span class="mandatory"> {{ $errors->first('permission.*')  }} </span>
           <div class="col-md-12">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-2 col-form-label">Role Name <span class="mandatory">*</span></label>
@@ -58,12 +59,53 @@
           
         </div>
         <div class="col-md-7 text-right">
-          <button class="btn btn-success" name="add" type="submit">Submit</button>
+          <button class="btn btn-success submit" name="add" type="button">Submit</button>
         </div>
       </form>
     </div>
     <!-- card body end@ -->
   </div>
 </div>
+
+<script>
+
+function checked_count()
+{
+  var checked_count=0;
+  $(".permission").each(function(){
+    if($(this). prop("checked") == true)
+    {
+      checked_count++;
+
+    }
+  });
+
+  return checked_count;
+
+}
+
+$(document).on("click",".submit",function(){
+  var checked_count_value=checked_count();
+  var error_count=0;
+  if($(".name").val() !="")
+  {
+    $(".name").removeClass("is-invalid");
+     $(".name").addClass("is-valid");
+  }else{
+    error_count++;  
+    $(".name").removeClass("is-valid");
+     $(".name").addClass("is-invalid");
+  }
+
+  if(checked_count_value == 0){
+    error_count++; 
+    alert("Please Choose Atleast One Permission");
+  }
+
+  if(error_count == 0){
+$("form").submit();
+  }
+});
+</script>
 @endsection
 
