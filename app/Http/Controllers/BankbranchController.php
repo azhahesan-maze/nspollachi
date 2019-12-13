@@ -78,7 +78,7 @@ class BankbranchController extends Controller
             $bank_branch->created_by = 0;
             $bank_branch->updated_by = 0;
       if ($bank_branch->save()) {
-            return Redirect::back()->with('success', 'Successfully Updated');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }

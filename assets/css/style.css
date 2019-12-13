@@ -23,6 +23,9 @@ body {
 h1,h2,h3,h4,h5,h6,p {
     margin-bottom: 0;
 }
+.w-20 {
+    width:20%;
+}
 .bg-green {
     background: #28a745;
 }
@@ -344,4 +347,13 @@ div.dataTables_wrapper {
 }
 table.dataTable {
     width: 1400px !important;
+}
+.r_pmission .row .w-20 {
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+    margin-bottom: 0;
+}
+
+.r_pmission .row {
+    padding: 10px 7px;
 }

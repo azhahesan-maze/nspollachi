@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
          $rule=[];
         if($request->has('add')){
             $rule=array(
-                'name' => 'required|unique:customers,name,NULL,id,deleted_at,NULL',
+                'company_name' => 'required|unique:customers,company_name,NULL,id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:customers,phone_no,NULL,id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
                 'email' => 'required|email|unique:customers,email,NULL,id,deleted_at,NULL',
@@ -53,7 +53,7 @@ class CustomerRequest extends FormRequest
             
 
             $rule=array(
-                'name' => 'required|unique:customers,name,'.$this->id.',id,deleted_at,NULL',
+                'company_name' => 'required|unique:customers,company_name,'.$this->id.',id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:customers,phone_no,'.$this->id.',id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
                 'email' => 'required|email|unique:customers,email,'.$this->id.',id,deleted_at,NULL',

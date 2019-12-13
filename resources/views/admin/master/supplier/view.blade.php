@@ -21,6 +21,7 @@
         <thead>
           <tr>
             <th>S.No</th>
+            <th>Company Name</th>
             <th>Supplier Name</th>
            <th>Phone No </th>
            <th>Whatsapp No </th>
@@ -35,6 +36,7 @@
           @foreach($supplier as $key=>$value)
             <tr>
               <td>{{ $key+1 }}</td>
+              <td>{{ $value->company_name}}</td>
               <td>{{ $value->salutation }} {{ $value->name}}</td>
               
               <td>{{ $value->phone_no}}</td>

@@ -126,8 +126,13 @@ $(this).html("Address Details - " + (key+1));
 
 $(document).on("click",".remove_new_address",function(){
    var $tr=$(this).closest(".address_div");
-   $(this).closest(".address_div").remove();
-   address_lable_count();
+   if($(".remove_new_address").length >1){
+    $(this).closest(".address_div").remove();
+    address_lable_count();
+   }else{
+     alert("Atleast One Row Present");
+   }
+  
   });
 
   $(document).on("click",".add_address",function(){

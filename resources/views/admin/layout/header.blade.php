@@ -94,7 +94,7 @@
                             <li><a href="{{url('master/address-type')}}">Address Type</a></li>
                             @endcan
                             @can('location_list')
-                            <li><a href="{{url('master/location')}}">Location</a></li>
+                            <li><a href="{{url('master/location')}}">Company Location</a></li>
                             @endcan
                         </ul>
                     </li>

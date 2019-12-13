@@ -99,6 +99,26 @@
 
                 <div class="col-md-6">
                     <div class="form-group row">
+                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Item Type <span class="mandatory">*</span></label>
+                      <div class="col-sm-8">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select item_type" name="item_type" required>
+                          <option value="">Choose Item Type</option>
+                         <option value="Direct"   {{ old('item_type',$item->item_type) == "Direct" ? 'selected' : '' }}  >Direct</option>
+                          <option value="Bulk" {{ old('item_type',$item->item_type) == "Bulk" ? 'selected' : '' }}  >Bulk</option>
+                          <option value="Repack" {{ old('item_type',$item->item_type) == "Repack" ? 'selected' : '' }}  >Repack</option>
+                        
+                        </select>
+                        <span class="mandatory"> {{ $errors->first('item_type')  }} </span>
+                       <div class="invalid-feedback">
+                          Enter valid Item Type
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">Print Name in English <span class="mandatory">*</span></label>
                       <div class="col-sm-8">
                         <input type="text" class="form-control print_name_in_english only_allow_alp_num_dot_com_amp" placeholder="Print Name in English " name="print_name_in_english" value="{{old('print_name_in_english',$item->print_name_in_english)}}" required>
@@ -220,6 +240,30 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  <div class="col-md-6">
+                                      <div class="form-group row">
+                                        <label for="validationCustom01" class="col-sm-4 col-form-label">Is Machine Weight Applicable <span class="mandatory">*</span></label>
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                  <input type="radio" class="form-check-input machine_weight_applicable" {{ old('machine_weight_applicable',$item->machine_weight_applicable) == 1 ? 'checked' : '' }} value ="1" name="machine_weight_applicable">Yes
+                                                </label>
+                                              </div>
+
+                                              <div class="form-check">
+                                                  <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input machine_weight_applicable" value ="0" {{ old('machine_weight_applicable',$item->machine_weight_applicable) == 0 ? 'checked' : '' }} name="machine_weight_applicable">No
+                                                  </label>
+                                                </div>
+                                          
+                                          <span class="mandatory"> {{ $errors->first('machine_weight_applicable')}} </span>
+                                         <div class="invalid-feedback">
+                                            Enter valid Machine Weight
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
 
 
                                   <div class="col-md-6">

@@ -21,6 +21,7 @@
         <thead>
           <tr>
             <th>S.No</th>
+            <th>Company Name</th>
             <th>Customer Name</th>
            <th>Phone No </th>
            <th>Email </th>
@@ -38,6 +39,7 @@
           @foreach($customer as $key=>$value)
             <tr>
               <td>{{ $key+1 }}</td>
+              <td>{{ $value->company_name}}</td>
               <td>{{ $value->salutation }} {{ $value->name}}</td>
               
               <td>{{ $value->phone_no}}</td>

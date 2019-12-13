@@ -200,9 +200,16 @@
               @if (old('address_line_1'))
               @foreach (old('address_line_1') as $key=>$item)
             <div class="form-row address_div">
-      <div class="col-md-8">
-      <h3 class="address_label"></h3>
-      </div>
+                <div class="col-md-7">
+                    <div class="form-group row">
+                    <div class="col-md-7">
+                    <h3 class="address_label"></h3>
+                    </div>
+                    <div class="col-md-4">
+                    <h3 class="address_delete_label"><label class="btn btn-danger remove_address"> Delete </label></h3>
+                        </div>
+                    </div>
+                    </div>
                 <div class="col-md-6">
               <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
@@ -466,6 +473,20 @@
 </div>
 <script>
 
+
+$(document).on("click",".remove_address",function(){
+if($(".remove_address").length >1){
+  $(this).closest(".address_div").remove();
+  $(".address_label").each(function(key,index){
+  $(this).html("Address Details - " + (key+1));
+  });
+
+}else{
+  alert("Atleast One Row Present ");
+}
+  
+});
+
   $(document).ready(function(){
     set_sno_for_proof_details();
   });
@@ -696,9 +717,16 @@ function validation(){
     
   var address='';
     address+='<div class="form-row address_div">\
-    <div class="col-md-8">\
-    <h3 class="address_label"></h3>\
-    </div>\
+        <div class="col-md-7">\
+        <div class="form-group row">\
+        <div class="col-md-7">\
+        <h3 class="address_label"></h3>\
+        </div>\
+        <div class="col-md-4">\
+        <h3 class="address_delete_label"><label class="btn btn-danger remove_address"> Delete </label></h3>\
+            </div>\
+        </div>\
+        </div>\
               <div class="col-md-6">\
             <div class="form-group row">\
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\

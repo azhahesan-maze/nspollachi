@@ -26,6 +26,7 @@
           <th>{{ $category_1 }}</th>
             <th>{{ $category_2 }}</th>
             <th>{{ $category_3 }}</th>
+            <th> Item Type</th>
             <th>Item Name in English</th>
             <th>Item Name in Tamil</th>
             <th>Item Name in Malayalam</th>
@@ -47,7 +48,9 @@
               <td>{{ isset($value->category_one->name) ? $value->category_one->name : ""}}</td>
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td>
+              <td>{{ $value->item_type}}</td>
               <td>{{ $value->print_name_in_english}}</td>
+              
               <td>{{ $value->print_name_in_language_1}}</td>
               <td>{{ $value->print_name_in_language_2}}</td>
               <td>{{ $value->print_name_in_language_3}}</td>
@@ -59,7 +62,10 @@
                 <a href="{{url('master/item/show/'.$value->id )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{url('master/item/edit/'.$value->id )}}" class="px-1 py-0 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a onclick="return confirm('Are you sure ?')" href="{{url('master/item/delete/'.$value->id )}}" class="px-1 py-0 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                @if ($value->item_type == "Bulk")
                 <a href="{{url('master/item/uom-factor-convertion-for-item/'.$value->id )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-plus" aria-hidden="true"></i>Uom Factor Convertion</a>
+                @endif
+               
               </td>
             </tr>
           @endforeach

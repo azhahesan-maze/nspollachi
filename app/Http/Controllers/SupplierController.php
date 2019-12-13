@@ -51,6 +51,7 @@ class SupplierController extends Controller
     public function store(SupplierRequest $request)
     {
         $supplier=new Supplier();
+        $supplier->company_name=$request->company_name;
         $supplier->name=$request->name;
         $supplier->salutation=$request->salutation;
         $supplier->phone_no=$request->phone_no;
@@ -170,6 +171,7 @@ class SupplierController extends Controller
     public function update(SupplierRequest $request, Supplier $supplier,$id)
     {
         $supplier=Supplier::find($id);
+        $supplier->company_name=$request->company_name;
         $supplier->name=$request->name;
         $supplier->salutation=$request->salutation;
         $supplier->phone_no=$request->phone_no;

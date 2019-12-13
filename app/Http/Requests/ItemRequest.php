@@ -41,6 +41,7 @@ class ItemRequest extends FormRequest
                 'category_1' => 'required',
                 'mrp' => 'required',
                 'default_selling_price' => 'required',
+                'item_type' => 'required',
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',
             ];
@@ -57,6 +58,7 @@ class ItemRequest extends FormRequest
                 'item_id' => 'required',
                 'category_1' => 'required',
                 'default_uom_id' => 'required',
+                
                  ];
 
                 if($request->has('uom_id'))
@@ -105,6 +107,7 @@ class ItemRequest extends FormRequest
                 'ptc' => 'required',
                 'ean' => 'required',
                 'mrp' => 'required',
+                'item_type' => 'required',
                 'default_selling_price' => 'required',
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',

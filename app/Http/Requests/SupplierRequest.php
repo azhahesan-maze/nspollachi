@@ -28,7 +28,7 @@ class SupplierRequest extends FormRequest
         if($request->has('add'))
         {
             $rule=array(
-                'name' => 'required|unique:suppliers,name,NULL,id,deleted_at,NULL',
+                'company_name' => 'required|unique:suppliers,company_name,NULL,id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,NULL,id,deleted_at,NULL',
                 'email' => 'required|email|unique:suppliers,email,NULL,id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
@@ -49,7 +49,7 @@ class SupplierRequest extends FormRequest
          }else
          {
             $rule=array(
-                'name' => 'required|unique:suppliers,name,'.$this->id.',id,deleted_at,NULL',
+                'company_name' => 'required|unique:suppliers,company_name,'.$this->id.',id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,'.$this->id.',id,deleted_at,NULL',
                 'email' => 'required|email|unique:suppliers,email,'.$this->id.',id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',

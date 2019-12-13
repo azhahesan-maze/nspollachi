@@ -129,16 +129,16 @@
               <th scope="row" class="s_no">1</th>
               <td>
                   <div class="col-sm-10">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select uom_id" name="uom_id[]" required>
-                        <option value=""> Choose Uom </option>
-                        @foreach ($uom as $value)
+                      <select class="js-example-basic-multiple col-12 form-control custom-select item_id" name="item_id[]" required>
+                        <option value=""> Choose Item </option>
+                        @foreach ($item_dets as $value)
                       <option value="{{$value->id}}">{{$value->name}}</option>
                             
                         @endforeach
                       </select>
-                   <span class="mandatory"> {{ $errors->first('uom_id.0')  }} </span>
+                   <span class="mandatory"> {{ $errors->first('item_id.0')  }} </span>
                     <div class="invalid-feedback">
-                      Enter valid Uom
+                      Enter valid Item
                     </div>
                   </div>
                 </td>

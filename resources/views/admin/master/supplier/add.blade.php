@@ -31,19 +31,30 @@
           <h4>Professional details:</h4>
           </div>
           <div class="col-md-6">
-            
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name <span class="mandatory">*</span></label>
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Company Name<span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control only_allow_alp_num_dot_com_amp company_name required_for_valid"  error-data="Enter valid Company Name" placeholder="Company Name" name="company_name" value="{{old('company_name')}}" >
+                  <span class="mandatory"> {{ $errors->first('company_name')  }} </span>
+                  <div class="invalid-feedback">
+                    Enter valid Company Name
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="col-md-6">
+             <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name </label>
               <div class="col-sm-8">
             <div class="input-group">
             <div class="input-group-prepend">
-              <select class="form-control required_for_valid salutation" name="salutation" error-data="Enter valid Salutation" >
+              <select class="form-control salutation" name="salutation" error-data="Enter valid Salutation" >
                   <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
                   <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }} >Mrs</option>
               </select>
               <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
             </div>
-            <input type="text" class="form-control required_for_valid name" name="name" error-data="Supplier Name Field is required" aria-label="Text input with dropdown button" value={{old('name')}}>
+            <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Supplier Name Field is required" aria-label="Text input with dropdown button" value={{old('name')}}>
             
             <div class="invalid-feedback">
               Enter valid Supplier Name

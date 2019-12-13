@@ -102,7 +102,7 @@ class DepartmentController extends Controller
         $department->created_by = 0;
         $department->updated_by = 0;
       if ($department->save()) {
-            return Redirect::back()->with('success', 'Successfully Updated');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }

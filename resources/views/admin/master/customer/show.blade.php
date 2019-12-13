@@ -18,6 +18,14 @@
     <!-- card header end@ -->
     <div class="card-body">
       <div class="form-row">
+
+          <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Company Name :</label>
+                <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $customer->company_name }}</label>
+              </div>
+            </div>
+
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name :</label>

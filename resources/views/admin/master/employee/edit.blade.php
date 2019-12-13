@@ -287,9 +287,16 @@
               @foreach (old('address_line_1') as $key=>$item)
             
                             <div class="form-row address_div">
-      <div class="col-md-8">
-      <h3 class="address_label"></h3>
-      </div>
+                              <div class="col-md-7">
+                                <div class="form-group row">
+                                <div class="col-md-7">
+                                <h3 class="address_label"></h3>
+                                </div>
+                                <div class="col-md-4">
+                                <h3 class="address_delete_label"><label class="btn btn-danger c"> Delete </label></h3>
+                                    </div>
+                                </div>
+                                </div>
                 <div class="col-md-6">
               <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
@@ -551,9 +558,7 @@
                 </table>
 
               </div>
-
-
-                       </div>
+</div>
              
              </div>
         <div class="col-md-7 text-right">

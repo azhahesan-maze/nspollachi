@@ -100,7 +100,7 @@ class BankController extends Controller
         $bank->created_by = 0;
         $bank->updated_by = 0;
       if ($bank->save()) {
-            return Redirect::back()->with('success', 'Successfully Updated');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }

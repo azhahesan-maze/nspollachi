@@ -88,6 +88,7 @@ class ItemController extends Controller
     {
         $item=new Item();
         $item->name=$request->name;
+        $item->item_type=$request->item_type;
         $item->code=$request->code;
         $item->category_1=$request->category_1;
         $item->category_2=$request->category_2;
@@ -102,6 +103,7 @@ class ItemController extends Controller
         $item->default_selling_price=$request->default_selling_price;
         $item->uom_id=$request->uom_id;
         $item->is_expiry_date=$request->is_expiry_date;
+        $item->machine_weight_applicable=$request->machine_weight_applicable;
         if(!empty($request->expiry_date))
         {
             $item->expiry_date=date('Y-m-d',strtotime($request->expiry_date));
@@ -168,6 +170,7 @@ class ItemController extends Controller
     {
         $item=Item::find($id);
         $item->name=$request->name;
+        $item->item_type=$request->item_type;
         $item->code=$request->code;
         $item->category_1=$request->category_1;
         $item->category_2=$request->category_2;
@@ -182,6 +185,8 @@ class ItemController extends Controller
         $item->default_selling_price=$request->default_selling_price;
         $item->uom_id=$request->uom_id;
         $item->is_expiry_date=$request->is_expiry_date;
+        $item->machine_weight_applicable=$request->machine_weight_applicable;
+        
         if(!empty($request->expiry_date))
         {
             $item->expiry_date=date('Y-m-d',strtotime($request->expiry_date));
@@ -220,9 +225,10 @@ class ItemController extends Controller
         $category_2=$this->category_2;
         $category_3=$this->category_3;
         $item=Item::find($id);
+        $item_dets=Item::where(['item_type'=>'Repack'])->get();
         $uom=Uom::whereNotIn('id', [$item->uom_id])->get();
         $uom_factor_convertion_for_item=UomFactorConvertionForItem::where('item_id',$id)->get();
-        return view('admin.master.item.uom_factor_convertion_for_item',compact('item','category_1','category_2','category_3','uom','uom_factor_convertion_for_item'));
+        return view('admin.master.item.uom_factor_convertion_for_item',compact('item_dets','item','category_1','category_2','category_3','uom','uom_factor_convertion_for_item'));
 
     }
 

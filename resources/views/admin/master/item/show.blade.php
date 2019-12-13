@@ -52,7 +52,12 @@
                 </div>
               </div>
 
-
+              <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">Item Type :</label>
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{$item->item_type }} </label>
+                  </div>
+                </div>
 
 
 

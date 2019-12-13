@@ -102,7 +102,7 @@ class DesignationController extends Controller
         $designation->created_by = 0;
         $designation->updated_by = 0;
       if ($designation->save()) {
-            return Redirect::back()->with('success', 'Successfully Updated');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }

@@ -38,6 +38,7 @@ class CustomerController extends Controller
     public function store(CustomerRequest $request)
     {
        $customer=new Customer();
+       $customer->company_name=$request->company_name;
        $customer->name=$request->name;
        $customer->salutation=$request->salutation;
        $customer->phone_no=$request->phone_no;
@@ -143,6 +144,7 @@ class CustomerController extends Controller
     public function update(CustomerRequest $request, Customer $customer,$id)
     {
         $customer = Customer::find($id);
+        $customer->company_name=$request->company_name;
         $customer->name=$request->name;
        $customer->salutation=$request->salutation;
        $customer->phone_no=$request->phone_no;

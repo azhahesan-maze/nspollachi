@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 <div class="col-12 body-sec">
-  <div class="card container px-0">
+  <div class="card container-fluid px-0">
     <!-- card header start@ -->
     <div class="card-header px-2">
       <div class="row">
@@ -27,7 +27,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-2 col-form-label">Role Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name only_allow_alp_num_dot_com_amp" placeholder="Role Name" name="name" value="{{old('name')}}" required>
+              <input type="text" class="form-control name only_allow_alp_num_dot_com_amp " placeholder="Role Name" name="name" value="{{old('name')}}" required>
                 <span class="mandatory"> {{ $errors->first('name')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Role Name
@@ -36,18 +36,35 @@
             </div>
           </div>
 
+         
 
           <div class="col-12 col-sm-12 col-md-12">
               <div class="form-group row">
                   <p class="col-md-2">Permission:</p>
+                  <label class="col-md-offset-0 col-sm-4 "> 
+                      <input type="checkbox" name="all_permission" class="permission"  value="all_permission">  
+                     ALL
+                </label>
                   <br/>
-                  <div class="col-md-10">
-                      <div class="row">
+                  <div class="col-md-12 r_pmission">
+                      <div class="row mx-0">
+                          <?php $class=""; ?>
                   @foreach($permission as $value)
-               <label class="col-sm-3"> 
-                      <input type="checkbox" name="permission[]" class="permission"  value="{{$value->id}}">  
+                 
+                  @if($class != $value->class)
+                  <label class="w-20"> 
+                      <input type="checkbox" name="permission[]" class="all_{{ $value->class }}_master all_classname permission"  value="{{$value->class}}">  
+                     ALL
+                </label>
+              @endif 
+            
+                
+               <label class="w-20"> 
+                      <input type="checkbox" name="permission[]" class="{{ $value->class }} permission"  value="{{$value->id}}">  
                       {{ $value->label }}
               </label>
+              <?php  $class=$value->class; ?>
+             
                   @endforeach
                 </div>
               </div>
@@ -68,6 +85,50 @@
 </div>
 
 <script>
+
+
+$(".permission").click(function (e) {
+        var id = $(this).val();
+        if (id == "all_permission")
+        {
+            if ($(this).prop('checked') != true) {
+                $('.permission').prop('checked', false);
+            } else
+            {
+                $('.permission').prop('checked', true);
+            }
+        } else
+        {
+            var id_new = "all_" + $(this).val() + "_master";
+            var id_newest = $(this).val();
+            if ($(this).hasClass(id_new) == true)
+            {
+                if ($(this).prop('checked') != true) {
+                    $("." + id_newest).prop('checked', false);
+                } else
+                {
+                    $("." + id_newest).prop('checked', true);
+                }
+            } else
+            {
+                var classname = "." + $(this).attr("class").split(' ')[0];
+                var all_classname = ".all_" + $(this).attr("class").split(' ')[0]+"_master";
+                var counter = 0;
+                $(classname).each(function () {
+                    if ($(this).prop('checked') != true && $(all_classname).attr("class") != $(this).attr("class")) {
+                        counter++;
+                    }
+                });
+                if (counter > 0)
+                {
+                    $(all_classname).prop('checked', false);
+                } else
+                {
+                    $(all_classname).prop('checked', true);
+                }
+            }
+        }
+    });
 
 function checked_count()
 {
