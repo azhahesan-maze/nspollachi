@@ -188,12 +188,45 @@ class CommonController extends Controller
             die(json_encode(array(
                 "option" => $option
             )));
-
-
-        }
+ }
         
+    }
+
+    public function get_category_based_bulk_item(Request $request)
+    {
+        $category_1=isset($request->category_one_id) && !empty($request->category_one_id) ? $request->category_one_id : "" ;
+        $category_2=isset($request->category_two_id) && !empty($request->category_two_id) ? $request->category_two_id : "" ;
+        $category_3=isset($request->category_three_id) && !empty($request->category_three_id) ? $request->category_three_id : "" ;
+        $item_id=isset($request->item_id) && !empty($request->item_id) ? $request->item_id : "" ;
+
+        $condition=[];
+        $category_1 !="" ?  $condition['category_1']=$category_1 : "";
+        $category_2 !="" ?  $condition['category_2']=$category_2 : "";
+        $category_3 !="" ?  $condition['category_3']=$category_3 : "";
+        $condition['item_type']="Bulk";
+
+        if(count($condition)>0)
+        {
+            $item=Item::where($condition)->get();
+            $option = "";
+            $option .= count($item) > 0 ? "<option value=''> Choose Item  </option>" : "<option value=''> No Result Found </option>";
+            $select = "";
+            foreach ($item as $value) 
+            {
+                if ($item_id != "") 
+                {
+                    $select = $item_id == $value->id ? "Selected" : "";
+                } else {
+                    $select = "";
+                }
+                $option .= "<option value=" . $value->id . "   " . $select . ">" . $value->name . "</option>";
+            }
+    
+            die(json_encode(array(
+                "option" => $option
+            )));
+ }
         
-       
     }
 
 

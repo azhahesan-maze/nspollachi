@@ -17,6 +17,12 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 500)->nullable();
             $table->string('code', 100)->nullable();
+            $table->enum('item_type', ['Direct', 'Bulk','Repack','Parent','Child'])->nullable();	
+           // $table->float('weight_in_grams',8,0)->nullable();
+            $table->float('weight_in_grams',8,2)->unsigned()->nullable();
+            $table->float('weight_in_kg',8,2)->unsigned()->nullable();
+            //$table->float('weight_in_kg',8,0)->nullable();
+            $table->integer('bulk_item_id')->nullable();
             $table->integer('category_1')->nullable();
             $table->integer('category_2')->nullable();
             $table->integer('category_3')->nullable();

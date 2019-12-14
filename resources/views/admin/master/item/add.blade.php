@@ -105,11 +105,43 @@
                            <option value="Direct" selected  {{ old('item_type') == "Direct" ? 'selected' : '' }}  >Direct</option>
                             <option value="Bulk" {{ old('item_type') == "Bulk" ? 'selected' : '' }}  >Bulk</option>
                             <option value="Repack" {{ old('item_type') == "Repack" ? 'selected' : '' }}  >Repack</option>
-                          
-                          </select>
+                            <!--<option value="Parent" {{ old('item_type') == "Parent" ? 'selected' : '' }}  >Parent</option>
+                            <option value="Child" {{ old('item_type') == "Child" ? 'selected' : '' }}  >Child</option>
+                            -->   </select>
                           <span class="mandatory"> {{ $errors->first('item_type')  }} </span>
                          <div class="invalid-feedback">
                             Enter valid Item Type
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 bulk_item_div" style="display:none">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
+                        <div class="col-sm-8">
+                          <select class="js-example-basic-multiple col-12 form-control custom-select bulk_item_id" name="bulk_item_id">
+                            <option value="">Choose Bulk Item</option>
+                            @foreach ($bulk_item as $value)
+                            <option value="{{ $value->id }}" {{ old('bulk_item_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                            @endforeach
+                           </select>
+                          <span class="mandatory"> {{ $errors->first('bulk_item_id')  }} </span>
+                         <div class="invalid-feedback">
+                            Enter valid Bulk Item Name
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Weight In Grams <span class="mandatory">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control weight_in_grams" placeholder="Weight In Grams " name="weight_in_grams" value="{{old('weight_in_grams')}}" >
+                          <span class="mandatory"> {{ $errors->first('weight_in_grams')  }} </span>
+                          <div class="invalid-feedback">
+                            Enter valid Weight In Grams
                           </div>
                         </div>
                       </div>
@@ -174,6 +206,8 @@
                               </div>
                             </div>
                           </div>
+
+
 
                           <div class="col-md-6">
                               <div class="form-group row">
@@ -329,6 +363,36 @@
 
 
 <script>
+/* Repack */
+$(document).on("change",".item_type",function(){
+
+  if($(this).val() == "Repack"){
+    alert("in");
+    $(".bulk_item_div").css("display","block");
+   }else{
+    $(".bulk_item_div").css("display","none");
+
+  }
+});
+
+function get_category_based_item(category_one_id,category_two_id,category_three_id,item_id)
+{
+  $.ajax({
+              type: "post",
+              url: "{{ url('common/get-category-based-bulk-item')}}",
+              data: {category_one_id:category_one_id,category_two_id: category_two_id, category_three_id:category_three_id,item_id:item_id},
+              success: function (res)
+              {
+                result = JSON.parse(res);
+                $(".bulk_item_id").html(result.option);
+              }
+          });
+
+}
+
+
+  
+
  function get_category_one_based_category_two(category_one_id,category_two_id)
 {
   $.ajax({
@@ -363,6 +427,7 @@ function get_category_two_based_category_three(category_two_id,category_three_id
 $(document).on("change",".category_1",function(){
   if($(this).val() != ""){
     get_category_one_based_category_two($(this).val(),category_two_id ="");
+    get_category_based_item($(this).val(),category_two_id="",category_three_id="",item_id="");
   }
   
 });
@@ -370,6 +435,15 @@ $(document).on("change",".category_1",function(){
 $(document).on("change",".category_2",function(){
   if($(this).val() != ""){
     get_category_two_based_category_three($(this).val(),category_three_id ="");
+    get_category_based_item($(".category_1").val(),$(this).val(),category_three_id="",item_id="");
+  }
+  
+});
+
+$(document).on("change",".category_3",function(){
+  if($(this).val() != ""){
+    get_category_based_item(category_one_id="",$(this).val(),category_three_id="",item_id="");
+    get_category_based_item($(".category_1").val(),$(".category_2").val(),$(this).val(),item_id="");
   }
   
 });

@@ -357,3 +357,6 @@ table.dataTable {
 .r_pmission .row {
     padding: 10px 7px;
 }
+.bulk_item_div .select2-container {
+    width: 100% !important;
+}

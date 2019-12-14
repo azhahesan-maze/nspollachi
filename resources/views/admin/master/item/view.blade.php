@@ -27,6 +27,9 @@
             <th>{{ $category_2 }}</th>
             <th>{{ $category_3 }}</th>
             <th> Item Type</th>
+            <th> Bulk Item Name</th>
+            <th> Weight In Grams </th>
+            <th> Weight In Kg</th>
             <th>Item Name in English</th>
             <th>Item Name in Tamil</th>
             <th>Item Name in Malayalam</th>
@@ -49,6 +52,10 @@
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td>
               <td>{{ $value->item_type}}</td>
+              <td>{{ isset($value->bulk_item->name) ? $value->bulk_item->name : ""}}</td>
+              <td>{{ $value->weight_in_grams}}</td>
+              <td>{{ $value->weight_in_kg}}</td>
+              
               <td>{{ $value->print_name_in_english}}</td>
               
               <td>{{ $value->print_name_in_language_1}}</td>

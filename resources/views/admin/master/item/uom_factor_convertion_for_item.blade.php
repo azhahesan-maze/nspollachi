@@ -90,10 +90,9 @@
             <input type="hidden" class="" name="uom_factor_convertion_id[]" value="{{ $uom_factor_value->id }}">
                 <div class="col-sm-10">
                     <select class="js-example-basic-multiple col-12 form-control custom-select old_uom_id" name="old_uom_id[]" required>
-                      <option value=""> Choose Uom iiii</option>
+                      <option value=""> Choose Uom</option>
                       @foreach ($uom as $value)
                     <option value="{{$value->id}}" {{ old('old_uom_id.'.$uom_factor_key,$uom_factor_value->uom_id) == $value->id ? 'selected' : '' }}>{{$value->name}}</option>
-                          
                       @endforeach
                     </select>
                  <span class="mandatory"> {{ $errors->first('old_uom_id.'.$uom_factor_key)  }} </span>

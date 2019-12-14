@@ -27,4 +27,8 @@ class Item extends Model
     public function uom(){
         return $this->belongsTo(Uom::class,'uom_id','id');
     }
+
+    public function bulk_item(){
+        return $this->belongsTo(Item::class,'bulk_item_id','id');
+    }
 }

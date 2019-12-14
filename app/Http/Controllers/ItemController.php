@@ -75,7 +75,8 @@ class ItemController extends Controller
         $category_three=Category_three::all();
         $uom=Uom::all();
         $language=Language::all();
-        return view('admin.master.item.add',compact('category_one','category_two','category_three','uom','language','language_1','language_2','language_3','category_1','category_2','category_3'));
+        $bulk_item=Item::where('item_type','Bulk')->get();
+        return view('admin.master.item.add',compact('bulk_item','category_one','category_two','category_three','uom','language','language_1','language_2','language_3','category_1','category_2','category_3'));
     }
 
     /**

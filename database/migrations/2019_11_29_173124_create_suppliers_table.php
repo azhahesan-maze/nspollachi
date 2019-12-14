@@ -14,35 +14,23 @@ class CreateSuppliersTable extends Migration
     public function up()
     {
         Schema::create('suppliers', function (Blueprint $table) {
+           
             $table->bigIncrements('id');
-
             $table->enum('salutation', ['Mr', 'Mrs'])->nullable();	
-
+            $table->string('company_name', 500)->nullable();
             $table->string('name', 500)->nullable();
-
             $table->string('code', 100)->nullable();
-
             $table->string('phone_no', 15)->nullable();
-
             $table->string('whatsapp_no', 15)->nullable();
-
             $table->string('email', 100)->nullable();
             $table->string('website', 100)->nullable();
-
             $table->string('pan_card', 100)->nullable();
-
             $table->string('gst_no', 100)->nullable();
-
             $table->integer('max_credit_limit')->nullable();
-
             $table->integer('max_credit_days')->nullable();
-
             $table->integer('opening_balance')->nullable();
-
             $table->string('remark', 100)->nullable();
-
             $table->integer('price_level')->nullable();
-
             $table->boolean('status')->default(false)->comment = '0=>Active,1=>DeActive ';
             $table->boolean('block')->default(false)->comment = '0=>Active,1=>blocked ';
             $table->string('blocked_reason', 500)->nullable();

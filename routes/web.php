@@ -37,6 +37,7 @@ Route::any('common/get-district-based-city', 'CommonController@get_district_base
 Route::any('common/get-bank-based-branch', 'CommonController@get_bank_based_branch');
 Route::any('common/get-branch-based-ifsc', 'CommonController@get_branch_based_ifsc');
 Route::any('common/get-category-based-item', 'CommonController@get_category_based_item');
+Route::any('common/get-category-based-bulk-item', 'CommonController@get_category_based_bulk_item');
 Route::any('common/get-category-one-based-category-two', 'CommonController@get_category_one_based_category_two');
 Route::any('common/get-category-two-based-category-three', 'CommonController@get_category_two_based_category_three');
 /* Common Functions End Here */

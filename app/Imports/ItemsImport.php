@@ -10,6 +10,7 @@ use App\Models\Item as ModelsItem;
 use App\Models\Uom;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ItemsImport implements ToCollection
 {
@@ -21,7 +22,9 @@ class ItemsImport implements ToCollection
     public function collection(Collection $rows)
     {
 
+       // echo "<pre>";print_r($rows);exit;
         $item_main_array=[];
+        $bulk_item_id=0;
         foreach ($rows as $key=>$row) 
         {
             $uom_id=0;
@@ -111,6 +114,24 @@ class ItemsImport implements ToCollection
 
                     }
             }
+            $bulk_item_id=0;
+            if($row[7] == "Repack")
+            {
+                if($row[8] != "")
+                {
+                    $bulk_item=ModelsItem::where('name',$row[8])->get();
+                    $bulk_item_id=count($bulk_item)>0 ? $bulk_item[0]->id : NULL;
+                }else{
+                    $bulk_item_id=NULL;    
+                }
+
+            }else{
+                $bulk_item_id=NULL;
+            }
+
+           $weigth_in_grams=$row[9] != "" ? $row[9] : 0;
+           $weight_in_kg=$weigth_in_grams !="" && $weigth_in_grams >0 ? $weigth_in_grams/1000 : 0;
+
 
 
             if($category_one_id != "")
@@ -123,6 +144,10 @@ class ItemsImport implements ToCollection
                 $item->print_name_in_english=$row[4];
                 $item->print_name_in_language_1=$row[5];
                 $item->print_name_in_language_2=$row[6];
+                $item->item_type=$row[7];
+                $item->weight_in_grams=$weigth_in_grams;
+                $item->weight_in_kg=$weight_in_kg;
+                $item->bulk_item_id=$bulk_item_id;
                 $item->mrp=$row[11];
                 $item->default_selling_price=$row[12];
                 $item->hsn=$row[14];
