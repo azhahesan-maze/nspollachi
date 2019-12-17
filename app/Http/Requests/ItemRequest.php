@@ -39,6 +39,7 @@ class ItemRequest extends FormRequest
                 'ean' => 'required|unique:items,ean,NULL,id,deleted_at,NULL',
                 'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
                 'category_1' => 'required',
+                'print_name_in_language_3' => 'required',
                 'mrp' => 'required',
                 'default_selling_price' => 'required',
                 'item_type' => 'required',

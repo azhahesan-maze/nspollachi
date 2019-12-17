@@ -18,11 +18,9 @@ class CreateItemsTable extends Migration
             $table->string('name', 500)->nullable();
             $table->string('code', 100)->nullable();
             $table->enum('item_type', ['Direct', 'Bulk','Repack','Parent','Child'])->nullable();	
-           // $table->float('weight_in_grams',8,0)->nullable();
             $table->float('weight_in_grams',8,2)->unsigned()->nullable();
             $table->float('weight_in_kg',8,2)->unsigned()->nullable();
-            //$table->float('weight_in_kg',8,0)->nullable();
-            $table->integer('bulk_item_id')->nullable();
+             $table->integer('bulk_item_id')->nullable();
             $table->integer('category_1')->nullable();
             $table->integer('category_2')->nullable();
             $table->integer('category_3')->nullable();
@@ -37,7 +35,8 @@ class CreateItemsTable extends Migration
             $table->float('default_selling_price')->nullable();
             $table->integer('uom_id')->nullable();
             $table->integer('opening_stock')->nullable();
-            $table->boolean('is_expiry_date')->default(false)->comment = '0=>Not Applicable,1=>Applicable ';
+            $table->boolean('is_expiry_date')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
+            $table->boolean('is_machine_weight_applicable')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->date('expiry_date')->nullable();	
             $table->string('image',500)->nullable();
             $table->string('remark',500)->nullable();

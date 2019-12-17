@@ -23,7 +23,7 @@
             <th>S.No</th>
             <th>Item Name</th>
             <th>Item Code</th>
-          <th>{{ $category_1 }}</th>
+             <th>{{ $category_1 }}</th>
             <th>{{ $category_2 }}</th>
             <th>{{ $category_3 }}</th>
             <th> Item Type</th>
@@ -78,6 +78,7 @@
           @endforeach
          
         </tbody>
+        
       </table>
 
     </div>

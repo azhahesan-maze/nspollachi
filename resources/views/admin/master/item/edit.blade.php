@@ -17,7 +17,6 @@
     </div>
     <!-- card header end@ -->
     <div class="card-body">
-    
       <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/item/update/'.$item->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
@@ -117,6 +116,38 @@
                   </div>
 
 
+                  <div class="col-md-6 bulk_item_div" style="display:none">
+                    <div class="form-group row">
+                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
+                      <div class="col-sm-8">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select bulk_item_id" name="bulk_item_id">
+                          <option value="">Choose Bulk Item</option>
+                          @foreach ($bulk_item as $value)
+                          <option value="{{ $value->id }}" {{ old('bulk_item_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                          @endforeach
+                         </select>
+                        <span class="mandatory"> {{ $errors->first('bulk_item_id')  }} </span>
+                       <div class="invalid-feedback">
+                          Enter valid Bulk Item Name
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="validationCustom01" class="col-sm-4 col-form-label">Weight In Grams <span class="mandatory">*</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control weight_in_grams only_allow_digit_and_dot" placeholder="Weight In Grams " name="weight_in_grams" value="{{old('weight_in_grams',$value->weight_in_grams)}}" >
+                        <span class="mandatory"> {{ $errors->first('weight_in_grams')  }} </span>
+                        <div class="invalid-feedback">
+                          Enter valid Weight In Grams
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                 <div class="col-md-6">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">Print Name in English <span class="mandatory">*</span></label>
@@ -149,7 +180,7 @@
                         <div class="form-group row">
                           <label for="validationCustom01" class="col-sm-4 col-form-label">Print Name in {{$language_2}} </label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control print_name_in_language_2 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_2 }}" name="print_name_in_language_2" value="{{old('print_name_in_language_2',$item->print_name_in_language_2)}}" required>
+                            <input type="text" class="form-control print_name_in_language_2 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_2 }}" name="print_name_in_language_2" value="{{old('print_name_in_language_2',$item->print_name_in_language_2)}}">
                             <span class="mandatory"> {{ $errors->first('print_name_in_language_2')  }} </span>
                             <div class="invalid-feedback">
                               Enter valid Print Name in {{ $language_2 }}
@@ -162,7 +193,7 @@
                           <div class="form-group row">
                             <label for="validationCustom01" class="col-sm-4 col-form-label">Print Name in {{$language_3}} </label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control print_name_in_language_3 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_3 }}" name="print_name_in_language_3" value="{{old('print_name_in_language_3',$item->print_name_in_language_3)}}" required>
+                              <input type="text" class="form-control print_name_in_language_3 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_3 }}" name="print_name_in_language_3" value="{{old('print_name_in_language_3',$item->print_name_in_language_3)}}">
                               <span class="mandatory"> {{ $errors->first('print_name_in_language_3')  }} </span>
                               <div class="invalid-feedback">
                                 Enter valid Print Name in {{ $language_3 }}
@@ -247,17 +278,17 @@
                                         <div class="col-sm-8">
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input type="radio" class="form-check-input machine_weight_applicable" {{ old('machine_weight_applicable',$item->machine_weight_applicable) == 1 ? 'checked' : '' }} value ="1" name="machine_weight_applicable">Yes
+                                                  <input type="radio" class="form-check-input is_machine_weight_applicable" {{ old('is_machine_weight_applicable',$item->is_machine_weight_applicable) == 1 ? 'checked' : '' }} value ="1" name="is_machine_weight_applicable">Yes
                                                 </label>
                                               </div>
 
                                               <div class="form-check">
                                                   <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input machine_weight_applicable" value ="0" {{ old('machine_weight_applicable',$item->machine_weight_applicable) == 0 ? 'checked' : '' }} name="machine_weight_applicable">No
+                                                    <input type="radio" class="form-check-input is_machine_weight_applicable" value ="0" {{ old('is_machine_weight_applicable',$item->is_machine_weight_applicable) == 0 ? 'checked' : '' }} name="is_machine_weight_applicable">No
                                                   </label>
                                                 </div>
                                           
-                                          <span class="mandatory"> {{ $errors->first('machine_weight_applicable')}} </span>
+                                          <span class="mandatory"> {{ $errors->first('is_machine_weight_applicable')}} </span>
                                          <div class="invalid-feedback">
                                             Enter valid Machine Weight
                                           </div>
@@ -335,6 +366,54 @@
 </div>
 
 <script>
+  $(".name").keyup(function(){
+    $(".print_name_in_english").val($(this).val());
+  });
+
+/* Repack */
+
+function item_type()
+{
+  $(".weight_in_grams").removeAttr("required");
+  $(".bulk_item_id").removeAttr('required');
+  var item_type=$(".item_type").val();
+  if(item_type == "Bulk")
+  {
+    $(".weight_in_grams").attr('required', 'required');
+  }
+  if(item_type == "Repack")
+  {
+    $(".weight_in_grams").attr('required', 'required');
+    $(".bulk_item_id").attr('required', 'required');
+    $(".bulk_item_div").css("display","block");
+    get_category_based_item($(".category_1").val(),$(".category_2").val(),$(".category_3").val(),item_id="")
+  }else
+  {
+    $(".bulk_item_div").css("display","none");
+  }
+
+}
+
+
+$(document).on("change",".item_type",function(){
+  item_type();
+
+});
+
+function get_category_based_item(category_one_id,category_two_id,category_three_id,item_id)
+{
+  $.ajax({
+              type: "post",
+              url: "{{ url('common/get-category-based-bulk-item')}}",
+              data: {category_one_id:category_one_id,category_two_id: category_two_id, category_three_id:category_three_id,item_id:item_id},
+              success: function (res)
+              {
+                result = JSON.parse(res);
+                $(".bulk_item_id").html(result.option);
+              }
+          });
+
+}
   function get_category_one_based_category_two(category_one_id,category_two_id)
  {
    $.ajax({
@@ -379,6 +458,13 @@
    }
    
  });
+
+ $(document).on("change",".category_3",function(){
+  if($(this).val() != ""){
+     get_category_based_item($(".category_1").val(),$(".category_2").val(),$(this).val(),item_id="");
+  }
+  
+});
  
  $(document).on("click",".is_expiry_date",function(){
    var is_expiry_date=$(".is_expiry_date:checked").val();
@@ -391,6 +477,7 @@
  });
  
  $(document).ready(function(){
+  item_type();
    var old_expiry_date="{{ old('is_expiry_date')}}";
    var is_expiry_date="";
    is_expiry_date="{{ $item->is_expiry_date }}";
@@ -403,29 +490,38 @@
    }else{
      $(".expiry_date_div").css("display","none");
    }
+   
 
    /* Category Based Subcategory Ajax Start Here */
    var category_1="";
    var category_2="";
    var category_3="";
+  
 
    var new_category_1=$(".category_1").val();
    var new_category_2="{{ $item->category_2}}";
    var new_category_3="{{ $item->category_3}}";
+   var new_bulk_item_id="{{ $item->bulk_item_id}}";
    var old_category_1="{{ old('category_1') }}";
    var old_category_2="{{ old('category_2') }}";
    var old_category_3="{{ old('category_3') }}";
+   var old_bulk_item_id="{{ old('bulk_item_id') }}";
+
 
    category_1=old_category_1 !="" ? old_category_1 : new_category_1;
    category_2=old_category_2 !="" ? old_category_2 : new_category_2;
    category_3=old_category_3 !="" ? old_category_3 : new_category_3;
+   bulk_item_id=old_bulk_item_id !="" ? old_bulk_item_id : new_bulk_item_id;
 if(category_1 !=""){
   get_category_one_based_category_two(category_1,category_2);
+ 
+
 }
 
 if(category_2 !=""){
   get_category_two_based_category_three(category_2,category_3);
 }
+get_category_based_item(category_1,category_2,category_3,bulk_item_id);
   
   
 

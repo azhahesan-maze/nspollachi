@@ -90,6 +90,22 @@ class ItemController extends Controller
         $item=new Item();
         $item->name=$request->name;
         $item->item_type=$request->item_type;
+        if($request->item_type == "Repack")
+        {
+            $item->bulk_item_id=$request->bulk_item_id;
+        }
+
+        if($request->weight_in_grams !="" && $request->weight_in_grams >0)
+        {
+            $item->weight_in_grams=$request->weight_in_grams;
+            $item->weight_in_kg=$request->weight_in_grams/1000;
+        }else
+        {
+            $item->weight_in_grams=0;
+            $item->weight_in_kg=0;
+        }
+
+
         $item->code=$request->code;
         $item->category_1=$request->category_1;
         $item->category_2=$request->category_2;
@@ -104,7 +120,7 @@ class ItemController extends Controller
         $item->default_selling_price=$request->default_selling_price;
         $item->uom_id=$request->uom_id;
         $item->is_expiry_date=$request->is_expiry_date;
-        $item->machine_weight_applicable=$request->machine_weight_applicable;
+        $item->is_machine_weight_applicable=$request->is_machine_weight_applicable;
         if(!empty($request->expiry_date))
         {
             $item->expiry_date=date('Y-m-d',strtotime($request->expiry_date));
@@ -157,7 +173,8 @@ class ItemController extends Controller
         $category_two=Category_two::all();
         $category_three=Category_three::all();
         $uom=Uom::all();
-        return view('admin.master.item.edit',compact('item','language_1','language_2','language_3','category_1','category_2','category_3','category_one','category_two','category_three','uom'));
+        $bulk_item=Item::where('item_type','Bulk')->get();
+        return view('admin.master.item.edit',compact('bulk_item','item','language_1','language_2','language_3','category_1','category_2','category_3','category_one','category_two','category_three','uom'));
     }
 
     /**
@@ -171,7 +188,21 @@ class ItemController extends Controller
     {
         $item=Item::find($id);
         $item->name=$request->name;
-        $item->item_type=$request->item_type;
+       $item->item_type=$request->item_type;
+        if($request->item_type == "Repack")
+        {
+            $item->bulk_item_id=$request->bulk_item_id;
+        }
+
+        if($request->weight_in_grams !="" && $request->weight_in_grams >0)
+        {
+            $item->weight_in_grams=$request->weight_in_grams;
+            $item->weight_in_kg=$request->weight_in_grams/1000;
+        }else
+        {
+            $item->weight_in_grams=0;
+            $item->weight_in_kg=0;
+        }
         $item->code=$request->code;
         $item->category_1=$request->category_1;
         $item->category_2=$request->category_2;
@@ -186,7 +217,7 @@ class ItemController extends Controller
         $item->default_selling_price=$request->default_selling_price;
         $item->uom_id=$request->uom_id;
         $item->is_expiry_date=$request->is_expiry_date;
-        $item->machine_weight_applicable=$request->machine_weight_applicable;
+        $item->is_machine_weight_applicable=$request->is_machine_weight_applicable;
         
         if(!empty($request->expiry_date))
         {

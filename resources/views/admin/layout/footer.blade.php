@@ -101,11 +101,26 @@ $(document).on("keypress",".only_allow_alp_numeric",function(e)
 
 });
 
+
+
+
+
+
 $(document).on("keypress",".only_allow_digit_and_dot",function(e)
 {
     var regex  = new RegExp("^[0-9.]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    $(this).onpaste = function(e) {
+   e.preventDefault();
+ }
+    
     if (regex.test(str)) {
+        if (e.keyCode === 46 && this.value.split('.').length === 2) 
+        {
+            return false;
+        }
+
+
         return true;
     }
     e.preventDefault();

@@ -346,7 +346,7 @@ div.dataTables_wrapper {
     margin: 0 auto;
 }
 table.dataTable {
-    width: 1400px !important;
+    width: 100% !important;
 }
 .r_pmission .row .w-20 {
     border: 1px solid #ccc;
@@ -360,3 +360,9 @@ table.dataTable {
 .bulk_item_div .select2-container {
     width: 100% !important;
 }
+
+/* table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting {
+    padding-right: 50px !important;
+    white-space: nowrap;
+ } */ 
+

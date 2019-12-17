@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('#master thead tr').clone(true).appendTo( '#master thead' );
     $('#master thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+        $(this).html( '<input type="text" placeholder="Search" />' );
  
         $( 'input', this ).on( 'keyup change', function () {
             if ( table.column(i).search() !== this.value ) {
@@ -22,6 +22,7 @@ $(document).ready(function() {
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
+        "scrollY":300,
         buttons: [
           {
               extend: 'copyHtml5',
