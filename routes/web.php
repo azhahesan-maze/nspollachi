@@ -30,7 +30,18 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('change-password', 'Auth\RegisterController@indexshow')->name('change.password')->middleware(['auth']);
 Route::any('update-password', 'Auth\RegisterController@updatePassword')->name('changePassword')->middleware(['auth']);
 
-
+/* Common Master Details Start Here */
+Route::any('common-master-details/get-state-master-details', 'CommonMasterDetailController@get_state_master_details');
+Route::any('common-master-details/get-district-master-details', 'CommonMasterDetailController@get_district_master_details');
+Route::any('common-master-details/get-city-master-details', 'CommonMasterDetailController@get_city_master_details');
+Route::any('common-master-details/get-location-type-master-details', 'CommonMasterDetailController@get_location_type_master_details');
+Route::any('common-master-details/get-bank-branch-master-details', 'CommonMasterDetailController@get_bank_branch_master_details');
+Route::any('common-master-details/get-bank-master-details', 'CommonMasterDetailController@get_bank_master_details');
+Route::any('common-master-details/get-department-master-details', 'CommonMasterDetailController@get_department_master_details');
+Route::any('common-master-details/get-address-type-master-details', 'CommonMasterDetailController@get_address_type_master_details');
+Route::any('common-master-details/get-bank-branch-master-details', 'CommonMasterDetailController@get_bank_branch_master_details');
+Route::any('common-master-details/get-accounts-type-master-details', 'CommonMasterDetailController@get_accounts_type_master_details');
+/* Common Master Details End Here */
 /* Common Functions Start Here */
 Route::any('common/get-state-based-district', 'CommonController@get_state_based_district');
 Route::any('common/get-district-based-city', 'CommonController@get_district_based_city');
@@ -343,6 +354,18 @@ Route::group(['prefix' => 'master/category-one','middleware' => ['auth']], funct
     Route::any('delete/{id}', 'CategoryOneController@destroy')->middleware('permission:category_1_master_delete');
 });
 /* Category One Master End Here  */
+
+/* Category Master  Start Here  */
+Route::group(['prefix' => 'master/category','middleware' => ['auth']], function () {
+    Route::any('/', 'CategoryController@index')->middleware('permission:category_1_master_list');
+    Route::any('create', 'CategoryController@create')->middleware('permission:category_1_master_create');
+    Route::any('store', 'CategoryController@store')->middleware('permission:category_1_master_create');
+    Route::any('show/{id}', 'CategoryController@show')->middleware('permission:category_1_master_list');
+    Route::any('edit/{id}', 'CategoryController@edit')->middleware('permission:category_1_master_edit');
+    Route::any('update/{id}', 'CategoryController@update')->middleware('permission:category_1_master_edit');
+    Route::any('delete/{id}', 'CategoryController@destroy')->middleware('permission:category_1_master_delete');
+});
+/* Category Master End Here  */
 
 /* Category Two Master  Start Here  */
 Route::group(['prefix' => 'master/category-two','middleware' => ['auth']], function () {

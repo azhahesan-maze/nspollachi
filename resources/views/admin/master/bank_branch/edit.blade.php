@@ -21,7 +21,7 @@
       <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/bank-branch/update/'.$bank_branch->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
       <div class="form-row">
-          <div class="col-md-7">
+           <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Branch Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -33,10 +33,10 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7">
+           <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Bank <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <select class="js-example-basic-multiple col-12 custom-select bank_id" name="bank_id" required>
                   <option value="">Choose Bank</option>
                   @foreach($bank as $value)
@@ -48,10 +48,14 @@
                   Enter valid Bank
                 </div>
               </div>
+              <a href="{{ url('master/bank/create')}}" target="_blank">
+                <button type="button"  class="px-3 btn btn-success ml-2 " title="Add Bank"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-3 btn btn-success mx-2 refresh_bank_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        
             </div>
           </div>
 
-          <div class="col-md-7">
+           <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Ifsc Code <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -74,4 +78,10 @@
     <!-- card body end@ -->
   </div>
 </div>
+<script>
+  $(document).on("click",".refresh_bank_id",function(){
+     var bank_dets=refresh_bank_master_details();
+    $(".bank_id").html(bank_dets);
+  });
+  </script>
 @endsection

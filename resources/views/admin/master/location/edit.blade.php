@@ -38,7 +38,7 @@
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Location Type <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <select class="js-example-basic-multiple form-control col-12 custom-select location_type_id" name="location_type_id" required>
                   <option value="">Choose Location Type</option>
                   @foreach($location_type as $value)
@@ -50,6 +50,10 @@
                   Enter valid Location Type
                 </div>
               </div>
+              <a href="{{ url('master/location-type/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2" title="Add Location Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-2 btn btn-success mx-2 refresh_location_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+          
             </div>
           </div>
 
@@ -96,7 +100,7 @@
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <select class="js-example-basic-multiple form-control col-12 custom-select state_id" name="state_id" required>
                   <option value="">Choose State</option>
                   @foreach($state as $value)
@@ -108,22 +112,29 @@
                   Enter valid State 
                 </div>
               </div>
+              <a href="{{ url('master/state/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2" title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+          
             </div>
           </div>
 
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <select class="js-example-basic-multiple form-control col-12 custom-select district_id" name="district_id">
                   <option value="">Choose District</option>
-                  
                 </select>
                 <span class="mandatory"> {{ $errors->first('district_id')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid District
                 </div>
               </div>
+              <a href="{{ url('master/district/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        
             </div>
           </div>
 
@@ -132,16 +143,19 @@
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <select class="js-example-basic-multiple form-control col-12 custom-select city_id" name="city_id" >
                   <option value="">Choose City</option>
-                  
                 </select>
                 <span class="mandatory"> {{ $errors->first('city_id')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid City
                 </div>
               </div>
+              <a href="{{ url('master/city/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+         
             </div>
           </div>
 
@@ -169,6 +183,38 @@
   </div>
 </div>
 <script>
+
+$(document).on("click",".refresh_state_id",function(){
+   var state_dets=refresh_state_master_details();
+  $(".state_id").html(state_dets);
+  $(".district_id").html("<option value=''>Choose District</option>");
+  $(".city_id").html("<option value=''>Choose City</option>");
+});
+
+$(document).on("click",".refresh_location_type_id",function(){
+  var location_type_dets=refresh_location_type_master_details();
+  $(".location_type_id").html(location_type_dets);
+});
+
+$(document).on("click",".refresh_district_id",function(){
+  var state_id=$(".state_id").val();
+  if(state_id !="")
+  {
+    var district_dets=refresh_district_master_details(state_id);
+    $(".district_id").html(district_dets);
+    $(".city_id").html("<option value=''>Choose City</option>");
+  }
+ });
+
+ $(document).on("click",".refresh_city_id",function(){
+  var state_id=$(".state_id").val();
+  var district_id=$(".district_id").val();
+  if(state_id !="" && district_id !="")
+  {
+    var city_dets=refresh_city_master_details(state_id,district_id);
+    $(".city_id").html(city_dets);
+  }
+ });
 
 function get_state_based_district(state_id,district_id)
 {

@@ -51,7 +51,7 @@
             <div class="col-md-6">
                 <div class="form-group row">
                   <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} <span class="mandatory">*</span></label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-6">
                     <select class="js-example-basic-multiple col-12 form-control custom-select category_1" name="category_1" required>
                       <option value="">Choose {{ $category_1}}</option>
                       @foreach ($category_one as $value)
@@ -63,6 +63,10 @@
                       Enter valid {{ $category_1}}
                     </div>
                   </div>
+                  <a href="{{ url('master/state/create')}}" target="_blank">
+                    <button type="button"  class="px-2 btn btn-success ml-2" title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                    <button type="button"  class="px-2 btn btn-success mx-2" title="Add State"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+              
                 </div>
               </div>
 
@@ -264,7 +268,7 @@
                                   <div class="col-md-6">
                                       <div class="form-group row">
                                         <label for="validationCustom01" class="col-sm-4 col-form-label">UOM <span class="mandatory">*</span></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-6">
                                           <select class="js-example-basic-multiple col-12 form-control custom-select uom_id" name="uom_id" required>
                                             <option value="">Choose UOM</option>
                                             @foreach ($uom as $value)
@@ -276,6 +280,9 @@
                                             Enter valid UOM
                                           </div>
                                         </div>
+                                        <a href="{{ url('master/uom/create')}}" target="_blank">
+                                          <button type="button"  class="px-2 btn btn-success ml-2 " title="Add UOM"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                                         <button type="button"  class="px-2 btn btn-success mx-2 refresh_uom_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                       </div>
                                     </div>
                                     <div class="col-md-6">

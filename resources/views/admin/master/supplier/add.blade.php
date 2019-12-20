@@ -181,7 +181,7 @@
                 <div class="col-md-6">
               <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                 <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">
                     <option value="">Choose Address Type</option>
                     @foreach($address_type as $value)
@@ -193,6 +193,9 @@
                     Enter valid Address Type
                   </div>
                 </div>
+                <a href="{{ url('master/address_type/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               </div>
             </div>
       <div class="col-md-6">
@@ -239,7 +242,7 @@
   <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >
                     <option value="">Choose State</option>
                     @foreach($state as $value)
@@ -251,12 +254,15 @@
                     Enter valid State 
                   </div>
                 </div>
+                <a href="{{ url('master/state/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               </div>
             </div>
   <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">
                     <option value="">Choose District</option>
                     </select>
@@ -265,12 +271,15 @@
                     Enter valid District
                   </div>
                 </div>
-              </div>
+                <a href="{{ url('master/district/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+             </div>
             </div>
              <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >
                     <option value="">Choose City</option>
                   </select>
@@ -279,6 +288,9 @@
                     Enter valid City
                   </div>
                 </div>
+                <a href="{{ url('master/city/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               </div>
             </div>
    <div class="col-md-6">
@@ -323,13 +335,13 @@
 
 
               <div class="col-md-12">
-                <table class="table">
+                <table class="table bank_dtails">
                   <thead>
                     <th>S.no</th>
-                    <th> Bank   Name</th>
-                    <th> Branch Name</th>
+                    <th class="tbl_wd"> Bank   Name</th>
+                    <th class="tbl_wd"> Branch Name</th>
                     <th> Ifsc Code </th>
-                    <th>Account Type </th>
+                    <th class="tbl_wd">Account Type </th>
                     <th>Account Holder Name </th>
                     <th>Account No </th>
                     <th>Action</th>
@@ -344,7 +356,7 @@
 
                       <td>
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-8">
                               <select class="js-example-basic-multiple col-12 form-control custom-select bank_id required_for_valid" error-data="Enter valid Bank" name="bank_id[]" >
                                 <option value="">Choose Bank</option>
                                 @foreach($bank as $value)
@@ -356,12 +368,15 @@
                                 Enter valid Bank Name 
                               </div>
                             </div>
+                            <a href="{{ url('master/bank/create')}}" target="_blank">
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_bank_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                           </div>
                        </td>
 
                        <td>
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-8">
                               <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" error-data="Enter valid Branch Name" name="branch_id[]" >
                                 <option value="">Choose Branch Name</option>
                                 </select>
@@ -370,6 +385,9 @@
                                 Enter valid Branch Name 
                               </div>
                             </div>
+                            <a href="{{ url('master/bank-branch/create')}}" target="_blank">
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank Branch"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_branch_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                           </div>
                        </td>
 
@@ -388,7 +406,7 @@
 
                       <td>
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-8">
                               <select class="js-example-basic-multiple col-12 form-control custom-select account_type_id required_for_valid" error-data="Enter valid Account Type" name="account_type_id[]" >
                                 <option value="">Choose Account Type</option>
                                 @foreach($account_type as $value)
@@ -400,12 +418,15 @@
                                 Enter valid Account Type 
                               </div>
                             </div>
+                            <a href="{{ url('master/accounts-type/create')}}" target="_blank">
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Accounts Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_accounts_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                           </div>
                        </td>
 
                       <td>
                         <div class="form-group row">
-                          <div class="col-sm-12">
+                          <div class="mm">
                           <input type="text" class="form-control account_holder_name required_for_proof_valid" error-data="Enter valid Account Holder Name" placeholder="Account Holder Name" name="account_holder_name[]" value="{{ old('account_holder_name.0') }}" >
                             <span class="mandatory"> {{ $errors->first('account_holder_name.0')  }} </span>
                             <div class="invalid-feedback">
@@ -417,7 +438,7 @@
 
                       <td>
                         <div class="form-group row">
-                          <div class="col-sm-12">
+                          <div class="mm">
                           <input type="text" class="form-control account_no required_for_proof_valid" error-data="Enter valid Account No"  placeholder="Account No" name="account_no[]" value="{{ old('account_no.0') }}" >
                             <span class="mandatory"> {{ $errors->first('account_no.0')  }} </span>
                             <div class="invalid-feedback">
@@ -428,7 +449,7 @@
                       </td>
                     <td>
                                 <div class="form-group row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 mr-1">
                                     <label class="btn btn-success add_bank_details">+</label>
                                     </div>
                                     <div class="col-sm-3 mx-2">
@@ -451,7 +472,7 @@
   
                         <td>
                           <div class="form-group row">
-                              <div class="col-sm-12">
+                              <div class="col-sm-8">
                                 <select class="js-example-basic-multiple col-12 form-control custom-select bank_id required_for_valid" error-data="Enter valid Bank" name="bank_id[]" >
                                   <option value="">Choose Bank</option>
                                   @foreach($bank as $value)
@@ -463,12 +484,15 @@
                                   Enter valid Bank Name 
                                 </div>
                               </div>
+                              <a href="{{ url('master/bank/create')}}" target="_blank">
+                                <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                               <button type="button"  class="px-1 btn btn-success mx-1 refresh_bank_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                             </div>
                          </td>
   
                          <td>
                           <div class="form-group row">
-                              <div class="col-sm-12">
+                              <div class="col-sm-8">
                                 <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" error-data="Enter valid Branch Name" name="branch_id[]" >
                                   <option value="">Choose Branch Name</option>
                                   </select>
@@ -477,6 +501,9 @@
                                   Enter valid Branch Name 
                                 </div>
                               </div>
+                              <a href="{{ url('master/bank-branch/create')}}" target="_blank">
+                                <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank Branch"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                               <button type="button"  class="px-1 btn btn-success mx-1 refresh_branch_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                             </div>
                          </td>
   
@@ -495,7 +522,7 @@
   
                         <td>
                           <div class="form-group row">
-                              <div class="col-sm-12">
+                              <div class="col-sm-8">
                                 <select class="js-example-basic-multiple col-12 form-control custom-select account_type_id required_for_valid" error-data="Enter valid Account Type" name="account_type_id[]" >
                                   <option value="">Choose Account Type</option>
                                   @foreach($account_type as $value)
@@ -507,12 +534,15 @@
                                   Enter valid Account Type 
                                 </div>
                               </div>
+                              <a href="{{ url('master/accounts-type/create')}}" target="_blank">
+                                <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Accounts Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                               <button type="button"  class="px-1 btn btn-success mx-1 refresh_accounts_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                             </div>
                          </td>
   
                         <td>
                           <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="mm">
                             <input type="text" class="form-control account_holder_name required_for_proof_valid" error-data="Enter valid Account Holder Name" placeholder="Account Holder Name" name="account_holder_name[]" value="{{ old('account_holder_name.'.$key) }}" >
                               <span class="mandatory"> {{ $errors->first('account_holder_name.'.$key)  }} </span>
                               <div class="invalid-feedback">
@@ -524,7 +554,7 @@
   
                         <td>
                           <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="mm">
                             <input type="text" class="form-control account_no required_for_proof_valid" error-data="Enter valid Account No"  placeholder="Account No" name="account_no[]" value="{{ old('account_no.'.$key) }}" >
                               <span class="mandatory"> {{ $errors->first('account_no.'.$key)  }} </span>
                               <div class="invalid-feedback">
@@ -535,7 +565,7 @@
                         </td>
                       <td>
                                   <div class="form-group row">
-                                      <div class="col-sm-3">
+                                      <div class="col-sm-3 mr-1">
                                       <label class="btn btn-success add_bank_details">+</label>
                                       </div>
                                       <div class="col-sm-3 mx-2">

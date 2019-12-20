@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="{{asset('assets/datepicker/datepicker3.css')}}" type="text/css" />
     <!-- main js -->
     <script src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
+
+    <script type="text/javascript">
+      var APP_URL = {!! json_encode(url('/')) !!}
+      </script>
     
     
 
@@ -90,7 +94,7 @@
                             @can('location_type_list')
                             <li><a href="{{url('master/location-type')}}">Location Type</a></li>
                             @endcan
-                            @can('address_type')
+                            @can('address_type_list')
                             <li><a href="{{url('master/address-type')}}">Address Type</a></li>
                             @endcan
                             @can('location_list')
@@ -293,14 +297,16 @@
 
     @if ($message=Session::get('success'))
    
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <!-- <div class="alert alert-success alert-dismissible fade show container py-1 mt-2 mb-0" role="alert"> -->
+    <div class="alert alert-success alert-dismissible fade show " role="alert">
       <strong>{{ $message }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" class="close py-1" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>  
   
     @endif
+
     @if ($message=Session::get('failure'))
     
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -311,4 +317,15 @@
     </div>  
    
        
+    @endif
+
+    @if (isset($errors) && count($errors)>0)
+   
+    <div class="alert alert-danger alert-dismissible fade show container py-1 mt-2 mb-0" role="alert">
+      <strong>Validation Errros </strong>
+      <button type="button" class="close py-1" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>  
+  
     @endif
