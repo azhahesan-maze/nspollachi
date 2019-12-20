@@ -17,7 +17,7 @@ function add_address(id="",text=""){
             <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\
-            <div class="col-sm-8">\
+            <div class="col-sm-6">\
               <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">\
                 <option value="">Choose Address Type</option>\
                 '+ $(".address_type_id_div").html() +'</select>\
@@ -25,7 +25,10 @@ function add_address(id="",text=""){
                 Enter valid Address Type\
               </div>\
             </div>\
-          </div>\
+            <a href="'+ APP_URL +'/master/address-type/create" target="_blank">\
+            <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+           <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+  </div>\
         </div>\
   <div class="col-md-6">\
           <div class="form-group row">\
@@ -63,7 +66,7 @@ function add_address(id="",text=""){
 <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>\
-            <div class="col-sm-8">\
+            <div class="col-sm-6">\
               <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >\
                 <option value="">Choose State</option>\
               '+ $(".state_id_div").html() +'</select>\
@@ -71,12 +74,15 @@ function add_address(id="",text=""){
                 Enter valid State \
               </div>\
             </div>\
-          </div>\
+            <a href="'+ APP_URL +'/master/state/create" target="_blank">\
+            <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+           <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+  </div>\
         </div>\
 <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>\
-            <div class="col-sm-8">\
+            <div class="col-sm-6">\
               <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">\
                 <option value="">Choose District</option>\
                </select>\
@@ -84,12 +90,15 @@ function add_address(id="",text=""){
                 Enter valid District\
               </div>\
             </div>\
-          </div>\
+            <a href="'+ APP_URL +'/master/district/create" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+        </div>\
         </div>\
          <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>\
-            <div class="col-sm-8">\
+            <div class="col-sm-6">\
               <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >\
                 <option value="">Choose City</option>\
               </select>\
@@ -97,7 +106,10 @@ function add_address(id="",text=""){
                 Enter valid City\
               </div>\
             </div>\
-          </div>\
+            <a href="'+ APP_URL +'/master/city/create" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+           </div>\
         </div>\
 <div class="col-md-6">\
           <div class="form-group row">\
@@ -141,4 +153,44 @@ $(document).on("click",".remove_new_address",function(){
 
 
 /* Add More Fileds For Bank Details End Here */
+
+$(document).on("click",".refresh_state_id",function(){
+  var state_dets=refresh_state_master_details();
+  $(this).closest(".address_div").find(".state_id").html(state_dets);
+  $(this).closest(".address_div").find(".district_id").html("<option value=''>Choose District</option>");
+  $(this).closest(".address_div").find(".city_id").html("<option value=''>Choose City</option>");
+});
+
+$(document).on("click",".refresh_district_id",function(){
+ var state_id= $(this).closest(".address_div").find(".state_id").val();
+ if(state_id !="")
+ {
+   var district_dets=refresh_district_master_details(state_id);
+   $(this).closest(".address_div").find(".district_id").html(district_dets);
+   $(this).closest(".address_div").find(".city_id").html("<option value=''>Choose City</option>");
+ }
+});
+
+$(document).on("click",".refresh_city_id",function(){
+ var state_id= $(this).closest(".address_div").find(".state_id").val();
+ var district_id= $(this).closest(".address_div").find(".district_id").val();
+ if(state_id !="" && district_id !="")
+ {
+   var city_dets=refresh_city_master_details(state_id,district_id);
+   $(this).closest(".address_div").find(".city_id").html(city_dets);
+ }
+});
+
+$(document).on("click",".refresh_department_id",function(){
+  var department_dets=refresh_department_master_details();
+ $(".department_id").html(department_dets);
+});
+
+$(document).on("click",".refresh_address_type_id",function(){
+  var address_type_dets=refresh_address_type_master_details();
+  $(this).closest(".address_div").find(".address_type_id").html(address_type_dets);
+ 
+});
+
+
 

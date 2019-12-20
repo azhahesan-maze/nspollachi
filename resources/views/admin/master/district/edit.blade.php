@@ -21,7 +21,7 @@
       <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/district/update/'.$district->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
       <div class="form-row">
-          <div class="col-md-7">
+          <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">District Name <span class="mandatory">*</span></label>
               <div class="col-sm-8">
@@ -33,16 +33,14 @@
               </div>
             </div>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                <select class="js-example-basic-multiple form-control col-12 custom-select" name="state_id" required>
+              <div class="col-sm-6">
+                <select class="js-example-basic-multiple form-control col-12 custom-select state_id" name="state_id" required>
                   <option value="">Choose States</option>
                   @foreach($state as $value)
-
-                  <option value="{{  $value->id }}" {{ old('state_id', $district->state_id) == $value->id ? 'selected' : '' }}>{{ $value->name}}</option>
-                 
+                 <option value="{{  $value->id }}" {{ old('state_id', $district->state_id) == $value->id ? 'selected' : '' }}>{{ $value->name}}</option>
                   @endforeach
                 </select>
                 <span class="mandatory"> {{ $errors->first('state_id')  }} </span>
@@ -50,9 +48,13 @@
                   Enter valid State 
                 </div>
               </div>
+              <a href="{{ url('master/state/create')}}" target="_blank">
+                <button type="button"  class="px-3 btn btn-success ml-2" title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-3 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+           
             </div>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-8">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Remark </label>
               <div class="col-sm-8">
@@ -70,4 +72,10 @@
     <!-- card body end@ -->
   </div>
 </div>
+<script>
+  $(document).on("click",".refresh_state_id",function(){
+     var state_dets=refresh_state_master_details();
+    $(".state_id").html(state_dets);
+  });
+  </script>
 @endsection

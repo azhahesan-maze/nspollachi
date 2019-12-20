@@ -23,6 +23,7 @@ class CustomerRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+   //    echo "<pre>"; print_r($request->all());exit;
          $rule=[];
         if($request->has('add')){
             $rule=array(

@@ -37,6 +37,7 @@
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <!-- date picker -->
     <script src="{{asset('assets/js/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/master/common_ajax_master.js')}}"></script>
      
 
     <script src="{{asset('assets/datepicker/bootstrap-datepicker.js')}}"></script>

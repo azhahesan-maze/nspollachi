@@ -7,7 +7,7 @@ function add_bank_details(){
       <td><span class="bank_s_no"> 1 </span></td>\
       <td>\
                           <div class="form-group row">\
-                              <div class="col-sm-12">\
+                              <div class="col-sm-8">\
                                 <select class="js-example-basic-multiple col-12 form-control custom-select bank_id required_for_valid" error-data="Enter valid Bank" name="bank_id[]" >\
                                   <option value="">Choose Bank</option>\
                                   '+ $(".bank_id_div").html() +'</select>\
@@ -15,11 +15,14 @@ function add_bank_details(){
                                   Enter valid Bank Name \
                                 </div>\
                               </div>\
+                              <a href="'+ APP_URL +'/master/bank/create" target="_blank">\
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_bank_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
                             </div>\
                          </td>\
                          <td>\
                           <div class="form-group row">\
-                              <div class="col-sm-12">\
+                              <div class="col-sm-8">\
                                 <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" error-data="Enter valid Branch Name" name="branch_id[]" >\
                                   <option value="">Choose Branch Name</option>\
                                  </select>\
@@ -27,6 +30,9 @@ function add_bank_details(){
                                   Enter valid Branch Name \
                                 </div>\
                               </div>\
+                           <a href="'+ APP_URL +'/master/bank/create" target="_blank">\
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Bank Branch"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_branch_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
                             </div>\
                          </td>\
                          <td>\
@@ -41,7 +47,7 @@ function add_bank_details(){
                         </td>\
                         <td>\
                           <div class="form-group row">\
-                              <div class="col-sm-12">\
+                              <div class="col-sm-8">\
                                 <select class="js-example-basic-multiple col-12 form-control custom-select account_type_id " error-data="Enter valid Account Type" name="account_type_id[]" >\
                                   <option value="">Choose Account Type</option>\
                                   '+ $(".account_type_id_div").html() +'</select>\
@@ -49,11 +55,14 @@ function add_bank_details(){
                                   Enter valid Account Type \
                                 </div>\
                               </div>\
+                               <a href="'+ APP_URL +'/master/accounts-type/create" target="_blank">\
+                              <button type="button"  class="px-1 btn btn-success ml-3 " title="Add Accounts Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                             <button type="button"  class="px-1 btn btn-success mx-1 refresh_accounts_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
                             </div>\
                          </td>\
                          <td>\
                           <div class="form-group row">\
-                            <div class="col-sm-12">\
+                            <div class="mm">\
                             <input type="text" class="form-control account_holder_name required_for_proof_valid" error-data="Enter valid Account Holder Name" placeholder="Account Holder Name" name="account_holder_name[]" value="" >\
                              <div class="invalid-feedback">\
                                 Enter valid Account Holder Name\
@@ -63,7 +72,7 @@ function add_bank_details(){
                         </td>\
                         <td>\
                           <div class="form-group row">\
-                            <div class="col-sm-12">\
+                            <div class="mm">\
                             <input type="text" class="form-control account_no required_for_proof_valid" error-data="Enter valid Account No"  placeholder="Account No" name="account_no[]" value="" >\
                                <div class="invalid-feedback">\
                                 Enter valid Account No\
@@ -73,7 +82,7 @@ function add_bank_details(){
                         </td>\
                         <td>\
                                   <div class="form-group row">\
-                                      <div class="col-sm-3">\
+                                      <div class="col-sm-3 mr-1">\
                                       <label class="btn btn-success add_bank_details">+</label>\
                                       </div>\
                                       <div class="col-sm-3 mx-2">\
@@ -107,6 +116,32 @@ $(document).on("click",".remove_bank_details",function(){
   }
 });
 /* Add More Fileds For Bank Details End Here */
+
+$(document).on("click",".refresh_branch_id",function(){
+  var bank_id=$(this).closest("tr").find(".bank_id").val();
+  if(bank_id !="")
+  {
+    var bank_branch_dets=refresh_bank_branch_master_details(bank_id);
+    $(this).closest("tr").find(".branch_id").html(bank_branch_dets);
+    $(this).closest("tr").find(".ifsc").val("");
+  }
+  
+});
+
+$(document).on("click",".refresh_bank_id",function(){
+  var bank_dets=refresh_bank_master_details();
+  $(this).closest("tr").find(".bank_id").html(bank_dets);
+  $(this).closest("tr").find(".branch_id").html("<option value=''>Choose Branch</option>");
+  $(this).closest("tr").find(".ifsc").val("");
+  
+});
+
+$(document).on("click",".refresh_accounts_type_id",function(){
+  var accounts_type_dets=refresh_accounts_type_master_details();
+  $(this).closest("tr").find(".account_type_id").html(accounts_type_dets);
+  
+});
+
 
 
 

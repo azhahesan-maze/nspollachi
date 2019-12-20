@@ -115,22 +115,23 @@
          <div class="col-md-6">
            <div class="form-group row">
              <label for="validationCustom01" class="col-sm-4 col-form-label">Department <span class="mandatory">*</span></label>
-             <div class="col-sm-8">
-
-             <select class="js-example-basic-multiple col-12 form-control custom-select department_id required_for_valid" 
+             <div class="col-sm-6">
+            <select class="js-example-basic-multiple col-12 form-control custom-select department_id required_for_valid" 
              error-data="Enter valid Department" data-placeholder="Choose Department" name="department_id" >
                <option value="">Choose Department</option>
                  @foreach($department as $value)
                  <option value="{{ $value->id}}" {{ old('department_id',$employee->department_id) == $value->id  ? 'selected' : '' }}>{{$value->name}}</option>
                  @endforeach
-                
-             </select>
-              
+              </select>
                <span class="mandatory"> {{ $errors->first('department_id')  }} </span>
                <div class="invalid-feedback">
                  Enter valid Department
                </div>
              </div>
+             <a href="{{ url('master/department/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Department"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+               <button type="button"  class="px-2 btn btn-success mx-2 refresh_department_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+       
            </div>
          </div>
 </div>
@@ -166,7 +167,7 @@
                     <div class="col-md-6">
                   <div class="form-group row">
                   <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                     <select class="js-example-basic-multiple col-12 form-control custom-select old_address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="old_address_type_id[]" required>
                         <option value="">Choose Address Type</option>
                         @foreach($address_type as $value)
@@ -178,6 +179,10 @@
                         Enter valid Address Type
                       </div>
                     </div>
+                    <a href="{{ url('master/address-type/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                
                   </div>
                 </div>
           <div class="col-md-6">
@@ -225,7 +230,7 @@
       <div class="col-md-6">
                   <div class="form-group row">
                     <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                       <select class="js-example-basic-multiple col-12 form-control custom-select state_id old_state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="old_state_id[]" required>
                         <option value="">Choose State</option>
                         @foreach($state as $value)
@@ -237,12 +242,15 @@
                         Enter valid State 
                       </div>
                     </div>
-                  </div>
+                    <a href="{{ url('master/state/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                </div>
                 </div>
       <div class="col-md-6">
                   <div class="form-group row">
                     <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                       <select class="js-example-basic-multiple col-12 form-control custom-select district_id old_district_id" name="old_district_id[]">
                         <option value="">Choose District</option>
                         </select>
@@ -251,12 +259,16 @@
                         Enter valid District
                       </div>
                     </div>
+                    <a href="{{ url('master/district/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+             
                   </div>
                 </div>
                  <div class="col-md-6">
                   <div class="form-group row">
                     <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                       <select class="js-example-basic-multiple col-12 form-control custom-select city_id old_city_id" name="old_city_id[]" >
                         <option value="">Choose City</option>
                       </select>
@@ -265,7 +277,10 @@
                         Enter valid City
                       </div>
                     </div>
-                  </div>
+                    <a href="{{ url('master/city/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                </div>
                 </div>
        <div class="col-md-6">
                   <div class="form-group row">
@@ -300,7 +315,7 @@
                 <div class="col-md-6">
               <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                 <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]" required>
                     <option value="">Choose Address Type</option>
                     @foreach($address_type as $value)
@@ -312,6 +327,9 @@
                     Enter valid Address Type
                   </div>
                 </div>
+                <a href="{{ url('master/address-type/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               </div>
             </div>
       <div class="col-md-6">
@@ -358,7 +376,7 @@
   <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select state_id new_state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" required>
                     <option value="">Choose State</option>
                     @foreach($state as $value)
@@ -370,12 +388,16 @@
                     Enter valid State 
                   </div>
                 </div>
+                <a href="{{ url('master/state/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            
               </div>
             </div>
   <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select new_district_id district_id" name="district_id[]">
                     <option value="">Choose District</option>
                     </select>
@@ -384,12 +406,16 @@
                     Enter valid District
                   </div>
                 </div>
+                <a href="{{ url('master/district/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+         
               </div>
             </div>
              <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                   <select class="js-example-basic-multiple col-12 form-control custom-select new_city_id city_id" name="city_id[]" >
                     <option value="">Choose City</option>
                   </select>
@@ -398,7 +424,10 @@
                     Enter valid City
                   </div>
                 </div>
-              </div>
+                <a href="{{ url('master/city/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+             </div>
             </div>
    <div class="col-md-6">
               <div class="form-group row">
@@ -571,6 +600,46 @@
 </div>
 
 <script>
+
+$(document).on("click",".refresh_state_id",function(){
+   var state_dets=refresh_state_master_details();
+   $(this).closest(".address_div").find(".state_id").html(state_dets);
+   $(this).closest(".address_div").find(".district_id").html("<option value=''>Choose District</option>");
+   $(this).closest(".address_div").find(".city_id").html("<option value=''>Choose City</option>");
+
+});
+
+$(document).on("click",".refresh_district_id",function(){
+  var state_id= $(this).closest(".address_div").find(".state_id").val();
+  if(state_id !="")
+  {
+    var district_dets=refresh_district_master_details(state_id);
+    $(this).closest(".address_div").find(".district_id").html(district_dets);
+    $(this).closest(".address_div").find(".city_id").html("<option value=''>Choose City</option>");
+  }
+ });
+
+ $(document).on("click",".refresh_city_id",function(){
+  var state_id= $(this).closest(".address_div").find(".state_id").val();
+  var district_id= $(this).closest(".address_div").find(".district_id").val();
+  if(state_id !="" && district_id !="")
+  {
+    var city_dets=refresh_city_master_details(state_id,district_id);
+    $(this).closest(".address_div").find(".city_id").html(city_dets);
+  }
+ });
+
+$(document).on("click",".refresh_department_id",function(){
+   var department_dets=refresh_department_master_details();
+  $(".department_id").html(department_dets);
+});
+
+$(document).on("click",".refresh_address_type_id",function(){
+   var address_type_dets=refresh_address_type_master_details();
+   $(this).closest(".address_div").find(".address_type_id").html(address_type_dets);
+   $(this).closest(".address_div").find(".old_address_type_id").html(address_type_dets);
+  
+});
 
   /* Address Perement Delete Start Here */
 $(document).on("click",".perment_proof_details",function(){
@@ -972,7 +1041,7 @@ var address='';
            <div class="col-md-6">\
             <div class="form-group row">\
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
+              <div class="col-sm-6">\
                 <select class="js-example-basic-multiple col-12 form-control custom-select address_type_id required_for_valid required_for_address_valid" error-data="Enter valid Address Type" name="address_type_id[]">\
                   <option value="">Choose Address Type</option>\
                   @foreach($address_type as $value)\
@@ -983,7 +1052,10 @@ var address='';
                   Enter valid Address Type\
                 </div>\
               </div>\
-            </div>\
+              <a href="{{ url("master/address-type/create")}}" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+             </div>\
           </div>\
     <div class="col-md-6">\
             <div class="form-group row">\
@@ -1021,7 +1093,7 @@ var address='';
 <div class="col-md-6">\
             <div class="form-group row">\
               <label for="validationCustom01" class="col-sm-4 col-form-label">State <span class="mandatory">*</span></label>\
-              <div class="col-sm-8">\
+              <div class="col-sm-6">\
                 <select class="js-example-basic-multiple col-12 form-control custom-select state_id required_for_valid required_for_address_valid" error-data="Enter valid State" name="state_id[]" >\
                   <option value="">Choose State</option>\
                   @foreach($state as $value)\
@@ -1032,12 +1104,15 @@ var address='';
                   Enter valid State \
                 </div>\
               </div>\
-            </div>\
+              <a href="{{ url("master/state/create")}}" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+             </div>\
           </div>\
 <div class="col-md-6">\
             <div class="form-group row">\
               <label for="validationCustom01" class="col-sm-4 col-form-label">District </label>\
-              <div class="col-sm-8">\
+              <div class="col-sm-6">\
                 <select class="js-example-basic-multiple col-12 form-control custom-select district_id" name="district_id[]">\
                   <option value="">Choose District</option>\
                  </select>\
@@ -1045,12 +1120,15 @@ var address='';
                   Enter valid District\
                 </div>\
               </div>\
-            </div>\
+              <a href="{{ url("master/district/create")}}" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+         </div>\
           </div>\
            <div class="col-md-6">\
             <div class="form-group row">\
               <label for="validationCustom01" class="col-sm-4 col-form-label">City </label>\
-              <div class="col-sm-8">\
+              <div class="col-sm-6">\
                 <select class="js-example-basic-multiple col-12 form-control custom-select city_id" name="city_id[]" >\
                   <option value="">Choose City</option>\
                 </select>\
@@ -1058,7 +1136,10 @@ var address='';
                   Enter valid City\
                 </div>\
               </div>\
-            </div>\
+              <a href="{{ url("master/city/create")}}" target="_blank">\
+                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+             </div>\
           </div>\
  <div class="col-md-6">\
             <div class="form-group row">\

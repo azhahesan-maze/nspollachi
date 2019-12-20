@@ -360,7 +360,24 @@ table.dataTable {
 .bulk_item_div .select2-container {
     width: 100% !important;
 }
-
+.bank_dtails th {
+    text-align: center;
+    font-size: 14px;
+}
+.bank_dtails td input {
+    width: 70%;
+    margin: 0 auto;
+}
+.bank_dtails td {text-align: center;}
+.bank_dtails .select2 {
+    width: 150px !important;
+}
+th.tbl_wd {
+    width: 220px;
+}
+.bank_dtails .select2-selection__rendered {
+    font-size: 12px !important;
+}
 /* table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting {
     padding-right: 50px !important;
     white-space: nowrap;
