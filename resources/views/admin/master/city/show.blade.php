@@ -21,13 +21,13 @@
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">State Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $city->state->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ isset($city->state->name) && !empty( $city->state->name) ?  $city->state->name : "" }}</label>
           </div>
         </div>
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">District Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $city->district->name }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($city->district->name) && !empty( $city->district->name) ?  $city->district->name : "" }} </label>
           </div>
         </div>
         <div class="col-md-7">

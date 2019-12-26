@@ -21,7 +21,7 @@
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Bank Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $bank_branch->bank->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ isset($bank_branch->bank->name) && !empty($bank_branch->bank->name) ? $bank_branch->bank->name :"" }}</label>
           </div>
         </div>
         <div class="col-md-7">

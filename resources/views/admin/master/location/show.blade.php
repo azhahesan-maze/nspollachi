@@ -27,7 +27,7 @@
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Location Type :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $location->location_type->name }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($location->location_type->name) && !empty($location->location_type->name) ? $location->location_type->name : "" }} </label>
           </div>
         </div>
         <div class="col-md-7">
@@ -45,16 +45,16 @@
                   @if($location->land_mark != "")
                   {{ $location->land_mark }},
                   @endif
-                  @if($location->city->name != "")
+                  @if(isset($location->city->name) && $location->city->name != "")
                   {{ $location->city->name }},
                   @endif
 
-                  @if($location->district->name != "")
+                  @if(isset($location->district->name) && $location->district->name != "")
                   {{ $location->district->name }},
                   @endif
 </br>
 @endif
-                  @if($location->state->name != "")
+                  @if(isset($location->state->name) && $location->state->name != "")
                   {{ $location->state->name }}
                   @endif
                   @if($location->postal_code != "")
