@@ -251,6 +251,30 @@
                  <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Company Name <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                <input type="text" class="form-control company_name required_for_valid required_for_address_valid" error-data="Enter valid Company Name" placeholder="Company Name" name="company_name[]" value="{{ old('company_name.'.$key) }}" >
+                  <span class="mandatory"> {{ $errors->first('company_name.'.$key)  }} </span>
+                  <div class="invalid-feedback">
+                  Enter valid Company Name
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Gst No <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                <input type="text" class="form-control gst_no required_for_valid required_for_address_valid" error-data="Enter valid Gst No" placeholder="Gst No" name="gst_no[]" value="{{ old('gst_no.'.$key) }}" >
+                  <span class="mandatory"> {{ $errors->first('gst_no.'.$key)  }} </span>
+                  <div class="invalid-feedback">
+                  Enter valid Gst No
+                  </div>
+                </div>
+              </div>
+            </div>
       <div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>

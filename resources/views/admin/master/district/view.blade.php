@@ -32,7 +32,7 @@
           @foreach($district as $key=>$value)
             <tr>
               <td>{{ $key+1 }}</td>
-              <td>{{ $value->state->name}}</td>
+              <td>{{ isset($value->state->name) && !empty($value->state->name) ? $value->state->name : ""}}</td>
               <td>{{ $value->name}}</td>
               <td>{{ $value->remark}}</td>
               <td> 

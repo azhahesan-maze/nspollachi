@@ -59,6 +59,7 @@
           <button class="btn btn-success" name="add" type="submit">Submit</button>
         </div>
       </form>
+      <!--
 <button type="button" class="btn btn-success add_row">Add</button>
       <table class="table">
         <tr>
@@ -77,31 +78,22 @@
           <td>Food</td>
           <td><input type="text" class="form-control"></td>
         </tr>
-      </table>
+      </table> -->
     </div>
     <!-- card body end@ -->
   </div>
 </div>
 
 <script>
-  $(document).on("click",".add_row",function()
+ /*  $(document).on("click",".add_row",function()
   {
-
-//     $('td').click(function(){
-//     var colIndex = 
-//         $(this).parent().children().index($(this));
-//     var rowIndex = $(this).parent().parent().children().index($(this).parent());
-//     alert('Row: ' + rowIndex + ', Column: ' + colIndex);
-// });
-   
-      $('.table tr').each(function(key,value)
+   $('.table tr').each(function(key,value)
       {
           if(key == 0)
           {
 
             $(this).append('<td><input type="date" class="form-control"><label class="btn btn-danger delete_column">Delete</label></td>');
-
-          }else
+    }else
           {
 
             $(this).append('<td><input type="text" class="form-control"></td>');
@@ -113,10 +105,7 @@
   $(document).on("click",".delete_column",function(){
     var colIndex = $(this).closest("td").index();
     $('table tr').find('td:eq('+ colIndex +')').remove();
-
-
-   
-  });
+}); */
 </script>
 @endsection
 

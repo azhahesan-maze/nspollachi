@@ -33,9 +33,9 @@
           @foreach($city as $key=>$value)
             <tr>
               <td>{{ $key+1 }}</td>
-              <td>{{ $value->state->name}}</td>
-              <td>{{ $value->district->name}}</td>
-              <td>{{ $value->name}}</td>
+              <td>{{ isset($value->state->name) && !empty($value->state->name) ? $value->state->name : "" }}</td>
+              <td>{{ isset($value->district->name) && !empty($value->district->name) ? $value->district->name : "" }}</td>
+               <td>{{ $value->name}}</td>
               <td>{{ $value->remark}}</td>
               <td> 
                 <a href="{{url('master/city/show/'.$value->id )}}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>

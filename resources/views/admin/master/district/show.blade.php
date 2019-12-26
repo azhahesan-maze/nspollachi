@@ -21,7 +21,7 @@
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">State Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $district->state->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ isset($district->state->name) && !empty($district->state->name) ?  $district->state->name : "" }}</label>
           </div>
         </div>
         <div class="col-md-7">
