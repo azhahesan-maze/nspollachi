@@ -23,9 +23,10 @@
             <th>S.No</th>
             <th>Item Name</th>
             <th>Item Code</th>
-             <th>{{ $category_1 }}</th>
+            <th>Category </th>
+            <!-- <th>{{ $category_1 }}</th>
             <th>{{ $category_2 }}</th>
-            <th>{{ $category_3 }}</th>
+            <th>{{ $category_3 }}</th> -->
             <th> Item Type</th>
             <th> Bulk Item Name</th>
             <th> Weight In Grams </th>
@@ -48,9 +49,10 @@
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name}}</td>
               <td>{{ $value->code}}</td>
-              <td>{{ isset($value->category_one->name) ? $value->category_one->name : ""}}</td>
+             <!-- <td>{{ isset($value->category_one->name) ? $value->category_one->name : ""}}</td>
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
-              <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td>
+              <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td> -->
+              <td>{{ isset($value->category->name) ? $value->category->name : ""}}</td>
               <td>{{ $value->item_type}}</td>
               <td>{{ isset($value->bulk_item->name) ? $value->bulk_item->name : ""}}</td>
               <td>{{ $value->weight_in_grams}}</td>

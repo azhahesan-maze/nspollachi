@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 <div class="col-12 body-sec">
-  <div class="card container px-0">
+  <div class="card container-fluid px-0">
     <!-- card header start@ -->
     <div class="card-header px-2">
       <div class="row">
@@ -18,15 +18,31 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/item-tax-details/store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation form_submit" novalidate action="{{url('master/item-tax-details/store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
 
 
         <div class="form-row">
           
-
-            <div class="col-md-6">
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Category <span class="mandatory">*</span></label>
+              <div class="col-sm-8">
+                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_category_id" name="category_1" required>
+                  <option value="">Choose {{ $category_1}}</option>
+                  @foreach ($category as $value)
+                  <option value="{{ $value->id }}" {{ old('category_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                  @endforeach
+                </select>
+                <span class="mandatory"> {{ $errors->first('category_id')  }} </span>
+               <div class="invalid-feedback">
+                  Enter valid Category
+                </div>
+              </div>
+            </div>
+          </div>
+           <!-- <div class="col-md-6">
                 <div class="form-group row">
                   <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} <span class="mandatory">*</span></label>
                   <div class="col-sm-8">
@@ -72,13 +88,13 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">Item </label>
                         <div class="col-sm-8">
-                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id" name="item_id" required>
+                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id search_item_id" name="item_id" required>
                             <option value="">Choose Item </option>
                           </select>
                           <span class="mandatory"> {{ $errors->first('item_id')  }} </span>
@@ -88,150 +104,42 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                       
+                        <div class="col-sm-8">
+                         
+                         <label class="btn btn-success search_btn">Search</label>
+                         
+                        </div>
+                      </div>
+                    </div>
                                   
  </div>
 
  <div class="form-row">
-       <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="width:6%">S.no</th>
-            <th scope="col" style="width:20%">IGST (%) </th>
-            <th scope="col" style="width:20%">CGST (%) </th>
-             <th scope="col" style="width:20%">SGST (%) </th>
-            <th scope="col" style="width:20%">Effective From </th>
-            <th scope="col" style="width:14%">Action</th>
-          </tr>
-        </thead>
-        <tbody class="append_row">
-
-            <tr>
-                <th scope="row" class="s_no">1</th>
-                <td>
-                    <div class="col-sm-12">
-                    <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.0')}}" required>
-                     <span class="mandatory"> {{ $errors->first('igst.0')  }} </span>
-                      <div class="invalid-feedback">
-                        Enter valid IGST
-                      </div>
-                    </div>
-                  </td>
-                <td>
-                    <div class="col-sm-12">
-                    <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="{{old('cgst.0')}}" required>
-                     <span class="mandatory"> {{ $errors->first('cgst.0')  }} </span>
-                      <div class="invalid-feedback">
-                        Enter valid CGST
-                      </div>
-                    </div>
-                  </td>
-
-                  
-
-                    <td>
-                        <div class="col-sm-12">
-                        <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" placeholder="SGST" value="{{old('sgst.0')}}" required>
-                         <span class="mandatory"> {{ $errors->first('sgst.0')  }} </span>
-                          <div class="invalid-feedback">
-                            Enter valid SGST
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                          <div class="col-sm-12">
-                            @php
-                                $old_value_0=old('valid_from.0') !="" ? date('d-m-Y',strtotime(old('valid_from.0'))) : "";
-                            @endphp
-                          <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{$old_value_0}}" required>
-                           <span class="mandatory"> {{ $errors->first('valid_from.0')  }} </span>
-                            <div class="invalid-feedback">
-                              Enter valid Effective From Date
-                            </div>
-                          </div>
-                        </td>
-                  <td>
-                      <div class="form-group row">
-                          <div class="col-sm-3">
-                          <label class="btn btn-success add_more">+</label>
-                          </div>
-                          <div class="col-sm-3 mx-2">
-                          <label class="btn btn-danger remove_row">-</label>
-                            </div>
-                        </div>
-                  </td>
-              </tr>
-
-              @if (old('cgst'))
-              @foreach (old('cgst') as $old_key=>$old_value)
-              @if($old_key > 0)
-
-              <tr>
-                  <th scope="row" class="s_no">1</th>
-                  <td>
-                      <div class="col-sm-12">
-                      <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{old('igst.'.$old_key)}}" required>
-                       <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
-                        <div class="invalid-feedback">
-                          Enter valid IGST
-                        </div>
-                      </div>
-                    </td>
-                  <td>
-                      <div class="col-sm-12">
-                      <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="{{old('cgst.'.$old_key)}}" required>
-                       <span class="mandatory"> {{ $errors->first('cgst.'.$old_key)  }} </span>
-                        <div class="invalid-feedback">
-                          Enter valid CGST
-                        </div>
-                      </div>
-                    </td>
-  
-                    
-  
-                      <td>
-                          <div class="col-sm-12">
-                          <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" placeholder="SGST" value="{{old('sgst.'.$old_key)}}" required>
-                           <span class="mandatory"> {{ $errors->first('sgst.'.$old_key)  }} </span>
-                            <div class="invalid-feedback">
-                              Enter valid SGST
-                            </div>
-                          </div>
-                        </td>
-  
-                        <td>
-                            @php
-                            $old_value_new=old('valid_from.'.$old_key) !="" ? date('d-m-Y',strtotime(old('valid_from.'.$old_key))) : "";
-                        @endphp
-                            <div class="col-sm-12">
-                            <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ $old_value_new }}" required>
-                             <span class="mandatory"> {{ $errors->first('valid_from.'.$old_key)  }} </span>
-                              <div class="invalid-feedback">
-                                Enter valid Effective From Date
-                              </div>
-                            </div>
-                          </td>
-                    <td>
-                        <div class="form-group row">
-                            <div class="col-sm-3">
-                            <label class="btn btn-success add_more">+</label>
-                            </div>
-                            <div class="col-sm-3 mx-2">
-                            <label class="btn btn-danger remove_row">-</label>
-                              </div>
-                          </div>
-                    </td>
-                </tr>
-
-              @endif
-              @endforeach
-              @endif
 
 
-        </tbody>
-    </table>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>S.No</th>
+        <th>Item</th>
+        <th>IGST (%) </th>
+        <th>CGST (%) </th>
+        <th >SGST (%) </th>
+        <th >Effective From </th>
+      </tr>
+    </thead>
+    <tbody class="append_row">
+      
+      
+    </tbody>
+  </table>
+       
  </div>
-        <div class="col-md-7 text-right">
+        <div class="col-md-7 text-right response_div" style="display:none">
           <button class="btn btn-success" name="add" type="submit">Submit</button>
         </div>
       </form>
@@ -245,6 +153,7 @@
 <script>
 
 $(document).ready(function () {
+  //$(".response_div").css("display","none");
   var currentDate = new Date();
     $('.valid_from').datepicker({
     format: "dd-mm-yyyy",
@@ -263,26 +172,43 @@ var item_id="{{ old('item_id') }}";
 
 if(category_one_id != "")
 {
-    get_category_one_based_category_two(category_one_id,category_two_id);
+   // get_category_one_based_category_two(category_one_id,category_two_id);
 }
 
 if(category_two_id != "")
 {
-  get_category_two_based_category_three(category_two_id,category_three_id);
+ // get_category_two_based_category_three(category_two_id,category_three_id);
 }
 
 
 if(category_one_id !="" || category_two_id !="" || category_three_id != "")
 {
-  get_category_based_item(category_one_id,category_two_id,category_three_id,item_id);
+ // get_category_based_item(category_one_id,category_two_id,category_three_id,item_id);
 }
   });
 
 
+$(document).on("change",".category_id",function(){
+  var category_id=$(this).val();
+  if(category_id !="")
+  {
+    category_based_item(category_id,"");
+  }
+});
 
 
-
-      
+      function category_based_item(category_id,item_id){
+        $.ajax({
+              type: "post",
+              url: "{{ url('common/get-category-based-item-dets')}}",
+              data: {category_id: category_id},
+              success: function (res)
+              {
+                result = JSON.parse(res);
+                $(".item_id").html(result.option);
+              }
+          });
+      }
 
 
  function get_category_one_based_category_two(category_one_id,category_two_id)
@@ -441,6 +367,22 @@ if($(".remove_row").length > 1)
 }else{
   alert("Atleast One Row Present");
 }
+});
+
+$(document).on("click",".search_btn",function(){
+  $.ajax({
+              type: "post",
+              url: "{{ url('master/item-tax-details/search-item-by-category')}}",
+              data: {category_id:$(".search_category_id").val(),item_id: $(".search_item_id").val()},
+              success: function (res)
+              {
+                result = JSON.parse(res);
+                $(".append_row").html(result.page);
+
+                $(".response_div").css("display","block");
+                s_no_generation();
+              }
+          });
 });
 
 

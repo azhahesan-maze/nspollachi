@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-          <div class="col-md-6">
+      <!-- <div class="col-md-6">
              <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name </label>
               <div class="col-sm-8">
@@ -66,7 +66,84 @@
           </div>
           </div>
 
+          </div> -->
+
+
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Type <span class="mandatory">*</span></label>
+              <div class="col-sm-8">
+                <div class="form-check d-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input supplier_type" value="1" {{ old('supplier_type') == 1 ? 'checked' : '' }} name="supplier_type">Exist
+                  </label>
+                </div>
+
+                <div class="form-check d-inline mx-4 ">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input supplier_type" value="0" {{ old('supplier_type') == 0 ? 'checked' : '' }} name="supplier_type">New
+                  </label>
+                </div>
+
+                <span class="mandatory"> {{ $errors->first('supplier_type')}} </span>
+                <div class="invalid-feedback">
+                  Enter valid Supplier Type
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="col-md-6 new_supplier_div">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name </label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <select class="form-control  salutation" name="salutation" error-data="Enter valid Salutation">
+                      <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr</option>
+                      <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }}>Mrs</option>
+                    </select>
+                    <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+                  </div>
+                  <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Customer Name Field is required" aria-label="Text input with dropdown button" value={{old('name')}}>
+
+                  <div class="invalid-feedback">
+                    Enter valid Supplier Name
+                  </div>
+
+                </div>
+                <span class="mandatory"> {{ $errors->first('name')  }} </span>
+                <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-6 exist_supplier_div" style="display:none">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name<span class="mandatory">*</span></label>
+              <div class="col-sm-6">
+                <select class="js-example-basic-multiple col-12 form-control exist_supplier_name select custom-select" error-data="Enter valid Supplier" data-placeholder="Choose Supplier" name="exist_supplier_name">
+                  <option value="">Choose Supplier</option>
+@foreach ($exist_supplier_dets as $value)
+                <option value="{{ $value->id }}" {{ old('exist_supplier_name') == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
+@endforeach
+     </select>
+
+                <span class="mandatory"> {{ $errors->first('exist_supplier_name')  }} </span>
+                <div class="invalid-feedback">
+                  Enter valid supplier Name
+                </div>
+              </div>
+              <a href="{{ url('master/supplier/create')}}" target="_blank">
+                <button type="button" class="px-2 btn btn-success ml-2 " title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+              <button type="button" class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+
+
 
 
           <div class="col-md-6">
@@ -627,7 +704,29 @@
 <script src="{{asset('assets/js/master/add_more_branch_details.js')}}"></script>
 <script src="{{asset('assets/js/validation/common_validation.js')}}"></script>
 <script>
+function supplier_type(type) {
+    /* Type => 0 => New */
+    /* Type => 1 => Exist */
+    if (type == 0) {
+      $(".new_supplier_div").css("display", "block");
+      $(".exist_supplier_div").css("display", "none");
+    } else {
+      $(".new_supplier_div").css("display", "none");
+      $(".exist_supplier_div").css("display", "block");
 
+    }
+
+  }
+
+  $(document).ready(function() {
+    var type = $(".supplier_type:checked").val();
+    supplier_type(type);
+  });
+
+  $(document).on("click", ".supplier_type", function() {
+    var type = $(this).val();
+    supplier_type(type);
+  });
    $(document).on("click",".submit",function(){
     var error_count=validation();
     var address_error_count=address_details_validation();

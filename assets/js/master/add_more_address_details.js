@@ -14,29 +14,7 @@ function add_address(id = "", text = "") {
                       </div>\
                   </div>\
                   </div>\
-                  <div class="col-md-6">\
-          <div class="form-group row">\
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Company Name <span class="mandatory">*</span></label>\
-            <div class="col-sm-8">\
-              <input type="text" class="form-control company_name required_for_valid required_for_address_valid" error-data="Enter Company Name" placeholder="Company Name" name="company_name[]" value="" >\
-             <div class="invalid-feedback">\
-              Enter valid Company Name\
-              </div>\
-            </div>\
-          </div>\
-        </div>\
-        <div class="col-md-6">\
-        <div class="form-group row">\
-          <label for="validationCustom01" class="col-sm-4 col-form-label">Gst No <span class="mandatory">*</span></label>\
-          <div class="col-sm-8">\
-            <input type="text" class="form-control gst_no required_for_valid required_for_address_valid" error-data="Enter Gst No" placeholder="Gst No" name="gst_no[]" value="" >\
-           <div class="invalid-feedback">\
-            Enter valid Gst No\
-            </div>\
-          </div>\
-        </div>\
-      </div>\
-            <div class="col-md-6">\
+    <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type <span class="mandatory">*</span></label>\
             <div class="col-sm-6">\
@@ -44,21 +22,21 @@ function add_address(id = "", text = "") {
                 <option value="">Choose Address Type</option>\
                 '+ $(".address_type_id_div").html() + '</select>\
              <div class="invalid-feedback">\
-                Enter valid Address Type\
+             Enter valid Address Type\
               </div>\
             </div>\
             <a href="'+ APP_URL + '/master/address-type/create" target="_blank">\
-            <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
-           <button type="button"  class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+            <button type="button" class="px-2 btn btn-success ml-2 " title="Add Address Type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+           <button type="button" class="px-2 btn btn-success mx-2 refresh_address_type_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
   </div>\
         </div>\
-  <div class="col-md-6">\
+    <div class="col-md-6">\
           <div class="form-group row">\
             <label for="validationCustom01" class="col-sm-4 col-form-label">Address Line 1 <span class="mandatory">*</span></label>\
             <div class="col-sm-8">\
               <input type="text" class="form-control address_line_1 required_for_valid required_for_address_valid" error-data="Enter valid Address" placeholder="Address Line 1" name="address_line_1[]" value="" >\
              <div class="invalid-feedback">\
-              Enter valid Address\
+             Enter valid Address\
               </div>\
             </div>\
           </div>\
@@ -80,7 +58,7 @@ function add_address(id = "", text = "") {
             <div class="col-sm-8">\
               <input type="text" class="form-control land_mark" placeholder="Land Mark" name="land_mark[]" value="">\
              <div class="invalid-feedback">\
-              Enter valid Land Mark\
+                 Enter valid Land Mark\
               </div>\
             </div>\
           </div>\
@@ -93,12 +71,12 @@ function add_address(id = "", text = "") {
                 <option value="">Choose State</option>\
               '+ $(".state_id_div").html() + '</select>\
             <div class="invalid-feedback">\
-                Enter valid State \
+                    Enter valid State \
               </div>\
             </div>\
             <a href="'+ APP_URL + '/master/state/create" target="_blank">\
-            <button type="button"  class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
-           <button type="button"  class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+            <button type="button" class="px-2 btn btn-success ml-2 " title="Add State"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+           <button type="button" class="px-2 btn btn-success mx-2 refresh_state_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
   </div>\
         </div>\
 <div class="col-md-6">\
@@ -109,12 +87,12 @@ function add_address(id = "", text = "") {
                 <option value="">Choose District</option>\
                </select>\
                <div class="invalid-feedback">\
-                Enter valid District\
+                 Enter valid District\
               </div>\
             </div>\
             <a href="'+ APP_URL + '/master/district/create" target="_blank">\
-                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
-                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+                  <button type="button" class="px-2 btn btn-success ml-2 " title="Add District"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button" class="px-2 btn btn-success mx-2 refresh_district_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
         </div>\
         </div>\
          <div class="col-md-6">\
@@ -125,12 +103,12 @@ function add_address(id = "", text = "") {
                 <option value="">Choose City</option>\
               </select>\
              <div class="invalid-feedback">\
-                Enter valid City\
+                   Enter valid City\
               </div>\
             </div>\
             <a href="'+ APP_URL + '/master/city/create" target="_blank">\
-                  <button type="button"  class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
-                 <button type="button"  class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
+                  <button type="button" class="px-2 btn btn-success ml-2 " title="Add City"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>\
+                 <button type="button" class="px-2 btn btn-success mx-2 refresh_city_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>\
            </div>\
         </div>\
 <div class="col-md-6">\
@@ -139,7 +117,7 @@ function add_address(id = "", text = "") {
             <div class="col-sm-8">\
               <input type="text" class="form-control postal_code required_for_valid required_for_address_valid only_allow_digit" error-data="Enter valid Postal Code" placeholder="Postal Code" name="postal_code[]" value="" >\
             <div class="invalid-feedback">\
-                Enter valid Postal Code\
+                      Enter valid Postal Code\
               </div>\
             </div>\
           </div>\

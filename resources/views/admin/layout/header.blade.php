@@ -162,9 +162,9 @@
                             @can('income_list')
                             <li><a href="{{url('master/income-type')}}">Income</a></li>
                             @endcan
-                            @can('gst_master_list')
+                           <!-- @can('gst_master_list')
                             <li><a href="{{url('master/gst-type')}}">Gst</a></li>
-                            @endcan
+                            @endcan -->
                             @can('gift_voucher_matser_list')
                             <li><a href="{{url('master/gift-voucher')}}">Gift Voucher</a></li>
                             @endcan
@@ -179,7 +179,11 @@
                     @if(Gate::check('category_name_master_list') || Gate::check('category_1_master_list') || Gate::check('category_2_master_list') || Gate::check('category_3_master_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
-                            <li class="dropdown-header">Category</li>
+                          <li class="dropdown-header">Category</li>
+                            @can('category_name_master_list')
+                            <li><a href="{{url('master/category')}}">Category </a></li>
+                            @endcan
+                            <!--
                              @can('category_name_master_list')
                             <li><a href="{{url('master/category-name')}}">Category Name</a></li>
                             @endcan
@@ -191,7 +195,7 @@
                             @endcan
                             @can('category_3_master_list')
                             <li><a href="{{url('master/category-three')}}">Category 3</a></li>
-                            @endcan
+                            @endcan -->
                          </ul>
                     </li>
                     @endif

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemsTable extends Migration
+class CreateSupplierPromisedDiscountSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('supplier_promised_discount_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 500)->nullable();
-            $table->string('code', 100)->nullable();
-            $table->enum('item_type', ['Direct', 'Bulk', 'Repack', 'Parent', 'Child'])->nullable();
-            $table->float('weight_in_grams', 8, 2)->unsigned()->nullable();
-            $table->float('weight_in_kg', 8, 2)->unsigned()->nullable();
-            $table->integer('bulk_item_id')->nullable();
+            $table->integer('supplier_id')->nullable();
             $table->integer('category_id')->nullable();
-            $table->integer('category_1')->nullable();
-            $table->integer('category_2')->nullable();
+            $table->integer('item_id')->nullable();
+            $table->integer('discount_type_id')->nullable();
+            $table->float('discount')->nullable();
+            $table->float('discount_in_rs')->nullable();
+            $table->float('discount_in_percentage')->nullable();
+            $table->date('valid_till')->nullable();
+
+            $table->integer('discount_in_rs')->nullable();
             $table->integer('category_3')->nullable();
             $table->string('print_name_in_english', 500)->nullable();
             $table->string('print_name_in_language_1', 500)->nullable();
@@ -57,6 +58,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('supplier_promised_discount_settings');
     }
 }

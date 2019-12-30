@@ -24,16 +24,15 @@ class SupplierRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $rule=[];
-        if($request->has('add'))
-        {
-            $rule=array(
+        $rule = [];
+        if ($request->has('add')) {
+            $rule = array(
                 'company_name' => 'required|unique:suppliers,company_name,NULL,id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,NULL,id,deleted_at,NULL',
                 'email' => 'required|email|unique:suppliers,email,NULL,id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
                 'gst_no' => 'required|unique:suppliers,gst_no,NULL,id,deleted_at,NULL',
-                'opening_balance'=>'required|numeric',
+                'opening_balance' => 'required|numeric',
                 'address_type_id .*' => 'required',
                 'address_line_1.*' => 'required',
                 'state_id.*' => 'required',
@@ -44,60 +43,58 @@ class SupplierRequest extends FormRequest
                 'account_type_id.*' => 'required',
                 'account_holder_name.*' => 'required',
                 'account_no.*' => 'required',
-             );
+            );
 
-         }else
-         {
-            $rule=array(
-                'company_name' => 'required|unique:suppliers,company_name,'.$this->id.',id,deleted_at,NULL',
-                'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,'.$this->id.',id,deleted_at,NULL',
-                'email' => 'required|email|unique:suppliers,email,'.$this->id.',id,deleted_at,NULL',
+            if ($request->supplier_type == 0) {
+                $rule['name'] = 'required|unique:customer_suppliers,name,NULL,id,deleted_at,NULL,type,Supplier';
+            } else {
+                $rule['exist_supplier_name'] = 'required';
+            }
+        } else {
+            $rule = array(
+                'company_name' => 'required|unique:suppliers,company_name,' . $this->id . ',id,deleted_at,NULL',
+                'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,' . $this->id . ',id,deleted_at,NULL',
+                'email' => 'required|email|unique:suppliers,email,' . $this->id . ',id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
-                'gst_no' => 'required|unique:suppliers,gst_no,'.$this->id.',id,deleted_at,NULL',
-                'opening_balance'=>'required|numeric|min:1',
-                );
+                'gst_no' => 'required|unique:suppliers,gst_no,' . $this->id . ',id,deleted_at,NULL',
+                'opening_balance' => 'required|numeric|min:1',
+            );
 
-                if($request->has('address_type_id'))
-                {
-                    $rule['address_type_id .*']='required';
-                    $rule['address_line_1.*'] = 'required';
-                    $rule['state_id.*'] = 'required';
-                    $rule['postal_code.*'] = 'required|numeric|min:5';
-                }
-    
-                if($request->has('old_address_type_id'))
-                {
-                    $rule['old_address_type_id .*']='required';
-                    $rule['old_address_line_1.*'] = 'required';
-                    $rule['old_state_id.*'] = 'required';
-                    $rule['old_postal_code.*'] = 'required|numeric|min:5';
-    
-                }
+            if ($request->has('address_type_id')) {
+                $rule['address_type_id .*'] = 'required';
+                $rule['address_line_1.*'] = 'required';
+                $rule['state_id.*'] = 'required';
+                $rule['postal_code.*'] = 'required|numeric|min:5';
+            }
 
-                if($request->has('bank_id')){
+            if ($request->has('old_address_type_id')) {
+                $rule['old_address_type_id .*'] = 'required';
+                $rule['old_address_line_1.*'] = 'required';
+                $rule['old_state_id.*'] = 'required';
+                $rule['old_postal_code.*'] = 'required|numeric|min:5';
+            }
 
-                    $rule['bank_id.*'] = 'required';
-                    $rule['branch_id.*'] = 'required';
-                    $rule['ifsc.*'] = 'required';
-                    $rule['account_type_id.*'] = 'required';
-                    $rule['account_holder_name.*'] = 'required';
-                    $rule['account_no.*'] = 'required';
-    
-                }
-    
-                if($request->has('old_bank_id')){
-    
-                    $rule['old_bank_id.*'] = 'required';
-                    $rule['old_branch_id.*'] = 'required';
-                    $rule['old_ifsc.*'] = 'required';
-                    $rule['old_account_type_id.*'] = 'required';
-                    $rule['old_account_holder_name.*'] = 'required';
-                    $rule['old_account_no.*'] = 'required';
-    
-                }
+            if ($request->has('bank_id')) {
 
-         }
-         return $rule;
+                $rule['bank_id.*'] = 'required';
+                $rule['branch_id.*'] = 'required';
+                $rule['ifsc.*'] = 'required';
+                $rule['account_type_id.*'] = 'required';
+                $rule['account_holder_name.*'] = 'required';
+                $rule['account_no.*'] = 'required';
+            }
+
+            if ($request->has('old_bank_id')) {
+
+                $rule['old_bank_id.*'] = 'required';
+                $rule['old_branch_id.*'] = 'required';
+                $rule['old_ifsc.*'] = 'required';
+                $rule['old_account_type_id.*'] = 'required';
+                $rule['old_account_holder_name.*'] = 'required';
+                $rule['old_account_no.*'] = 'required';
+            }
+        }
+        return $rule;
     }
 
     public function messages()
@@ -125,6 +122,6 @@ class SupplierRequest extends FormRequest
             'old_account_type_id.*.required' => 'Account Type field is required',
             'old_account_holder_name.*.required' => 'Account Holder Name Type field is required',
             'old_account_no.*.required' => 'Account No field is required',
- ];
+        ];
     }
 }

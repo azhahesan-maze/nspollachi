@@ -32,6 +32,12 @@
         </div>
 
         <div class="col-md-6">
+          <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Catgeory :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category->name) ? $item->category->name : "" }} </label>
+          </div>
+        </div>
+        <!--<div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} :</label>
               <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category_one->name) ? $item->category_one->name : "" }} </label>
@@ -50,7 +56,7 @@
                   <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_3}} :</label>
                   <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category_three->name) ? $item->category_three->name : "" }} </label>
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-md-6">
                   <div class="form-group row">

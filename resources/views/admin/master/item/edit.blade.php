@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <!--<div class="col-md-6">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} <span class="mandatory">*</span></label>
                 <div class="col-sm-8">
@@ -93,8 +93,29 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="validationCustom01" class="col-sm-4 col-form-label"> Category <span class="mandatory">*</span></label>
+                    <div class="col-sm-6">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select category_id" name="category_id" required>
+                        <option value="">Choose Category</option>
+                        @foreach ($category as $value)
+                        <option value="{{ $value->id }}" {{ old('category_id',$item->category_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                        @endforeach
+                      </select>
+                      <span class="mandatory"> {{ $errors->first('category_id')  }} </span>
+                     <div class="invalid-feedback">
+                        Enter valid Category
+                      </div>
+                    </div>
+                    <a href="{{ url('master/category/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2" title="Add Category"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_category_id" title="Refresh Category"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                
+                  </div>
+                </div>
 
                 <div class="col-md-6">
                     <div class="form-group row">
@@ -138,7 +159,7 @@
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">Weight In Grams <span class="mandatory">*</span></label>
                       <div class="col-sm-8">
-                        <input type="text" class="form-control weight_in_grams only_allow_digit_and_dot" placeholder="Weight In Grams " name="weight_in_grams" value="{{old('weight_in_grams',$value->weight_in_grams)}}" >
+                        <input type="text" class="form-control weight_in_grams only_allow_digit_and_dot" placeholder="Weight In Grams " name="weight_in_grams" value="{{old('weight_in_grams',$item->weight_in_grams)}}" >
                         <span class="mandatory"> {{ $errors->first('weight_in_grams')  }} </span>
                         <div class="invalid-feedback">
                           Enter valid Weight In Grams
@@ -257,7 +278,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                       <label for="validationCustom01" class="col-sm-4 col-form-label">UOM <span class="mandatory">*</span></label>
-                                      <div class="col-sm-8">
+                                      <div class="col-sm-6">
                                         <select class="js-example-basic-multiple col-12 form-control custom-select uom_id" name="uom_id" required>
                                           <option value="">Choose UOM</option>
                                           @foreach ($uom as $value)
@@ -269,6 +290,9 @@
                                           Enter valid UOM
                                         </div>
                                       </div>
+                                      <a href="{{ url('master/category/create')}}" target="_blank">
+                                        <button type="button"  class="px-2 btn btn-success ml-2" title="Add Uom"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                                        <button type="button"  class="px-2 btn btn-success mx-2 refresh_uom_id" title="Add Uom"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                     </div>
                                   </div>
 
@@ -465,6 +489,16 @@ function get_category_based_item(category_one_id,category_two_id,category_three_
   }
   
 });
+
+$(document).on("click",".refresh_category_id",function(){
+   var category_dets=refresh_category_master_details();
+   $(".category_id").html(category_dets);
+});
+$(document).on("click",".refresh_uom_id",function(){
+   var uom_dets=refresh_uom_master_details();
+   $(".uom_id").html(uom_dets);
+});
+
  
  $(document).on("click",".is_expiry_date",function(){
    var is_expiry_date=$(".is_expiry_date:checked").val();

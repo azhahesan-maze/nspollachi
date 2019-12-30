@@ -159,8 +159,6 @@ $(document).on("click",".refresh_district",function(){
   if(state_id !="")
   {
     var test=refresh_district_master_details(state_id);
-  
-    
   }
 });
 

@@ -39,31 +39,83 @@
               </div>
             </div>
 
-          <div class="col-md-6">
-             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name </label>
-              <div class="col-sm-8">
-            <div class="input-group">
-            <div class="input-group-prepend">
-              <select class="form-control  salutation" name="salutation" error-data="Enter valid Salutation" >
-                  <option value="Mr" {{ old('salutation',$customer->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
-                  <option value="Mrs" {{ old('salutation',$customer->salutation) == 'Mrs' ? 'selected' : '' }} >Mrs</option>
-              </select>
-              <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Type {{ $customer->customer_type}} <span class="mandatory">*</span></label>
+                <div class="col-sm-8">
+                  <div class="form-check d-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input customer_type" value="1" {{ old('customer_type',$customer->customer_type) == 1 ? 'checked' : '' }} name="customer_type">Exist
+                    </label>
+                  </div>
+  
+                  <div class="form-check d-inline mx-4 ">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input customer_type" value="0" {{ old('customer_type',$customer->customer_type) == 0 ? 'checked' : '' }} name="customer_type">New
+                    </label>
+                  </div>
+  
+                  <span class="mandatory"> {{ $errors->first('customer_type')}} </span>
+                  <div class="invalid-feedback">
+                    Enter valid Customer Type
+                  </div>
+                </div>
+              </div>
             </div>
-            <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Customer Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$customer->name)}}>
-            
-            <div class="invalid-feedback">
-              Enter valid Customer Name
+            <div class="col-md-6 new_customer_div">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name </label>
+                <div class="col-sm-8">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <select class="form-control  salutation" name="salutation" error-data="Enter valid Salutation">
+                        <option value="Mr" {{ old('salutation',$customer->salutation) == 'Mr' ? 'selected' : '' }}>Mr</option>
+                        <option value="Mrs" {{ old('salutation',$customer->salutation) == 'Mrs' ? 'selected' : '' }}>Mrs</option>
+                      </select>
+                      <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+                    </div>
+                    <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Customer Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$customer->name)}}>
+  
+                    <div class="invalid-feedback">
+                      Enter valid Customer Name
+                    </div>
+  
+                  </div>
+                  <span class="mandatory"> {{ $errors->first('name')  }} </span>
+                  <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
+                </div>
+              </div>
+  
+            </div>
+  
+  
+            <div class="col-md-6 exist_customer_div" style="display:none">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name<span class="mandatory">*</span></label>
+                <div class="col-sm-6">
+                  <select class="js-example-basic-multiple col-12 form-control exist_customer_name select custom-select" error-data="Enter valid Customer" data-placeholder="Choose Customer" name="exist_customer_name">
+                    <option value="">Choose Customer</option>
+  @foreach ($exist_customer_dets as $value)
+                  <option value="{{ $value->id }}" {{ old('exist_customer_name',$customer->customer_id) == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
+  @endforeach
+       </select>
+  
+                  <span class="mandatory"> {{ $errors->first('exist_customer_name')  }} </span>
+                  <div class="invalid-feedback">
+                    Enter valid Customer Name
+                  </div>
+                </div>
+                <a href="{{ url('master/customer/create')}}" target="_blank">
+                  <button type="button" class="px-2 btn btn-success ml-2 " title="Add Customer"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                <button type="button" class="px-2 btn btn-success mx-2 refresh_customer_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+              </div>
             </div>
             
-          </div>
-          <span class="mandatory"> {{ $errors->first('name')  }} </span>
-          <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
-          </div>
-          </div>
+  
+  
+            
 
-          </div>
+         
 
 
           <div class="col-md-6">
@@ -819,6 +871,34 @@
 </div>
 <script src="{{asset('assets/js/master/add_more_branch_details.js')}}"></script>
 <script>
+
+$(document).on("click",".refresh_customer_id",function(){
+   var customer_dets=refresh_customer_master_details();
+   $(".exist_customer_name").html(customer_dets);
+});
+  function customer_type(type) {
+    /* Type => 0 => New */
+    /* Type => 1 => Exist */
+    if (type == 0) {
+      $(".new_customer_div").css("display", "block");
+      $(".exist_customer_div").css("display", "none");
+    } else {
+      $(".new_customer_div").css("display", "none");
+      $(".exist_customer_div").css("display", "block");
+
+    }
+
+  }
+
+  $(document).ready(function() {
+    var type = $(".customer_type:checked").val();
+    customer_type(type);
+  });
+
+  $(document).on("click", ".customer_type", function() {
+    var type = $(this).val();
+    customer_type(type);
+  });
 $(document).on("click",".refresh_state_id",function(){
    var state_dets=refresh_state_master_details();
    $(this).closest(".address_div").find(".state_id").html(state_dets);
