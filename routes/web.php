@@ -22,6 +22,18 @@ Route::get('/view', function () {
     return view('Masters.Sample.View');
 });
 
+
+Route::get('send-mail', function () {
+   
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+   
+    \Mail::to('azhahesan@mazenetsolution.com')->send(new \App\Mail\SendMail($details));
+   
+    dd("Email is Sent.");
+});
 Route::any('import-item', 'ItemImportExportController@importExportView');
 Route::any('import', 'ItemImportExportController@import');
 

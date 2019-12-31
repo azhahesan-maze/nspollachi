@@ -24,7 +24,7 @@ class CreateSupplierPromisedDiscountSettingsTable extends Migration
             $table->float('discount_in_percentage')->nullable();
             $table->date('valid_till')->nullable();
 
-            $table->integer('discount_in_rs')->nullable();
+            /*$table->integer('discount_in_rs')->nullable();
             $table->integer('category_3')->nullable();
             $table->string('print_name_in_english', 500)->nullable();
             $table->string('print_name_in_language_1', 500)->nullable();
@@ -45,7 +45,7 @@ class CreateSupplierPromisedDiscountSettingsTable extends Migration
             $table->boolean('active_status')->default(true)->comment = '1=>Active,0=>DeActive ';
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->integer('deleted_by')->nullable(); */
             $table->timestamps();
             $table->softDeletes();
         });
