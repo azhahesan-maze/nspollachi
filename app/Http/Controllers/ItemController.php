@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CategoryName;
 use App\Http\Requests\ItemRequest;
 use App\Model\Category;
+use App\Models\Brand;
 use App\Models\Category_one;
 use App\Models\Category_three;
 use App\Models\Category_two;
@@ -73,11 +74,12 @@ class ItemController extends Controller
         $category_two = Category_two::all();
         $category_three = Category_three::all();
         $category = Category::orderBy('name', 'asc')->get();
+        $brand = Brand::orderBy('name', 'asc')->get();
 
         $uom = Uom::all();
         $language = Language::all();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
-        return view('admin.master.item.add', compact('category', 'bulk_item', 'category_one', 'category_two', 'category_three', 'uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
+        return view('admin.master.item.add', compact('brand','category', 'bulk_item', 'category_one', 'category_two', 'category_three', 'uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
     }
 
     /**
@@ -109,6 +111,7 @@ class ItemController extends Controller
         $item->category_2 = $request->category_2;
         $item->category_3 = $request->category_3; */
         $item->category_id = $request->category_id;
+        $item->brand_id = $request->brand_id;
         $item->print_name_in_english = $request->print_name_in_english;
         $item->print_name_in_language_1 = $request->print_name_in_language_1;
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
@@ -169,9 +172,10 @@ class ItemController extends Controller
         $category_two = Category_two::all();
         $category_three = Category_three::all();
         $uom = Uom::all();
+        $brand = Brand::orderBy('name', 'asc')->get();
         $category = Category::orderBy('name', 'asc')->get();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
-        return view('admin.master.item.edit', compact('bulk_item', 'category', 'item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three', 'uom'));
+        return view('admin.master.item.edit', compact('brand','bulk_item', 'category', 'item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three', 'uom'));
     }
 
     /**
@@ -199,6 +203,7 @@ class ItemController extends Controller
         }
         $item->code = $request->code;
         $item->category_id = $request->category_id;
+        $item->brand_id = $request->brand_id;
         /* $item->category_1 = $request->category_1;
         $item->category_2 = $request->category_2;
         $item->category_3 = $request->category_3; */

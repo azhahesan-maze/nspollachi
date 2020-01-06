@@ -180,6 +180,16 @@ class PermissionTableSeeder extends Seeder
             ['name'=>'role_edit','label'=>'Role Edit','guard_name'=>'web','type'=>'Master','class'=>'role_list'],
             ['name'=>'role_delete','label'=>'Role Delete','guard_name'=>'web','type'=>'Master','class'=>'role_list'],
 
+            ['name'=>'brand_list','label'=>'Brand List','guard_name'=>'web','type'=>'Master','class'=>'brand_list'],
+            ['name'=>'brand_create','label'=>'Brand Create','guard_name'=>'web','type'=>'Master','class'=>'brand_list'],
+            ['name'=>'brand_edit','label'=>'Brand Edit','guard_name'=>'web','type'=>'Master','class'=>'brand_list'],
+            ['name'=>'brand_delete','label'=>'Brand Delete','guard_name'=>'web','type'=>'Master','class'=>'brand_list'],
+
+            ['name'=>'category_list','label'=>'Category List','guard_name'=>'web','type'=>'Master','class'=>'category_list'],
+            ['name'=>'category_create','label'=>'Category Create','guard_name'=>'web','type'=>'Master','class'=>'category_list'],
+            ['name'=>'category_edit','label'=>'Category Edit','guard_name'=>'web','type'=>'Master','class'=>'category_list'],
+            ['name'=>'category_delete','label'=>'Category Delete','guard_name'=>'web','type'=>'Master','class'=>'category_list'],
+
             
  ];
  

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemTaxRequest;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Category_one;
 use App\Models\Category_three;
@@ -59,7 +60,8 @@ class ItemTaxDetailsController extends Controller
         $category_two = Category_two::all();
         $category_three = Category_three::all();
         $category = Category::all();
-        return view('admin.master.item_tax_details.add', compact('category', 'category_one', 'category_two', 'category_three', 'category_1', 'category_2', 'category_3'));
+        $brand = Brand::orderBy('name', 'asc')->get();
+        return view('admin.master.item_tax_details.add', compact('brand','category', 'category_one', 'category_two', 'category_three', 'category_1', 'category_2', 'category_3'));
     }
 
     /**

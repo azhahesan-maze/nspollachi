@@ -24,6 +24,7 @@
             <th>Item Name</th>
             <th>Item Code</th>
             <th>Category </th>
+            <th>Brand Name </th>
             <!-- <th>{{ $category_1 }}</th>
             <th>{{ $category_2 }}</th>
             <th>{{ $category_3 }}</th> -->
@@ -53,6 +54,7 @@
               <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
               <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td> -->
               <td>{{ isset($value->category->name) ? $value->category->name : ""}}</td>
+              <td>{{ isset($value->brand->name) ? $value->brand->name : ""}}</td>
               <td>{{ $value->item_type}}</td>
               <td>{{ isset($value->bulk_item->name) ? $value->bulk_item->name : ""}}</td>
               <td>{{ $value->weight_in_grams}}</td>

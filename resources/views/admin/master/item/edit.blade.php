@@ -118,6 +118,28 @@
                 </div>
 
                 <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="validationCustom01" class="col-sm-4 col-form-label"> Brand <span class="mandatory">*</span></label>
+                    <div class="col-sm-6">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select brand_id" name="brand_id" required>
+                        <option value="">Choose Brand</option>
+                        @foreach ($brand as $value)
+                        <option value="{{ $value->id }}" {{ old('brand_id',$item->brand_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                        @endforeach
+                      </select>
+                      <span class="mandatory"> {{ $errors->first('brand_id')  }} </span>
+                     <div class="invalid-feedback">
+                        Enter valid Brand
+                      </div>
+                    </div>
+                    <a href="{{ url('master/brand/create')}}" target="_blank">
+                      <button type="button"  class="px-2 btn btn-success ml-2" title="Add Brand"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_brand_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                
+                  </div>
+                </div>
+
+                <div class="col-md-6">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label"> Item Type <span class="mandatory">*</span></label>
                       <div class="col-sm-8">
@@ -140,7 +162,7 @@
                   <div class="col-md-6 bulk_item_div" style="display:none">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
-                      <div class="col-sm-8">
+                      <div class="col-sm-6">
                         <select class="js-example-basic-multiple col-12 form-control custom-select bulk_item_id" name="bulk_item_id">
                           <option value="">Choose Bulk Item</option>
                           @foreach ($bulk_item as $value)
@@ -152,6 +174,9 @@
                           Enter valid Bulk Item Name
                         </div>
                       </div>
+                      <a href="{{ url('master/item/create')}}" target="_blank">
+                        <button type="button"  class="px-2 btn btn-success ml-2" title="Add Bulk Item"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                        <button type="button"  class="px-2 btn btn-success mx-2 refresh_item_id" title="Refresh Bulk Item"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                     </div>
                   </div>
 
@@ -188,7 +213,7 @@
                       <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">Print Name in {{$language_1}}</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control print_name_in_language_1 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_1 }}" name="print_name_in_language_1" value="{{old('print_name_in_language_1',$item->print_name_in_language_1)}}" required>
+                          <input type="text" class="form-control print_name_in_language_1 only_allow_alp_num_dot_com_amp" placeholder="Print Name in {{ $language_1 }}" name="print_name_in_language_1" value="{{old('print_name_in_language_1',$item->print_name_in_language_1)}}" >
                           <span class="mandatory"> {{ $errors->first('print_name_in_language_1')  }} </span>
                           <div class="invalid-feedback">
                             Enter valid Print Name in {{ $language_1 }}
@@ -497,6 +522,16 @@ $(document).on("click",".refresh_category_id",function(){
 $(document).on("click",".refresh_uom_id",function(){
    var uom_dets=refresh_uom_master_details();
    $(".uom_id").html(uom_dets);
+});
+
+$(document).on("click",".refresh_item_id",function(){
+   var item_dets=refresh_item_master_details();
+   $(".bulk_item_id").html(item_dets);
+});
+
+$(document).on("click",".refresh_brand_id",function(){
+   var brand_dets=refresh_brand_master_details();
+   $(".brand_id").html(brand_dets);
 });
 
  

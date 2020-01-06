@@ -18,7 +18,9 @@ class CityController extends Controller
      */
     public function index()
     {
-        $city = City::all();
+        //$city = City::all();
+		$city = City::with(['state', 'district'])->get();
+		
         return view('admin.master.city.view', compact('city'));
     }
 

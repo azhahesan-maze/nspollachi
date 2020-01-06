@@ -56,7 +56,10 @@ Route::any('common-master-details/get-category-master-details', 'CommonMasterDet
 Route::any('common-master-details/get-uom-master-details', 'CommonMasterDetailController@get_uom_master_details');
 Route::any('common-master-details/get-bulk-item-master-details', 'CommonMasterDetailController@get_bulk_item_master_details');
 Route::any('common-master-details/get-customer-master-details', 'CommonMasterDetailController@get_customer_master_details');
+Route::any('common-master-details/get-brand-master-details', 'CommonMasterDetailController@get_brand_master_details');
+
 /* Common Master Details End Here */
+
 /* Common Functions Start Here */
 Route::any('common/get-state-based-district', 'CommonController@get_state_based_district');
 Route::any('common/get-district-based-city', 'CommonController@get_district_based_city');
@@ -108,6 +111,19 @@ Route::group(['prefix' => 'master/city', 'middleware' => ['auth']], function () 
     Route::any('delete/{id}', 'CityController@destroy')->middleware('permission:city_delete');
 });
 /* City Master Group End Here  */
+
+/* City Master Group Start Here  */
+Route::group(['prefix' => 'master/brand', 'middleware' => ['auth']], function () {
+    Route::any('/', 'BrandController@index')->middleware('permission:brand_list');
+    Route::any('create', 'BrandController@create')->middleware('permission:brand_create');
+    Route::any('store', 'BrandController@store')->middleware('permission:brand_create');
+    Route::any('show/{id}', 'BrandController@show')->middleware('permission:brand_list');
+    Route::any('edit/{id}', 'BrandController@edit')->middleware('permission:brand_edit');
+    Route::any('update/{id}', 'BrandController@update')->middleware('permission:brand_edit');
+    Route::any('delete/{id}', 'BrandController@destroy')->middleware('permission:brand_delete');
+});
+/* City Master Group End Here  */
+
 /* Location Type Group Start Here  */
 Route::group(['prefix' => 'master/location-type', 'middleware' => ['auth']], function () {
     Route::any('/', 'LocationTypeController@index')->middleware('permission:location_type_list');

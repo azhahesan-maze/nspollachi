@@ -22,7 +22,8 @@ class CreateItemsTable extends Migration
             $table->float('weight_in_kg', 8, 2)->unsigned()->nullable();
             $table->integer('bulk_item_id')->nullable();
             $table->integer('category_id')->nullable();
-            $table->integer('category_1')->nullable();
+            $table->bigInteger('brand_id')->unsigned()->nullable();
+           $table->integer('category_1')->nullable();
             $table->integer('category_2')->nullable();
             $table->integer('category_3')->nullable();
             $table->string('print_name_in_english', 500)->nullable();
@@ -47,7 +48,13 @@ class CreateItemsTable extends Migration
             $table->integer('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
-        });
+
+            
+          /*  $table->foreign('brand_id')
+            ->references('id')
+            ->on('brands')
+            ->onDelete('cascade'); */
+        }); 
     }
 
     /**

@@ -65,7 +65,29 @@
                 </div>
                 <a href="{{ url('master/category/create')}}" target="_blank">
                   <button type="button"  class="px-2 btn btn-success ml-2" title="Add Category"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                  <button type="button"  class="px-2 btn btn-success mx-2 refresh_category_id" title="Add State"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  <button type="button"  class="px-2 btn btn-success mx-2 refresh_category_id" title="Add Category"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label"> Brand <span class="mandatory">*</span></label>
+                <div class="col-sm-6">
+                  <select class="js-example-basic-multiple col-12 form-control custom-select brand_id" name="brand_id" required>
+                    <option value="">Choose Brand</option>
+                    @foreach ($brand as $value)
+                    <option value="{{ $value->id }}" {{ old('brand_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                    @endforeach
+                  </select>
+                  <span class="mandatory"> {{ $errors->first('brand_id')  }} </span>
+                 <div class="invalid-feedback">
+                    Enter valid Brand
+                  </div>
+                </div>
+                <a href="{{ url('master/brand/create')}}" target="_blank">
+                  <button type="button"  class="px-2 btn btn-success ml-2" title="Add Brand"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                  <button type="button"  class="px-2 btn btn-success mx-2 refresh_brand_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
             
               </div>
             </div>
@@ -531,6 +553,13 @@ $(document).on("click",".refresh_item_id",function(){
    var item_dets=refresh_item_master_details();
    $(".bulk_item_id").html(item_dets);
 });
+
+$(document).on("click",".refresh_brand_id",function(){
+   var brand_dets=refresh_brand_master_details();
+   $(".brand_id").html(brand_dets);
+});
+
+
 
 
 

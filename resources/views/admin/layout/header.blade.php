@@ -176,12 +176,16 @@
 
 
                    
-                    @if(Gate::check('category_name_master_list') || Gate::check('category_1_master_list') || Gate::check('category_2_master_list') || Gate::check('category_3_master_list'))
+                    @if(Gate::check('category_list') || Gate::check('category_1_master_list') || Gate::check('category_2_master_list') || Gate::check('category_3_master_list') || Gate::check('brand_master_list'))
                     <li class="col-md-3 dropdown-item">
                         <ul>
                           <li class="dropdown-header">Category</li>
-                            @can('category_name_master_list')
+                            @can('category_list')
                             <li><a href="{{url('master/category')}}">Category </a></li>
+                            @endcan
+
+                            @can('brand_list')
+                            <li><a href="{{url('master/brand')}}">Brand </a></li>
                             @endcan
                             <!--
                              @can('category_name_master_list')

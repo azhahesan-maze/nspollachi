@@ -25,79 +25,51 @@
 
         <div class="form-row">
           
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Category <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_category_id" name="category_1" required>
-                  <option value="">Choose {{ $category_1}}</option>
+                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_category_id" name="search_category_id" required>
+                  <option value="">Choose Category</option>
                   @foreach ($category as $value)
-                  <option value="{{ $value->id }}" {{ old('category_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                  <option value="{{ $value->id }}" {{ old('search_category_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
                   @endforeach
                 </select>
-                <span class="mandatory"> {{ $errors->first('category_id')  }} </span>
+                <span class="mandatory"> {{ $errors->first('search_category_id')  }} </span>
                <div class="invalid-feedback">
                   Enter valid Category
                 </div>
               </div>
             </div>
           </div>
-           <!-- <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} <span class="mandatory">*</span></label>
-                  <div class="col-sm-8">
-                    <select class="js-example-basic-multiple col-12 form-control custom-select category_1" name="category_1" required>
-                      <option value="">Choose {{ $category_1}}</option>
-                      @foreach ($category_one as $value)
-                      <option value="{{ $value->id }}" {{ old('category_1') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                      @endforeach
-                    </select>
-                    <span class="mandatory"> {{ $errors->first('category_1')  }} </span>
-                   <div class="invalid-feedback">
-                      Enter valid {{ $category_1}}
-                    </div>
-                  </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Brand <span class="mandatory">*</span></label>
+              <div class="col-sm-8">
+                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_brand_id" name="search_brand_id" required>
+                  <option value="">Choose Brand</option>
+                  @foreach ($brand as $value)
+                  <option value="{{ $value->id }}" {{ old('search_brand_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                  @endforeach
+                </select>
+                <span class="mandatory"> {{ $errors->first('search_brand_id')  }} </span>
+               <div class="invalid-feedback">
+                  Enter valid Brand
                 </div>
               </div>
+            </div>
+          </div>
+          
 
-              <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{$category_2}} </label>
-                    <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select category_2" name="category_2" >
-                        <option value="">Choose {{$category_2}}</option>
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('category_2')  }} </span>
-                     <div class="invalid-feedback">
-                        Enter valid {{$category_2}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_3}} </label>
-                      <div class="col-sm-8">
-                        <select class="js-example-basic-multiple col-12 form-control custom-select category_3" name="category_3" >
-                          <option value="">Choose {{ $category_3}}</option>
-                        </select>
-                        <span class="mandatory"> {{ $errors->first('category_3')  }} </span>
-                       <div class="invalid-feedback">
-                          Enter valid {{ $category_3}}
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
-
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">Item </label>
                         <div class="col-sm-8">
-                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id search_item_id" name="item_id" required>
+                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id search_item_id" name="search_item_id" required>
                             <option value="">Choose Item </option>
                           </select>
-                          <span class="mandatory"> {{ $errors->first('item_id')  }} </span>
+                          <span class="mandatory"> {{ $errors->first('search_item_id')  }} </span>
                          <div class="invalid-feedback">
                             Enter valid Item Name
                           </div>
@@ -105,7 +77,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group row">
                        
                         <div class="col-sm-8">

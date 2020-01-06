@@ -7,6 +7,7 @@ use App\Models\AccountType;
 use App\Models\AddressType;
 use App\Models\Bank;
 use App\Models\Bankbranch;
+use App\Models\Brand;
 use App\Models\City;
 use App\Models\Customer;
 use App\Models\Department;
@@ -129,6 +130,12 @@ class CommonMasterDetailController extends Controller
     {
         $customer_dets = Customer::orderBy('name', 'asc')->get();
         echo $this->get_json_details($customer_dets, $place_holder = "Customers");
+    }
+
+    public function get_brand_master_details()
+    {
+        $brand_dets = Brand::orderBy('name', 'asc')->get();
+        echo $this->get_json_details($brand_dets, $place_holder = "Brand");
     }
 
 

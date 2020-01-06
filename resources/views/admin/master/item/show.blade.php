@@ -37,6 +37,13 @@
             <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category->name) ? $item->category->name : "" }} </label>
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Brand Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->brand->name) ? $item->brand->name : "" }} </label>
+          </div>
+        </div>
         <!--<div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} :</label>

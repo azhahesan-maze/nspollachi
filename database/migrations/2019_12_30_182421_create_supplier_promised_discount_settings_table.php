@@ -20,6 +20,7 @@ class CreateSupplierPromisedDiscountSettingsTable extends Migration
             $table->integer('item_id')->nullable();
             $table->integer('discount_type_id')->nullable();
             $table->float('discount')->nullable();
+            $table->float('discount_value')->nullable();
             $table->float('discount_in_rs')->nullable();
             $table->float('discount_in_percentage')->nullable();
             $table->date('valid_till')->nullable();

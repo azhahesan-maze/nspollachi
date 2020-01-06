@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountType;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+
 use Illuminate\Support\Facades\Validator;
 
 class AccountTypeController extends Controller
@@ -20,6 +22,8 @@ class AccountTypeController extends Controller
     {
         return view('admin.master.accounts_type.add');
     }
+
+  
 
     public function store(Request $request)
     {
