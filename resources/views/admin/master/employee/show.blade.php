@@ -51,7 +51,7 @@
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Department :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $employee->department->name }} </label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($employee->department->name) && !empty($value->department->name) ? $value->department->name : "" }} </label>
           </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
         <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Address Type :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $values->address_type->name }} </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($values->address_type->name) && !empty($values->address_type->name) ? $values->address_type->name : "" }} </label>
             </div>
           </div>
           <div class="col-md-6">
@@ -94,13 +94,13 @@
                 <div class="col-md-6">
                     <div class="form-group row">
                       <label for="validationCustom01" class="col-sm-4 col-form-label">State :</label>
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{$values->state->name }} </label>
+                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($values->state->name) && !empty($values->state->name) ? $values->state->name : "" }} </label>
                     </div>
                   </div>
                   <div class="col-md-6">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">District :</label>
-                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{$values->district->name }} </label>
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($values->district->name) && !empty($values->district->name) ? $values->district->name : "" }} </label>
                       </div>
                     </div>
                     <div class="col-md-6">

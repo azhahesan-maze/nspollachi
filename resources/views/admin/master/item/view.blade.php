@@ -46,15 +46,23 @@
         <tbody>
           
           @foreach($item as $key=>$value)
+            @php
+              $barnd_name="";
+              if($value->brand_id > 0 && isset($value->brand->name))
+              {
+                $barnd_name=$value->brand->name;
+              }
+              else if($value->brand_id == 0)
+              {
+                $barnd_name="Not Applicable";
+              }
+            @endphp
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name}}</td>
               <td>{{ $value->code}}</td>
-             <!-- <td>{{ isset($value->category_one->name) ? $value->category_one->name : ""}}</td>
-              <td>{{ isset($value->category_two->name) ? $value->category_two->name : ""}}</td>
-              <td>{{ isset($value->category_three->name) ? $value->category_three->name : ""}}</td> -->
               <td>{{ isset($value->category->name) ? $value->category->name : ""}}</td>
-              <td>{{ isset($value->brand->name) ? $value->brand->name : ""}}</td>
+              <td>{{ $barnd_name }}</td>
               <td>{{ $value->item_type}}</td>
               <td>{{ isset($value->bulk_item->name) ? $value->bulk_item->name : ""}}</td>
               <td>{{ $value->weight_in_grams}}</td>

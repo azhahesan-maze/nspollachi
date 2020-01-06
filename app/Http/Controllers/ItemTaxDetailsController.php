@@ -208,10 +208,12 @@ class ItemTaxDetailsController extends Controller
     {
         $category_id = $request->has('category_id') ? $request->category_id : "";
         $item_id = $request->has('item_id') ? $request->item_id : "";
+        $brand_id = $request->has('brand_id') ? $request->brand_id : "";
 
         $condition = [];
         $category_id != "" ? $condition['items.category_id'] = $category_id : "";
         $item_id != "" ? $condition['items.id'] = $item_id : "";
+        $brand_id != "" ? $condition['items.brand_id'] = $brand_id : "";
         if (count($condition) > 0) {
             $item_dets = Item::where($condition)->get();
         } else {

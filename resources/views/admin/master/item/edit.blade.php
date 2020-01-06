@@ -47,53 +47,28 @@
             </div>
           </div>
 
-          <!--<div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} <span class="mandatory">*</span></label>
-                <div class="col-sm-8">
-                  <select class="js-example-basic-multiple col-12 form-control custom-select category_1" name="category_1" required>
-                    <option value="">Choose {{ $category_1}}</option>
-                    @foreach ($category_one as $value)
-                    <option value="{{ $value->id }}" {{ old('category_1',$item->category_1) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                    @endforeach
-                  </select>
-                  <span class="mandatory"> {{ $errors->first('category_1')  }} </span>
-                 <div class="invalid-feedback">
-                    Enter valid {{ $category_1}}
-                  </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label"> Brand <span class="mandatory">*</span></label>
+              <div class="col-sm-6">
+                <select class="js-example-basic-multiple col-12 form-control custom-select brand_id" name="brand_id" required>
+                  <option value="">Choose Brand</option>
+                  <option value="0" {{ old('brand_id',$item->brand_id) == "0" ? 'selected' : '' }}> Not Applicable </option>
+                  @foreach ($brand as $value)
+                  <option value="{{ $value->id }}" {{ old('brand_id',$item->brand_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                  @endforeach
+                </select>
+                <span class="mandatory"> {{ $errors->first('brand_id')  }} </span>
+               <div class="invalid-feedback">
+                  Enter valid Brand
                 </div>
               </div>
+              <a href="{{ url('master/brand/create')}}" target="_blank">
+                <button type="button"  class="px-2 btn btn-success ml-2" title="Add Brand"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                <button type="button"  class="px-2 btn btn-success mx-2 refresh_brand_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+          
             </div>
-
-            <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{$category_2}} </label>
-                  <div class="col-sm-8">
-                    <select class="js-example-basic-multiple col-12 form-control custom-select category_2" name="category_2" >
-                      <option value="">Choose {{$category_2}}</option>
-                    </select>
-                    <span class="mandatory"> {{ $errors->first('category_2')  }} </span>
-                   <div class="invalid-feedback">
-                      Enter valid {{$category_2}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$category_3}} </label>
-                    <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select category_3" name="category_3" >
-                        <option value="">Choose {{$category_3}}</option>
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('category_3')  }} </span>
-                     <div class="invalid-feedback">
-                        Enter valid {{$category_3}}
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+          </div>
 
                 <div class="col-md-6">
                   <div class="form-group row">
@@ -117,27 +92,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label"> Brand <span class="mandatory">*</span></label>
-                    <div class="col-sm-6">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select brand_id" name="brand_id" required>
-                        <option value="">Choose Brand</option>
-                        @foreach ($brand as $value)
-                        <option value="{{ $value->id }}" {{ old('brand_id',$item->brand_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                        @endforeach
-                      </select>
-                      <span class="mandatory"> {{ $errors->first('brand_id')  }} </span>
-                     <div class="invalid-feedback">
-                        Enter valid Brand
-                      </div>
-                    </div>
-                    <a href="{{ url('master/brand/create')}}" target="_blank">
-                      <button type="button"  class="px-2 btn btn-success ml-2" title="Add Brand"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_brand_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                 
-                  </div>
-                </div>
 
                 <div class="col-md-6">
                     <div class="form-group row">

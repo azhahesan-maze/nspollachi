@@ -21,7 +21,7 @@
         <div class="col-md-7">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $user->employee->name }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ isset($user->employee->name) && !empty($user->employee->name) ? $user->employee->name : "" }}</label>
           </div>
         </div>
 
@@ -35,7 +35,7 @@
           <div class="col-md-7">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Role :</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $user->role->name }}</label>
+                <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ isset($user->role->name) && !empty($user->role->name) ? $user->role->name : "" }}</label>
               </div>
             </div>
         

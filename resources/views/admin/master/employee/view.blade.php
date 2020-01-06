@@ -38,7 +38,7 @@
               <td>{{ $value->code}}</td>
               <td>{{ $value->phone_no}}</td>
               <td>{{ $value->email}}</td>
-              <td>{{ $value->department->name}}</td>
+              <td>{{ isset($value->department->name) && !empty($value->department->name) ? $value->department->name : "" }}</td>
            
               <td> 
                 <a href="{{url('master/employee/show/'.$value->id )}}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>

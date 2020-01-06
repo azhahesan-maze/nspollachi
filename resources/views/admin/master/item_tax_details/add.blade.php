@@ -24,12 +24,30 @@
 
 
         <div class="form-row">
-          
           <div class="col-md-3">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Category <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Brand </label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_category_id" name="search_category_id" required>
+                <select class="js-example-basic-multiple col-12 form-control custom-select search_brand_id" name="search_brand_id">
+                  <option value="">Choose Brand</option>
+                  <option value="0">Not Applicable</option>
+                  @foreach ($brand as $value)
+                  <option value="{{ $value->id }}" {{ old('search_brand_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                  @endforeach
+                </select>
+                <span class="mandatory"> {{ $errors->first('search_brand_id')  }} </span>
+               <div class="invalid-feedback">
+                  Enter valid Brand
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Category </label>
+              <div class="col-sm-8">
+                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_category_id" name="search_category_id">
                   <option value="">Choose Category</option>
                   @foreach ($category as $value)
                   <option value="{{ $value->id }}" {{ old('search_category_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
@@ -43,30 +61,11 @@
             </div>
           </div>
 
-          <div class="col-md-3">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Brand <span class="mandatory">*</span></label>
-              <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select category_id search_brand_id" name="search_brand_id" required>
-                  <option value="">Choose Brand</option>
-                  @foreach ($brand as $value)
-                  <option value="{{ $value->id }}" {{ old('search_brand_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
-                  @endforeach
-                </select>
-                <span class="mandatory"> {{ $errors->first('search_brand_id')  }} </span>
-               <div class="invalid-feedback">
-                  Enter valid Brand
-                </div>
-              </div>
-            </div>
-          </div>
-          
-
-                  <div class="col-md-3">
+            <div class="col-md-3">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label">Item </label>
                         <div class="col-sm-8">
-                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id search_item_id" name="search_item_id" required>
+                          <select class="js-example-basic-multiple col-12 form-control custom-select item_id search_item_id" name="search_item_id">
                             <option value="">Choose Item </option>
                           </select>
                           <span class="mandatory"> {{ $errors->first('search_item_id')  }} </span>
@@ -94,14 +93,14 @@
 
 
   <table class="table">
-    <thead class="thead-dark">
+    <thead class="thead-gray">
       <tr>
         <th>S.No</th>
         <th>Item</th>
-        <th>IGST (%) </th>
-        <th>CGST (%) </th>
+        <th>IGST (%) <input type="text" class="form-control common_igst" placeholder="IGST (%)"> </th>
+        <th>CGST (%)</th>
         <th >SGST (%) </th>
-        <th >Effective From </th>
+        <th >Effective From <input type="text" class="form-control common_effective_from" placeholder="dd-mm-yyyy"> </th>
       </tr>
     </thead>
     <tbody class="append_row">
@@ -345,7 +344,7 @@ $(document).on("click",".search_btn",function(){
   $.ajax({
               type: "post",
               url: "{{ url('master/item-tax-details/search-item-by-category')}}",
-              data: {category_id:$(".search_category_id").val(),item_id: $(".search_item_id").val()},
+              data: {category_id:$(".search_category_id").val(),item_id: $(".search_item_id").val(),brand_id: $(".search_brand_id").val()},
               success: function (res)
               {
                 result = JSON.parse(res);
@@ -359,7 +358,25 @@ $(document).on("click",".search_btn",function(){
 
 
 
+$(document).on("blur",".common_igst",function(){
 
+  var common_igst=$(this).val();
+  var common_cgst_and_sgst=parseInt(common_igst)/2;
+  $(".igst").val(common_igst);
+  $(".cgst").val(common_cgst_and_sgst);
+  $(".sgst").val(common_cgst_and_sgst); 
+
+});
+
+$(document).on("blur",".igst",function(){
+
+var common_igst=$(this).val();
+var common_cgst_and_sgst=parseInt(common_igst)/2;
+
+$(this).closest("tr").find(".cgst").val(common_cgst_and_sgst);
+$(this).closest("tr").find(".sgst").val(common_cgst_and_sgst); 
+
+});
     
 
 

@@ -31,39 +31,33 @@
           </div>
         </div>
 
+        
+
+        @php
+        $barnd_name="";
+        if($item->brand_id > 0 && isset($item->brand->name))
+        {
+          $barnd_name=$item->brand->name;
+        }
+        else if($item->brand_id == 0)
+        {
+          $barnd_name="Not Applicable";
+        }
+      @endphp
+
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Brand Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $barnd_name }} </label>
+          </div>
+        </div>
+
         <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Catgeory :</label>
             <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category->name) ? $item->category->name : "" }} </label>
           </div>
         </div>
-
-        <div class="col-md-6">
-          <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Brand Name :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->brand->name) ? $item->brand->name : "" }} </label>
-          </div>
-        </div>
-        <!--<div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category_one->name) ? $item->category_one->name : "" }} </label>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_2}} :</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category_two->name) ? $item->category_two->name : "" }} </label>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_3}} :</label>
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item->category_three->name) ? $item->category_three->name : "" }} </label>
-                </div>
-              </div> -->
 
               <div class="col-md-6">
                   <div class="form-group row">
