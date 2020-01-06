@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
          $this->call(LanguageTableSeeder::class);
          $this->call(PermissionTableSeeder::class);
          $this->call(UserTableSeeder::class);
-         $this->call(DiscountTypeTableSeeder::class);
+         //$this->call(DiscountTypeTableSeeder::class);
     }
 }
