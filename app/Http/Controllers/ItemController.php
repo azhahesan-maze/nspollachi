@@ -75,7 +75,6 @@ class ItemController extends Controller
         $category_three = Category_three::all();
         $category = Category::orderBy('name', 'asc')->get();
         $brand = Brand::orderBy('name', 'asc')->get();
-
         $uom = Uom::all();
         $language = Language::all();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
@@ -117,8 +116,9 @@ class ItemController extends Controller
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
         $item->ptc = $request->ptc;
-        $item->ean = $request->ean;
+        $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
+        $item->hsn = $request->hsn;
         $item->default_selling_price = $request->default_selling_price;
         $item->uom_id = $request->uom_id;
         $item->is_expiry_date = $request->is_expiry_date;
@@ -212,8 +212,9 @@ class ItemController extends Controller
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
         $item->ptc = $request->ptc;
-        $item->ean = $request->ean;
+        $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
+        $item->hsn = $request->hsn;
         $item->default_selling_price = $request->default_selling_price;
         $item->uom_id = $request->uom_id;
         $item->is_expiry_date = $request->is_expiry_date;

@@ -106,8 +106,8 @@
               </div>
               <div class="col-md-6">
                   <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">EAN Code :</label>
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->ean }} </label>
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">Barcode :</label>
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->barcode }} </label>
                   </div>
                 </div>
                 <div class="col-md-6">

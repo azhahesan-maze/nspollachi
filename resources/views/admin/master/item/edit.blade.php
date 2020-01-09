@@ -103,7 +103,8 @@
                          <option value="Direct"   {{ old('item_type',$item->item_type) == "Direct" ? 'selected' : '' }}  >Direct</option>
                           <option value="Bulk" {{ old('item_type',$item->item_type) == "Bulk" ? 'selected' : '' }}  >Bulk</option>
                           <option value="Repack" {{ old('item_type',$item->item_type) == "Repack" ? 'selected' : '' }}  >Repack</option>
-                        
+                          <option value="Parent" {{ old('item_type',$item->item_type) == "Parent" ? 'selected' : '' }}  >Parent</option>
+                          <option value="Child" {{ old('item_type',$item->item_type) == "Child" ? 'selected' : '' }}  >Child</option>
                         </select>
                         <span class="mandatory"> {{ $errors->first('item_type')  }} </span>
                        <div class="invalid-feedback">
@@ -218,12 +219,25 @@
 
                           <div class="col-md-6">
                               <div class="form-group row">
-                                <label for="validationCustom01" class="col-sm-4 col-form-label">EAN Code <span class="mandatory">*</span></label>
+                                <label for="validationCustom01" class="col-sm-4 col-form-label">Barcode <span class="mandatory">*</span></label>
                                 <div class="col-sm-8">
-                                  <input type="text" class="form-control ean only_allow_alp_num_dot_com_amp" placeholder="EAN Code" name="ean" value="{{old('ean',$item->ean)}}" required>
-                                  <span class="mandatory"> {{ $errors->first('ean')  }} </span>
+                                  <input type="text" class="form-control barcode only_allow_alp_num_dot_com_amp" placeholder="Barcode" name="barcode" value="{{old('barcode',$item->barcode)}}" required>
+                                  <span class="mandatory"> {{ $errors->first('barcode')  }} </span>
                                   <div class="invalid-feedback">
-                                    Enter valid EAN Code 
+                                    Enter valid Barcode
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label for="validationCustom01" class="col-sm-4 col-form-label">Hsn Code <span class="mandatory">*</span></label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control hsn only_allow_alp_num_dot_com_amp" placeholder="Hsn Code" name="hsn" value="{{old('hsn',$item->hsn)}}" required>
+                                  <span class="mandatory"> {{ $errors->first('hsn')  }} </span>
+                                  <div class="invalid-feedback">
+                                    Enter valid Hsn Code
                                   </div>
                                 </div>
                               </div>

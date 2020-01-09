@@ -97,7 +97,7 @@
       <tr>
         <th>S.No</th>
         <th>Item</th>
-        <th>IGST (%) <input type="text" class="form-control common_igst" placeholder="IGST (%)"> </th>
+        <th>IGST (%) <div class="col-sm-12"><input type="text" class="form-control common_igst" placeholder="IGST (%)"> </div></th>
         <th>CGST (%)</th>
         <th >SGST (%) </th>
         <th >Effective From <input type="text" class="form-control common_effective_from" placeholder="dd-mm-yyyy"> </th>
@@ -105,7 +105,63 @@
     </thead>
     <tbody class="append_row">
       
-      
+     @if (old('item_id'))
+         @foreach (old('item_id') as $old_key=>$old_value)
+  
+         <td class="s_no"></td> 
+         <td>
+             <p> {{ old('item_name.'.$old_key) }} </p>
+             <input type="hidden" class="form-control item_id" name="item_id[]" value="{{ old('item_id.'.$old_key) }}">
+             <input type="hidden" class="form-control item_name" name="item_name[]" value="{{ old('item_name.'.$old_key) }}">
+             <span class="mandatory"> {{ $errors->first('item_id.'.$old_key)  }} </span>
+                  <div class="invalid-feedback">
+                  Enter valid Item
+                  </div>
+         </td>
+         <td>
+             <div class="col-sm-12">
+             <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{ old('igst.'.$old_key) }}" required>
+             <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
+             <div class="invalid-feedback">
+                 Enter valid IGST
+               </div>
+             </div>
+           </td>
+         <td>
+             <div class="col-sm-12">
+             <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" placeholder="CGST" value="{{ old('cgst.'.$old_key) }}" required>
+             <span class="mandatory"> {{ $errors->first('cgst.'.$old_key)  }} </span>
+             <div class="invalid-feedback">
+                 Enter valid CGST
+               </div>
+             </div>
+           </td>
+
+       <td>
+                 <div class="col-sm-12">
+                 <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" placeholder="SGST" value="{{ old('sgst.'.$old_key) }}" required>
+                 <span class="mandatory"> {{ $errors->first('sgst.'.$old_key)  }} </span>
+                 <div class="invalid-feedback">
+                     Enter valid SGST
+                   </div>
+                 </div>
+               </td>
+
+               <td>
+                   <div class="col-sm-12">
+                    <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.'.$old_key) }}" required>
+                    <span class="mandatory"> {{ $errors->first('valid_from.'.$old_key)  }} </span>
+                    <div class="invalid-feedback">
+                       Enter valid Effective From Date
+                     </div>
+                   </div>
+                 </td>
+    
+
+     </tr>
+         @endforeach
+     @endif
+
     </tbody>
   </table>
        
@@ -135,27 +191,14 @@ $(document).ready(function () {
     autoclose: true
     });
 
-/* Set Dropdown Values for onload  */
-var category_one_id=$(".category_1").val();
-var category_two_id="{{ old('category_2') }}";
-var category_three_id="{{ old('category_3') }}";
-var item_id="{{ old('item_id') }}";
-
-if(category_one_id != "")
-{
-   // get_category_one_based_category_two(category_one_id,category_two_id);
-}
-
-if(category_two_id != "")
-{
- // get_category_two_based_category_three(category_two_id,category_three_id);
-}
+    var item_length=$(".item_id").length;
+    if(item_length >1)
+    {
+      $(".response_div").css("display","block");
+                s_no_generation();
+    }
 
 
-if(category_one_id !="" || category_two_id !="" || category_three_id != "")
-{
- // get_category_based_item(category_one_id,category_two_id,category_three_id,item_id);
-}
   });
 
 

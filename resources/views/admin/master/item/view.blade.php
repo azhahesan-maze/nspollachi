@@ -25,9 +25,6 @@
             <th>Item Code</th>
             <th>Category </th>
             <th>Brand Name </th>
-            <!-- <th>{{ $category_1 }}</th>
-            <th>{{ $category_2 }}</th>
-            <th>{{ $category_3 }}</th> -->
             <th> Item Type</th>
             <th> Bulk Item Name</th>
             <th> Weight In Grams </th>

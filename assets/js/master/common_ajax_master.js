@@ -209,3 +209,19 @@ function refresh_brand_master_details() {
     return result;
 }
 /* Load Customer Master Data End Here  */
+
+/* Load Child Item Master Data Start Here */
+function refresh_child_item_master_details(category_id) {
+    var result = "";
+    $.ajax({
+        type: "post",
+        url: APP_URL + "/common-master-details/get-child-item-master-details",
+        data: { category_id: category_id },
+        async: false,
+        success: function(res) {
+            result = res;
+        }
+    });
+    return result;
+}
+/* Load Child Item Master Data End Here  */

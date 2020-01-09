@@ -5,7 +5,8 @@
             <td class="s_no"></td> 
             <td>
                 <p> {{ $value->name }} </p>
-                <input type="hidden" class="form-control item_id" value="{{ $value->id}}">
+                <input type="hidden" class="form-control item_id" name="item_id[]" value="{{ $value->id}}">
+                <input type="hidden" class="form-control item_name" name="item_name[]" value="{{ $value->name}}">
             </td>
             <td>
                 <div class="col-sm-12">

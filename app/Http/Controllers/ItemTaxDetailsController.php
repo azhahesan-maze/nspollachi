@@ -74,6 +74,7 @@ class ItemTaxDetailsController extends Controller
     {
 
         $input = $request->all();
+      // echo "<pre>"; print_r($input);exit;
 
 
         foreach ($input['valid_from'] as $key => $value) {
@@ -82,22 +83,36 @@ class ItemTaxDetailsController extends Controller
 
         $request->replace($input);
         $rule = [
-            'category_1' => 'required',
-            'item_id' => 'required',
+           // 'category_1' => 'required',
+            'item_id.*' => 'required',
             'cgst.*' => 'required',
             'igst.*' => 'required',
             'sgst.*' => 'required',
-            'valid_from.*' => 'date_format:Y-m-d|required|distinct|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,' . $request->item_id,
+            'valid_from.*' => 'required',
+            //'valid_from.*' => 'date_format:Y-m-d|required|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,' . $request->item_id,
         ];
+
+        foreach($request->item_id as $item_Key=>$item_value)
+        {
+            
+        }
+
+        if ($request->has('item_id')) {
+            foreach($request->item_id as $item_Key=>$item_value){
+                
+                $rule['valid_from.' . $item_Key] = 'required|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,' . $item_value;
+            }
+        }
 
 
         $messages = array(
+            'item_id.*.required' => 'Item field is required',
             'cgst.*.required' => 'CGST field is required',
             'igst.*.required' => 'IGST field is required',
             'sgst.*.required' => 'SGST field is required',
             'valid_from.*.required' => 'Effective From Date  field is required',
-            'valid_from.*.distinct' => 'Please Check Duplication Date',
-            'valid_from.*.unique' => ' The Effective From Date has already been taken.',
+            //'valid_from.*.distinct' => 'Please Check Duplication Date',
+           'valid_from.*.unique' => ' The Effective From Date has already been taken for this item.',
         );
 
 
@@ -111,10 +126,7 @@ class ItemTaxDetailsController extends Controller
             $batch_insert = [];
             foreach ($request->cgst as $key => $value) {
                 $data = [
-                    'item_id' => $request->item_id,
-                    'category_1' => $request->category_1,
-                    'category_2' => $request->category_2,
-                    'category_3' => $request->category_3,
+                    'item_id' => isset($request->item_id[$key]) ? $request->item_id[$key] : "",
                     'cgst' => isset($request->cgst[$key]) ? $request->cgst[$key] : "",
                     'igst' => isset($request->igst[$key]) ? $request->igst[$key] : "",
                     'sgst' => isset($request->sgst[$key]) ? $request->sgst[$key] : "",

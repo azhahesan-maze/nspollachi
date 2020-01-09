@@ -29,7 +29,7 @@ class ItemRequest extends FormRequest
             $rule = [
                 'name' => 'required|unique:items,name,NULL,id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,NULL,id,deleted_at,NULL',
-                'ean' => 'required|unique:items,ean,NULL,id,deleted_at,NULL',
+                'barcode' => 'required|unique:items,barcode,NULL,id,deleted_at,NULL',
                 'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
@@ -83,12 +83,10 @@ class ItemRequest extends FormRequest
             $rule = [
                 'name' => 'required|unique:items,name,' . $this->id . ',id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,' . $this->id . ',id,deleted_at,NULL',
-                'ean' => 'required|unique:items,ean,' . $this->id . ',id,deleted_at,NULL',
+                'barcode' => 'required|unique:items,barcode,' . $this->id . ',id,deleted_at,NULL',
                 'ptc' => 'required|unique:items,ptc,' . $this->id . ',id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
-                'ptc' => 'required',
-                'ean' => 'required',
                 'mrp' => 'required',
                 'item_type' => 'required',
                 'default_selling_price' => 'required',

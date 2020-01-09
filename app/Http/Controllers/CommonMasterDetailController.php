@@ -126,6 +126,18 @@ class CommonMasterDetailController extends Controller
         echo $this->get_json_details($bulk_item_dets, $place_holder = "Bulk Item");
     }
 
+    public function get_child_item_master_details(Request $request)
+    {
+        $where=array();
+       if($request->has('category_id') && $request->category_id !=""){
+
+       }
+       
+        
+        $child_item_dets = Item::where('item_type', 'Child')->get();
+        echo $this->get_json_details($child_item_dets, $place_holder = "Child Item");
+    }
+
     public function get_customer_master_details()
     {
         $customer_dets = Customer::orderBy('name', 'asc')->get();

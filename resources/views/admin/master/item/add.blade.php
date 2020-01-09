@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 <div class="col-12 body-sec">
-  <div class="card container px-0">
+  <div class="card container-fluid px-0">
     <!-- card header start@ -->
     <div class="card-header px-2">
       <div class="row">
@@ -114,6 +114,41 @@
                       </div>
                     </div>
 
+                    <div class="col-md-6 child_div" style="display:none">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label"> Child <span class="mandatory">*</span> </label>
+                        <div class="col-sm-6">
+                          <select class="js-example-basic-multiple col-12 form-control custom-select child_item_id" name="child_item_id">
+                            <option value="">Choose Child</option>
+                            @foreach ($bulk_item as $value)
+                            <option value="{{ $value->id }}" {{ old('child_item_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                            @endforeach
+                           </select>
+                          <span class="mandatory"> {{ $errors->first('child_item_id')  }} </span>
+                         <div class="invalid-feedback">
+                            Enter valid Child Name
+                          </div>
+                        </div>
+                        <a href="{{ url('master/item/create')}}" target="_blank">
+                          <button type="button"  class="px-2 btn btn-success ml-2" title="Add Child Item"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                          <button type="button"  class="px-2 btn btn-success mx-2 refresh_child_item_id" title="Refresh Child Item"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 child_div" style="display:none">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label"> No of Units <span class="mandatory">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control child_unit only_allow_digit_and_dot" placeholder="Units" name="child_unit" value="{{old('child_unit')}}" >
+                          <span class="mandatory"> {{ $errors->first('child_unit')  }} </span>
+                         <div class="invalid-feedback">
+                            Enter valid Units
+                          </div>
+                        </div>
+                                              </div>
+                    </div>
+                    
+
                     <div class="col-md-6 bulk_item_div" style="display:none">
                       <div class="form-group row">
                         <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
@@ -225,12 +260,25 @@
 
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label for="validationCustom01" class="col-sm-4 col-form-label">EAN Code <span class="mandatory">*</span></label>
+                                  <label for="validationCustom01" class="col-sm-4 col-form-label">Barcode <span class="mandatory">*</span></label>
                                   <div class="col-sm-8">
-                                    <input type="text" class="form-control ean only_allow_alp_num_dot_com_amp" placeholder="EAN Code" name="ean" value="{{old('ean')}}" required>
-                                    <span class="mandatory"> {{ $errors->first('ean')  }} </span>
+                                    <input type="text" class="form-control barcode only_allow_alp_num_dot_com_amp" placeholder="Barcode" name="barcode" value="{{old('barcode')}}" required>
+                                    <span class="mandatory"> {{ $errors->first('barcode')  }} </span>
                                     <div class="invalid-feedback">
-                                      Enter valid EAN Code 
+                                      Enter valid Barcode 
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label for="validationCustom01" class="col-sm-4 col-form-label">Hsn Code </label>
+                                  <div class="col-sm-8">
+                                    <input type="text" class="form-control hsn only_allow_alp_num_dot_com_amp" placeholder="Hsn Code" name="hsn" value="{{old('hsn')}}">
+                                    <span class="mandatory"> {{ $errors->first('hsn')  }} </span>
+                                    <div class="invalid-feedback">
+                                      Enter valid Hsn Code 
                                     </div>
                                   </div>
                                 </div>
@@ -376,16 +424,21 @@
   });
 
 /* Repack */
-
 function item_type()
 {
   $(".weight_in_grams").removeAttr("required");
   $(".bulk_item_id").removeAttr('required');
+
+  /* Item Type Parent  */
+  $(".child_unit").removeAttr("required");
+  $(".child_item_id").removeAttr('required');
+
   var item_type=$(".item_type").val();
   if(item_type == "Bulk")
   {
     $(".weight_in_grams").attr('required', 'required');
   }
+
   if(item_type == "Repack")
   {
     $(".weight_in_grams").attr('required', 'required');
@@ -395,6 +448,17 @@ function item_type()
   }else
   {
     $(".bulk_item_div").css("display","none");
+  }
+
+  if(item_type == "Parent")
+  {
+    $(".child_unit").attr('required', 'required');
+    $(".child_item_id").attr('required', 'required');
+    $(".child_div").css("display","block");
+    //get_category_based_item($(".category_1").val(),$(".category_2").val(),$(".category_3").val(),item_id="")
+  }else
+  {
+    $(".child_div").css("display","none");
   }
 
 }
@@ -454,28 +518,7 @@ function get_category_two_based_category_three(category_two_id,category_three_id
 
 }
 
-$(document).on("change",".category_1",function(){
-  if($(this).val() != ""){
-    get_category_one_based_category_two($(this).val(),category_two_id ="");
-    get_category_based_item($(this).val(),category_two_id="",category_three_id="",item_id="");
-  }
-  
-});
 
-$(document).on("change",".category_2",function(){
-  if($(this).val() != ""){
-    get_category_two_based_category_three($(this).val(),category_three_id ="");
-    get_category_based_item($(".category_1").val(),$(this).val(),category_three_id="",item_id="");
-  }
-  
-});
-
-$(document).on("change",".category_3",function(){
-  if($(this).val() != ""){
-     get_category_based_item($(".category_1").val(),$(".category_2").val(),$(this).val(),item_id="");
-  }
-  
-});
 
 $(document).on("click",".is_expiry_date",function()
 {
@@ -507,6 +550,12 @@ $(document).on("click",".refresh_item_id",function(){
 $(document).on("click",".refresh_brand_id",function(){
    var brand_dets=refresh_brand_master_details();
    $(".brand_id").html(brand_dets);
+});
+
+$(document).on("click",".refresh_child_item_id",function(){
+  var category_id=$(".category_id").val();
+   var child_item_dets=refresh_child_item_master_details(category_id);
+   $(".child_item_id").html(child_item_dets);
 });
 
 

@@ -21,9 +21,11 @@ class CreateItemsTable extends Migration
             $table->float('weight_in_grams', 8, 2)->unsigned()->nullable();
             $table->float('weight_in_kg', 8, 2)->unsigned()->nullable();
             $table->integer('bulk_item_id')->nullable();
+            $table->integer('child_unit')->nullable();
+            $table->integer('child_item_id')->nullable();
             $table->integer('category_id')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
-           $table->integer('category_1')->nullable();
+            $table->integer('category_1')->nullable();
             $table->integer('category_2')->nullable();
             $table->integer('category_3')->nullable();
             $table->string('print_name_in_english', 500)->nullable();
@@ -31,7 +33,7 @@ class CreateItemsTable extends Migration
             $table->string('print_name_in_language_2', 500)->nullable();
             $table->string('print_name_in_language_3', 500)->nullable();
             $table->string('ptc', 500)->nullable();
-            $table->string('ean', 500)->nullable();
+            $table->string('barcode', 500)->nullable();
             $table->string('hsn', 500)->nullable();
             $table->float('mrp')->nullable();
             $table->float('default_selling_price')->nullable();

@@ -22,10 +22,9 @@
           <tr>
             <th>S.No</th>
             <th>Item Name</th>
-            <th>Item Code</th>
-          <th>{{ $category_1 }}</th>
-            <th>{{ $category_2 }}</th>
-            <th>{{ $category_3 }}</th>
+            
+            <th>Brand</th>
+            <th>Category</th>
             <th>SGST</th>
             <th>IGST</th>
             <th>CGST</th>
@@ -36,14 +35,24 @@
         <tbody>
           
           @foreach($item_tax_details as $key=>$value)
+          @php
+              $barnd_name="";
+              if($value->item->brand_id > 0 && isset($value->item->brand->name))
+              {
+                $barnd_name=$value->item->brand->name;
+              }
+              else if($value->item->brand_id == 0)
+              {
+                $barnd_name="Not Applicable";
+              }
+            @endphp
             <tr>
               <td>{{ $key+1 }}</td>
-              <td>{{ $value->item->name}}</td>
-             
-              <td>{{ $value->item->code}}</td>
-              <td>{{ isset($value->category_one->name) ? $value->category_one->name : "" }}</td>
-              <td>{{ $value->category_two->name}}</td>
-              <td>{{ $value->category_three->name}}</td>
+              <td>{{ isset($value->item->name) && !empty($value->item->name) ? $value->item->name : "" }}</td>
+              <td>{{ $barnd_name }}</td>
+              <td>{{ isset($value->item->category->name) && !empty($value->item->category->name) ? $value->item->category->name : ""}}</td>
+              
+         
               <td>{{ $value->sgst}}</td>
               <td>{{ $value->igst}}</td>
               <td>{{ $value->cgst}}</td>
