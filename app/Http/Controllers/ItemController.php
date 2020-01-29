@@ -170,7 +170,7 @@ class ItemController extends Controller
                                 'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
                                 'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
                                 'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
-                                'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
+                                'valid_from' => isset($request->valid_from[$tax_key]) && !empty($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
                                 'created_by' => 0,
                                 'created_at' => $now,
                                 'updated_at' => $now,
