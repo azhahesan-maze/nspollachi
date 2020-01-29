@@ -66,7 +66,7 @@ class ItemRequest extends FormRequest
                 if($request->igst !=""){
                     $rule['cgst.*'] = ' required';
                     $rule['sgst.*'] = 'required';
-                   $rule['valid_from.*'] = 'required';
+                   $rule['valid_from.*'] = 'required|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,NULL';
                       }
             }
 
@@ -150,7 +150,7 @@ class ItemRequest extends FormRequest
                 if($request->igst !=""){
                     $rule['cgst.*'] = ' required';
                     $rule['sgst.*'] = 'required';
-                    $rule['valid_from.*'] = 'required';
+                    $rule['valid_from.*'] = 'required|unique:item_tax_details,valid_from,NULL,'.$this->id.',deleted_at,NULL,item_id,NULL';
                   
                    // $rule['valid_from.*'] = 'required|distinct';
                 }
