@@ -44,4 +44,30 @@ class Item extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
+
+    public function item_tax_details()
+    {
+        return $this->hasMany(ItemTaxDetails::class, 'item_id', 'id');
+        
+    }
+
+    public function item_barcode_details()
+    {
+        return $this->hasMany(ItemBracodeDetails::class, 'item_id', 'id');
+    }
+
+    public function delete()
+    {
+        // delete all related photos 
+        $this->item_tax_details()->delete();
+        $this->item_barcode_details()->delete();
+       
+
+        // as suggested by Dirk in comment,
+        // it's an uglier alternative, but faster
+        // Photo::where("user_id", $this->id)->delete()
+
+        // delete the user
+        return parent::delete();
+    }
 }

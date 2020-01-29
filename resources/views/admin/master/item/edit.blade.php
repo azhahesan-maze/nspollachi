@@ -104,7 +104,7 @@
                           <option value="Bulk" {{ old('item_type',$item->item_type) == "Bulk" ? 'selected' : '' }}  >Bulk</option>
                           <option value="Repack" {{ old('item_type',$item->item_type) == "Repack" ? 'selected' : '' }}  >Repack</option>
                           <option value="Parent" {{ old('item_type',$item->item_type) == "Parent" ? 'selected' : '' }}  >Parent</option>
-                          <option value="Child" {{ old('item_type',$item->item_type) == "Child" ? 'selected' : '' }}  >Child</option>
+                         <!-- <option value="Child" {{ old('item_type',$item->item_type) == "Child" ? 'selected' : '' }}  >Child</option> -->
                         </select>
                         <span class="mandatory"> {{ $errors->first('item_type')  }} </span>
                        <div class="invalid-feedback">
@@ -114,6 +114,41 @@
                     </div>
                   </div>
 
+                  <!-- Parent child Relation Concept Start Here  -->
+                  <div class="col-md-6 child_div" style="display:none">
+                    <div class="form-group row">
+                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Child <span class="mandatory">*</span> </label>
+                      <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select child_item_id" name="child_item_id">
+                          <option value="">Choose Child</option>
+                          @foreach ($child_item as $value)
+                          <option value="{{ $value->id }}" {{ old('child_item_id',$item->child_item_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                          @endforeach
+                         </select>
+                        <span class="mandatory"> {{ $errors->first('child_item_id')  }} </span>
+                       <div class="invalid-feedback">
+                          Enter valid Child Name
+                        </div>
+                      </div>
+                      <a href="{{ url('master/item/create')}}" target="_blank">
+                        <button type="button"  class="px-2 btn btn-success ml-2" title="Add Child Item"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                        <button type="button"  class="px-2 btn btn-success mx-2 refresh_child_item_id" title="Refresh Child Item"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 child_div" style="display:none">
+                    <div class="form-group row">
+                      <label for="validationCustom01" class="col-sm-4 col-form-label"> No of Units <span class="mandatory">*</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control child_unit only_allow_digit_and_dot" placeholder="Units" name="child_unit" value="{{old('child_unit',$item->child_unit)}}" >
+                        <span class="mandatory"> {{ $errors->first('child_unit')  }} </span>
+                       <div class="invalid-feedback">
+                          Enter valid Units
+                        </div>
+                      </div>
+                                            </div>
+                  </div>
+                  <!-- Parent child Relation Concept End Here  -->
 
                   <div class="col-md-6 bulk_item_div" style="display:none">
                     <div class="form-group row">
@@ -217,18 +252,7 @@
                             </div>
                           </div>
 
-                          <div class="col-md-6">
-                              <div class="form-group row">
-                                <label for="validationCustom01" class="col-sm-4 col-form-label">Barcode <span class="mandatory">*</span></label>
-                                <div class="col-sm-8">
-                                  <input type="text" class="form-control barcode only_allow_alp_num_dot_com_amp" placeholder="Barcode" name="barcode" value="{{old('barcode',$item->barcode)}}" required>
-                                  <span class="mandatory"> {{ $errors->first('barcode')  }} </span>
-                                  <div class="invalid-feedback">
-                                    Enter valid Barcode
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                         
 
                             <div class="col-md-6">
                               <div class="form-group row">
@@ -362,6 +386,56 @@
                                       </div>
 
                                       <div class="col-md-6">
+                                        <div class="form-group row">
+                                          <label for="validationCustom01" class="col-sm-4 col-form-label">Is Miminum Sales Qty Applicable <span class="mandatory">*</span></label>
+                                          <div class="col-sm-8">
+                                              <div class="form-check">
+                                                  <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input is_minimum_sales_qty_applicable" value ="1" {{ old('is_minimum_sales_qty_applicable',$item->is_minimum_sales_qty_applicable) == 1 ? 'checked' : '' }} name="is_minimum_sales_qty_applicable">Yes
+                                                  </label>
+                                                </div>
+
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                      <input type="radio" class="form-check-input is_minimum_sales_qty_applicable" value ="0" {{ old('is_minimum_sales_qty_applicable',$item->is_minimum_sales_qty_applicable) == 0 ? 'checked' : '' }} name="is_minimum_sales_qty_applicable">No
+                                                    </label>
+                                                  </div>
+                                            
+                                            <span class="mandatory"> {{ $errors->first('is_minimum_sales_qty_applicable')}} </span>
+                                           <div class="invalid-feedback">
+                                              Enter valid UOM
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6 minimum_sales_div" style="display: none">
+                                        <div class="form-group row">
+                                          <label for="validationCustom01" class="col-sm-4 col-form-label">Minimum Sales Qty <span class="mandatory">*</span></label>
+                                          <div class="col-sm-8">
+                                            <input type="text" class="form-control minimum_sales_qty" placeholder="Minimum Sales Qty" name="minimum_sales_qty" value="{{old('minimum_sales_qty',$item->minimum_sales_qty)}}">
+                                            <span class="mandatory"> {{ $errors->first('minimum_sales_qty')  }} </span>
+                                            <div class="invalid-feedback">
+                                              Enter valid Minimum Sales Qty
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6 minimum_sales_div" style="display: none">
+                                        <div class="form-group row">
+                                          <label for="validationCustom01" class="col-sm-4 col-form-label">Minimum Sales Price <span class="mandatory">*</span></label>
+                                          <div class="col-sm-8">
+                                            <input type="text" class="form-control minimum_sales_price" placeholder="Minimum Sales Price" name="minimum_sales_price" value="{{old('minimum_sales_price',$item->minimum_sales_price)}}">
+                                            <span class="mandatory"> {{ $errors->first('minimum_sales_price')  }} </span>
+                                            <div class="invalid-feedback">
+                                              Enter valid Minimum Sales Price
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
                                           <div class="form-group row">
                                             <label for="validationCustom01" class="col-sm-4 col-form-label">Product Image </label>
                                             <div class="col-sm-8">
@@ -374,6 +448,234 @@
                                           </div>
                                         </div>
  </div>
+
+ <div class="form-row">
+  <div class="col-md-8">
+  <h4> Item Tax Details :</h4>
+  </div>
+</div>
+
+ <div class="form-row">
+
+  <table class="table">
+    <thead class="thead-gray">
+      <tr>
+        <th class="text-center">S.No</th>
+        <th class="text-center">IGST (%) <input type="text" class="w-50 border-radius common_igst" placeholder="IGST (%)"> </th>
+        <th class="text-center">CGST (%)</th>
+        <th class="text-center">SGST (%) </th>
+        <th class="text-center">Effective From  </th>
+        <th class="text-center">Action  <label class="btn btn-success add_tax_details">+</label></th>
+      </tr>
+    </thead>
+    <tbody class="append_row">
+      @foreach ($item->item_tax_details as $item_tax_key=>$item_tax_details)
+      <tr>
+      <td class="s_no">{{$item_tax_key + 1}}</td> 
+        <td>
+            <div class="col-sm-12">
+            <input type="hidden" name="item_tax_details_id" class="" value="{{ old('item_tax_details_id.'.$item_tax_key,$item_tax_details->id) }}">
+            <input type="text" class="form-control igst only_allow_digit_and_dot" name="old_igst[]"  placeholder="IGST" value="{{ old('old_igst.'.$item_tax_key,$item_tax_details->igst) }}" required >
+            <span class="mandatory"> {{ $errors->first('old_igst.'.$item_tax_key)  }} </span>
+            <div class="invalid-feedback">
+                Enter valid IGST
+              </div>
+            </div>
+          </td>
+        <td>
+            <div class="col-sm-12">
+            <input type="text" class="form-control cgst only_allow_digit_and_dot" name="old_cgst[]" readonly placeholder="CGST" value="{{ old('old_cgst.'.$item_tax_key,$item_tax_details->cgst) }}" required>
+            <span class="mandatory"> {{ $errors->first('old_cgst.'.$item_tax_key)  }} </span>
+            <div class="invalid-feedback">
+                Enter valid CGST
+              </div>
+            </div>
+          </td>
+
+      <td>
+                <div class="col-sm-12">
+                <input type="text" class="form-control sgst only_allow_digit_and_dot" name="old_sgst[]" readonly placeholder="SGST" value="{{ old('old_sgst.'.$item_tax_key,$item_tax_details->cgst) }}" required>
+                <span class="mandatory"> {{ $errors->first('old_sgst.'.$item_tax_key)  }} </span>
+                <div class="invalid-feedback">
+                    Enter valid SGST
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                  <div class="col-sm-12">
+                    @php
+                        $valid_from=isset($item_tax_details->valid_from) && !empty($item_tax_details->valid_from) ? date('d-m-Y',strtotime($item_tax_details->valid_from)) : "";
+                    @endphp
+                   <input type="text" class="form-control valid_from" name="old_valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('old_valid_from.'.$item_tax_key,$valid_from) }}" required autocomplete="off">
+                   <span class="mandatory"> {{ $errors->first('old_valid_from.'.$item_tax_key)  }} </span>
+                   <div class="invalid-feedback">
+                      Enter valid Effective From Date
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group row">
+                   <div class="col-sm-3 mr-1">
+                     <label class="btn btn-success add_tax_details">+</label>
+                   </div>
+                   <div class="col-sm-3 mx-2">
+                     <label class="btn btn-danger remove_tax_details">-</label>
+                   </div>
+                 </div>
+                </td>
+    </tr>
+      @endforeach
+      
+     @if (old('igst'))
+         @foreach (old('igst') as $old_key=>$old_value)
+   <tr>
+         <td class="s_no"></td> 
+         <td>
+             <div class="col-sm-12">
+             <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{ old('igst.'.$old_key) }}" required>
+             <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
+             <div class="invalid-feedback">
+                 Enter valid IGST
+               </div>
+             </div>
+           </td>
+         <td>
+             <div class="col-sm-12">
+             <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" readonly placeholder="CGST" value="{{ old('cgst.'.$old_key) }}" required>
+             <span class="mandatory"> {{ $errors->first('cgst.'.$old_key)  }} </span>
+             <div class="invalid-feedback">
+                 Enter valid CGST
+               </div>
+             </div>
+           </td>
+
+       <td>
+                 <div class="col-sm-12">
+                 <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" readonly placeholder="SGST" value="{{ old('sgst.'.$old_key) }}" required>
+                 <span class="mandatory"> {{ $errors->first('sgst.'.$old_key)  }} </span>
+                 <div class="invalid-feedback">
+                     Enter valid SGST
+                   </div>
+                 </div>
+               </td>
+
+               <td>
+                   <div class="col-sm-12">
+                    <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.'.$old_key) }}" required>
+                    <span class="mandatory"> {{ $errors->first('valid_from.'.$old_key)  }} </span>
+                    <div class="invalid-feedback">
+                       Enter valid Effective From Date
+                     </div>
+                   </div>
+                 </td>
+                 <td>
+                  <div class="form-group row">
+                   <div class="col-sm-3 mr-1">
+                     <label class="btn btn-success add_tax_details">+</label>
+                   </div>
+                   <div class="col-sm-3 mx-2">
+                     <label class="btn btn-danger remove_tax_details">-</label>
+                   </div>
+                 </div>
+                </td> 
+      </tr>
+   
+         @endforeach
+     @endif
+
+    </tbody>
+  </table>
+       
+ </div>
+
+ <div class="form-row">
+  <table class="table">
+     <thead class="thead-gray">
+        <tr>
+           <th class="text-center">S.No</th>
+           <th class="text-center">Barcode</th>
+           <th class="text-center">Confirm Barcode</th>
+           <th class="text-center">Action <label class="btn btn-success add_barcode_details">+</label></th>
+        </tr>
+     </thead>
+     <tbody class="append_barcode_dets">
+       @foreach ($item->item_barcode_details as $item_barcode_key=>$item_barcode_value)
+       <tr>
+       <td class="barcode_s_no">{{ $item_barcode_key+1 }}</td>
+        <td>
+           <div class="col-sm-12">
+             <input type="hidden" class="form-control item_barcode_details_id" name="item_barcode_details_id[]" value="{{ old('item_barcode_details_id.'.$item_barcode_key,$item_barcode_value->id) }}">
+              <input type="text" class="form-control barcode" name="old_barcode[]"  placeholder="Barcode" value="{{ old('old_barcode.'.$item_barcode_key,$item_barcode_value->barcode) }}" required>
+              <span class="mandatory"> {{ $errors->first('old_barcode.'.$item_barcode_key)  }} </span>
+              <div class="invalid-feedback">
+                 Enter valid Barcode
+              </div>
+           </div>
+        </td>
+        <td>
+           <div class="col-sm-12">
+              <input type="text" class="form-control confirm_barcode" name="old_barcode_confirmation[]"  placeholder="Confirm Barcode" value="{{ old('old_barcode_confirmation.'.$item_barcode_key,$item_barcode_value->barcode) }}" required>
+              <span class="mandatory"> {{ $errors->first('old_barcode_confirmation.'.$item_barcode_key)  }} </span>
+              <div class="invalid-feedback">
+                 Enter valid Confirm Barcode
+              </div>
+           </div>
+        </td>
+        <td>
+           <div class="form-group row">
+              <div class="col-sm-3 mr-1">
+                 <label class="btn btn-success add_barcode_details">+</label>
+              </div>
+              <div class="col-sm-3 mx-1">
+                 <label class="btn btn-danger remove_existing_barcode">-</label>
+              </div>
+           </div>
+        </td>
+     </tr>
+       @endforeach
+       
+        @if (old('barcode'))
+        @foreach (old('barcode') as $old_barcode_key=>$old_barcode_value)
+       
+        <tr>
+           <td class="barcode_s_no">1</td>
+           <td>
+              <div class="col-sm-12">
+                 <input type="text" class="form-control barcode" name="barcode[]"  placeholder="Barcode" value="{{ old('barcode.'.$old_barcode_key) }}" required>
+                 <span class="mandatory"> {{ $errors->first('barcode.'.$old_barcode_key)  }} </span>
+                 <div class="invalid-feedback">
+                    Enter valid Barcode
+                 </div>
+              </div>
+           </td>
+           <td>
+              <div class="col-sm-12">
+                 <input type="text" class="form-control confirm_barcode" name="barcode_confirmation[]"  placeholder="Confirm Barcode" value="{{ old('barcode_confirmation.'.$old_barcode_key) }}" required>
+                 <span class="mandatory"> {{ $errors->first('barcode_confirmation.'.$old_barcode_key)  }} </span>
+                 <div class="invalid-feedback">
+                    Enter valid Confirm Barcode
+                 </div>
+              </div>
+           </td>
+           <td>
+              <div class="form-group row">
+                 <div class="col-sm-2 mr-1">
+                    <label class="btn btn-success add_barcode_details">+</label>
+                 </div>
+                 <div class="col-sm-2 mx-1">
+                    <label class="btn btn-danger remove_barcode_details">-</label>
+                 </div>
+              </div>
+           </td>
+        </tr>
+      
+        @endforeach
+        @endif
+     </tbody>
+  </table>
+</div>
+
         <div class="col-md-7 text-right">
           <button class="btn btn-success" type="submit">Submit</button>
         </div>
@@ -383,22 +685,51 @@
   </div>
 </div>
 
+<script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script>
+<script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
 <script>
+$(document).on("click",".add_tax_details",function(){
+  add_item_tax_details();
+});
+
+$(document).on("click",".add_barcode_details",function(){
+     add_barcode_details();
+   });
+
+$(document).ready(function(){
+  s_no();
+  minimum_sales_qty();
+  item_type();
+  var currentDate = new Date();
+    $('.valid_from,.common_effective_from').datepicker({
+    format: "dd-mm-yyyy",
+    todayHighlight: true,
+    startDate: currentDate,
+    endDate: '',
+    setDate: currentDate,
+    autoclose: true
+    });
+});
   $(".name").keyup(function(){
     $(".print_name_in_english").val($(this).val());
   });
 
 /* Repack */
-
 function item_type()
 {
   $(".weight_in_grams").removeAttr("required");
   $(".bulk_item_id").removeAttr('required');
+
+  /* Item Type Parent  */
+  $(".child_unit").removeAttr("required");
+  $(".child_item_id").removeAttr('required');
+
   var item_type=$(".item_type").val();
   if(item_type == "Bulk")
   {
     $(".weight_in_grams").attr('required', 'required');
   }
+
   if(item_type == "Repack")
   {
     $(".weight_in_grams").attr('required', 'required');
@@ -410,6 +741,17 @@ function item_type()
     $(".bulk_item_div").css("display","none");
   }
 
+  if(item_type == "Parent")
+  {
+    $(".child_unit").attr('required', 'required');
+    $(".child_item_id").attr('required', 'required');
+    $(".child_div").css("display","block");
+    //get_category_based_item($(".category_1").val(),$(".category_2").val(),$(".category_3").val(),item_id="")
+  }else
+  {
+    $(".child_div").css("display","none");
+  }
+
 }
 
 
@@ -418,8 +760,29 @@ $(document).on("change",".item_type",function(){
 
 });
 
+
+$(document).on("click",".remove_existing_barcode",function(){
+  var item_barcode_details_id=$(this).closest("tr").find(".item_barcode_details_id").val();
+  var $tr=$(this).closest("tr");
+  $.ajax({
+              type: "post",
+              url: "{{ url('master/item/remove-item-barcode-details')}}",
+              data: {item_barcode_details_id:item_barcode_details_id},
+              success: function (res)
+              {
+               if(res == 1){
+                $tr.remove();
+               }else{
+                 alert("Something Went Wrong!..");
+               }
+                
+              }
+          });
+});
+
 function get_category_based_item(category_one_id,category_two_id,category_three_id,item_id)
 {
+ 
   $.ajax({
               type: "post",
               url: "{{ url('common/get-category-based-bulk-item')}}",
@@ -467,21 +830,18 @@ function get_category_based_item(category_one_id,category_two_id,category_three_
    if($(this).val() != ""){
      get_category_one_based_category_two($(this).val(),category_two_id ="");
    }
-   
  });
  
  $(document).on("change",".category_2",function(){
    if($(this).val() != ""){
      get_category_two_based_category_three($(this).val(),category_three_id ="");
-   }
-   
+   } 
  });
 
  $(document).on("change",".category_3",function(){
   if($(this).val() != ""){
      get_category_based_item($(".category_1").val(),$(".category_2").val(),$(this).val(),item_id="");
   }
-  
 });
 
 $(document).on("click",".refresh_category_id",function(){
@@ -501,6 +861,12 @@ $(document).on("click",".refresh_item_id",function(){
 $(document).on("click",".refresh_brand_id",function(){
    var brand_dets=refresh_brand_master_details();
    $(".brand_id").html(brand_dets);
+});
+
+$(document).on("click",".refresh_child_item_id",function(){
+  var category_id=$(".category_id").val();
+   var child_item_dets=refresh_child_item_master_details(category_id);
+   $(".child_item_id").html(child_item_dets);
 });
 
  
@@ -569,7 +935,28 @@ get_category_based_item(category_1,category_2,category_3,bulk_item_id);
 });
 
 
+function minimum_sales_qty(){
+  var is_minimum_sales_qty_applicable=$(".is_minimum_sales_qty_applicable:checked").val();
+  $(".minimum_sales_qty").removeAttr("required");
+  $(".minimum_sales_price").removeAttr("required");
+  if(is_minimum_sales_qty_applicable == 1){
+    $(".minimum_sales_qty").attr('required', 'required');
+  $(".minimum_sales_price").attr('required', 'required');
+    $(".minimum_sales_div").css("display","block");
+  }else{
+    $(".minimum_sales_qty").val("");
+    $(".minimum_sales_price").val("");
+    $(".minimum_sales_qty").removeAttr("required");
+    $(".minimum_sales_price").removeAttr("required");
+    $(".minimum_sales_div").css("display","none");
+  }
 
+}
+
+$(document).on("click",".is_minimum_sales_qty_applicable",function()
+{
+  minimum_sales_qty();
+});
 
 
 

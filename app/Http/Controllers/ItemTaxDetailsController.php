@@ -38,11 +38,9 @@ class ItemTaxDetailsController extends Controller
      */
     public function index()
     {
-        $category_1 = $this->category_1;
-        $category_2 = $this->category_2;
-        $category_3 = $this->category_3;
-        $item_tax_details = ItemTaxDetails::all();
-        return view('admin.master.item_tax_details.view', compact('item_tax_details', 'category_1', 'category_2', 'category_3'));
+        
+        $item_tax_details = ItemTaxDetails::with('item')->get();
+        return view('admin.master.item_tax_details.view', compact('item_tax_details'));
     }
 
     /**
@@ -72,6 +70,7 @@ class ItemTaxDetailsController extends Controller
      */
     public function store(Request $request)
     {
+
 
         $input = $request->all();
       // echo "<pre>"; print_r($input);exit;

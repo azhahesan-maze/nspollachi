@@ -25,27 +25,61 @@ class ItemRequest extends FormRequest
     public function rules(Request $request)
     {
         $rule = [];
+  
         if ($request->has('add')) {
-            $rule = [
+         $rule = [
                 'name' => 'required|unique:items,name,NULL,id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,NULL,id,deleted_at,NULL',
-                'barcode' => 'required|unique:items,barcode,NULL,id,deleted_at,NULL',
+               // 'barcode' => 'required|unique:items,barcode,NULL,id,deleted_at,NULL',
                 'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
-               // 'print_name_in_language_3' => 'required',
                 'mrp' => 'required',
                 'default_selling_price' => 'required',
                 'item_type' => 'required',
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',
+                'is_minimum_sales_qty_applicable' => 'required',    
             ];
 
             if ($request->is_expiry_date == 1) {
                 $rule['expiry_date'] = 'required';
             }
-        } else if ($request->has('add_uom_factor')) {
 
+            if ($request->item_type == "Parent") {
+                $rule['child_item_id'] = 'required'; 
+                $rule['child_unit'] = 'required';
+            }
+
+            
+
+            /* Minimum Sales Qty Details */
+            if ($request->is_minimum_sales_qty_applicable == 1) {
+                 $rule['minimum_sales_price'] = 'required|numeric';
+                $rule['minimum_sales_qty'] = 'required|numeric';
+            }
+
+            if ($request->has('igst'))
+            {
+                $rule['igst.*'] = 'nullable|required';
+                if($request->igst !=""){
+                    $rule['cgst.*'] = ' required';
+                    $rule['sgst.*'] = 'required';
+                    $rule['valid_from.*'] = 'required|date_format:d-m-Y|distinct|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,NULL';
+                  }
+            }
+
+             /* Item Barcode Details Start Here  */
+             if ($request->has('barcode'))
+             {
+                     foreach ($request->barcode as $barcode_key => $barcode_value) {
+                         $rule['barcode.' . $barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
+                         $rule['barcode_confirmation.' . $barcode_key] = 'required|same:barcode.'.$barcode_key;
+                     }
+            }
+
+          
+            } else if ($request->has('add_uom_factor')) {
             $rule = [
                 'item_id' => 'required',
                 'category_id' => 'required',
@@ -83,7 +117,7 @@ class ItemRequest extends FormRequest
             $rule = [
                 'name' => 'required|unique:items,name,' . $this->id . ',id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,' . $this->id . ',id,deleted_at,NULL',
-                'barcode' => 'required|unique:items,barcode,' . $this->id . ',id,deleted_at,NULL',
+               
                 'ptc' => 'required|unique:items,ptc,' . $this->id . ',id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
@@ -92,10 +126,52 @@ class ItemRequest extends FormRequest
                 'default_selling_price' => 'required',
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',
+                'is_minimum_sales_qty_applicable' => 'required',
             ];
 
             if ($request->is_expiry_date == 1) {
                 $rule['expiry_date'] = 'required';
+            }
+
+            if ($request->item_type == "Parent") {
+                $rule['child_item_id'] = 'required'; 
+                $rule['child_unit'] = 'required';
+            }
+
+           /* Minimum Sales Qty Details */
+           if ($request->is_minimum_sales_qty_applicable == 1) {
+            $rule['minimum_sales_price'] = 'required|numeric';
+           $rule['minimum_sales_qty'] = 'required|numeric';
+       }
+
+            if ($request->has('igst'))
+            {
+                $rule['igst.*'] = 'nullable|required';
+                if($request->igst !=""){
+                    $rule['cgst.*'] = ' required';
+                    $rule['sgst.*'] = 'required';
+                    $rule['valid_from.*'] = 'required|date_format:d-m-Y|distinct|unique:item_tax_details,valid_from,NULL,'.$this->id.',deleted_at,NULL,item_id,NULL';
+                   // $rule['valid_from.*'] = 'required|distinct';
+                }
+               
+            }
+
+              /* Item Barcode Details Start Here  */
+              if ($request->has('barcode'))
+              {
+               // $rule['barcode.*']="distinct";
+                      foreach ($request->barcode as $barcode_key => $barcode_value) {
+                          $rule['barcode.' . $barcode_key] = 'required|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
+                          $rule['barcode_confirmation.' . $barcode_key] = 'required|same:barcode.'.$barcode_key;
+                      }
+             }
+
+             if ($request->has('old_barcode'))
+             {
+                     foreach ($request->old_barcode as $old_barcode_key => $barcode_value) {
+                         $rule['old_barcode.' . $old_barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,'.$request->item_barcode_details_id[$old_barcode_key].',id,deleted_at,NULL';
+                         $rule['old_barcode_confirmation.' . $old_barcode_key] = 'required|same:old_barcode.'.$old_barcode_key;
+                     }
             }
         }
         return $rule;
@@ -112,6 +188,22 @@ class ItemRequest extends FormRequest
             'old_uom_id.*.unique' => ' The Uom Name has already been taken.',
             'old_convertion_factor.*.required' => 'Convertion Factor field is required',
             'old_convertion_factor.*.unique' => 'Convertion Factor field  already exist',
+            'igst.*.required' => 'IGST field is required',
+            'sgst.*.required' => 'SGST field is required',
+            'cgst.*.required' => 'CGST field is required',
+            'valid_from.*.required' => 'Effective From Date  field is required',
+            'valid_from.*.distinct' => 'Please Check Duplication Date',
+            'valid_from.*.unique' => ' The Effective From Date has already been taken.',
+            'barcode.*.required' => 'Barcode field is required',
+            'barcode.*.distinct' => 'Please Check Duplication Barcode',
+            'barcode.*.unique' => ' The Barcode has already been taken.',
+            'barcode_confirmation.*.required' => 'barcode confirmation field is required',
+            'barcode_confirmation.*.same' => ' The Barcode and Barcode Confirmation does not match.',
+            'old_barcode.*.required' => 'Barcode field is required',
+            'old_barcode.*.distinct' => 'Please Check Duplication Barcode',
+            'old_barcode.*.unique' => ' The Barcode has already been taken.',
+            'old_barcode_confirmation.*.required' => 'barcode confirmation field is required',
+            'old_barcode_confirmation.*.same' => ' The Barcode and Barcode Confirmation does not match.',
 
         ];
     }

@@ -39,6 +39,10 @@ class CreateItemsTable extends Migration
             $table->float('default_selling_price')->nullable();
             $table->integer('uom_id')->nullable();
             $table->integer('opening_stock')->nullable();
+            
+            $table->boolean('is_minimum_sales_qty_applicable')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
+            $table->float('minimum_sales_price')->nullable();
+            $table->float('minimum_sales_qty')->nullable();
             $table->boolean('is_expiry_date')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->boolean('is_machine_weight_applicable')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->date('expiry_date')->nullable();

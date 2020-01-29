@@ -134,7 +134,8 @@ class CommonMasterDetailController extends Controller
        }
        
         
-        $child_item_dets = Item::where('item_type', 'Child')->get();
+      // $child_item_dets = Item::where('item_type', 'Child')->get();
+       $child_item_dets = Item::all();
         echo $this->get_json_details($child_item_dets, $place_holder = "Child Item");
     }
 

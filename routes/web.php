@@ -458,6 +458,8 @@ Route::group(['prefix' => 'master/item', 'middleware' => ['auth']], function () 
     Route::any('uom-factor-convertion-for-item/{id}', 'ItemController@uomfactorconvertionforitem')->middleware('permission:uom_factor_convertion_for_item_list');
     Route::any('store-uom-factor-convertion-for-item', 'ItemController@store_uom_factor_convertion_for_item')->middleware('permission:uom_factor_convertion_for_item_list');
     Route::any('delete-uom-factor-convertion-for-item', 'ItemController@delete_uom_factor_convertion_for_item')->middleware('permission:uom_factor_convertion_for_item_delete');
+    Route::any('remove-item-barcode-details', 'ItemController@remove_item_barcode_details');
+    
 });
 /* Item Master End Here  */
 

@@ -6,7 +6,6 @@ use App\Models\AccountType;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
 use Illuminate\Support\Facades\Validator;
 
 class AccountTypeController extends Controller
@@ -63,10 +62,10 @@ class AccountTypeController extends Controller
          ])->validate();
 
          $accounts_type=AccountType::find($id);
-        $accounts_type->name       = $request->name;
-        $accounts_type->remark      =  $request->remark;
-        $accounts_type->created_by = 0;
-        $accounts_type->updated_by = 0;
+         $accounts_type->name       = $request->name;
+         $accounts_type->remark      =  $request->remark;
+         $accounts_type->created_by = 0;
+         $accounts_type->updated_by = 0;
       if ($accounts_type->save()) {
             return Redirect::back()->with('success', 'Updated Successfully');
         } else {

@@ -41,7 +41,7 @@
                 <select class="js-example-basic-multiple col-12 custom-select bank_id" name="bank_id" required>
                   <option value="">Choose Bank</option>
                   @foreach($bank as $value)
-                  <option value="{{ $value->id }}" {{ old('bank_id') == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
+                  <option value="{{ $value->id }}" {{ old('bank_id') == $value->id ? 'selected' : '' }} >{{ $value->name }}</option>
                   @endforeach
                 </select>
                 <span class="mandatory"> {{ $errors->first('bank_id')  }} </span>

@@ -17,7 +17,7 @@
     </div>
     <!-- card header end@ -->
     <div class="card-body">
-      <table id="master" class="table table-striped table-bordered" style="width:100%">
+        <table id="master" class="table table-striped table-bordered" style="width:100%">
         <thead>
           <tr>
             <th>S.No</th>
@@ -64,9 +64,7 @@
               <td>{{ isset($value->bulk_item->name) ? $value->bulk_item->name : ""}}</td>
               <td>{{ $value->weight_in_grams}}</td>
               <td>{{ $value->weight_in_kg}}</td>
-              
               <td>{{ $value->print_name_in_english}}</td>
-              
               <td>{{ $value->print_name_in_language_1}}</td>
               <td>{{ $value->print_name_in_language_2}}</td>
               <td>{{ $value->print_name_in_language_3}}</td>

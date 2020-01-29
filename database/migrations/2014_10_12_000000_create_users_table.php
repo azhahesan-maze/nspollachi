@@ -26,14 +26,11 @@ class CreateUsersTable extends Migration
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+          //  $table->timestamp('deleted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 			$table->softDeletes();
-
-
-
-        });
+ });
     }
 
     /**
