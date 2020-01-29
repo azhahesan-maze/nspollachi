@@ -25,6 +25,7 @@ class ItemRequest extends FormRequest
     public function rules(Request $request)
     {
         $rule = [];
+     
   
         if ($request->has('add')) {
          $rule = [
@@ -65,7 +66,8 @@ class ItemRequest extends FormRequest
                 if($request->igst !=""){
                     $rule['cgst.*'] = ' required';
                     $rule['sgst.*'] = 'required';
-                    $rule['valid_from.*'] = 'required|date_format:Y-m-d|distinct|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,NULL';
+                   $rule['valid_from.*'] = 'required|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,NULL';
+                   // $rule['valid_from.*'] = 'required|date_format:Y-m-d|distinct|unique:item_tax_details,valid_from,NULL,id,deleted_at,NULL,item_id,NULL';
                   }
             }
 
@@ -149,7 +151,8 @@ class ItemRequest extends FormRequest
                 if($request->igst !=""){
                     $rule['cgst.*'] = ' required';
                     $rule['sgst.*'] = 'required';
-                    $rule['valid_from.*'] = 'required|date_format:d-m-Y|distinct|unique:item_tax_details,valid_from,NULL,'.$this->id.',deleted_at,NULL,item_id,NULL';
+                    $rule['valid_from.*'] = 'required|unique:item_tax_details,valid_from,NULL,'.$this->id.',deleted_at,NULL,item_id,NULL';
+                   // $rule['valid_from.*'] = 'required|date_format:d-m-Y|distinct|unique:item_tax_details,valid_from,NULL,'.$this->id.',deleted_at,NULL,item_id,NULL';
                    // $rule['valid_from.*'] = 'required|distinct';
                 }
                
