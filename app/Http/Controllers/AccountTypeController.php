@@ -13,6 +13,7 @@ class AccountTypeController extends Controller
    
     public function index()
     {
+        return view('admin.purchase.add');
         $accounts_type=AccountType::all();
         return view('admin.master.accounts_type.view',compact('accounts_type'));
     }

@@ -225,3 +225,20 @@ function refresh_child_item_master_details(category_id) {
     return result;
 }
 /* Load Child Item Master Data End Here  */
+
+
+
+/* Load Customer Master Data Start Here */
+function refresh_supplier_master_details() {
+    var result = "";
+    $.ajax({
+        type: "post",
+        url: APP_URL + "/common-master-details/get-supplier-master-details",
+        async: false,
+        success: function(res) {
+            result = res;
+        }
+    });
+    return result;
+}
+/* Load Customer Master Data End Here  */

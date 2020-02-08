@@ -447,6 +447,27 @@
                                             </div>
                                           </div>
                                         </div>
+
+                                        <div class="col-md-6">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier <span class="mandatory">*</span></label>
+                     <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" name="supplier_id" required>
+                           <option value="">Choose Supplier</option>
+                           @foreach ($supplier as $value)
+                           <option value="{{ $value->id }}" {{ old('supplier_id',$item->supplier_id) == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                        <span class="mandatory"> {{ $errors->first('supplier_id')}} </span>
+                        <div class="invalid-feedback">
+                           Enter valid Supplier
+                        </div>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
  </div>
 
  <div class="form-row">
@@ -751,6 +772,8 @@ function item_type()
   {
     $(".child_div").css("display","none");
   }
+  
+  $("select").select2();
 
 }
 
@@ -950,6 +973,7 @@ function minimum_sales_qty(){
     $(".minimum_sales_price").removeAttr("required");
     $(".minimum_sales_div").css("display","none");
   }
+  $("select").select2();
 
 }
 

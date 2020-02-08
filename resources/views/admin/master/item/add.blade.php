@@ -137,6 +137,26 @@
                      </div>
                   </div>
                </div>
+               <div class="col-md-6 child_div" style="display:none">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">UOM For Parent Item <span class="mandatory">*</span></label>
+                     <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select  uom_for_repack_item" name="uom_for_repack_item" required>
+                           <option value="">Choose UOM</option>
+                           @foreach ($uom as $value)
+                           <option value="{{ $value->id }}" {{ old('uom_for_repack_item') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                        <span class="mandatory"> {{ $errors->first('uom_for_repack_item')}} </span>
+                        <div class="invalid-feedback">
+                           Enter valid UOM for Repack Item
+                        </div>
+                     </div>
+                     <a href="{{ url('master/uom/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2 " title="Add UOM"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_uom_for_repack_item_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
                <div class="col-md-6 bulk_item_div" style="display:none">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
@@ -295,12 +315,12 @@
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">Is Machine Weight Applicable <span class="mandatory">*</span></label>
                      <div class="col-sm-8">
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_machine_weight_applicable" value ="1" {{ old('is_machine_weight_applicable') == 1 ? 'checked' : '' }} name="is_machine_weight_applicable">Yes
                            </label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_machine_weight_applicable" value ="0" {{ old('is_machine_weight_applicable') == 0 ? 'checked' : '' }} name="is_machine_weight_applicable">No
                            </label>
@@ -316,12 +336,12 @@
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">Is Expiry Date Applicable <span class="mandatory">*</span></label>
                      <div class="col-sm-8">
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_expiry_date" value ="1" {{ old('is_expiry_date') == 1 ? 'checked' : '' }} name="is_expiry_date">Yes
                            </label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_expiry_date" value ="0" {{ old('is_expiry_date') == 0 ? 'checked' : '' }} name="is_expiry_date">No
                            </label>
@@ -349,12 +369,12 @@
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">Is Miminum Sales Qty Applicable <span class="mandatory">*</span></label>
                      <div class="col-sm-8">
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_minimum_sales_qty_applicable" value ="1" {{ old('is_minimum_sales_qty_applicable') == 1 ? 'checked' : '' }} name="is_minimum_sales_qty_applicable">Yes
                            </label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check d-inline">
                            <label class="form-check-label">
                            <input type="radio" class="form-check-input is_minimum_sales_qty_applicable" value ="0" {{ old('is_minimum_sales_qty_applicable') == 0 ? 'checked' : '' }} name="is_minimum_sales_qty_applicable">No
                            </label>
@@ -376,6 +396,26 @@
                            Enter valid Minimum Sales Qty
                         </div>
                      </div>
+                  </div>
+               </div>
+               <div class="col-md-6 minimum_sales_div" style="display:none">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">UOM  <span class="mandatory">*</span></label>
+                     <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select  uom_for_minimum_sales_item" name="uom_for_minimum_sales_item" required>
+                           <option value="">Choose UOM</option>
+                           @foreach ($uom as $value)
+                           <option value="{{ $value->id }}" {{ old('uom_for_minimum_sales_item') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                        <span class="mandatory"> {{ $errors->first('uom_for_minimum_sales_item')}} </span>
+                        <div class="invalid-feedback">
+                           Enter valid UOM 
+                        </div>
+                     </div>
+                     <a href="{{ url('master/uom/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2 " title="Add UOM"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_uom_for_minimum_sales_item_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
                <div class="col-md-6 minimum_sales_div" style="display: none">
@@ -402,6 +442,30 @@
                      </div>
                   </div>
                </div>
+               
+               <div class="col-md-6">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier <span class="mandatory">*</span></label>
+                     <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" name="supplier_id" required>
+                           <option value="">Choose Supplier</option>
+                           @foreach ($supplier as $value)
+                           <option value="{{ $value->id }}" {{ old('supplier_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                        <span class="mandatory"> {{ $errors->first('supplier_id')}} </span>
+                        <div class="invalid-feedback">
+                           Enter valid Supplier
+                        </div>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2 " title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+               
+
+
             </div>
             <div class="form-row">
                <table class="table">
@@ -620,7 +684,7 @@
 $(document).on("submit",".submit_form2",function(){
   var error_count=barcode_validation();
   if(error_count == 0){
-return true;
+   return true;
   }else{
     return false;
   }
@@ -693,6 +757,7 @@ return true;
      {
        $(".child_div").css("display","none");
      }
+	 $("select").select2();
    
    }
    
@@ -781,6 +846,7 @@ return true;
        $(".minimum_sales_price").removeAttr("required");
        $(".minimum_sales_div").css("display","none");
      }
+	 $("select").select2();
    });
    
    
@@ -793,6 +859,21 @@ return true;
       var uom_dets=refresh_uom_master_details();
       $(".uom_id").html(uom_dets);
    });
+
+   $(document).on("click",".refresh_uom_for_repack_item_id",function(){
+      var uom_dets=refresh_uom_master_details();
+      $(".uom_for_repack_item").html(uom_dets);
+   });
+
+   $(document).on("click",".refresh_uom_for_minimum_sales_item_id",function(){
+      var uom_dets=refresh_uom_master_details();
+      $(".uom_for_minimum_sales_item").html(uom_dets);
+   });
+
+
+   
+
+   
    
    $(document).on("click",".refresh_item_id",function(){
       var item_dets=refresh_item_master_details();
@@ -809,6 +890,13 @@ return true;
       var child_item_dets=refresh_child_item_master_details(category_id);
       $(".child_item_id").html(child_item_dets);
    });
+
+   $(document).on("click",".refresh_supplier_id",function(){
+      var supplier_dets=refresh_supplier_master_details();
+      $(".supplier_id").html(supplier_dets);
+   });
+
+   
    
    
    

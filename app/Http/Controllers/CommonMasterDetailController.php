@@ -16,6 +16,10 @@ use App\Models\Item;
 use App\Models\LocationType;
 use App\Models\State;
 use App\Models\Uom;
+use App\Models\Supplier;
+
+
+
 use Illuminate\Http\Request;
 
 class CommonMasterDetailController extends Controller
@@ -149,6 +153,12 @@ class CommonMasterDetailController extends Controller
     {
         $brand_dets = Brand::orderBy('name', 'asc')->get();
         echo $this->get_json_details($brand_dets, $place_holder = "Brand");
+    }
+
+    public function get_supplier_master_details()
+    {
+        $supplier_dets = Supplier::orderBy('name', 'asc')->get();
+        echo $this->get_json_details($supplier_dets, $place_holder = "Supplier");
     }
 
 

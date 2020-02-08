@@ -23,6 +23,7 @@ class CreateItemsTable extends Migration
             $table->integer('bulk_item_id')->nullable();
             $table->integer('child_unit')->nullable();
             $table->integer('child_item_id')->nullable();
+            $table->integer('uom_for_repack_item')->nullable();
             $table->integer('category_id')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->integer('category_1')->nullable();
@@ -39,10 +40,10 @@ class CreateItemsTable extends Migration
             $table->float('default_selling_price')->nullable();
             $table->integer('uom_id')->nullable();
             $table->integer('opening_stock')->nullable();
-            
             $table->boolean('is_minimum_sales_qty_applicable')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->float('minimum_sales_price')->nullable();
             $table->float('minimum_sales_qty')->nullable();
+            $table->integer('uom_for_minimum_sales_item')->nullable();
             $table->boolean('is_expiry_date')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->boolean('is_machine_weight_applicable')->default(false)->comment = '0=>Not Applicable,1=>Applicable';
             $table->date('expiry_date')->nullable();
@@ -55,12 +56,12 @@ class CreateItemsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            
-          /*  $table->foreign('brand_id')
+
+            /*  $table->foreign('brand_id')
             ->references('id')
             ->on('brands')
             ->onDelete('cascade'); */
-        }); 
+        });
     }
 
     /**

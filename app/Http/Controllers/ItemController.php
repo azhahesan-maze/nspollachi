@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CategoryName;
 use App\Http\Requests\ItemRequest;
 use App\Model\Category;
+use App\Models\Supplier;
 use App\Models\Brand;
 use App\Models\Category_one;
 use App\Models\Category_three;
@@ -55,8 +56,8 @@ class ItemController extends Controller
         $language_1 = $this->language_1;
         $language_2 = $this->language_2;
         $language_3 = $this->language_3;
-        $item = Item::with('category','uom','bulk_item')->get();
-		//$item=Item::all();
+        $item = Item::with('category', 'uom', 'bulk_item')->get();
+        //$item=Item::all();
         return view('admin.master.item.view', compact('item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
     }
 
@@ -75,10 +76,11 @@ class ItemController extends Controller
         $language_3 = $this->language_3;
         $category = Category::orderBy('name', 'asc')->get();
         $brand = Brand::orderBy('name', 'asc')->get();
+        $supplier = Supplier::orderBy('name', 'asc')->get();
         $uom = Uom::all();
         $language = Language::all();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
-        return view('admin.master.item.add', compact('brand','category', 'bulk_item','uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
+        return view('admin.master.item.add', compact('supplier', 'brand', 'category', 'bulk_item', 'uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
     }
 
     /**
@@ -99,6 +101,7 @@ class ItemController extends Controller
         if ($request->item_type == "Parent") {
             $item->child_item_id = $request->child_item_id;
             $item->child_unit = $request->child_unit;
+            $item->uom_for_repack_item = $request->uom_for_repack_item;
         }
 
         if ($request->weight_in_grams != "" && $request->weight_in_grams > 0) {
@@ -111,6 +114,7 @@ class ItemController extends Controller
 
 
         $item->code = $request->code;
+        $item->supplier_id = $request->supplier_id;
         $item->category_id = $request->category_id;
         $item->brand_id = $request->brand_id;
         $item->print_name_in_english = $request->print_name_in_english;
@@ -118,7 +122,7 @@ class ItemController extends Controller
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
         $item->ptc = $request->ptc;
-       // $item->barcode = $request->barcode;
+        // $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
         $item->hsn = $request->hsn;
         $item->default_selling_price = $request->default_selling_price;
@@ -126,13 +130,15 @@ class ItemController extends Controller
         $item->is_expiry_date = $request->is_expiry_date;
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
+
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));
         }
 
-        if($request->is_minimum_sales_qty_applicable == 1){
+        if ($request->is_minimum_sales_qty_applicable == 1) {
             $item->minimum_sales_price = $request->minimum_sales_price;
             $item->minimum_sales_qty = $request->minimum_sales_qty;
+            $item->uom_for_minimum_sales_item = $request->uom_for_minimum_sales_item;
         }
 
         $item->created_by = 0;
@@ -140,17 +146,16 @@ class ItemController extends Controller
         if ($item->save()) {
             /* Store Barcode Details Start Here  */
             $batch_barcode_insert = [];
-            if($request->has('barcode')){
-                foreach($request->barcode as $barcode_key=>$barcode_value)
-                {
-                    if($barcode_value !=""){
+            if ($request->has('barcode')) {
+                foreach ($request->barcode as $barcode_key => $barcode_value) {
+                    if ($barcode_value != "") {
                         $data = [
                             'item_id' => $item->id,
                             'barcode' => $barcode_value,
                             'created_by' => 0,
                             'created_at' => $now,
                             'updated_at' => $now,
-                        ];       
+                        ];
                         $batch_barcode_insert[] = $data;
                     }
                 }
@@ -159,35 +164,31 @@ class ItemController extends Controller
 
 
             /* Store Barcode Details End Here  */
-            if($request->has('igst')){
-               
-                $batch_insert = [];
-                foreach($request->igst as $tax_key=>$tax_value)
-                {
-                    if($tax_value !=""){
-                            $data = [
-                                'item_id' => $item->id,
-                                'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
-                                'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
-                                'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
-                                'valid_from' => isset($request->valid_from[$tax_key]) && !empty($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
-                                'created_by' => 0,
-                                'created_at' => $now,
-                                'updated_at' => $now,
-                            ];
-            
-                            $batch_insert[] = $data;
-                }
-                }
+            if ($request->has('igst')) {
 
+                $batch_insert = [];
+                foreach ($request->igst as $tax_key => $tax_value) {
+                    if ($tax_value != "") {
+                        $data = [
+                            'item_id' => $item->id,
+                            'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+                            'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
+                            'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+                            'valid_from' => isset($request->valid_from[$tax_key]) && !empty($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
+                            'created_by' => 0,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
+
+                        $batch_insert[] = $data;
+                    }
+                }
             }
-            if(count($batch_insert)>0)
-            {
+            if (count($batch_insert) > 0) {
                 ItemTaxDetails::insert($batch_insert);
             }
 
-            if(count($batch_barcode_insert)>0)
-            {
+            if (count($batch_barcode_insert) > 0) {
                 ItemBracodeDetails::insert($batch_barcode_insert);
             }
             return Redirect::back()->with('success', 'Successfully created');
@@ -236,8 +237,9 @@ class ItemController extends Controller
         $brand = Brand::orderBy('name', 'asc')->get();
         $category = Category::orderBy('name', 'asc')->get();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
-        $child_item=Item::all();
-        return view('admin.master.item.edit', compact('brand','bulk_item', 'category', 'item', 'child_item','language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three', 'uom'));
+        $child_item = Item::all();
+        $supplier = Supplier::orderBy('name', 'asc')->get();
+        return view('admin.master.item.edit', compact('supplier', 'brand', 'bulk_item', 'category', 'item', 'child_item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three', 'uom'));
     }
 
     /**
@@ -269,6 +271,7 @@ class ItemController extends Controller
             $item->weight_in_kg = 0;
         }
         $item->code = $request->code;
+        $item->supplier_id = $request->supplier_id;
         $item->category_id = $request->category_id;
         $item->brand_id = $request->brand_id;
         $item->print_name_in_english = $request->print_name_in_english;
@@ -276,7 +279,7 @@ class ItemController extends Controller
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
         $item->ptc = $request->ptc;
-       // $item->barcode = $request->barcode;
+        // $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
         $item->hsn = $request->hsn;
         $item->default_selling_price = $request->default_selling_price;
@@ -284,15 +287,15 @@ class ItemController extends Controller
         $item->is_expiry_date = $request->is_expiry_date;
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
-       
+
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));
         }
 
-        if($request->is_minimum_sales_qty_applicable == 1){
+        if ($request->is_minimum_sales_qty_applicable == 1) {
             $item->minimum_sales_price = $request->minimum_sales_price;
             $item->minimum_sales_qty = $request->minimum_sales_qty;
-        }else{
+        } else {
             $item->minimum_sales_price = $request->minimum_sales_price;
             $item->minimum_sales_qty = $request->minimum_sales_qty;
         }
@@ -305,86 +308,80 @@ class ItemController extends Controller
 
             /* Store Barcode Details Start Here  */
             $batch_barcode_insert = [];
-            if($request->has('barcode')){
-                foreach($request->barcode as $barcode_key=>$barcode_value)
-                {
-                    $exist_barcode_count=ItemBracodeDetails::where('barcode',$barcode_value)->get();
-                    if($barcode_value !="" && count($exist_barcode_count) == 0){
+            if ($request->has('barcode')) {
+                foreach ($request->barcode as $barcode_key => $barcode_value) {
+                    $exist_barcode_count = ItemBracodeDetails::where('barcode', $barcode_value)->get();
+                    if ($barcode_value != "" && count($exist_barcode_count) == 0) {
                         $data = [
                             'item_id' => $item->id,
                             'barcode' => $barcode_value,
                             'created_by' => 0,
                             'created_at' => $now,
                             'updated_at' => $now,
-                        ];       
+                        ];
                         $batch_barcode_insert[] = $data;
                     }
                 }
             }
-              /* Update Existing Barcode Details Start Here  */
+            /* Update Existing Barcode Details Start Here  */
             $batch_barcode_update = [];
-            if($request->has('old_barcode')){
-                foreach($request->old_barcode as $exist_barcode_key=>$exist_barcode_value)
-                {
-                    if($exist_barcode_value !=""){
-                        $exist_item_barcode_details=ItemBracodeDetails::find($request->item_barcode_details_id[$exist_barcode_key]);
-                        $exist_item_barcode_details->item_id=$item->id;
-                        $exist_item_barcode_details->barcode=$exist_barcode_value;
-                        $exist_item_barcode_details->updated_by=0;
-                         $exist_item_barcode_details->save();      
+            if ($request->has('old_barcode')) {
+                foreach ($request->old_barcode as $exist_barcode_key => $exist_barcode_value) {
+                    if ($exist_barcode_value != "") {
+                        $exist_item_barcode_details = ItemBracodeDetails::find($request->item_barcode_details_id[$exist_barcode_key]);
+                        $exist_item_barcode_details->item_id = $item->id;
+                        $exist_item_barcode_details->barcode = $exist_barcode_value;
+                        $exist_item_barcode_details->updated_by = 0;
+                        $exist_item_barcode_details->save();
                     }
                 }
             }
 
-            if($request->has('igst')){
-                foreach($request->igst as $tax_key=>$tax_value)
-                {
-                    if($tax_value !=""){
-                            $data = [
-                                'item_id' => $item->id,
-                                'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
-                                'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
-                                'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key]/2 : "",
-                                'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
-                                'created_by' => 0,
-                                'created_at' => $now,
-                                'updated_at' => $now,
-                            ];
-                            $batch_insert[] = $data;
-                }
+            if ($request->has('igst')) {
+                foreach ($request->igst as $tax_key => $tax_value) {
+                    if ($tax_value != "") {
+                        $data = [
+                            'item_id' => $item->id,
+                            'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+                            'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
+                            'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+                            'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
+                            'created_by' => 0,
+                            'created_at' => $now,
+                            'updated_at' => $now,
+                        ];
+                        $batch_insert[] = $data;
+                    }
                 }
             }
 
             /* Update Exsiting Item Tax Details Start Here */
-            if($request->has('old_igst')){
+            if ($request->has('old_igst')) {
                 $now = Carbon::now()->toDateTimeString();
-                foreach($request->old_igst as $tax_key=>$tax_value)
-                {
-                    $old_item_tax_details=ItemTaxDetails::find($request->item_tax_details_id);
-                    $old_item_tax_details->item_id=$item->id;
-                    $old_item_tax_details->cgst=isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key]/2 : "";
-                    $old_item_tax_details->igst=isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] : "";
-                    $old_item_tax_details->sgst=isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key]/2 : "";
-                    $old_item_tax_details->valid_from=isset($request->old_valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->old_valid_from[$tax_key])) : "";
-                    $old_item_tax_details->updated_by=0;
-                   $old_item_tax_details->save();
+                foreach ($request->old_igst as $tax_key => $tax_value) {
+                    $old_item_tax_details = ItemTaxDetails::find($request->item_tax_details_id);
+                    $old_item_tax_details->item_id = $item->id;
+                    $old_item_tax_details->cgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
+                    $old_item_tax_details->igst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] : "";
+                    $old_item_tax_details->sgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
+                    $old_item_tax_details->valid_from = isset($request->old_valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->old_valid_from[$tax_key])) : "";
+                    $old_item_tax_details->updated_by = 0;
+                    $old_item_tax_details->save();
                 }
             }
             /* Update Exsiting Item Tax Details End Here */
 
 
-            if(count($batch_insert)>0)
-            {
+            if (count($batch_insert) > 0) {
                 ItemTaxDetails::insert($batch_insert);
             }
 
-            if(count($batch_barcode_insert)>0)
-            {
-                $batch_barcode_insert= array_unique($batch_barcode_insert, SORT_REGULAR);
+            if (count($batch_barcode_insert) > 0) {
+                $batch_barcode_insert = array_unique($batch_barcode_insert, SORT_REGULAR);
 
                 ItemBracodeDetails::insert($batch_barcode_insert);
             }
-            
+
 
 
             return Redirect::back()->with('success', 'Updated Successfully');
@@ -486,15 +483,14 @@ class ItemController extends Controller
 
     public function remove_item_barcode_details(Request $request)
     {
-        $item_barcode_details_id=$request->has('item_barcode_details_id') ? $request->item_barcode_details_id : "";
-        if($item_barcode_details_id !=""){
-            $item_barcode_details=ItemBracodeDetails::find($item_barcode_details_id);
-            if($item_barcode_details->delete()){
+        $item_barcode_details_id = $request->has('item_barcode_details_id') ? $request->item_barcode_details_id : "";
+        if ($item_barcode_details_id != "") {
+            $item_barcode_details = ItemBracodeDetails::find($item_barcode_details_id);
+            if ($item_barcode_details->delete()) {
                 echo 1;
-            }else{
+            } else {
                 echo 0;
             }
-
         }
     }
 }
