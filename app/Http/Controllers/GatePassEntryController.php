@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GatePassEntry;
 use App\Cart;
+use App\Models\Supplier;
 
 class GatePassEntryController extends Controller
 {
@@ -15,7 +16,12 @@ class GatePassEntryController extends Controller
      */
     public function index()
     {
-        $gatepassentry=GatePassEntry::all();
+        $gatepassentry=GatePassEntry::
+                        join('suppliers','suppliers.id','=','gate_pass_entries.supplier_name')
+                        ->select('*')
+                        ->get();
+
+                                    
         return view('admin.master.gate_pass_entry.view',compact('gatepassentry'));
     }
 
@@ -28,6 +34,8 @@ class GatePassEntryController extends Controller
     {
         $date=date('Y-m-d');
 
+        $supplier=Supplier::all();
+
         $gatepassentry=GatePassEntry::all();
 
         $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
@@ -39,14 +47,14 @@ class GatePassEntryController extends Controller
         {
             $gatepass=1;
 
-            return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date'));                 
+            return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));                 
         }                  
         else
         {
             $current_gate_pass_no=$gate_pass_no->gate_pass_no;
             $gatepass=$current_gate_pass_no+1;
         
-        return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date'));
+        return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));
         }
           
         

@@ -47,7 +47,7 @@
               <td>{{ $count }}</td>
               <td>{{ $gate_pass_entry->gate_pass_no }}</td>
               <td>{{ $gate_pass_entry->date }}</td>
-              <td>{{ $gate_pass_entry->supplier_name }}</td>
+              <td>{{ $gate_pass_entry->name }}</td>
               @if($gate_pass_entry->type == 1)
               <td> Invoice </td>
               @else

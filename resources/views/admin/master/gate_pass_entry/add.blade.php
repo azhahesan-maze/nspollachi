@@ -72,8 +72,15 @@
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
               <div class="col-sm-8">
             <div class="input-group">
+
+              <select class="form-control" name="supplier_name" required="">
+                <option></option>
+                @foreach($supplier as $value)
+                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                @endforeach
+              </select>
             
-                     <input type="text" class="form-control"   placeholder="Supplier Name" name="supplier_name" pattern="[a-zA-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters">
+                     <!-- <input type="text" class="form-control"   placeholder="Supplier Name" name="supplier_name" pattern="[a-zA-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters"> -->
                 
                  
             
