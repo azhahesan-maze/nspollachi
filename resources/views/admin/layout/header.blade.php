@@ -83,7 +83,7 @@
                         <ul>
                             <li class="dropdown-header">Location</li>
                             @can('state_list')
-                            <li><a href="{{url('master/state')}}">State</a></li>
+                            <li><a href="{{url('master/state')}}">Statessssss</a></li>
                             @endcan
                             @can('district_list')
                             <li><a href="{{url('master/district')}}">District</a></li>
