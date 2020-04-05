@@ -260,11 +260,25 @@
                            </ul>
                   </li>
                   @endif
+
+                  <li class="col-md-3 dropdown-item">
+                        <ul>
+                           
+                            <li class="dropdown-header">Gate Pass Entry</li>
+                            
+                            <li><a href="{{ route('gate_pass_entry.index') }}">Gate Pass Entry</a></li>
+
+                            <li><a href="{{ route('cart.index') }}">Cart</a></li>
+                           
+                        </ul>
+                    </li>
                     
             </ul>        
             
             
           </li>
+
+          
           <!--<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Reports
