@@ -41,7 +41,7 @@
             <tr>
               <td>{{ $count }}</td>
               <td>{{ $carts->date }}</td>
-              <td>{{ $carts->supplier_name }}</td>
+              <td>{{ $carts->name }}</td>
               @if($carts->type == 1)
               <td> Invoice </td>
               @else

@@ -73,9 +73,9 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"   placeholder="Supplier Name" name="supplier_name" pattern="[a-z A-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters" value="{{ $cart->supplier_name }}">
+                     <input type="text" class="form-control"   placeholder="Supplier Name" name="name" pattern="[a-z A-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters" value="{{ $cart->name }}">
                 
-                 
+                 <input type="hidden" name="supplier_name" value="{{ $cart->suppliers_id }}">
             
           </div>
           

@@ -18,7 +18,7 @@ class GatePassEntryController extends Controller
     {
         $gatepassentry=GatePassEntry::
                         join('suppliers','suppliers.id','=','gate_pass_entries.supplier_name')
-                        ->select('*')
+                        ->select('*','gate_pass_entries.id as gatepass_id')
                         ->get();
 
                                     

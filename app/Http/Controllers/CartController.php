@@ -15,8 +15,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart=Cart::where('status','=','0')
+        $cart=Cart::join('suppliers','suppliers.id','=','carts.supplier_name')
+                    ->where('carts.status','=','0')
+                    ->select('*')
                     ->get();
+
+                
 
         return view('admin.master.cart.view',compact('cart'));
     }
@@ -69,7 +73,12 @@ class CartController extends Controller
 
         $gatepss_no   =  $gate_pass_no->gate_pass_no+1; 
 
-        $cart=Cart::find($id);
+        $cart=Cart::join('suppliers','suppliers.id','=','carts.supplier_name')
+                    ->where('carts.id','=',$id)
+                    ->select('*','suppliers.id as suppliers_id')
+                    ->first();
+//return $cart;
+
 
         return view('admin.master.cart.add',compact('cart','gatepss_no'));
     }
@@ -105,6 +114,8 @@ class CartController extends Controller
 
         $cart->status=1;
         $cart->save();
+
+        return redirect('/cart')->with('Success','Suuccessfully added');
     }
 
     /**
