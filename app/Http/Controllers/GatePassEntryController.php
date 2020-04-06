@@ -137,9 +137,20 @@ class GatePassEntryController extends Controller
      */
     public function edit($id)
     {
-        $gatepass=GatePassEntry::find($id);
+        //$gatepass=GatePassEntry::find($id);
 
-        return view('admin.master.gate_pass_entry.show',compact('gatepass'));
+        $suppliers = Supplier::all();
+
+        $gatepass= GatePassEntry::
+                        join('suppliers','suppliers.id','=','gate_pass_entries.supplier_name')
+                        ->where('gate_pass_entries.id','=',$id)
+                        ->select('*','gate_pass_entries.id as pass_id','suppliers.id as suppliers_id')
+                        ->first();
+
+                        
+
+
+        return view('admin.master.gate_pass_entry.show',compact('gatepass','suppliers'));
     }
 
     /**

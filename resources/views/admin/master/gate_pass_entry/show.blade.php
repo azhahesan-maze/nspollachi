@@ -18,7 +18,7 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" action="{{ route('gate_pass_entry.update',$gatepass->id) }}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" action="{{ route('gate_pass_entry.update',$gatepass->pass_id) }}" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
 
@@ -72,10 +72,15 @@
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
               <div class="col-sm-8">
             <div class="input-group">
+
+              <select class="form-control" name="supplier_name" required="">
+                <option value="{{ $gatepass->suppliers_id }}">{{ $gatepass->name }}</option>
+                @foreach($suppliers as $value)
+                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                @endforeach
+              </select>
             
-                     <input type="text" class="form-control"   placeholder="Supplier Name" name="supplier_name" pattern="[a-zA-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters" value="{{ $gatepass->supplier_name }}">
-                
-                 
+                     
             
           </div>
           
