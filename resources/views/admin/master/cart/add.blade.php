@@ -118,7 +118,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number"  pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $cart->supplier_invoice_number }}">
+                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number"  value="{{ $cart->supplier_invoice_number }}">
                 
           </div>
           
