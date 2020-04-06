@@ -17,7 +17,7 @@ class CartController extends Controller
     {
         $cart=Cart::join('suppliers','suppliers.id','=','carts.supplier_name')
                     ->where('carts.status','=','0')
-                    ->select('*')
+                    ->select('*','suppliers.id as suppliers_id','carts.id as cart_id')
                     ->get();
 
                 
@@ -75,7 +75,7 @@ class CartController extends Controller
 
         $cart=Cart::join('suppliers','suppliers.id','=','carts.supplier_name')
                     ->where('carts.id','=',$id)
-                    ->select('*','suppliers.id as suppliers_id')
+                    ->select('*','suppliers.id as suppliers_id','carts.id as cart_id')
                     ->first();
 //return $cart;
 
@@ -94,6 +94,7 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
+       
         $gate_pass=new GatePassEntry;
 
         $gate_pass->gate_pass_no=$request->num;
@@ -115,7 +116,7 @@ class CartController extends Controller
         $cart->status=1;
         $cart->save();
 
-        return redirect('/cart')->with('Success','Suuccessfully added');
+        return redirect('/cart');
     }
 
     /**

@@ -18,7 +18,7 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" action="{{ route('cart.update',$cart->id) }}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" action="{{ route('cart.update',$cart->cart_id) }}" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
 

@@ -56,7 +56,7 @@
               <td>{{ $carts->unload_live }}</td>
               
               <td> 
-                <a href="{{ route('cart.edit',$carts->id) }}" class="px-3 py-0 btn btn-success text-white rounded"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                <a href="{{ route('cart.edit',$carts->cart_id) }}" class="px-3 py-0 btn btn-success text-white rounded"><i class="fa fa-plus" aria-hidden="true"></i></a>
               </td>
               <!-- <td> 
                 <a href="{{ url('to_gatepass/cart',$carts->id) }}" class="px-3 py-0 bg-info text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
