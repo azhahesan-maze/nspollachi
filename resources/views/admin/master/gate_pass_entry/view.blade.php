@@ -26,6 +26,7 @@
             <th>Supplier Name </th>
             <th>Type</th>
             <th> Supplier Invoice No</th>
+            <th> Supplier Delivery No</th>
             <th> Taxable Value</th>
             <th> Tax Value </th>
             <th> Load Bill</th>
@@ -54,6 +55,7 @@
               <td> Delivery Note </td>
               @endif
               <td>{{ $gate_pass_entry->supplier_invoice_number }}</td>
+              <td>{{ $gate_pass_entry->supplier_delivery_number }}</td>
               <td>{{ $gate_pass_entry->taxable_value }}</td>
               <td>{{ $gate_pass_entry->tax_value }}</td>
               <td>{{ $gate_pass_entry->load_bill }}</td>

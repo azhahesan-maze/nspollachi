@@ -19,6 +19,7 @@ class CreateCartsTable extends Migration
             $table->string('supplier_name')->nullable();
             $table->integer('type')->comment = '1=>Invoice,0=>Delivary Note ';
             $table->string('supplier_invoice_number')->nullable();
+            $table->string('supplier_delivery_number')->nullable();
             $table->string('taxable_value')->nullable();
             $table->string('tax_value')->nullable();
             $table->string('total_invoice_value')->nullable();

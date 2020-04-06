@@ -102,6 +102,7 @@ class CartController extends Controller
         $gate_pass->supplier_name=$request->supplier_name;
         $gate_pass->type=$request->type;
         $gate_pass->supplier_invoice_number=$request->supplier_invoice_number;
+        $gate_pass->supplier_delivery_number=$request->supplier_delivery_number;
         $gate_pass->taxable_value=$request->taxable_value;
         $gate_pass->tax_value=$request->tax_value;
         $gate_pass->total_invoice_value=$request->total_invoice_value;

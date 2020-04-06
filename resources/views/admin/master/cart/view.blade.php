@@ -21,6 +21,7 @@
             <th>Supplier Name</th>
             <th>Type</th>
             <th> Supplier Invoice No</th>
+            <th> Supplier Delivery No</th>
             <th> Taxable Value</th>
             <th> Tax Value </th>
             <th> Load Bill</th>
@@ -48,6 +49,7 @@
               <td> Delivery Note </td>
               @endif
               <td>{{ $carts->supplier_invoice_number }}</td>
+              <td>{{ $carts->supplier_delivery_number }}</td>
               <td>{{ $carts->taxable_value }}</td>
               <td>{{ $carts->tax_value }}</td>
               <td>{{ $carts->load_bill }}</td>
