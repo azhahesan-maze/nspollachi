@@ -149,10 +149,11 @@ class GatePassEntryController extends Controller
                         ->select('*','gate_pass_entries.id as pass_id','suppliers.id as suppliers_id')
                         ->first();
 
+          $type_value= $gatepass->type;             
                         
 
 
-        return view('admin.master.gate_pass_entry.show',compact('gatepass','suppliers'));
+        return view('admin.master.gate_pass_entry.show',compact('gatepass','suppliers','type_value'));
     }
 
     /**
@@ -164,9 +165,37 @@ class GatePassEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $update_gatepass=GatePassEntry::find($id);
+        
 
-       $update_gatepass->gate_pass_no=$request->num;
+        if($request->value == 1 && $request->type==0)
+        {
+          
+             $update_gatepass=GatePassEntry::find($id);
+
+
+        $update_gatepass->supplier_invoice_number=null;
+        $update_gatepass->gate_pass_no=$request->num;
+        $update_gatepass->date=$request->date;
+        $update_gatepass->supplier_name=$request->supplier_name;
+        $update_gatepass->type=$request->type;
+        $update_gatepass->supplier_delivery_number=$request->supplier_delivery_number;
+        $update_gatepass->taxable_value=$request->taxable_value;
+        $update_gatepass->tax_value=$request->tax_value;
+        $update_gatepass->total_invoice_value=$request->total_invoice_value;
+        $update_gatepass->load_bill=$request->load_bill;
+        $update_gatepass->load_live=$request->load_live;
+        $update_gatepass->unload_bill=$request->unload_bill;
+        $update_gatepass->unload_live=$request->unload_live;
+
+        $update_gatepass->save();                              
+        }
+        else if($request->value == 0 && $request->type==1)
+        {
+
+             $update_gatepass=GatePassEntry::find($id);
+
+        $update_gatepass->supplier_delivery_number=null;     
+        $update_gatepass->gate_pass_no=$request->num;
         $update_gatepass->date=$request->date;
         $update_gatepass->supplier_name=$request->supplier_name;
         $update_gatepass->type=$request->type;
@@ -179,7 +208,30 @@ class GatePassEntryController extends Controller
         $update_gatepass->unload_bill=$request->unload_bill;
         $update_gatepass->unload_live=$request->unload_live;
 
+        $update_gatepass->save();                              
+        }
+        else
+        {
+            $update_gatepass=GatePassEntry::find($id);
+
+       $update_gatepass->gate_pass_no=$request->num;
+        $update_gatepass->date=$request->date;
+        $update_gatepass->supplier_name=$request->supplier_name;
+        $update_gatepass->type=$request->type;
+        $update_gatepass->supplier_invoice_number=$request->supplier_invoice_number;
+        $update_gatepass->supplier_delivery_number=$request->supplier_delivery_number;
+        $update_gatepass->taxable_value=$request->taxable_value;
+        $update_gatepass->tax_value=$request->tax_value;
+        $update_gatepass->total_invoice_value=$request->total_invoice_value;
+        $update_gatepass->load_bill=$request->load_bill;
+        $update_gatepass->load_live=$request->load_live;
+        $update_gatepass->unload_bill=$request->unload_bill;
+        $update_gatepass->unload_live=$request->unload_live;
+
         $update_gatepass->save();
+        }
+
+       
 
         return redirect('/gate_pass_entry');
     }

@@ -93,15 +93,16 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Type</label>
               <div class="col-sm-8">
+                <input type="hidden" name="value" value="{{ $type_value }}">
                 @if($gatepass->type == 1)
-               <input type="radio" name="type" checked="" value="1">
+               <input type="radio" name="type" checked="" value="1" onchange="invoice()">
                <label for="validationCustom01" class="col-sm-4 col-form-label">Invoice</label>
-               <input type="radio" name="type"  value="0">
+               <input type="radio" name="type"  value="0" onchange="delivery()">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Delivery note</label>
                @else
-               <input type="radio" name="type" value="1">
+               <input type="radio" name="type" value="1" onchange="invoice()">
                <label for="validationCustom01" class="col-sm-4 col-form-label">Invoice</label>
-                <input type="radio" name="type"  value="0" checked="">
+                <input type="radio" name="type"  value="0" checked="" onchange="delivery()">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Delivery note</label>
                 @endif
               </div>
@@ -117,18 +118,57 @@
           <h4>Professional details:</h4>
           </div> -->
           <div class="col-md-6">
-            
-            <div class="form-group row">
+            @if($gatepass->type == 1)
+            <div class="form-group row" id="invoice_number">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Invoice No</label>
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number" value="{{ $gatepass->supplier_invoice_number }}">
+                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number"  value="{{ $gatepass->supplier_invoice_number }}">
                 
           </div>
           
           </div>
           </div>
+
+          <div class="form-group row"  style="display: none;" id="delivery_number">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Delivery No</label>
+              <div class="col-sm-8">
+            <div class="input-group">
+            
+                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number"  value="{{ $gatepass->supplier_delivery_number }}">
+                
+          </div>
+          
+          </div>
+          </div>
+          @else
+
+          <div class="form-group row" id="delivery_number">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Delivery No</label>
+              <div class="col-sm-8">
+            <div class="input-group">
+            
+                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number"  value="{{ $gatepass->supplier_delivery_number }}">
+                
+          </div>
+          
+          </div>
+          </div>
+
+<div class="form-group row" style="display: none;" id="invoice_number">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Invoice No</label>
+              <div class="col-sm-8">
+            <div class="input-group">
+            
+                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number"  value="{{ $gatepass->supplier_invoice_number }}">
+                
+          </div>
+          
+          </div>
+          </div>
+
+          @endif
 
           </div>
 
@@ -267,3 +307,17 @@
 
 @endsection
 
+<script>
+function delivery()
+{
+  
+  $('#invoice_number').hide();
+  $('#delivery_number').show();
+}
+
+function invoice()
+{
+  $('#invoice_number').show();
+  $('#delivery_number').hide();
+}
+</script>

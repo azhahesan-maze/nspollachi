@@ -29,6 +29,7 @@
             <th> Supplier Delivery No</th>
             <th> Taxable Value</th>
             <th> Tax Value </th>
+            <th> Total Invoice Value</th>
             <th> Load Bill</th>
             <th>Load Live</th>
             <th>Unload Bill</th>
@@ -58,6 +59,7 @@
               <td>{{ $gate_pass_entry->supplier_delivery_number }}</td>
               <td>{{ $gate_pass_entry->taxable_value }}</td>
               <td>{{ $gate_pass_entry->tax_value }}</td>
+              <td>{{ $gate_pass_entry->total_invoice_value }}</td>
               <td>{{ $gate_pass_entry->load_bill }}</td>
               <td>{{ $gate_pass_entry->load_live }}</td>
               <td>{{ $gate_pass_entry->unload_bill }}</td>

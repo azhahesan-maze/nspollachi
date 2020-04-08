@@ -131,7 +131,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number">
+                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number" >
                 
           </div>
           
