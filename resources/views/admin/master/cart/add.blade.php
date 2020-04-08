@@ -88,6 +88,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Type</label>
               <div class="col-sm-8">
+                <input type="hidden" name="value" value="{{ $type_value }}">
                 @if($cart->type == 1)
                <input type="radio" name="type" checked="" value="1" onchange="invoice()">
                <label for="validationCustom01" class="col-sm-4 col-form-label">Invoice</label>
@@ -130,7 +131,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_delivery_number"  value="{{ $cart->supplier_delivery_number }}">
+                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number"  value="{{ $cart->supplier_delivery_number }}">
                 
           </div>
           
@@ -143,7 +144,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_delivery_number"  value="{{ $cart->supplier_delivery_number }}">
+                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number"  value="{{ $cart->supplier_delivery_number }}">
                 
           </div>
           

@@ -77,10 +77,11 @@ class CartController extends Controller
                     ->where('carts.id','=',$id)
                     ->select('*','suppliers.id as suppliers_id','carts.id as cart_id')
                     ->first();
-//return $cart;
+
+                    $type_value=$cart->type;
 
 
-        return view('admin.master.cart.add',compact('cart','gatepss_no'));
+        return view('admin.master.cart.add',compact('cart','gatepss_no','type_value'));
     }
 
     /**
@@ -94,8 +95,60 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
-       
-        $gate_pass=new GatePassEntry;
+       if($request->value == 1 && $request->type==0)
+       {
+            $gate_pass=new GatePassEntry;
+
+        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->date=$request->date;
+        $gate_pass->supplier_name=$request->supplier_name;
+        $gate_pass->type=$request->type;
+        $gate_pass->supplier_delivery_number=$request->supplier_delivery_number;
+        $gate_pass->taxable_value=$request->taxable_value;
+        $gate_pass->tax_value=$request->tax_value;
+        $gate_pass->total_invoice_value=$request->total_invoice_value;
+        $gate_pass->load_bill=$request->load_bill;
+        $gate_pass->load_live=$request->load_live;
+        $gate_pass->unload_bill=$request->unload_bill;
+        $gate_pass->unload_live=$request->unload_live;
+        $gate_pass->save();
+
+        $cart=Cart::find($id);
+
+        $cart->status=1;
+        $cart->supplier_invoice_number=null;
+        $cart->supplier_delivery_number=$request->supplier_delivery_number;
+        $cart->save();
+       }
+
+       else if($request->value == 0 && $request->type==1)
+       {
+            $gate_pass=new GatePassEntry;
+
+        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->date=$request->date;
+        $gate_pass->supplier_name=$request->supplier_name;
+        $gate_pass->type=$request->type;
+        $gate_pass->supplier_invoice_number=$request->supplier_invoice_number;
+        $gate_pass->taxable_value=$request->taxable_value;
+        $gate_pass->tax_value=$request->tax_value;
+        $gate_pass->total_invoice_value=$request->total_invoice_value;
+        $gate_pass->load_bill=$request->load_bill;
+        $gate_pass->load_live=$request->load_live;
+        $gate_pass->unload_bill=$request->unload_bill;
+        $gate_pass->unload_live=$request->unload_live;
+        $gate_pass->save();
+
+        $cart=Cart::find($id);
+
+        $cart->status=1;
+        $cart->supplier_delivery_number=null;
+        $cart->supplier_invoice_number=$request->supplier_invoice_number;
+        $cart->save();
+       }
+       else
+       {
+            $gate_pass=new GatePassEntry;
 
         $gate_pass->gate_pass_no=$request->num;
         $gate_pass->date=$request->date;
@@ -116,6 +169,8 @@ class CartController extends Controller
 
         $cart->status=1;
         $cart->save();
+       }
+        
 
         return redirect('/cart');
     }
