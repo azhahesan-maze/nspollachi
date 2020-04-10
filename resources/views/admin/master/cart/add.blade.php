@@ -71,14 +71,17 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
 
-              <div class="col-sm-8">
-                        <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" name="supplier_name">
+              <div class="col-sm-6">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select supplier_name required_for_valid" name="supplier_name">
                           <option value="{{ $cart->suppliers_id }}">{{ $cart->name }}</option>
                           @foreach($supplier as $value)
                           <option value="{{ $value->id }}">{{ $value->name }}</option>
                           @endforeach
                         </select>
                       </div>
+                      <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add New Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_name" title="Add supplier Name"><i class="fa fa-refresh" aria-hidden="true"></i></button>
               <!-- <div class="col-sm-8">
             <div class="input-group">
             
@@ -180,7 +183,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Taxable Value </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control"   placeholder="Taxable Value" name="taxable_value" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->taxable_value }}">
+                <input type="text" class="form-control" id="taxable_value" onchange="calc1()"  placeholder="Taxable Value" name="taxable_value" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->taxable_value }}">
                
                 
               </div>
@@ -202,7 +205,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Tax Value" name="tax_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->tax_value }}">
+                     <input type="text" class="form-control" id="tax_value" onchange="calc2()"  placeholder="Tax Value" name="tax_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->tax_value }}">
                 
           </div>
           
@@ -215,7 +218,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Total Invoice Value </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->total_invoice_value }}">
+                <input type="text" class="form-control" id="total_invoice_value" onclick="calc()" placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->total_invoice_value }}">
                
                 
               </div>
@@ -308,10 +311,10 @@
     <!-- card body end@ -->
   </div>
 </div>
+<script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script>
+<script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
 
-@endsection
-
-<script>
+   <script>
 function delivery()
 {
   $('#invoice_number').hide();
@@ -323,4 +326,43 @@ function invoice()
   $('#invoice_number').show();
   $('#delivery_number').hide();
 }
+
+function calc()
+{
+  
+  var taxable_value=$('#taxable_value').val();
+  var tax_value=$('#tax_value').val();
+  
+    var total = parseFloat(taxable_value) + parseFloat(tax_value);
+    $('#total_invoice_value').val(total.toFixed(2));
+  
+}
+function calc1()
+{
+  
+  var taxable_value=$('#taxable_value').val();
+  var tax_value=$('#tax_value').val();
+  
+    var total = parseFloat(taxable_value) + parseFloat(tax_value);
+    $('#total_invoice_value').val(total.toFixed(2));
+  
+}
+function calc2()
+{
+  
+  var taxable_value=$('#taxable_value').val();
+  var tax_value=$('#tax_value').val();
+  
+    var total = parseFloat(taxable_value) + parseFloat(tax_value);
+    $('#total_invoice_value').val(total.toFixed(2));
+  
+}
+
+$(document).on("click",".refresh_supplier_name",function(){
+      var supplier_dets=refresh_supplier_master_details();
+      $(".supplier_name").html(supplier_dets);
+   });
 </script>
+
+@endsection
+
