@@ -51,7 +51,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Date </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="Date"  name="date" value="{{ $cart->date }}" >
+                <input type="date" class="form-control"  placeholder="Date"  name="date" value="{{ $cart->date }}" >
                 
                 
               </div>
@@ -70,7 +70,16 @@
             
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
+
               <div class="col-sm-8">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" name="supplier_name">
+                          <option value="{{ $cart->suppliers_id }}">{{ $cart->name }}</option>
+                          @foreach($supplier as $value)
+                          <option value="{{ $value->id }}">{{ $value->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+              <!-- <div class="col-sm-8">
             <div class="input-group">
             
                      <input type="text" class="form-control"   placeholder="Supplier Name" name="name" pattern="[a-z A-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters" value="{{ $cart->name }}">
@@ -79,7 +88,7 @@
             
           </div>
           
-          </div>
+          </div> -->
           </div>
 
           </div>

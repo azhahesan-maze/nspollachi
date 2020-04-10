@@ -66,11 +66,21 @@
          <!--  <div class="col-md-8">
           <h4>Professional details:</h4>
           </div> -->
+
           <div class="col-md-6">
             
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
+
               <div class="col-sm-8">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" name="supplier_name">
+                          <option value="">Choose Supplier Name</option>
+                          @foreach($supplier as $value)
+                          <option value="{{ $value->id }}">{{ $value->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+              <!-- <div class="col-sm-8">
             <div class="input-group">
 
               <select class="form-control" name="supplier_name" required="">
@@ -78,15 +88,15 @@
                 @foreach($supplier as $value)
                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                 @endforeach
-              </select>
+              </select> -->
             
                      <!-- <input type="text" class="form-control"   placeholder="Supplier Name" name="supplier_name" pattern="[a-zA-Z]{4,100}" title="Alphabetic Letters Only should be more than 3 letters"> -->
                 
                  
             
-          </div>
+          <!-- </div>
           
-          </div>
+          </div> -->
           </div>
 
           </div>

@@ -51,7 +51,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Date </label>
               <div class="col-sm-8">
-                <input type="date" class="form-control"  placeholder="Date"  name="date" value="{{ $gatepass->date }}}" >
+                <input type="date" class="form-control"  placeholder="Date"  name="date" value="{{ $gatepass->date }}" >
                 
                 
               </div>
@@ -70,7 +70,18 @@
             
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name</label>
+
               <div class="col-sm-8">
+                        <select class="js-example-basic-multiple col-12 form-control custom-select branch_id required_for_valid" name="supplier_name">
+                          <option value="{{ $gatepass->suppliers_id }}">{{ $gatepass->name }}</option>
+                          @foreach($suppliers as $value)
+                          <option value="{{ $value->id }}">{{ $value->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+
+
+              <!-- <div class="col-sm-8">
             <div class="input-group">
 
               <select class="form-control" name="supplier_name" required="">
@@ -84,7 +95,7 @@
             
           </div>
           
-          </div>
+          </div> -->
           </div>
 
           </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cart;
 use App\GatePassEntry;
+use App\Models\Supplier;
 
 class CartController extends Controller
 {
@@ -66,7 +67,7 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-
+        $supplier=Supplier::all();
         $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
                           ->select('gate_pass_no')
                           ->first();
@@ -81,7 +82,7 @@ class CartController extends Controller
                     $type_value=$cart->type;
 
 
-        return view('admin.master.cart.add',compact('cart','gatepss_no','type_value'));
+        return view('admin.master.cart.add',compact('cart','gatepss_no','type_value','supplier'));
     }
 
     /**
