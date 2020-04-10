@@ -218,7 +218,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Total Invoice Value </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="total_invoice_value" onclick="calc()" placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->total_invoice_value }}">
+                <input type="text" class="form-control" readonly="" id="total_invoice_value" onclick="calc()" placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $cart->total_invoice_value }}">
                
                 
               </div>
