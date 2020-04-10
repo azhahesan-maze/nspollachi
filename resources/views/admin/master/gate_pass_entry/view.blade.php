@@ -66,7 +66,7 @@
               <td>{{ $gate_pass_entry->unload_live }}</td>
               
               <td> 
-                <a href="{{ route('gate_pass_entry.edit',$gate_pass_entry->id) }}" class="px-3 py-0 bg-info text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a href="{{ route('gate_pass_entry.edit',$gate_pass_entry->gatepass_id) }}" class="px-3 py-0 bg-info text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 
               </td>
             </tr>
