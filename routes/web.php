@@ -522,13 +522,13 @@ Route::group(['prefix' => 'master/role', 'middleware' => ['auth'], 'middleware' 
 
 /* Gate Pass Entry Start Here  */
 
-Route::resource('gate_pass_entry', 'GatePassEntryController');
+Route::resource('gate_pass_entry', 'GatePassEntryController',['middleware' => ['auth']]);
    
 /* Gate Pass Entry End Here  */
 
 /* Cart Start Here  */
 
-Route::resource('cart', 'CartController');
+Route::resource('cart', 'CartController',['middleware' => ['auth']]);
 
    
 /* Cart End Here  */
