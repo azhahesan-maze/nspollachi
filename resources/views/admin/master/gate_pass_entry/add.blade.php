@@ -131,7 +131,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Invoice No" name="supplier_invoice_number">
+                     <input type="text" class="form-control" id="invoice_num"  placeholder="Supplier Invoice No" name="supplier_invoice_number">
                 
           </div>
           
@@ -144,7 +144,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Supplier Delivery No" name="supplier_delivery_number" >
+                     <input type="text" class="form-control" id="delivery_num" placeholder="Supplier Delivery No" name="supplier_delivery_number" >
                 
           </div>
           
@@ -293,11 +293,13 @@ function delivery()
 {
   $('#invoice_number').hide();
   $('#delivery_number').show();
+  $('#delivery_num').focus();
 }
 
 function invoice()
 {
   $('#invoice_number').show();
+  $('#invoice_num').focus();
   $('#delivery_number').hide();
 }
 
