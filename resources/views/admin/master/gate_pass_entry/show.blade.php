@@ -189,7 +189,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Taxable Value </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="taxable_value" onchange="calc1()" placeholder="Taxable Value" name="taxable_value" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->taxable_value }}">
+                <input type="text" class="form-control" id="taxable_value" onchange="calc1()" placeholder="Taxable Value" name="taxable_value" required="" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->taxable_value }}">
                
                 
               </div>
@@ -211,7 +211,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control" id="tax_value" onchange="calc2()" placeholder="Tax Value" name="tax_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->tax_value }}">
+                     <input type="text" class="form-control" required="" id="tax_value" onchange="calc2()" placeholder="Tax Value" name="tax_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->tax_value }}">
                 
           </div>
           
@@ -224,7 +224,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Total Invoice Value </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" readonly="" id="total_invoice_value" onclick="calc()" placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->total_invoice_value }}">
+                <input type="text" class="form-control" required="" readonly="" id="total_invoice_value" onclick="calc()" placeholder="Total invoice Value" name="total_invoice_value"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->total_invoice_value }}">
                
                 
               </div>
@@ -251,7 +251,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control"  placeholder="Load Bill" name="load_bill" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->load_bill }}">
+                     <input type="text" class="form-control" required="" placeholder="Load Bill" name="load_bill" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->load_bill }}">
                 
           </div>
           
@@ -264,7 +264,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Load Live </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="Load Live" name="load_live"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->load_live }}">
+                <input type="text" class="form-control" required="" placeholder="Load Live" name="load_live"  pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="{{ $gatepass->load_live }}">
                
                 
               </div>
