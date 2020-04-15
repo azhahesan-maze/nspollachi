@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Purchase</h3>
+          <h3>Purchase Entry</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{url('master/accounts-type')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ route('purchase.index') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -23,10 +23,10 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/accounts-type/store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{ route('purchase.store') }}" enctype="multipart/form-data">
       {{csrf_field()}}
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="col-md-3">
             <div class="form-group row">
               <label for="voucher_no" class="col-sm-5 col-form-label">Voucher No </label>
@@ -171,9 +171,229 @@
               </div>
             </div>
           </div>
-</div>
-<h3 class="py-2 font-weight-bold h3-i">Item Details</h3>
+</div> -->
+<!-- <h3 class="py-2 font-weight-bold h3-i">Item Details</h3> -->
+
+
+
+
+
+
 <div class="form-row">
+              <div class="col-md-8">
+                       <div class="form-group row">
+                       <div class="col-md-4">
+                       <label for="validationCustom01" class=" col-form-label"><h4>Item Details:</h4> </label>
+                           
+                       </div>
+                         </div>
+              </div>
+              <div class="col-md-12">
+                <table class="table">
+                  <thead>
+                    <!-- <th> S.no </th> -->
+                    <th> Item Code</th>
+                    <th> Quantity</th>
+                    <th> Unit Price </th>
+                    <th> Discount</th>
+                    <th> With Tax</th>
+                    <th> Without Tax</th>
+                    <th> Net Price</th>
+                    <th> Description</th>
+                    <th>Action </th>
+                  </thead>
+                  <tbody class="append_proof_details">
+                    <tr>
+                      <!-- <td><span class="s_no"> 1 </span></td> -->
+                      <td>
+                        <div class="form-group row">
+              <div class="col-sm-12">
+                        <input list="item_code" class="form-control" placeholder="Item Code" name="item_code[]">
+                        <datalist id="item_code" name="item_code[]">
+                          @foreach($items as $item)
+                          <option value="{{ $item->code }}"></option>
+                          @endforeach
+                        </datalist>
+                      </div>
+          </div>
+
+          
+                      </td>
+                   <td>
+                            <div class="form-group row">
+                              <div class="col-sm-12">
+                              <input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid"  placeholder="Quantity" name="quantity[]" value="" >
+                                
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control  required_for_proof_valid"  placeholder="Unit Price" name="unit_price[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Discount" name="discount[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="With Tax" name="with_tax[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Without Tax" name="without_tax[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Net Price" name="net_price[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group row">
+                                <div class="col-sm-12">
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Desription" name="description[]" value="" >
+                                 
+                                </div>
+                              </div>
+                            </td>
+
+                            <td>
+                                <div class="form-group row">
+                                    <div class="col-sm-3">
+                                    <label class="btn btn-success add_items">+</label>
+                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col-sm-3">
+                                      <label class="btn btn-danger remove_items">-</label>
+                                      </div>
+                                  </div>
+                            </td>
+
+                    </tr>
+                  </tbody>
+
+                </table>
+
+              </div>
+
+
+                       </div>
+                       <script type="text/javascript">
+
+$(document).on("click",".add_items",function(){
+    
+    
+        var item_details='<tr>\
+                      <td>\
+                        <div class="form-group row">\
+              <div class="col-sm-12">\
+                        <input list="item_code" class="form-control" placeholder="Item Code" name="item_code[]">\
+                        <datalist id="item_code" name="item_code[]">\
+                        </datalist>\
+                      </div>\
+          </div>\
+                      </td>\
+                   <td>\
+                            <div class="form-group row">\
+                              <div class="col-sm-12">\
+                              <input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid"  placeholder="Quantity" name="quantity[]" value="" >\
+                                \
+                              </div>\
+                            </div>\
+                          </td>\
+                          <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control  required_for_proof_valid"  placeholder="Unit Price" name="unit_price[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Discount" name="discount[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="With Tax" name="with_tax[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Without Tax" name="without_tax[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Net Price" name="net_price[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                              <div class="form-group row">\
+                                <div class="col-sm-12">\
+                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Desription" name="description[]" value="" >\
+                                </div>\
+                              </div>\
+                            </td>\
+                            <td>\
+                                <div class="form-group row">\
+                                    <div class="col-sm-3">\
+                                    <label class="btn btn-success add_items">+</label>\
+                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                                    <div class="col-sm-3">\
+                                      <label class="btn btn-danger remove_proof_details">-</label>\
+                                      </div>\
+                                  </div>\
+                            </td>\
+                    </tr>';
+
+    $(".append_proof_details").append(item_details);
+    
+                        
+
+  });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="form-row">
   <div class="col-md-3">
     <div class="form-group row">
       <label for="voucher_no" class="col-sm-5 col-form-label">Item Code </label>
@@ -296,26 +516,28 @@
   <div class="col-md-3 text-left">
     <button class="btn btn-success" name="add" type="submit">Add</button>
   </div>
-</div>
+</div> -->
 
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-12">
 <div class="form-row custom-table">
                <table class="table table-bordered ">
                   <thead class="thead-gray">
-                  <tr>
+                  <!-- <tr>
                         <th class="text-center" rowspan="1" colspan="10">Common</th>
-                     </tr>
+                     </tr> -->
                      <tr>
                         <th class="text-center">S.No</th>
                         <th class="text-center">Item Code</th>
-                        <th class="text-center">Item Name</th>
-                        <th class="text-center">MRP</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Rate Rs.</th>
                         <th class="text-center">Qty</th>
-                        <th class="text-center">UOM</th>
-                        <th class="text-center">Rate </th>
-                        <th class="text-center">Discount</th>
+                        <!-- <th class="text-center">UOM</th> -->
+                        <!-- <th class="text-center">Rate </th> -->
                         <th class="text-center">Amount</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Tax Rs.</th>
+                        <th class="text-center">Net Value</th>
                         <th class="text-center">Action</th>
                      </tr>
                   </thead>
@@ -353,7 +575,7 @@
             </div>
             </div>
 
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
               <div class="form-row custom-table price-tbl">
                 <table class="table table-bordered table-responsive">
                     <tr class="thead-gray">
@@ -438,7 +660,7 @@
 
                   </table>
               </div>      
-            </div>
+            </div> -->
 </div>
 
 

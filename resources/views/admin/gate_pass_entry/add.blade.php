@@ -37,7 +37,7 @@
               <div class="col-sm-8">
             <div class="input-group">
             
-                     <input type="text" class="form-control" readonly placeholder="Gate Pass No" name="num" value="{{ $gatepass }}">
+                     <input type="text" class="form-control" readonly placeholder="Auto  Generate" name="num" value="">
                 
             
           </div>

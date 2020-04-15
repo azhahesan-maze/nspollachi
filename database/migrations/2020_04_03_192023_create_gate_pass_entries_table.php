@@ -15,7 +15,7 @@ class CreateGatePassEntriesTable extends Migration
     {
         Schema::create('gate_pass_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('gate_pass_no')->nullable();
+            $table->integer('gate_pass_no')->unique();
             $table->date('date')->nullable();
             $table->string('supplier_name')->nullable();
             $table->integer('type')->comment = '1=>Invoice,0=>Delivary Note ';

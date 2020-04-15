@@ -22,7 +22,7 @@ class GatePassEntryController extends Controller
                         ->get();
 
                                     
-        return view('admin.master.gate_pass_entry.view',compact('gatepassentry'));
+        return view('admin.gate_pass_entry.view',compact('gatepassentry'));
     }
 
     /**
@@ -38,26 +38,26 @@ class GatePassEntryController extends Controller
 
         $gatepassentry=GatePassEntry::all();
 
-        $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
-                          ->select('gate_pass_no')
-                          ->first();
+        // $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
+        //                   ->select('gate_pass_no')
+        //                   ->first();
 
                         
-        if ($gate_pass_no == null) 
-        {
-            $gatepass=1;
+        // if ($gate_pass_no == null) 
+        // {
+        //     $gatepass=1;
 
-            return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));                 
-        }                  
-        else
-        {
-            $current_gate_pass_no=$gate_pass_no->gate_pass_no;
-            $gatepass=$current_gate_pass_no+1;
+        //     return view('admin.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));                 
+        // }                  
+        // else
+        // {
+        //     $current_gate_pass_no=$gate_pass_no->gate_pass_no;
+        //     $gatepass=$current_gate_pass_no+1;
         
-        return view('admin.master.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));
-        }
+        // return view('admin.gate_pass_entry.add',compact('gatepassentry','gatepass','date','supplier'));
+        // }
           
-        
+        return view('admin.gate_pass_entry.add',compact('gatepassentry','date','supplier'));
         
     }
 
@@ -95,9 +95,29 @@ class GatePassEntryController extends Controller
         else
 
         {
+            $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
+                           ->select('gate_pass_no')
+                           ->first();
+
+              if ($gate_pass_no == null) 
+         {
+             $gatepass=1;
+
+                             
+         }                  
+         else
+         {
+             $current_gate_pass_no=$gate_pass_no->gate_pass_no;
+             $gatepass=$current_gate_pass_no+1;
+        
+         
+         }             
+
+
+
             $gate_pass=new GatePassEntry;
 
-        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->gate_pass_no=$gatepass;
         $gate_pass->date=$request->date;
         $gate_pass->supplier_name=$request->supplier_name;
         $gate_pass->type=$request->type;
@@ -153,7 +173,7 @@ class GatePassEntryController extends Controller
                         
 
 
-        return view('admin.master.gate_pass_entry.show',compact('gatepass','suppliers','type_value'));
+        return view('admin.gate_pass_entry.show',compact('gatepass','suppliers','type_value'));
     }
 
     /**

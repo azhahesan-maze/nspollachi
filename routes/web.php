@@ -534,6 +534,13 @@ Route::resource('cart', 'CartController',['middleware' => ['auth']]);
 /* Cart End Here  */
 
 
+/* Purchase Start Here  */
+
+Route::resource('purchase', 'PurchaseController',['middleware' => ['auth']]);
+
+   
+/* Purchase End Here  */
+
 
 //Route::any('master/address_type/store', 'AddressTypeController@store');
 

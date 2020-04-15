@@ -23,7 +23,7 @@ class CartController extends Controller
 
                 
 
-        return view('admin.master.cart.view',compact('cart'));
+        return view('admin.cart.view',compact('cart'));
     }
 
     /**
@@ -82,7 +82,7 @@ class CartController extends Controller
                     $type_value=$cart->type;
 
 
-        return view('admin.master.cart.add',compact('cart','gatepss_no','type_value','supplier'));
+        return view('admin.cart.add',compact('cart','gatepss_no','type_value','supplier'));
     }
 
     /**
@@ -96,11 +96,28 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
+        $gate_pass_no=GatePassEntry::orderBy('gate_pass_no','DESC')
+                          ->select('gate_pass_no')
+                          ->first();
+
+        if ($gate_pass_no == null) 
+        {
+            $gatepss_no=1;          
+        }    
+        else
+        {
+            $gatepss   =  $gate_pass_no->gate_pass_no; 
+             $gatepss_no = $gatepss+1; 
+            
+        }     
+
+
        if($request->value == 1 && $request->type==0)
        {
+
             $gate_pass=new GatePassEntry;
 
-        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->gate_pass_no=$gatepss_no;
         $gate_pass->date=$request->date;
         $gate_pass->supplier_name=$request->supplier_name;
         $gate_pass->type=$request->type;
@@ -126,7 +143,7 @@ class CartController extends Controller
        {
             $gate_pass=new GatePassEntry;
 
-        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->gate_pass_no=$gatepss_no;
         $gate_pass->date=$request->date;
         $gate_pass->supplier_name=$request->supplier_name;
         $gate_pass->type=$request->type;
@@ -151,7 +168,7 @@ class CartController extends Controller
        {
             $gate_pass=new GatePassEntry;
 
-        $gate_pass->gate_pass_no=$request->num;
+        $gate_pass->gate_pass_no=$gatepss_no;
         $gate_pass->date=$request->date;
         $gate_pass->supplier_name=$request->supplier_name;
         $gate_pass->type=$request->type;
