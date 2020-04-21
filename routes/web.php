@@ -537,6 +537,9 @@ Route::resource('cart', 'CartController',['middleware' => ['auth']]);
 /* Purchase Start Here  */
 
 Route::resource('purchase', 'PurchaseController',['middleware' => ['auth']]);
+Route::get('purchase/getdata/{id}', 'PurchaseController@getdata');
+Route::post('purchase/storedata', 'PurchaseController@storedata');
+Route::get('purchase/item_details/{id}', 'PurchaseController@item_details');
 
    
 /* Purchase End Here  */
