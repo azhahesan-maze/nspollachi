@@ -189,20 +189,100 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 <!-- <h3 class="py-2 font-weight-bold h3-i">Item Details</h3> -->
 
 
+<style type="text/css">
+  #middlecol {
+   
+    width: 45%;
+  }
 
+  #middlecol table {
+    max-width: 99%;
+    width: 100% !important;
+  }
+</style>
 
 
 <form  method="post" class="form-horizontal" action="{{ route('purchase.store') }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
-      <label>Batch No</label>
-                       <div class="form-group row">
+
+      
+                       <div class="row col-md-12">
+
                                 <div class="col-md-2">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Batch_no" id="batch_no" name="batch_no" value="" required="">
+                                  <label style="font-family: Times new roman;">Voucher No</label><br>
+                                <input type="text" readonly="" class="form-control proof_file  required_for_proof_valid" id="voucher_no" placeholder="Auto Generate Voucher No" name="voucher_no" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                                 
+                                </div>
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Gate Pass No</label><br>
+                                <select class="js-example-basic-multiple form-control gatepass_no" 
+                                data-placeholder="Choose Gate Pass No" required="" id="gatepass_no" onchange="gatepass()" name="gatepass_no" >
+                                <option value=""></option>
+                                    @foreach($gatepass_no as $gatepass)
+                                    <option value="{{ $gatepass->id }}">{{ $gatepass->gate_pass_no }}</option>
+                                    @endforeach
+                                 </select>
+                                 
+                                </div>
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Receipt Note No</label><br>
+                                <input type="text" class="form-control receipt_note_no  required_for_proof_valid" readonly="" id="receipt_note_no" placeholder="Receipt Note No" name="receipt_note_no" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Supplier Invoice No</label><br>
+                                <input type="text" readonly="" class="form-control supplier_invoice_no  required_for_proof_valid" id="supplier_invoice_no" placeholder="Supplier Invoice No" name="supplier_invoice_no" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Supplier Invoice Date</label><br>
+                                <input type="date" readonly="" class="form-control supplier_invoice_date  required_for_proof_valid" id="supplier_invoice_date" placeholder="Supplier Invoice Date" name="supplier_invoice_date" value="">
                                  
                                 </div>
                               </div>
-<div class="form-row">
-              <div class="col-md-8">
+
+                              <div class="row col-md-12">
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Supplier Details</label><br>
+                                <input type="text" readonly="" class="form-control supplier_details  required_for_proof_valid" id="supplier_details" placeholder="Supplier Details" name="supplier_details" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Order Details</label><br>
+                                <input type="text" class="form-control order_details  required_for_proof_valid" id="order_details" placeholder="Order Details" name="order_details" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Transport Details</label><br>
+                                <input type="text" class="form-control transport_details  required_for_proof_valid" id="transport_details" placeholder="Transport Details" name="transport_details" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Remarks</label><br>
+                                <input type="text" class="form-control remarks  required_for_proof_valid" id="remarks" placeholder="Remarks" name="remarks" value="">
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Supplier Invoice Value</label><br>
+                                <input type="text" readonly="" class="form-control supplier_invoice_value  required_for_proof_valid" id="supplier_invoice_value" placeholder="Supplier Invoice Value" name="supplier_invoice_value" value="">
+                                 
+                                </div>
+                              </div><br>
+    
+      <div class="col-md-8">
                        <div class="form-group row">
                        <div class="col-md-4">
                        <label for="validationCustom01" class=" col-form-label"><h4>Item Details:</h4> </label><br>
@@ -211,7 +291,109 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        </div>
                          </div>
               </div>
-              <div class="col-md-12">
+
+      <div class="row col-md-12">
+        <div class="col-md-2">
+          <label style="font-family: Times new roman;">Invoice No</label>
+        <input type="text" class="form-control invoice_sno  required_for_proof_valid" placeholder="Invoice S.no" id="invoice_sno" name="invoice_sno" value="">
+         
+        </div>
+
+        <div class="col-md-2">
+          <label style="font-family: Times new roman;">Item Code</label>
+              <select class="js-example-basic-multiple form-control" 
+              data-placeholder="Choose Item Code" id="items_codes" onchange="item_codes()" name="item_code" >
+              <option value=""></option>
+                  @foreach($items as $item)
+                  <option value="{{ $item->id }}">{{ $item->code }}</option>
+                  @endforeach
+               </select>
+               
+              </div>
+              
+                      <div class="cat" id="cat" style="display: none;" title="Choose Category">
+                        
+                        <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
+                          <option></option>
+                          @foreach($categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label><font color="white" style="font-family: Times new roman;">Item Code</font></label><br>
+                      <input type="button" onclick="find_cat()" class="btn btn-info" value="Find" name="" id="find">
+                    </div>
+                    <div class="col-md-2">
+                      <label style="font-family: Times new roman;">Item Name</label>
+                      <input type="text" class="form-control item_name  required_for_proof_valid" id="item_name" placeholder="Item Name" name="item_name" readonly="" id="item_name" value="">
+                    </div>
+                    <div class="col-md-2">
+                      <label style="font-family: Times new roman;">MRP</label>
+                      <input type="text" class="form-control mrp required_for_proof_valid" readonly="" placeholder="MRP" id="mrp" name="mrp" value="">
+                       
+                      </div>
+                      <div class="col-md-2">
+                      <label style="font-family: Times new roman;">HSN</label>
+                      <input type="text" class="form-control hsn  required_for_proof_valid" readonly="" placeholder="HSN" id="hsn" name="hsn" value="">
+                       
+                      </div>
+                    </div>
+                      <div class="row col-md-12" >
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Quantity</label>
+                      <input type="text" class="form-control quantity only_allow_digit required_for_proof_valid" id="quantity"  placeholder="Quantity" name="quantity" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Tax Rate%</label>
+                      <input type="text" class="form-control tax_rate  required_for_proof_valid" readonly="" placeholder="Tax Rate%" name="tax_rate" value="" id="tax_rate">
+                      </div>
+                      <div class="col-md-2" style="margin-top: 5px;">
+                        <label style="font-family: Times new roman;">Tax Exclusive/Inclusive</label><br>
+                      <input type="radio"  onclick="calc_tax1()" checked="" name="tax" id="tax"  value="1">
+                      <label style="font-family: Times new roman;">Exclusive</label>&nbsp;&nbsp;
+                    
+                      <input type="radio"  onclick="calc_tax()" name="tax" id="tax1" value="0">
+                      <label style="font-family: Times new roman;">Inclusive</label>
+                      </div>
+
+                      <div class="col-md-2" id="rate_exclusive">
+                        <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
+                      <input type="text" class="form-control exclusive" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" onchange="calc()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                      </div>
+                      <div class="col-md-2"  id="rate_inclusive">
+                        <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
+                      <input type="text" readonly="" class="form-control inclusive" id="inclusive" placeholder="Inclusive Tax" onchange="calc()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Amount</label>
+                        <input type="text" readonly="" class="form-control amount  required_for_proof_valid" placeholder="Amount" id="amount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount" value="" >
+                        </div>
+                        <div class="col-md-2">
+                          <label style="font-family: Times new roman;">Discount</label>
+                        <input type="text" class="form-control discount  required_for_proof_valid" placeholder="Discount" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" onchange="discount_calc()" name="discount" value="" >
+                        </div>
+                        <div class="col-md-2">
+                          <label style="font-family: Times new roman;">Net Price</label>
+                        <input type="text" class="form-control net_price  required_for_proof_valid" readonly="" id="net_price" placeholder="Net Price" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="net_price" value="">
+                         
+                        </div>
+                      </div>
+                                                          
+                     <div class="" align="center">
+                                   
+                    <input type="button" class="btn btn-success add_items" value="Add" name="" id="add_items0">    
+                     </div> <br>              
+                   
+<style>
+table, th, td {
+  border: 1px solid #E1E1E1;
+}
+</style>
+<div class="form-row">
+             
+              <div class="col-md-12" id="middlecol">
+                
                 <table class="table" id="team-list">
                   <thead>
                     <th> S.no </th>
@@ -222,7 +404,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     <th> HSN</th>
                     <th> Quantity</th>
                     <th> Tax Rate%</th>
-                    <th> Inclusive/Exclusive</th>
                     <th> Rate Exclusive</th>
                     <th> Rate Inclusive</th>
                     <th> Amount</th>
@@ -231,187 +412,204 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     <th>Action </th>
                   </thead>
                   <tbody class="append_proof_details" id="mytable">
-                    <tr id="row0" class="0 tables">
-                      <td><span class="bank_s_no"> 1 </span></td>
-                      <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Invoice S.no" id="invoice_sno0" name="invoice_sno[]" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td>
-                      <td>
-                        <div class="form-group row">
-              <div class="col-sm-12">
-                        <input list="item_code0" required="" id="item_codes0"  onchange="item_codes(0)"class="form-control" placeholder="Item Code" name="item_code[]">
-                        <datalist id="item_code0" name="item_code[]" >
-                          @foreach($items as $item)
-                          <option value="{{ $item->code }}"></option>
-                          @endforeach
-                        </datalist>
-                      </div>
-          </div>
-
-          
-                      </td>
-                      <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" id="item_name0" placeholder="Item Name" name="item_name[]" readonly="" id="item_name" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td>
-
-                           <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" readonly="" placeholder="MRP" id="mrp0" name="mrp[]" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td> 
-
-                            <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" readonly="" placeholder="HSN" id="hsn0" name="hsn[]" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td>
-                   <td>
-                            <div class="form-group row">
-                              <div class="col-sm-12">
-                              <input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid" id="quantity0"  placeholder="Quantity" name="quantity[]" pattern="[0-9]{0,100}" title="Numbers Only" value="" required="">
-                                
-                              </div>
-                            </div>
-                          </td>
-
-                          <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Tax Rate%" name="tax_rate[]" value="" id="tax_rate0" required="">
-                                 
-                                </div>
-                              </div>
-                            </td> 
-
-                            <td>
-                              <div class="form-group row">
-
-                                <div class="col-sm-12">
-                                <input type="checkbox"  onclick="calc_tax1(0)" name="tax[]" id="tax0">
-                                 <label>Inclusive Tax</label>
-                                </div>
-                                
-                              </div>
-                            </td>
-
-                          <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12" id="rate_exclusive">
-                                <input type="text" class="form-control  required_for_proof_valid" id="exclusive0" placeholder="Exclusive Tax" onchange="calc(0)" name="exclusive[]" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="" required=""></div>
-                                
-                              </div>
-                            </td>
-                            <td>
-                              <div class="form-group row">
-                              <div class="col-sm-12"  id="rate_inclusive">
-                                <input type="text" readonly="" class="form-control  required_for_proof_valid" id="inclusive0" placeholder="Inclusive Tax" onchange="calc(0)" name="inclusive[]" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td>
-
-                            <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" readonly="" class="form-control proof_file  required_for_proof_valid" placeholder="Amount" id="amount0" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount[]" value="" >
-                                 
-                                </div>
-                              </div>
-                            </td>
-
-                            <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Discount" id="discount0" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" onchange="discount_calc(0)" name="discount[]" value="" >
-                                 
-                                </div>
-                              </div>
-                            </td>
-                            
-                            <td>
-                              <div class="form-group row">
-                                <div class="col-sm-12">
-                                <input type="text" class="form-control proof_file  required_for_proof_valid" readonly="" id="net_price0" placeholder="Net Price" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="net_price[]" value="" required="">
-                                 
-                                </div>
-                              </div>
-                            </td>
-                            <input type="hidden" name="last" value="0" id="last">
-                            <input type="hidden" name="counts" value="1" id="counts">
-
-                            <td>
-                                <div class="form-group row">
-                                    <div class="col-sm-2">
-                                      <input type="submit" class="btn btn-success add_items" value="+" name="" id="add_items0">
-                                    <!-- <label class="btn btn-success add_items">+</label> -->
-                                    </div>&nbsp;&nbsp;&nbsp;
-                                    <div class="col-sm-2">
-                                      <input type="submit" id="0" class="btn btn-danger remove_items" value="-" name="">
-                                      <!-- <label class="btn btn-danger remove_items">-</label> -->
-                                      </div>
-                                  </div>
-                            </td>
-
-                    </tr>
+                    
+                            <input type="hidden" name="counts" value="" id="counts">
+                            <input type="hidden" name="total_amount" value="0" id="total_amount">
+                            <input type="hidden" name="total_price" value="0" id="total_price">
 
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><label class="total_amount"></label></th>
+                      <th></th>
+                      <th><label class="total_net_price"></label></th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
 
                 </table>
                 
-                                <div class="row" style="float:right;">
-                                <div class="col-md-5" >
-                                  <label>Total Amount</label>
-                                <input type="text" readonly="" align="right" class="form-control readonly  required_for_proof_valid" onclick="total_amounts()" id="total_amount" placeholder="Total Amount" name="total_amount" value="" required="">
-                                 
-                                </div>
-
-                                <div class="col-md-5">
-                                  <label>Total Net Price</label>
-                                <input type="text" readonly="" class="form-control readonly  required_for_proof_valid" id="total_price" onclick="total_net_price()" placeholder="Total Net Price" name="total_price" value="" required="">
-                                 
-                                </div>
-                         </div>
-                      
-                        
- 
-
                        </div>
 
                        <div class="col-md-7 text-right">
-          <button class="btn btn-success save" style="margin-bottom: 150px;" name="add" type="submit">Submit</button>
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save">
         </div>
       </form>
-                       <!-- <div align="center">
-                  <input type="submit" name="save" id="save" class="btn btn-success" value="Save">
-                </div> -->
+                       
         <script type="text/javascript">
+          var i=0;
+
+function calculate_total_net_price(){
+  var total_net_price=0;
+  $(".table_net_price").each(function(){
+    total_net_price=parseFloat(total_net_price)+parseFloat($(this).val());
+  });
+  return total_net_price;
+}
+function calculate_total_amount(){
+  var total_amount=0;
+  $(".table_amount").each(function(){
+    total_amount=parseFloat(total_amount)+parseFloat($(this).val());
+  });
+  return total_amount;
+}
 function add_items()
 {
   var j=$('#mytable tr:last').attr('class');
- var i=parseInt(j)+1;
+ var l=parseInt(i)+1;
+ var gatepass_no=$('.gatepass_no').val();
+ var invoice_no=$('.invoice_sno').val();
+ var item_code=$("#items_codes option:selected");
+ var item_code=item_code.text();
+ var items_codes=$('#items_codes').val();
+ var item_name=$('.item_name').val();
+ var mrp=$('.mrp').val();
+ var hsn=$('.hsn').val();
+ var quantity=$('.quantity').val();
+ var tax_rate=$('.tax_rate').val();
+ var exclusive=$('.exclusive').val();
+ var inclusive=$('.inclusive').val();
+ var amount=$('.amount').val();
+ var discount=$('.discount').val();
+ var net_price=$('.net_price').val();
+ if(exclusive == '')
+ {
+  var exclusive=0;
+ }
+ if(inclusive == '')
+ {
+  var inclusive=0;
+ }
+ if(discount == '')
+ {
+  var discount=0;
+ }
+ if(amount == '')
+ {
+  var amount=0;
+ }
+ if(net_price == '')
+ {
+  var net_price=0;
+ }
+
+ if(gatepass_no == '' || items_codes == '' || invoice_no == '' || quantity == '' || amount == '' || net_price == '')
+ {
+  alert('Please Fill All The Input Fields');
+ }
+
+ else
+ {
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="bank_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Invoice S.no" id="invoice_sno'+i+'" name="invoice_sno[]" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input list="item_code'+i+'" required="" id="item_codes'+i+'"  onchange="item_codes('+i+')"class="form-control" placeholder="Item Code" name="item_code[]"><datalist id="item_code'+i+'" name="item_code[]" >@foreach($items as $item)<option value="{{ $item->code }}"></option>@endforeach</datalist></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Item Name" name="item_name[]" id="item_name'+i+'" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="MRP" id="mrp'+i+'" name="mrp[]" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="HSN" id="hsn'+i+'" name="hsn[]" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_number only_allow_digit required_for_proof_valid" id="quantity'+i+'"  placeholder="Quantity" name="quantity[]" pattern="[0-9]{0,100}" title="Numbers Only" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Tax Rate%" name="tax_rate[]" value="" id="tax_rate'+i+'" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="checkbox" onclick="calc_tax1('+i+')" name="tax[]" value="1" id="tax"><label>Inclusive Tax</label></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="rate_exclusive'+i+'"><input type="text" class="form-control  required_for_proof_valid" id="exclusive'+i+'" placeholder="Exclusive Tax" onchange="calc('+i+')" name="exclusive[]" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"  id="rate_inclusive"><input type="text" readonly class="form-control  required_for_proof_valid" id="inclusive'+i+'" placeholder="Inclusive Tax" onchange="calc('+i+')" name="inclusive[]" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Amount" id="amount'+i+'" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount[]" value="" ></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" placeholder="Discount" id="discount'+i+'" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" onchange="discount_calc('+i+')" name="discount[]" value="" ></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="text" class="form-control proof_file  required_for_proof_valid" id="net_price'+i+'" placeholder="Net Price" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="net_price[]" value="" required=""></div></div></td><td><div class="form-group row"><div class="col-sm-3"><input type="submit" class="btn btn-success add_items" value="+" name="" id="add_items'+i+'"></div>&nbsp;&nbsp;&nbsp;<div class="col-sm-3"><input type="submit" class="btn btn-danger remove_items"  id="'+i+'" value="-" name=""></div></div></td></tr>'
-$('.append_proof_details').append(items);
-$('#last').val(i);
-var len=$('.tables').length;
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="bank_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]">'+invoice_no+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+items_codes+'" name="item_code[]">'+item_code+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+item_name+'" name="item_name[]">'+item_name+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+mrp+'" name="mrp[]">'+mrp+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+hsn+'" name="hsn[]">'+hsn+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+quantity+'" name="quantity[]">'+quantity+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+tax_rate+'" name="tax_rate[]">'+tax_rate+'</div></div></td><td><div class="form-group row"><div class="col-sm-12" id="rate_exclusive"><input type="hidden" value="'+exclusive+'" name="exclusive[]">'+exclusive+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"  id="rate_inclusive"><input type="hidden" value="'+inclusive+'" name="inclusive[]">'+inclusive+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" value="'+amount+'" name="amount[]">'+amount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+discount+'" name="discount[]">'+discount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" value="'+net_price+'" name="net_price[]">'+net_price+'</div></div></td><td><div class="form-group row"><div class="col-sm-3"><input type="button" class="btn btn-danger remove_items"  id="'+i+'" value="-" name=""></div></div></td></tr>'
+
+  $('.append_proof_details').append(items);
+var length=$('#mytable tr:last').attr('class').split(' ')[0];
+
+for(var m=0;m<length+1;m++)
+{
+
+  var invoice_num = $('#invoice'+m).val();
+  
+  for(var n=m+1;n<=length+1;n++)
+  {
+    
+    if(typeof $('#invoice'+n).val() == 'undefined')
+    {
+
+    }
+    else
+    {
+      var invoice_num1 = $('#invoice'+n).val();
+
+      if(invoice_num == invoice_num1)
+      {
+        alert('Invoice Number is Alredy Taken!');
+        $('#row'+i).remove();
+      }
+      else
+      {
+        
+      }
+    }
+  }
+}
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+$("#total_price").val(total_net_price);
+$("#total_amount").val(total_amount);
+
+$(".total_net_price").html(parseFloat(total_net_price));
+$(".total_amount").html(parseFloat(total_amount));
+ var len=$('.tables').length;
 $('#counts').val(len);
 i++;
+
+var array=[gatepass_no,invoice_no,items_codes,item_name,mrp,hsn,quantity,tax_rate,exclusive,inclusive,amount,discount,net_price];
+
+$.ajax({
+           type: "GET",
+            url: "{{ url('purchase/get_items/{id}') }}",
+            data: { id: len },
+           success: function(data) {
+             // console.log(data);
+             $('#items_codes').children('option:not(:first)').remove();
+             for (var k=0; k < data.length; k++)
+            {
+             name =data[k].name;
+             code =data[k].code;
+             id =data[k].id;
+              names = name.replace('','');
+              codes = code.replace('','');
+              
+              var div_data="<option value="+id+">"+codes+"</option>";
+                
+                $(div_data).appendTo('#items_codes');
+
+            }
+           }
+           
+        });
+
+$.ajax({
+           type: "POST",
+            url: "{{ url('purchase/storedata/') }}",
+            data: { array: array },
+           success: function(data) {
+             // console.log(data);
+             
+           }
+        });
+
+$('#cat').hide();
+$('.invoice_sno').val('');
+$('.items_codes').val('');
+$('.item_name').val('');
+$('.mrp').val('');
+$('.hsn').val('');
+$('.quantity').val('');
+$('.tax_rate').val('');
+$('.exclusive').val('');
+$('.inclusive').val('');
+$('.amount').val('');
+$('.discount').val('');
+$('.net_price').val('');
+$('#tax').val('');
+$('#tax1').val('');
+
+}
 } 
 $(document).on("click",".add_items",function(){
     add_items();
@@ -420,48 +618,56 @@ $(document).on("click",".add_items",function(){
   });
 
 $(document).on("click",".remove_items",function(){
-  if($(".remove_items").length >1){
+  
 
-        var button_id = $(this).attr("id");
-        
+       var button_id = $(this).attr("id");
+       var invoice_no=$('.invoice_no'+button_id).val();
        $('#row'+button_id).remove();
        
        var counts = $('#counts').val();
        $('#counts').val(counts-1); 
        bank_details_sno();
-        --i;
-    
-  }else{
-    alert("Atleast One row present");
-  }
+       //--i;
+    var total_net_price=calculate_total_net_price();
+
+    $(".total_net_price").html(parseFloat(total_net_price));
+
+    var total_amount=calculate_total_amount();
+    $(".total_amount").html(parseFloat(total_amount));
+
+    $("#total_price").val(total_net_price);
+    $("#total_amount").val(total_amount);
+
+    $.ajax({
+           type: "POST",
+            url: "{{ url('purchase/remove_data/') }}",
+            data: { invoice_no: invoice_no },
+           success: function(data) {
+             // console.log(data);
+             
+           }
+        });
+  
 });
+
 function bank_details_sno(){
   $(".bank_s_no").each(function(key,index){
       $(this).html((key+1));
     });
 }
 
-// $(document).on("click",".save",function(){
-//     var len=$('#mytable').length;
-//     alert(len);
 
-//   });
+  $("form").submit(function(e){
+  if($('#total_amount').val() == 0)
+  {
+    alert('There Is No Row To Submit');
+    e.preventDefault();
+  }
+  else
+  {
 
-// $(document).ready(function(){
-//   var result = [];
-//   $('table tr').each(function(){
-//     $('td', this).each(function(index, val){
-//         if(!result[index]) result[index] = 0;
-//       result[index] += parseInt($(val).text());
-//     });
-//   });
-
-//   $('table').append('<tr></tr>');
-//   $(result).each(function(){
-//     $('table tr').last().append('<td>'+this+'</td>')
-//   });
-// });
-
+  }    
+    });
 
 function total_amounts()
 {
@@ -529,18 +735,18 @@ function total_net_price()
 }
 
 
-function calc(ival)
+function calc()
 {
-  var quantity = $('#quantity'+ival).val();
-  var rate_exclusive = $('#exclusive'+ival).val();
-  var rate_inclusive = $('#inclusive'+ival).val();
+  var quantity = $('#quantity').val();
+  var rate_exclusive = $('#exclusive').val();
+  var rate_inclusive = $('#inclusive').val();
 
   if (quantity == '') 
   {
     alert('Please Enter Quantity First');
-    $('#exclusive'+ival).val('');
-    $('#inclusive'+ival).val('');
-    $('#quantity'+ival).focus();
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('#quantity').focus();
   }
   else
   {
@@ -553,8 +759,8 @@ function calc(ival)
       var total = parseInt(quantity)*parseFloat(rate_inclusive);
     }
     
-    $('#amount'+ival).val(total.toFixed(2));
-    $('#net_price'+ival).val(total.toFixed(2));
+    $('#amount').val(total.toFixed(2));
+    $('#net_price').val(total.toFixed(2));
   }
 }
 
@@ -563,116 +769,168 @@ function calc_tax()
   
   $("#exclusive").attr('readonly','readonly');
   $("#inclusive").removeAttr('readonly');
+  $("#inclusive").focus();
+  $("#exclusive").val('');
+  $("#amount").val('');
+  $("#net_price").val('');
+  $("#discount").val('');
   
 }
 
-function calc_tax1(ival)
+function calc_tax1()
 {
   
   
-  $("#inclusive"+ival).removeAttr('readonly');
-  $("#exclusive"+ival).attr('readonly','readonly');
+  $("#exclusive").removeAttr('readonly');
+  $("#inclusive").attr('readonly','readonly');
+  $("#exclusive").focus();
+  $("#inclusive").val('');
+  $("#amount").val('');
+  $("#net_price").val('');
+  $("#discount").val('');
 }
 
-function discount_calc(ival)
+function discount_calc()
 {
-  var discount = $("#discount"+ival).val();
-  var amount = $("#amount"+ival).val();
+  var discount = $("#discount").val();
+  var amount = $("#amount").val();
+  var quantity = $("#quantity").val();
+  var exclusive = $("#exclusive").val();
+  var inclusive = $("#inclusive").val();
 
-  $("#net_price"+ival).val((parseFloat(amount)-parseFloat(discount)).toFixed(2));
+  if ($("#tax").prop("checked")) 
+  {
+   if(exclusive == '' || quantity == '')
+   {
+    alert('Please Fill Above Boxes');
+    $("#discount").val('');
+   }
+   else
+  {
+    $(".net_price").val((parseFloat(amount)-parseFloat(discount)).toFixed(2));
+  }
+  }
+  if ($("#tax1").prop("checked")) 
+  {
+   if(inclusive == '' || quantity == '')
+   {
+    alert('Please Fill Above Boxes');
+    $("#discount").val('');
+   }
+   else
+  {
+    $(".net_price").val((parseFloat(amount)-parseFloat(discount)).toFixed(2));
+  }
+  }
+  
+  
 }
 
-function item_codes(ival)
+function item_codes()
 {
 
-var item_code=$('#item_codes'+ival).val();
+var item_code=$('#items_codes').val();
+var row_id=$('#last').val();
 
       $.ajax({  
-        //create an ajax request to display.php
+        
         type: "GET",
         url: "{{ url('purchase/getdata/{id}') }}",
         data: { id: item_code },             
-           //expect html to be returned                
-        success: function(data){                    
-             
-            $('#item_name'+ival).val(data.name);
-             $('#mrp'+ival).val(data.mrp);
-             $('#hsn'+ival).val(data.hsn);
+                        
+        success: function(data){ 
+       
+             name =data[0].name;
+             code =data[0].code;
+             mrp =data[0].mrp;
+             hsn =data[0].hsn;
+             igst =data[1].igst;
+          
+                       
+             $('#item_codes').val(code);
+            $('#item_name').val(name);
+             $('#mrp').val(mrp);
+             $('#hsn').val(hsn);
+             $('#tax_rate').val(igst);
+             $('#quantity').focus();
+             $('#cat').hide();
         }
 
     });
 
 }
 
-$('#dataInput').submit(function (e) { //Form is submitted, it calls this function automatically
-    
+
+function find_cat()
+{
   
-    if($('#total_amount').val() == '')
-    {
-      alert('Please Fill Total Amount!');
-      e.preventDefault();
-    }
-    else if($('#total_price').val() == '')
-    {
-      alert('Please Fill Total Net Price!');
-      e.preventDefault();
-    }
-});
+  $('#cat').show();
+  $('#cat').dialog();
+  $('.categories').focus();
 
-// $('#save').click(function(){
+}
 
-// var count=$('#mytable tr:last').attr('class');
-// var batch_no = $('#batch_no').val();
-
-//   var invoice_val = new Array();
-//   var item_code_val = new Array();
-//   var item_name_val = new Array();
-//   var mrp_val = new Array();
-//   var hsn_val = new Array();
-//   var qty = new Array();
-//   var tax_rate_val = new Array();
-//   var inclusive_val = new Array();
-//   var rate_exclusive_val = new Array();
-//   var rate_inclusive_val = new Array();
-//   var amount_val = new Array();
-//   var discount_val = new Array();
-//   var net_price_val = new Array();
-// for(k=0;k<=count;k++)
-// {
-
-//   invoice_val.push($('#invoice_sno'+k).val());
-//   item_code_val.push($('#item_code'+k).val());
-//   item_name_val.push($('#item_name'+k).val());
-//   mrp_val.push($('#mrp'+k).val());
-//   hsn_val.push($('#hsn'+k).val());
-//   quantity_val.push($('#quantity'+k).val());
-//   tax_rate_val.push($('#tax_rate'+k).val());
-//   inclusive_val.push($('#inclusive'+k).val());
-//   rate_exclusive_val.push($('#rate_exclusive'+k).val());
-//   rate_inclusive_val.push($('#rate_inclusive'+k).val());
-//   amount_val.push($('#amount'+k).val());
-//   discount_val.push($('#discount'+k).val());
-//   net_price_val.push($('#net_price'+k).val());
-// }
-
-
-// $.ajax({  
-//         //create an ajax request to display.php
-//         method: "POST",
-//         url: "{{ url('purchase/storedata') }}",
-//         data: { count:count, batch_no:batch_no, invoice_no: JSON.stringify(invoice_val), item_code:JSON.stringify(item_code_val), item_name:JSON.stringify(item_name_val), mrp:JSON.stringify(mrp_val), hsn:JSON.stringify(hsn_val), quantity:JSON.stringify(quantity_val), tax_rate:JSON.stringify(tax_rate_val), inclusive:JSON.stringify(inclusive_val), rate_exclusive:JSON.stringify(rate_exclusive_val), rate_inclusive:JSON.stringify(rate_inclusive_val), amount:JSON.stringify(amount_val), discount:JSON.stringify(discount_val), net_price:JSON.stringify(discount_val)},             
-//            //expect html to be returned                
-//         success: function(data)
-//         {                    
+function categories_check()
+{
+  var  categories=$('#categories').val();
+  $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('purchase/change_items/{id}') }}",
+        data: { id: categories },             
              
-//             alert(data);
-//         }
+        success: function(data){ 
+         
+        $('#items_codes').children('option:not(:first)').remove();                  
+            for (var i=0; i < data.length; i++)
+            {
+             name =data[i].name;
+             code =data[i].code;
+             id=data[i].id;
+              names = name.replace('','');
+              codes = code.replace('','');
+              
+              var div_data="<option value="+id+">"+codes+"</option>";
+                
+                $(div_data).appendTo('#items_codes');
 
-//     });
+            }
+            $(".cat").dialog('close');
+            $("#items_codes").focus();
+        }
 
-// });
+
+    });
+}
+
+function gatepass()
+{
+  var gatepass_no=$('.gatepass_no').val();
+ 
+  $.ajax({
+           type: "POST",
+            url: "{{ url('purchase/gatepass_details/') }}",
+            data: { gatepass_no : gatepass_no },
+           success: function(data) {
+              
+              $('.supplier_invoice_no').val(data.supplier_invoice_number);
+              $('.supplier_invoice_date').val(data.date);
+              $('.supplier_details').val(data.name);
+              $('.supplier_invoice_value').val(data.total_invoice_value);
+              $('.receipt_note_no').val(data.supplier_delivery_number);
+              
+             
+           }
+        });
+}
 
 
+</script>
+<script type="text/javascript">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+<script src="jquery.ui.position.js"></script>
 </script>
 
 

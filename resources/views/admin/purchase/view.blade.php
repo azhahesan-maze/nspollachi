@@ -21,7 +21,17 @@
         <thead>
           <tr>
             <th>S.No</th>
-            <th>Batch No</th>
+            <th>Gate Pass No</th>
+            <th>Voucher No </th>
+            <th>Voucher Date </th>
+            <th>Receipt Note No </th>
+            <th>Supplier Invoice No </th>
+            <th>Supplier Invoice Date </th>
+            <th>Supplier Details </th>
+            <th>Order Details </th>
+            <th>Transport Details </th>
+            <th>Remarks </th>
+            <th>Supplier Invoice Value </th>
             <th>Total Amount</th>
             <th>Total Net Price</th>
            <th>Action </th>
@@ -35,7 +45,17 @@
           
             <tr>
               <td>{{ $count }}</td>
-              <td><a href="{{ url('purchase/item_details/'.$purchase->batch_no) }}">{{ $purchase->batch_no }}</a></td>
+              <td><a href="{{ url('purchase/item_details/'.$purchase->gatepass_id) }}">{{ $purchase->gatepassentries_gatepass_no }}</a></td>
+              <td>{{ $purchase->voucher_no }}</td>
+              <td>{{ $purchase->voucher_date }}</td>
+              <td>{{ $purchase->receipt_note_no }}</td>
+              <td>{{ $purchase->supplier_invoice_no }}</td>
+              <td>{{ $purchase->supplier_invoice_date }}</td>
+              <td>{{ $purchase->supplier_details }}</td>
+              <td>{{ $purchase->order_details }}</td>
+              <td>{{ $purchase->transport_details }}</td>
+              <td>{{ $purchase->remarks }}</td>
+              <td>{{ $purchase->supplier_invoice_value }}</td>
               <td>{{ $purchase->total_amount }}</td>
               <td>{{ $purchase->total_price }}</td>
               <td> 

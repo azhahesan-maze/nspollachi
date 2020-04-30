@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Category;
 use App\Purchase;
+use App\Models\ItemTaxDetails;
+use App\Temporary_Purchase;
+use App\GatePassEntry;
+use App\Purchase_Details;
+
 
 class PurchaseController extends Controller
 {
@@ -15,9 +21,14 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::select('batch_no','total_amount','total_price')
-                             ->groupBy('batch_no','total_amount','total_price')
-                             ->get();
+        $purchases = Purchase_Details::join('gate_pass_entries','gate_pass_entries.id','=',
+                                            'purchase__details.gate_pass_no')
+                                       ->select('*','gate_pass_entries.id as gatepass_id',
+                                        'purchase__details.id as purchase_details_id',
+                                        'purchase__details.gate_pass_no as gatepass_no',
+                                        'gate_pass_entries.gate_pass_no as gatepassentries_gatepass_no')
+                                       ->get();
+                                       
         return view('admin.purchase.view',compact('purchases'));
     }
 
@@ -28,8 +39,11 @@ class PurchaseController extends Controller
      */
     public function create()
     {
+        $date=date('Y-m-d');
         $items=Item::all();
-        return view('admin.purchase.add',compact('items'));
+        $categories=Category::all();
+        $gatepass_no=GatePassEntry::all();
+        return view('admin.purchase.add',compact('items','categories','date','gatepass_no'));
     }
 
     /**
@@ -42,17 +56,14 @@ class PurchaseController extends Controller
     {
         error_reporting(0);
         $count = $request->counts;
-        //return $count;
+
+        //return $request->get('total_amount');
 
         for($i=0;$i<$count;$i++)
         {
+              $insert = new Purchase;
             
-                $insert = new Purchase;
-
-            
-           $insert->batch_no = $request->get('batch_no');
-           $insert->total_amount = $request->get('total_amount');
-           $insert->total_price = $request->get('total_price');
+           $insert->gatepass_no = $request->get('gatepass_no');
            $insert->invoice_no = $request->invoice_sno[$i];
            $insert->item_code = $request->item_code[$i];
            $insert->item_name = $request->item_name[$i];
@@ -60,15 +71,6 @@ class PurchaseController extends Controller
            $insert->hsn = $request->hsn[$i];
            $insert->tax_rate = $request->tax_rate[$i];
            $insert->quantity = $request->quantity[$i];
-
-           // if($request->tax[$i] == '')
-           // {
-           //  $insert->inclusive = 0;
-           // }
-           // else
-           // {
-           //  $insert->inclusive = $request->tax[$i];
-           // }
            $insert->rate_exclusive = floatval($request->exclusive[$i]);
            $insert->rate_inclusive = floatval($request->inclusive[$i]);
            $insert->amount = $request->amount[$i];
@@ -77,6 +79,43 @@ class PurchaseController extends Controller
            $insert->save();
             
         }
+
+
+        $voucher_num=Purchase_Details::orderBy('voucher_no','DESC')
+                           ->select('voucher_no')
+                           ->first();
+
+         if ($voucher_num == null) 
+         {
+             $voucher_no=1;
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->voucher_no;
+             $voucher_no=$current_voucher_num+1;
+        
+         
+         }
+
+        $purchase_details = new Purchase_Details;
+
+        $purchase_details->voucher_no = $voucher_no;
+        $purchase_details->voucher_date = $request->voucher_date;
+        $purchase_details->gate_pass_no = $request->gatepass_no;
+        $purchase_details->receipt_note_no = $request->receipt_note_no;
+        $purchase_details->supplier_invoice_no = $request->supplier_invoice_no;
+        $purchase_details->supplier_invoice_date = $request->supplier_invoice_date;
+        $purchase_details->supplier_details = $request->supplier_details;
+        $purchase_details->order_details = $request->order_details;
+        $purchase_details->transport_details = $request->transport_details;
+        $purchase_details->remarks = $request->remarks;
+        $purchase_details->supplier_invoice_value = $request->supplier_invoice_value;
+        $purchase_details->total_amount = $request->get('total_amount');
+        $purchase_details->total_price = $request->get('total_price');
+
+        $purchase_details->save();
 
         return redirect()->back();
 
@@ -130,49 +169,108 @@ class PurchaseController extends Controller
     public function getdata(Request $request,$id)
     {
         $id=$request->id;
-        $data=Item::where('code','=',$id)
-                    ->select('name','mrp','hsn')
+        $data[]=Item::where('id','=',$id)
+                    ->select('name','mrp','hsn','code')
                     ->first();
+        $data[] =ItemTaxDetails::where('item_id','=',$id)
+                                ->select('igst')
+                                ->first(); 
+        if($data[1]=='')  
+        {
+            $data[1]=0;
+        }                                
         return $data;
     }
     
     public function storedata(Request $request)
     {
-        $id=$request->count;
-        $batch_no=$request->batch_no;
-
-        for($i=0;$i<=$id;$i++)
-        {
-            $insert =new Purchase();
-           $insert->batch_no = $request->get('batch_no');  
-           $insert->invoice_no = $request->invoice_no[$i];
-           $insert->item_code = $request->item_code[$i];
-           $insert->item_name = $request->item_name[$i];
-           $insert->mrp = $request->mrp[$i];
-           $insert->hsn = $request->hsn[$i];
-           $insert->tax_rate = $request->tax_rate[$i];
-           $insert->quantity = $request->quantity[$i];
-           $insert->inclusive = $request->inclusive[$i];
-           $insert->rate_exclusive = $request->rate_exclusive[$i];
-           $insert->rate_inclusive = $request->rate_inclusive[$i];
-           $insert->amount = $request->amount[$i];
-           $insert->discount = $request->discount[$i];
-           $insert->net_price = $request->net_price[$i];
-           $insert->save();
-        }
-
-        $data = Purchase::where('batch_no','=',$batch_no)
-                        ->get();
-
-        return $data;                
         
+           $gatepass_no = $request->array[0];
+           $invoice_no = $request->array[1];
+           $item_code = $request->array[2];
+           $item_name = $request->array[3];
+           $mrp = $request->array[4];
+           $hsn = $request->array[5];
+           $quantity = $request->array[6];
+           $tax_rate = $request->array[7];
+           $rate_exclusive =$request->array[8];
+           $rate_inclusive =$request->array[9];
+           $amount = $request->array[10];
+           $discount = $request->array[11];
+           $net_price = $request->array[12];
+           
+           $insert = new Temporary_Purchase;
+
+           $insert->gatepass_no = $gatepass_no;
+           $insert->invoice_no = $invoice_no;
+           $insert->item_code = $item_code;
+           $insert->item_name = $item_name;
+           $insert->mrp = $mrp;
+           $insert->hsn = $hsn;
+           $insert->tax_rate = $tax_rate;
+           $insert->quantity = $quantity;
+           $insert->rate_exclusive =$rate_exclusive;
+           $insert->rate_inclusive =$rate_inclusive;
+           $insert->amount = $amount;
+           $insert->discount = $discount;
+           $insert->net_price = $net_price;
+           $insert->status = 1;
+           $insert->save();
+
+
+        
+    }
+
+    
+
+    public function remove_data(Request $request)
+    {
+        $invoice_no = $request->invoice_no;
+
+        $Temporary_Purchase = Temporary_Purchase::where('invoice_no','=',$invoice_no)
+                            ->first();
+
+        $Temporary_Purchase->status = 0; 
+        $Temporary_Purchase->save();                  
+    }
+
+    public function gatepass_details(Request $request)
+    {
+   $id = $request->gatepass_no;
+
+   $gatepass_data = GatePassEntry::join('suppliers','suppliers.id','=','gate_pass_entries.supplier_name')
+                                    ->where('gate_pass_entries.id','=',$id)
+                                    ->select('*','suppliers.id as supplier_id','gate_pass_entries.id as gatepass_id')
+                                    ->first();
+       return $gatepass_data;
     }
 
     public function item_details($id)
     {
-        $items = Purchase::where('batch_no','=',$id)
-                         ->get();
+        $items = Purchase::join('items','items.id','=','purchases.item_code')
+                           ->where('purchases.gatepass_no','=',$id)
+                           ->select('*','items.id as item_id','purchases.id as purchase_id')
+                           ->get();
 
         return view('admin.purchase.item_details',compact('items'));                 
+    }
+
+    public function change_items(Request $request,$id)
+    {
+        $id=$request->id;
+        
+        $items = Item::where('category_id','=',$id)
+                     ->select('id','code','name')
+                     ->get();
+          
+                   
+
+          return $items;
+
+    }
+    public function get_items($id)
+    {
+        $items = Item::all();
+        return $items;
     }
 }

@@ -46,7 +46,7 @@
             <tr>
               <td>{{ $count }}</td>
               <td>{{ $item->invoice_no }}</td>
-              <td>{{ $item->item_code }}</td>
+              <td>{{ $item->code }}</td>
               <td>{{ $item->item_name }}</td>
               <td>{{ $item->mrp }}</td>
               <td>{{ $item->hsn }}</td>

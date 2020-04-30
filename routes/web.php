@@ -538,8 +538,12 @@ Route::resource('cart', 'CartController',['middleware' => ['auth']]);
 
 Route::resource('purchase', 'PurchaseController',['middleware' => ['auth']]);
 Route::get('purchase/getdata/{id}', 'PurchaseController@getdata');
-Route::post('purchase/storedata', 'PurchaseController@storedata');
+Route::post('purchase/storedata/', 'PurchaseController@storedata');
+Route::post('purchase/gatepass_details/', 'PurchaseController@gatepass_details');
+Route::post('purchase/remove_data/', 'PurchaseController@remove_data');
 Route::get('purchase/item_details/{id}', 'PurchaseController@item_details');
+Route::get('purchase/change_items/{id}', 'PurchaseController@change_items');
+Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
 
    
 /* Purchase End Here  */

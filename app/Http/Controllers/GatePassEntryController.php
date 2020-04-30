@@ -99,7 +99,7 @@ class GatePassEntryController extends Controller
                            ->select('gate_pass_no')
                            ->first();
 
-              if ($gate_pass_no == null) 
+         if ($gate_pass_no == null) 
          {
              $gatepass=1;
 
