@@ -15,20 +15,20 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('gatepass_no');
-            $table->string('invoice_no');
-            $table->string('item_code');
-            $table->string('item_name');
-            $table->string('mrp');
-            $table->string('hsn');
-            $table->string('quantity');
+            $table->string('gatepass_no')->nullable();
+            $table->string('invoice_no')->nullable();
+            $table->string('item_code')->nullable();
+            $table->string('item_name')->nullable();
+            $table->string('mrp')->nullable();
+            $table->string('hsn')->nullable();
+            $table->string('quantity')->nullable();
             $table->string('tax_rate')->nullable();
             $table->string('inclusive')->nullable();
             $table->string('rate_exclusive')->nullable();
             $table->string('rate_inclusive')->nullable();
-            $table->string('amount');
+            $table->string('amount')->nullable();
             $table->string('discount')->nullable();
-            $table->string('net_price');
+            $table->string('net_price')->nullable();
             $table->timestamps();
         });
     }

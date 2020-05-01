@@ -15,13 +15,23 @@ class CreateTemporaryPurchasesTable extends Migration
     {
         Schema::create('temporary__purchases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('gatepass_no');
+            $table->string('gatepass_no')->nullable();
+            $table->string('voucher_no')->nullable();
+            $table->string('voucher_date')->nullable();
+            $table->string('receipt_note_no')->nullable();
+            $table->string('supplier_invoice_no')->nullable();
+            $table->string('supplier_invoice_date')->nullable();
+            $table->string('supplier_details')->nullable();
+            $table->string('order_details')->nullable();
+            $table->string('transport_details')->nullable();
+            $table->string('remarks')->nullable();
+            $table->string('supplier_invoice_value')->nullable();
             $table->string('invoice_no');
             $table->string('item_code');
             $table->string('item_name');
             $table->string('mrp');
             $table->string('hsn');
-            $table->string('quantity');
+            $table->string('quantity')->nullable();
             $table->string('tax_rate')->nullable();
             $table->string('inclusive');
             $table->string('rate_exclusive')->nullable();
