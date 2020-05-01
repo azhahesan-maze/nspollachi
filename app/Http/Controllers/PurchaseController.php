@@ -198,10 +198,29 @@ class PurchaseController extends Controller
            $amount = $request->array[10];
            $discount = $request->array[11];
            $net_price = $request->array[12];
+
+           $voucher_date = $request->array_new[0];
+           $receipt_note_no = $request->array_new[1];
+           $supplier_invoice_no = $request->array_new[2];
+           $supplier_invoice_date = $request->array_new[3];
+           $supplier_details = $request->array_new[4];
+           $order_details = $request->array_new[5];
+           $transport_details = $request->array_new[6];
+           $remarks = $request->array_new[7];
+           $supplier_invoice_value =$request->array_new[8];
            
            $insert = new Temporary_Purchase;
 
            $insert->gatepass_no = $gatepass_no;
+           $insert->voucher_date = $voucher_date;
+           $insert->receipt_note_no = $receipt_note_no;
+           $insert->supplier_invoice_no = $supplier_invoice_no;
+           $insert->supplier_invoice_date = $supplier_invoice_date;
+           $insert->supplier_details = $supplier_details;
+           $insert->order_details = $order_details;
+           $insert->transport_details = $transport_details;
+           $insert->remarks = $remarks;
+           $insert->supplier_invoice_value = $supplier_invoice_value;
            $insert->invoice_no = $invoice_no;
            $insert->item_code = $item_code;
            $insert->item_name = $item_name;
@@ -226,8 +245,10 @@ class PurchaseController extends Controller
     public function remove_data(Request $request)
     {
         $invoice_no = $request->invoice_no;
+        $gate_pass_no = $request->gatepass_no;
 
         $Temporary_Purchase = Temporary_Purchase::where('invoice_no','=',$invoice_no)
+                            ->where('gatepass_no','=',$gate_pass_no)
                             ->first();
 
         $Temporary_Purchase->status = 0; 

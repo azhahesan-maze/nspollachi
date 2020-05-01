@@ -469,6 +469,15 @@ function add_items()
   var j=$('#mytable tr:last').attr('class');
  var l=parseInt(i)+1;
  var gatepass_no=$('.gatepass_no').val();
+ var voucher_date=$('.voucher_date').val();
+ var receipt_note_no=$('.receipt_note_no').val();
+ var supplier_invoice_no=$('.supplier_invoice_no').val();
+ var supplier_invoice_date=$('.supplier_invoice_date').val();
+ var supplier_details=$('.supplier_details').val();
+ var order_details=$('.order_details').val();
+ var transport_details=$('.transport_details').val();
+ var remarks=$('.remarks').val();
+ var supplier_invoice_value=$('.supplier_invoice_value').val();
  var invoice_no=$('.invoice_sno').val();
  var item_code=$("#items_codes option:selected");
  var item_code=item_code.text();
@@ -557,7 +566,11 @@ $(".total_amount").html(parseFloat(total_amount));
 $('#counts').val(len);
 i++;
 
-var array=[gatepass_no,invoice_no,items_codes,item_name,mrp,hsn,quantity,tax_rate,exclusive,inclusive,amount,discount,net_price];
+var array=[gatepass_no,invoice_no,items_codes,item_name,mrp,hsn,quantity,tax_rate,exclusive,
+          inclusive,amount,discount,net_price];
+
+var array_new=[voucher_date,receipt_note_no,supplier_invoice_no,supplier_invoice_date,
+              supplier_details,order_details,transport_details,remarks,supplier_invoice_value];
 
 $.ajax({
            type: "GET",
@@ -586,7 +599,7 @@ $.ajax({
 $.ajax({
            type: "POST",
             url: "{{ url('purchase/storedata/') }}",
-            data: { array: array },
+            data: { array: array, array_new: array_new },
            success: function(data) {
              // console.log(data);
              
@@ -622,6 +635,7 @@ $(document).on("click",".remove_items",function(){
 
        var button_id = $(this).attr("id");
        var invoice_no=$('.invoice_no'+button_id).val();
+       var gatepass_no=$('.gatepass_no').val();
        $('#row'+button_id).remove();
        
        var counts = $('#counts').val();
@@ -641,7 +655,7 @@ $(document).on("click",".remove_items",function(){
     $.ajax({
            type: "POST",
             url: "{{ url('purchase/remove_data/') }}",
-            data: { invoice_no: invoice_no },
+            data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
            success: function(data) {
              // console.log(data);
              
