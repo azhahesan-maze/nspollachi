@@ -100,6 +100,7 @@
                             @can('location_list')
                             <li><a href="{{url('master/location')}}">Company Location</a></li>
                             @endcan
+                            <li><a href="{{ url('master/ho_details')}}">Head Office Details</a></li>
                         </ul>
                     </li>
                     @endif

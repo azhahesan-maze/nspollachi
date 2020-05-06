@@ -548,6 +548,18 @@ Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
    
 /* Purchase End Here  */
 
+/* Head Office Details Master Group Start Here  */
+Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
+    Route::any('/', 'Ho_detailsController@index')->middleware('permission:location_list');
+    Route::any('create', 'Ho_detailsController@create')->middleware('permission:location_create');
+    Route::any('store', 'Ho_detailsController@store')->middleware('permission:location_create');
+    Route::any('show/{id}', 'Ho_detailsController@show')->middleware('permission:location_list');
+    Route::any('edit/{id}', 'Ho_detailsController@edit')->middleware('permission:location_edit');
+    Route::any('update/{id}', 'Ho_detailsController@update')->middleware('permission:location_edit');
+    Route::any('delete/{id}', 'Ho_detailsController@destroy')->middleware('permission:location_delete');
+});
+/* Head Office Details Master  End Here  */
+
 
 //Route::any('master/address_type/store', 'AddressTypeController@store');
 
