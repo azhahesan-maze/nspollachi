@@ -88,11 +88,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
-                                  <input type="hidden" name="address_line_2" id="address_line_2">
-                                  <input type="hidden" name="city_id" id="city_id">
-                                  <input type="hidden" name="district_id" id="district_id">
-                                  <input type="hidden" name="state_id" id="state_id">
-                                  <input type="hidden" name="postal_code" id="postal_code">
+                                  <!-- <input type="text" name="address_line_2" id="address_line_2">
+                                  <input type="text" name="city_id" id="city_id">
+                                  <input type="text" name="district_id" id="district_id">
+                                  <input type="text" name="state_id" id="state_id">
+                                  <input type="text" name="postal_code" id="postal_code"> -->
                                   <div class="address">
                                     
                                   </div>
@@ -1087,14 +1087,14 @@ function supplier_details()
             data: { supplier_id : supplier_id },
            success: function(data) {
 
-            //console.log(data[5]);
-            $('#address_line_1').val(data[0]);
-            $('#address_line_2').val(data[1]);
-            $('#city_id').val(data[2]);
-            $('#district_id').val(data[3]);
-            $('#state_id').val(data[4]);
-            $('#postal_code').val(data[5]);
-           $('.address').text(data[6]);
+            console.log(data);
+            $('#address_line_1').val(data);
+            // $('#address_line_2').val(data[1]);
+            // $('#city_id').val(data[2]);
+            // $('#district_id').val(data[3]);
+            // $('#state_id').val(data[4]);
+            // $('#postal_code').val(data[5]);
+           $('.address').text(data);
            }
         });
 }

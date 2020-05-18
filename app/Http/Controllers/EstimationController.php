@@ -217,12 +217,12 @@ $count=0;
       
           if(isset($getdata->address_line_1) && !empty($getdata->address_line_1)){
             $address.=$getdata->address_line_1.", \n";
-            $data[] = $getdata->address_line_1;
+            
           }
 
           if(isset($getdata->address_line_2) && !empty($getdata->address_line_2)){
             $address.=$getdata->address_line_2.",  \n ";
-            $data[] = $getdata->address_line_2;
+            
           }
 
 
@@ -230,21 +230,15 @@ $count=0;
 
             if(!empty($getdata->city->name)){
                 $address.=$getdata->city->name." ,";
-                $data[] = $getdata->city->id;
+               
             }
-            else
-            {
-                $data[] = '';
-            }
+           
 
             if(!empty($getdata->district->name)){
                 $address.=$getdata->district->name." ,";
                 $data[] = $getdata->district->id;
             }
-            else
-            {
-                $data[] = '';
-            }
+            
 
             $address.="\n";
 
@@ -254,11 +248,11 @@ $count=0;
 
          if(isset($getdata->state->name)  && !empty($getdata->state->name)){
              $address.=$getdata->state->name." -";
-             $data[] = $getdata->state->id;
+             
         if(isset($getdata->postal_code) && !empty($getdata->postal_code)){
             // $address.=" - ";
             $address.=$getdata->postal_code." ";
-            $data[] = $getdata->postal_code;
+            
         }
              
              $address.="\n";
@@ -270,11 +264,11 @@ $count=0;
        // $data[] = $district_id;
        // $data[] = $state_id;
        // $data[] = $postal_code;
-       $data[] = $address;
+       //$data[] = $address;
 
 
 
-   return $data;   
+   return $address;   
         
     }
 
