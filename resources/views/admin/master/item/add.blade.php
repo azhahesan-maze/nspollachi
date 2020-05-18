@@ -402,7 +402,7 @@
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">UOM  <span class="mandatory">*</span></label>
                      <div class="col-sm-6">
-                        <select class="js-example-basic-multiple col-12 form-control custom-select  uom_for_minimum_sales_item" name="uom_for_minimum_sales_item" required>
+                        <select class="js-example-basic-multiple col-12 form-control custom-select  uom_for_minimum_sales_item" name="uom_for_minimum_sales_item">
                            <option value="">Choose UOM</option>
                            @foreach ($uom as $value)
                            <option value="{{ $value->id }}" {{ old('uom_for_minimum_sales_item') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
@@ -701,8 +701,12 @@ $(document).on("submit",".submit_form2",function(){
    
    
    $(document).ready(function(){
+
      s_no();
      item_type();
+
+     var is_minimum_sales_qty_applicable=$(".is_minimum_sales_qty_applicable:checked").val();
+
      var currentDate = new Date();
        $('.valid_from,.common_effective_from').datepicker({
        format: "dd-mm-yyyy",
@@ -729,6 +733,10 @@ $(document).on("submit",".submit_form2",function(){
      /* Item Type Parent  */
      $(".child_unit").removeAttr("required");
      $(".child_item_id").removeAttr('required');
+     $(".uom_for_repack_item").removeAttr('required');
+
+
+
    
      var item_type=$(".item_type").val();
      if(item_type == "Bulk")
@@ -749,15 +757,23 @@ $(document).on("submit",".submit_form2",function(){
    
      if(item_type == "Parent")
      {
+
        $(".child_unit").attr('required', 'required');
        $(".child_item_id").attr('required', 'required');
+       $(".uom_for_repack_item").attr('required', 'required');
        $(".child_div").css("display","block");
        //get_category_based_item($(".category_1").val(),$(".category_2").val(),$(".category_3").val(),item_id="")
      }else
      {
        $(".child_div").css("display","none");
      }
+
+     
+    
+
 	 $("select").select2();
+
+
    
    }
    
@@ -837,13 +853,21 @@ $(document).on("submit",".submit_form2",function(){
      var is_minimum_sales_qty_applicable=$(".is_minimum_sales_qty_applicable:checked").val();
      $(".minimum_sales_qty").removeAttr("required");
      $(".minimum_sales_price").removeAttr("required");
+     $(".uom_for_minimum_sales_item").removeAttr("required");
+
+     
+     
+
      if(is_minimum_sales_qty_applicable == 1){
-       $(".minimum_sales_qty").attr('required', 'required');
-     $(".minimum_sales_price").attr('required', 'required');
+      $(".minimum_sales_qty").attr('required', 'required');
+      $(".minimum_sales_price").attr('required', 'required');
+      $(".uom_for_minimum_sales_item").attr('required', 'required');
+
        $(".minimum_sales_div").css("display","block");
      }else{
        $(".minimum_sales_qty").removeAttr("required");
        $(".minimum_sales_price").removeAttr("required");
+      $(".uom_for_minimum_sales_item").removeAttr("required");
        $(".minimum_sales_div").css("display","none");
      }
 	 $("select").select2();
