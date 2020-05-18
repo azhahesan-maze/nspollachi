@@ -273,12 +273,22 @@
 
 <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Gate Pass Entry
+              Estimation
             </a>
             <ul class="dropdown-menu megamenu">
                     <div class="row mx-0">
-                   
-                    <li class="col-md-3 dropdown-item">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Estimation</li>
+                           
+                            <li><a href="{{ route('estimation.create') }}">Estimation</a></li>
+                            
+                            <!-- <li><a href="{{ route('cart.index') }}">Cart</a></li> -->
+                            
+                            
+                        </ul>
+                    </li>
+                    <!-- <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Gate Pass Entry</li>
                            
@@ -288,7 +298,7 @@
                             
                             
                         </ul>
-                    </li>
+                    </li> -->
                     
                     
             </ul>        

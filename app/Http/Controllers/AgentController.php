@@ -64,7 +64,7 @@ class AgentController extends Controller
                     'address_line_1'=>$request->address_line_1[$key],
                     'address_line_2'=>$request->address_line_2[$key],
                     'land_mark'=>$request->land_mark[$key],
-                    'country_id'=>$request->country_id[$key],
+                    'country_id'=>1,
                     'state_id'=>$request->state_id[$key],
                     'district_id'=>$request->district_id[$key],
                     'city_id'=>$request->city_id[$key],

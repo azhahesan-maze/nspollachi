@@ -548,6 +548,16 @@ Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
    
 /* Purchase End Here  */
 
+/* Estimation Start Here  */
+
+Route::resource('estimation', 'EstimationController',['middleware' => ['auth']]);
+Route::post('estimation/address_details/', 'EstimationController@address_details');
+Route::get('estimation/getdata/{id}', 'EstimationController@getdata');
+Route::get('estimation/getdata_item/{id}', 'EstimationController@getdata_item');
+
+
+/* Estimation End Here  */
+
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
     Route::any('/', 'Ho_detailsController@index')->middleware('permission:location_list');
