@@ -213,11 +213,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       
                       <div class="col-md-2" id="rate_exclusive">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
-                      <input type="text" class="form-control exclusive" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" onchange="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" onchange="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       <div class="col-md-2"  id="rate_inclusive">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
-                      <input type="text" class="form-control inclusive" id="inclusive" placeholder="Inclusive Tax" onchange="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" onchange="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
@@ -229,7 +229,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       
                       <div class="col-md-2">
                           <label style="font-family: Times new roman;">Discount Rs</label>
-                        <input type="text" class="form-control discount  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" onchange="discount_calc()" name="discount" value="" >
+                        <input type="text" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" onchange="discount_calc()" name="discount" value="" >
                         </div>
 
                         <input type="hidden" name="disc_total" id="disc_total" value="0">
@@ -241,7 +241,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                                           
                      <div class="" align="center">
                                    
-                    <input type="button" class="btn btn-success add_items" value="Add More" name="" id="add_items0">    
+                    <input type="button" class="btn btn-success add_items" value="Add More" name="" id="add_items0">  
+
+                    <input type="button" style="display: none" class="btn btn-success update_items" value="Update" name="" id="update_items">  
                      </div> <br>              
                    
 <style>
@@ -313,19 +315,19 @@ table, th, td {
                     </div>
 
 
-                    <div class="row col-md-12">
+                    <!-- <div class="row col-md-12">
                             <div class="col-md-2">
                               <label style="font-family: Times new roman;">Expense Type</label>
                             </div>
                             <div class="col-md-2">
                               <label style="font-family: Times new roman;">Expense Amount</label>
                             </div>
-                          </div>
+                          </div> -->
                         <div class="row col-md-12 append_expense">
 
                           <div class="row col-md-12 expense">
                         <div class="col-md-2">
-
+                          <label style="font-family: Times new roman;">Expense Type</label>
                         <select class="js-example-basic-multiple form-control" 
                         data-placeholder="Choose Expense Type" id="expense_type" name="expense_type[]" >
                         <option value=""></option>
@@ -337,11 +339,11 @@ table, th, td {
                          
                         </div>
                       <div class="col-md-2">
-                        
+                        <label style="font-family: Times new roman;">Expense Amount</label>
                       <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       <div class="col-md-2">
-                        
+                        <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
                       <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
                     </div>
                   </div>
@@ -380,12 +382,13 @@ table, th, td {
                        
 
                        <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save">
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save" disabled="">
         </div>
       </form>
                        
         <script type="text/javascript">
           var i=0;
+          var discount_total = 0;
 
 function calculate_total_net_price(){
   var total_net_price=0;
@@ -426,10 +429,10 @@ function add_items()
  var gst=$('.gst').val();
  var quantity=$('.quantity').val();
  var tax_rate=$('.tax_rate').val();
- var exclusive=$('.exclusive').val();
- var inclusive=$('.inclusive').val();
+ var exclusive=$('#exclusive').val();
+ var inclusive=$('#inclusive').val();
  var amount=$('.amount').val();
- var discount=$('.discount').val();
+ var discount=$('#discount').val();
  var discount_percentage=$('.discount_percentage').val();
  var net_price=$('.net_price').val();
  
@@ -468,8 +471,8 @@ function add_items()
   alert('You cannot insert Both Discount,Choose Any One Of That!');
     $('#discount').val('');
     $('.discount_percentage').val('');
-    $('.exclusive').val('');
-    $('.inclusive').val('');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
     $('.amount').val('');
     $('.net_price').val('');
     ('.gst').val('');
@@ -477,7 +480,7 @@ function add_items()
  else
  {
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="bank_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]">'+invoice_no+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+items_codes+'" name="item_code[]">'+item_code+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+item_name+'" name="item_name[]">'+item_name+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+hsn+'" name="hsn[]">'+hsn+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+mrp+'" name="mrp[]">'+mrp+'</div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" value="'+exclusive+'" name="exclusive[]">'+exclusive+'<input type="hidden" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+quantity+'" name="quantity[]">'+quantity+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" value="'+uom_id+'" name="uom[]">'+uom_name+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" value="'+amount+'" name="amount[]">'+amount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="discount_val'+i+'" type="hidden" value="'+discount+'" name="discount[]">'+discount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" value="'+gst+'" name="gst[]"><input type="hidden"  value="'+tax_rate+'" name="tax_rate[]">'+gst+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" value="'+net_price+'" name="net_price[]">'+net_price+'</div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="last_purchase" value="" name="last_purchase[]"></div></div></td><td><a class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a><a class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></a></td></tr>'
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="bank_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]">'+invoice_no+'</div></div></td><td class="items'+i+'"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]">'+item_code+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]">'+item_name+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]">'+hsn+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]">'+mrp+'</div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]">'+exclusive+'<input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]">'+quantity+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]">'+uom_name+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]">'+amount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="discount_val'+i+'" type="hidden" value="'+discount+'" name="discount[]">'+discount+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]">'+gst+'</div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]">'+net_price+'</div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="last_purchase" value="" name="last_purchase[]"></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
 
   $('.append_proof_details').append(items);
 var length=$('#mytable tr:last').attr('class').split(' ')[0];
@@ -527,6 +530,20 @@ var to_html_total_net = total_net_price.toFixed(2);
 var to_html_total_amount = total_amount.toFixed(2);
 $(".total_net_price").html(parseFloat(to_html_total_net));
 $(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+var discount_val = $('#discount').val();
+
+var discount_total = $('#total_discount').val();
+if(discount_val == '')
+{
+  var discount_val = 0;
+}
+var discount_total = parseInt(discount_total)+parseInt(discount_val);
+
+$('#disc_total').val(discount_total);
+$('#total_discount').val(discount_total);
+
 
 $("#round_off").val(Math.round(total_net_price));
 
@@ -581,10 +598,10 @@ $('.mrp').val('');
 $('.hsn').val('');
 $('.quantity').val('');
 $('.tax_rate').val('');
-$('.exclusive').val('');
-$('.inclusive').val('');
+$('#exclusive').val('');
+$('#inclusive').val('');
 $('.amount').val('');
-$('.discount').val('');
+$('#discount').val('');
 $('.discount_percentage').val('');
 $('.net_price').val('');
 $('.gst').val('');
@@ -661,11 +678,34 @@ $(document).on("click",".remove_items",function(){
   
 });
 
+// $(document).on("click",".edit_items",function(){
+//   $('.update_items').show();
+//   $('.add_items').hide();
+//   var id = $(this).attr("id");
+//   var invoice_no = $('.invoice_no'+id).val(); var item_code_id = $('.item_code'+id).val();
+//   var item_code_name = $('.items'+id).text(); var item_name = $('.item_name'+id).val();
+//   var hsn = $('.hsn'+id).val(); var mrp = $('.mrp'+id).val();
+//   var discount_val = $('.discount_val'+id).val(); var exclusive = $('.exclusive'+id).val();
+//   var inclusive = $('.inclusive'+id).val(); var quantity = $('.quantity'+id).val();
+//   var uom = $('.uom'+id).val(); var amnt = $('#amnt'+id).val();
+//   var tax = $('#tax'+id).val(); var tax = $('.tax-gst'+id).val();
+//   var net_price = $('.net_price'+id).val(); $('.exclusive_rate').val(exclusive);
+//   $('.inclusive_rate').val(inclusive);$('.item_sno').val(invoice_no);
+//   $('.items_codes').val(item_code_id);$('.item_name').val(item_name);
+//   $('.item_code').val(item_code_name);$('.mrp').val(mrp);$('.hsn').val(hsn);
+//   $('.quantity').val(quantity);$('.tax_rate').val(tax_gst);
+//   $('.amount').val(amnt);$('.net_price').val(net_price);
+//   $('.gst').val(tax);$('.uom').val(uom);
+//   var lastDigit = String(discount_val).substr(-1); if(lastDigit == '%'){
+//   var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
+//   $('.discount').val('');}else{$('.discount_rs').val(discount_val);$('.discount_percentage').val(''); }
+
+// });
 
 function expense_add()
 {
   
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman; color:white;">Expense Type</label><select class="js-example-basic-multiple form-control" required="" id="expense_type" name="expense_type[]" ><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman; color:white;">Expense Amount</label><input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control" required="" id="expense_type" name="expense_type[]" ><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
   var length=$('.expense').length;
@@ -875,12 +915,12 @@ function discount_calc()
       $('#net_price').val(total_net_val.toFixed(2));
 
   
-    var discount_total = $('#disc_total').val();
+    // var discount_total = $('#disc_total').val();
     
-    var discount_total = parseInt(discount_total)+parseInt(discount);
+    // var discount_total = parseInt(discount_total)+parseInt(discount);
 
-    $('#disc_total').val(discount_total);
-    $('#total_discount').val(discount_total);
+    // $('#disc_total').val(discount_total);
+    // $('#total_discount').val(discount_total);
   
 }
 
