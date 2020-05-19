@@ -466,7 +466,7 @@ function add_items()
  {
   alert('Please Fill All The Input Fields');
  }
- else if($('.discount').val() != '' && $('.discount_percentage').val() != '')
+ else if($('#discount').val() != '' && $('.discount_percentage').val() != '')
  {
   alert('You cannot insert Both Discount,Choose Any One Of That!');
     $('#discount').val('');
@@ -777,7 +777,7 @@ function calc_exclusive()
       var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
       var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
 
-      $('#inclusive').val(gst_rate_inclusive);
+      $('#inclusive').val(gst_rate_inclusive.toFixed(2));
       //alert(rate);
       var net_val = parseFloat(total)*parseFloat(rate);
       //alert(net_val);
@@ -825,7 +825,7 @@ function calc_inclusive()
       var gst_rate_exclusive = parseFloat(rate_inclusive)-parseFloat(gst_rate);
       var total = parseInt(quantity)*parseFloat(gst_rate_exclusive);
       $('#amount').val(total.toFixed(2));
-      $('#exclusive').val(gst_rate_exclusive);
+      $('#exclusive').val(gst_rate_exclusive.toFixed(2));
       //alert(rate);
       var net_val = parseFloat(total)*parseFloat(rate);
       //alert(net_val);
