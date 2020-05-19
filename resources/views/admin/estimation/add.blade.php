@@ -751,6 +751,7 @@ function calc_exclusive()
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
   var tax_rate = $('.tax_rate').val();
+  var mrp = $('.mrp').val();
   
 
   if (quantity == '') 
@@ -760,7 +761,15 @@ function calc_exclusive()
     $('#inclusive').val('');
     $('#quantity').focus();
   }
+  else if(mrp == '')
+  {
+    alert('Please Select Any Item');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+  }
   
+  else
+  {
   
       var total = parseInt(quantity)*parseFloat(rate_exclusive);
     
@@ -788,7 +797,7 @@ function calc_exclusive()
 
     }
 
-    
+   } 
   
 }
 
@@ -798,6 +807,7 @@ function calc_inclusive()
   var quantity = $('#quantity').val();
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
+  var mrp = $('.mrp').val();
   var tax_rate = $('.tax_rate').val();
   
 
@@ -808,11 +818,18 @@ function calc_inclusive()
     $('#inclusive').val('');
     $('#quantity').focus();
   }
+  else if(mrp == '')
+  {
+    alert('Please Select Any Item');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+  }
   
     //   var total = parseInt(quantity)*parseInt(rate_inclusive);
     
     // $('#amount').val(total.toFixed(2));
-
+    else
+    {
     if(tax_rate == '')
     {
       $('#net_price').val(total.toFixed(2));
@@ -836,6 +853,7 @@ function calc_inclusive()
 
     }
 
+  }
     
   
 }
