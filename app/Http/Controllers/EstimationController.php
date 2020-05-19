@@ -275,8 +275,9 @@ $count=0;
     public function getdata(Request $request,$id)
     {
         $id=$request->id;
-        $data[]=Item::where('id','=',$id)
-                    ->select('id','name','mrp','hsn','code')
+        $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
+                    ->where('items.id','=',$id)
+                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name')
                     ->first();
         $data[] =ItemTaxDetails::where('item_id','=',$id)
                                 ->select('igst')

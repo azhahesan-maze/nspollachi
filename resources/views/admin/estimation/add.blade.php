@@ -993,11 +993,13 @@ var row_id=$('#last').val();
         success: function(data){ 
           //alert(data);
              
-             id = data[0].id;
-             name =data[0].name;
+             id = data[0].item_id;
+             name =data[0].item_name;
              code =data[0].code;
              mrp =data[0].mrp;
              hsn =data[0].hsn;
+             uom_id =data[0].uom_id;
+             uom_name =data[0].uom_name;
              igst =data[1].igst;
               
               //var gst = igst/100;
@@ -1009,6 +1011,8 @@ var row_id=$('#last').val();
             $('#item_name').val(name);
              $('#mrp').val(mrp);
              $('#hsn').val(hsn);
+             $('#uom').val(uom_id);
+              $('#uom_name').val(uom_name);
              $('#tax_rate').val(igst);
              $(".cat").dialog('close');
              $('#quantity').focus();
