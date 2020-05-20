@@ -186,7 +186,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     </div>
                     <div class="col-md-2">
                       <label style="font-family: Times new roman;">MRP</label>
-                      <input type="text" class="form-control mrp required_for_proof_valid" readonly="" placeholder="MRP" id="mrp" name="mrp" value="">
+                      <input type="text" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
                        
                       </div>
 
@@ -207,7 +207,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <div class="row col-md-12">
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Tax Rate%</label>
-                      <input type="text" class="form-control tax_rate  required_for_proof_valid" readonly="" placeholder="Tax Rate%" name="tax_rate" value="" id="tax_rate">
+                      <input type="text" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" name="tax_rate" value="" id="tax_rate">
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
                       
@@ -688,7 +688,7 @@ $(document).on("click",".remove_items",function(){
 //   var discount_val = $('.discount_val'+id).val(); var exclusive = $('.exclusive'+id).val();
 //   var inclusive = $('.inclusive'+id).val(); var quantity = $('.quantity'+id).val();
 //   var uom = $('.uom'+id).val(); var amnt = $('#amnt'+id).val();
-//   var tax = $('#tax'+id).val(); var tax = $('.tax-gst'+id).val();
+//   var tax = $('#tax'+id).val(); var tax_gst = $('.tax_gst'+id).val();
 //   var net_price = $('.net_price'+id).val(); $('.exclusive_rate').val(exclusive);
 //   $('.inclusive_rate').val(inclusive);$('.item_sno').val(invoice_no);
 //   $('.items_codes').val(item_code_id);$('.item_name').val(item_name);
@@ -696,9 +696,17 @@ $(document).on("click",".remove_items",function(){
 //   $('.quantity').val(quantity);$('.tax_rate').val(tax_gst);
 //   $('.amount').val(amnt);$('.net_price').val(net_price);
 //   $('.gst').val(tax);$('.uom').val(uom);
-//   var lastDigit = String(discount_val).substr(-1); if(lastDigit == '%'){
-//   var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
-//   $('.discount').val('');}else{$('.discount_rs').val(discount_val);$('.discount_percentage').val(''); }
+//   var lastDigit = String(discount_val).substr(-1);
+//   if(lastDigit == '%')
+//   {
+//     var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
+//   $('.discount').val('');
+//   } 
+//   else
+//   {
+//    $('.discount_rs').val(discount_val);$('.discount_percentage').val(''); 
+//   }
+   
 
 // });
 
@@ -837,12 +845,13 @@ function calc_inclusive()
     else
     {
 
-      var rate=parseFloat(tax_rate)/100;
-      var gst_rate = parseFloat(rate_inclusive)*parseFloat(rate);
-      var gst_rate_exclusive = parseFloat(rate_inclusive)-parseFloat(gst_rate);
-      var total = parseInt(quantity)*parseFloat(gst_rate_exclusive);
+      var rate=parseFloat(tax_rate)/100+1;
+      //alert(rate_inclusive);
+      var gst_rate = parseFloat(rate_inclusive)/parseFloat(rate);
+      //var gst_rate_exclusive = parseFloat(rate_inclusive)-parseFloat(gst_rate);
+      var total = parseInt(quantity)*parseFloat(gst_rate);
       $('#amount').val(total.toFixed(2));
-      $('#exclusive').val(gst_rate_exclusive.toFixed(2));
+      $('#exclusive').val(gst_rate.toFixed(2));
       //alert(rate);
       var net_val = parseFloat(total)*parseFloat(rate);
       //alert(net_val);
@@ -917,8 +926,8 @@ function discount_calc()
   var disc_amount_exclusive = parseFloat(exclusive)-parseFloat(discount);
   var disc_amount_inclusive = parseFloat(inclusive)-parseFloat(discount);
 
-  $("#exclusive").val(disc_amount_exclusive);
-  $("#inclusive").val(disc_amount_inclusive);
+  $("#exclusive").val(disc_amount_exclusive.toFixed(2));
+  $("#inclusive").val(disc_amount_inclusive.toFixed(2));
 
   calc_exclusive();
   var amount = $(".amount").val();
@@ -973,8 +982,8 @@ function discount_calc1()
   var disc_amount_exclusive = parseFloat(exclusive)-parseFloat(disc_val_exclusive);
   var disc_amount_inclusive = parseFloat(inclusive)-parseFloat(disc_val_inclusive);
 
-  $("#exclusive").val(disc_amount_exclusive);
-  $("#inclusive").val(disc_amount_inclusive);
+  $("#exclusive").val(disc_amount_exclusive.toFixed(2));
+  $("#inclusive").val(disc_amount_inclusive.toFixed(2));
   calc_exclusive();
   var amount = $(".amount").val();
   //alert(disc_amount);
