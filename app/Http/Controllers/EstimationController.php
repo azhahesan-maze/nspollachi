@@ -251,12 +251,13 @@ $count=0;
              
         if(isset($getdata->postal_code) && !empty($getdata->postal_code)){
             // $address.=" - ";
-            $address.=$getdata->postal_code." ";
+            $address.=$getdata->postal_code.',';
             
         }
              
              $address.="\n";
          }
+         $address.="GST Number :".$getdata->gst_no;
 
        // $data[] = $address_line_1;
        // $data[] = $address_line_2;

@@ -85,7 +85,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  </select>
                                  
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
                                   <!-- <input type="text" name="address_line_2" id="address_line_2">
