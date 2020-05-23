@@ -139,14 +139,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
           <input type="text" class="form-control item_code  required_for_proof_valid" placeholder="Item Code" id="item_code" name="item_code" value="" oninput="get_details()">
 
           <input type="hidden" class="form-control items_codes  required_for_proof_valid" placeholder="Item Code" id="items_codes" name="items_codes" value="">
-          
-              <!-- <select class="js-example-basic-multiple form-control items_codes" 
-              data-placeholder="Choose Item Code" id="items_codes" onchange="item_codes()" name="item_code" >
-              <option value=""></option>
-                  @foreach($item as $items)
-                  <option value="{{ $items->id }}">{{ $items->code }}</option>
-                  @endforeach
-               </select> -->
                
               </div>
               
@@ -158,12 +150,19 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <option value="{{ $category->id }}">{{ $category->name }}</option>
                           @endforeach
                         </select><br><br>
+                        <!-- <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
+                          <option></option>
+                          @foreach($brand as $brands)
+                          <option value="{{ $brands->id }}">{{ $brands->name }}</option>
+                          @endforeach
+                        </select><br><br> -->
                         <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
                           <option></option>
                           @foreach($item as $items)
                           <option value="{{ $items->id }}">{{ $items->code }}</option>
                           @endforeach
                         </select>
+
                       </div>
 
                       <!-- <div class="code" id="code" style="display: none;" title="Choose Item Code">
@@ -483,9 +482,15 @@ function add_items()
   var net_price=0;
  }
 
- if(items_codes == '' || invoice_no == '' || quantity == '' || exclusive == '' && inclusive == '')
+ if(item_code == '' || invoice_no == '' || quantity == '' || exclusive == '' && inclusive == '')
  {
   alert('Please Fill All The Input Fields');
+ }
+ else if(item_name == '')
+ {
+  alert('Sorry There Is No  Such Item Code!!');
+  $("#item_code").val('');
+  $("#item_code").focus();
  }
  else if($('#discount').val() != '' && $('.discount_percentage').val() != '')
  {
@@ -576,7 +581,7 @@ if(substr[1] >= 50)
   var symbol ='+'+'0.'+round_off;
   $("#round_off").val(symbol);
 }
-else if(substr[1] >= 5)
+else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9)
 {
   var sub = substr[1]+'0';
   var round_off = 100-sub;
@@ -588,7 +593,12 @@ else if(typeof substr[1] == 'undefined')
   var symbol = 0;
   $("#round_off").val(symbol);
 }
-else
+else if(substr[1] == '00')
+{
+  var symbol = 0;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] < 50)
 {
   var symbol ='-'+'0.'+substr[1];
   $("#round_off").val(symbol);
@@ -716,7 +726,7 @@ if(substr[1] >= 50)
   var symbol ='+'+'0.'+round_off;
   $("#round_off").val(symbol);
 }
-else if(substr[1] >= 5)
+else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9)
 {
   var sub = substr[1]+'0';
   var round_off = 100-sub;
@@ -728,7 +738,12 @@ else if(typeof substr[1] == 'undefined')
   var symbol = 0;
   $("#round_off").val(symbol);
 }
-else
+else if(substr[1] == '00')
+{
+  var symbol = 0;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] < 50)
 {
   var symbol ='-'+'0.'+substr[1];
   $("#round_off").val(symbol);
@@ -952,6 +967,11 @@ else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || 
   $("#round_off").val(symbol);
 }
 else if(typeof substr[1] == 'undefined')
+{
+  var symbol = 0;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] == '00')
 {
   var symbol = 0;
   $("#round_off").val(symbol);
@@ -1407,7 +1427,6 @@ var row_id=$('#last').val();
         data: { id: item_code },             
                         
         success: function(data){ 
-          //alert(data);
              
              id = data[0].item_id;
              name =data[0].item_name;

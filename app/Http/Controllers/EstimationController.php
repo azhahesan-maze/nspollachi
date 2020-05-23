@@ -10,6 +10,7 @@ use App\Models\Estimation_Expense;
 use App\Models\Supplier;
 use App\Models\Item;
 use App\Models\Agent;
+use App\Models\Brand;
 use App\Models\AddressDetails;
 use App\Models\ItemTaxDetails;
 use App\Models\ExpenseType;
@@ -41,6 +42,7 @@ class EstimationController extends Controller
         $supplier = Supplier::all();
         $item = Item::all();
         $agent = Agent::all();
+        $brand = Brand::all();
         $expense_type = ExpenseType::all();
         
 
@@ -62,7 +64,7 @@ class EstimationController extends Controller
          
          }
 
-        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','expense_type'));
+        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type'));
     }
 
     /**
