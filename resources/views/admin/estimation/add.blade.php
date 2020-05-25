@@ -276,11 +276,53 @@ table, th, td {
                   </thead>
                   <tbody class="append_proof_details" id="mytable">
                     
-                            <input type="hidden" name="counts" value="" id="counts">
-                            <input type="hidden" name="expense_count" value="1" id="expense_count">
-                            <input type="hidden" name="total_amount" value="0" id="total_amount">
-                            <input type="hidden" name="total_gst" value="0" id="total_gst">
-                            <input type="hidden" name="total_price" value="0" id="total_price">
+                  <input type="hidden" name="counts" value="" id="counts">
+                  <input type="hidden" name="expense_count" value="1" id="expense_count">
+                  <input type="hidden" name="total_amount" value="0" id="total_amount">
+                  <input type="hidden" name="total_gst" value="0" id="total_gst">
+                  <input type="hidden" name="total_price" value="0" id="total_price">
+
+                  <div class="item_show" id="item_show" style="display: none;" title="Item Details">
+                    <div class="row col-md-12">
+                    <div class="col-md-3">
+                      <label style="font-family: Times New Roman;">Item Code: <font class="show_item_code" style="font-family: Times New Roman;"></font></label>
+                    </div>
+                    <div class="col-md-3">
+                      <label style="font-family: Times New Roman;">Item Name: <font class="show_item_name"></font></label>
+                    </div>
+                    <div class="col-md-3">
+                      <label style="font-family: Times New Roman;">HSN: <font class="show_hsn"></font></label>
+                    </div>
+                    <div class="col-md-3">
+                      <label style="font-family: Times New Roman;">MRP: <font class="show_mrp"></font></label>
+                    </div>
+                    </div>
+                    <div class="row col-md-12">
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Unit Price: <font class="show_unit_price"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Quantity: <font class="show_quantity"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">UOM: <font class="show_uom"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Amount: <font class="show_amount"></font></label>
+                      </div>
+                  </div>
+                  <div class="row col-md-12">
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Discount: <font class="show_discount"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">GST Rs: <font class="show_gst_rs"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Net Value: <font class="show_net_value"></font></label>
+                      </div>
+                  </div>
+                  </div>
 
                   </tbody>
                   <tfoot>
@@ -1007,14 +1049,27 @@ else if(substr[1] < 50)
   
   });
 
-// $(document).on("click",".show_items",function(){
-//   window.open('admin/estimation/view');
-// });
+$(document).on("click",".show_items",function(){
+  var id = $(this).attr("id");
+  $('.item_show').dialog({width : 1000});
+  $('.show_item_code').text($('.items'+id).text());
+  $('.show_item_name').text($('.item_name'+id).val());
+  $('.show_hsn').text($('.hsn'+id).val());
+  $('.show_mrp').text($('.mrp'+id).val());
+  $('.show_unit_price').text($('.exclusive'+id).val());
+  $('.show_quantity').text($('.quantity'+id).val());
+  $('.show_uom').text($('.font_uom'+id).text());
+  $('.show_amount').text($('#amnt'+id).val());
+  $('.show_discount').text($('.discount_val'+id).val());
+  $('.show_gst_rs').text($('#tax'+id).val());
+  $('.show_net_value').text($('#net_price'+id).val());
+
+});
 
 function expense_add()
 {
   
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control" required="" id="expense_type" name="expense_type[]" ><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" id="expense_type" name="expense_type[]" ><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
   var length=$('.expense').length;
@@ -1557,44 +1612,7 @@ function supplier_details()
         });
 }
 
-// function round_of()
-// {
-  
-//   if($('#total_price').val() == 0)
-//   {
-//     alert('There is no amount to Round Off!');
-//     $('.round_off').val('');
-//   }
-//   else
-//   {
-//     var round_off = $('.round_off').val();
-//  //var num = round_off.toString().substr(-2);
-//  var value = parseInt(round_off);
-//  alert(value);
 
-//  var first_symbol = String(round_off)[0];
-//  //alert(first_symbol);
- 
-//   if(first_symbol == '+')
-//   {
-//     var total_price = $('#total_price').val();
-//     var total = parseFloat(total_price)+parseFloat(value);
-//     $('#total_price').val(total);
-//     $('.total_net_value').text(total);
-    
-//   }
-//   else if(first_symbol == '-')
-//   {
-//     var total_price = $('#total_price').val();
-//     var total = parseFloat(total_price) + parseInt(value);
-//     //alert(total);
-//     $('#total_price').val(total);
-//     $('.total_net_value').text(total);
-//   }
-//   }
- 
-  
-// }
 
 
 </script>
