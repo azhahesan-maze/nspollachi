@@ -13,6 +13,7 @@ use App\Models\Agent;
 use App\Models\Brand;
 use App\Models\AddressDetails;
 use App\Models\ItemTaxDetails;
+use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 
 
@@ -280,16 +281,61 @@ $count=0;
         $id=$request->id;
         $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
                     ->where('items.id','=',$id)
-                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name')
+                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name','items.ptc')
                     ->first();
         $data[] =ItemTaxDetails::where('item_id','=',$id)
                                 ->select('igst')
                                 ->first(); 
+        $data[] =ItemBracodeDetails::where('item_id','=',$id)
+                                    ->select('barcode')
+                                    ->first();
         if($data[1]=='')  
         {
             $data[1]=0;
+        } 
+        else if($data[2]=='')  
+        {
+            $data[2]='';
         }                                
         return $data;
+    }
+
+    public function change_items(Request $request,$id)
+    {
+        $id=$request->id;
+        
+        $items = Item::where('category_id','=',$id)
+                     ->select('id','code','name')
+                     ->get();
+          
+                   
+
+          return $items;
+
+    }
+
+    public function brand_filter(Request $request)
+    {
+        $categories=$request->categories;
+        $brand=$request->brand;
+
+        if($categories == 0)
+        {
+            $items = Item::where('brand_id','=',$brand)
+                     ->select('id','code','name')
+                     ->get();
+        }
+        else
+        {
+            $items = Item::where('category_id','=',$categories)
+                     ->where('brand_id','=',$brand)
+                     ->select('id','code','name')
+                     ->get();
+        }
+
+        return $items;
+          
+
     }
 
 

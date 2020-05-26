@@ -553,6 +553,8 @@ Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
 Route::resource('estimation', 'EstimationController',['middleware' => ['auth']]);
 Route::post('estimation/address_details/', 'EstimationController@address_details');
 Route::get('estimation/getdata/{id}', 'EstimationController@getdata');
+Route::get('estimation/change_items/{id}', 'EstimationController@change_items');
+Route::post('estimation/brand_filter/', 'EstimationController@brand_filter');
 Route::get('estimation/getdata_item/{id}', 'EstimationController@getdata_item');
 
 
