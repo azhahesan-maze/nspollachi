@@ -154,7 +154,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           </div>
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
-                          <option></option>
+                          <option value=""></option>
                           @foreach($categories as $category)
                           <option value="{{ $category->id }}">{{ $category->name }}</option>
                           @endforeach
@@ -1467,8 +1467,9 @@ var row_id=$('#last').val();
               $('#uom_name').val(uom_name);
              $('#tax_rate').val(igst);
 
-             // $('#quantity').focus();
-             //$('#cat').hide();
+             
+             $('#cat').dialog('close');
+             $('#quantity').focus();
 
              if($('#quantity').val() != '')
              {
@@ -1571,10 +1572,14 @@ var row_id=$('#last').val();
 function find_cat()
 {
   
+  $('#categories').val("");
+  $('#brand').val("");
+  $("select").select2();
   $('#cat').show();
   //$('#code').dialog();
   $('#cat').dialog({width:1000});
-  $('.categories').focus();
+  $('.row_brand').remove(); 
+  $('.row_category').remove();  
 
 }
 
