@@ -143,38 +143,60 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
               </div>
               
                       <div class="cat" id="cat" style="display: none;" title="Search Here">
-                        
-                        <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
-                          <option></option>
-                          @foreach($categories as $category)
-                          <option value="{{ $category->id }}">{{ $category->name }}</option>
-                          @endforeach
-                        </select><br><br>
-                        <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
+                        <div class="row col-md-8">
+                          <div class="col-md-4">
+                            <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
                           <option></option>
                           @foreach($brand as $brands)
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                           @endforeach
-                        </select><br><br>
-                        <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
+                        </select>
+                          </div>
+                          <div class="col-md-4">
+                            <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
                           <option></option>
-                          @foreach($item as $items)
-                          <option value="{{ $items->id }}">{{ $items->code }}</option>
-                          @endforeach
-                        </select><br>
-                            
-
-                      </div>
-
-                      <!-- <div class="code" id="code" style="display: none;" title="Choose Item Code">
-                        
-                        <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
-                          <option></option>
-                          @foreach($item as $items)
-                          <option value="{{ $items->id }}">{{ $items->code }}</option>
+                          @foreach($categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->name }}</option>
                           @endforeach
                         </select>
-                      </div> -->
+                          </div>
+                          
+                        </div><br>
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                              <table class="item_code_table" style="width: 100%;">
+                                  <thead>
+                                  <th style="font-family: Times New Roman;">Item Code</th>
+                                  <th style="font-family: Times New Roman;">Item Name</th>
+                                  <th style="font-family: Times New Roman;">Brand</th>
+                                  <th style="font-family: Times New Roman;">Category</th>
+                                  <th style="font-family: Times New Roman;">PTC Code</th>
+                                  <th style="font-family: Times New Roman;">Barcode</th>
+                                  <th style="font-family: Times New Roman;">Select One</th>
+                                </thead>
+                                <tbody class="append_item">
+                                </tbody>
+                                <tfoot>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                        <!-- <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
+                          <option></option>
+                          @foreach($item as $items)
+                          <option value="{{ $items->id }}">{{ $items->code }}</option>
+                          @endforeach
+                        </select><br> -->
+                            
+                      </div>
+
 
                       <div class="col-md-2">
                         <label><font color="white" style="font-family: Times new roman;">Find</font></label><br>
@@ -1406,10 +1428,9 @@ function discount_calc1()
   
 }
 
-function item_codes()
+function item_codes(item_code)
 {
-
-var item_code=$('#codes').val();
+//var item_code=$('#codes').val();
 //alert(item_code);
 var row_id=$('#last').val();
 
@@ -1490,7 +1511,8 @@ var row_id=$('#last').val();
         data: { id: item_code },             
                         
         success: function(data){ 
-             
+          console.log(data);
+
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1499,7 +1521,7 @@ var row_id=$('#last').val();
              uom_id =data[0].uom_id;
              uom_name =data[0].uom_name;
              igst =data[1].igst;
-              
+              //console.log(uom_name);
               //var gst = igst/100;
 
               //alert(gst);
@@ -1551,7 +1573,7 @@ function find_cat()
   
   $('#cat').show();
   //$('#code').dialog();
-  $('#cat').dialog();
+  $('#cat').dialog({width:1000});
   $('.categories').focus();
 
 }
@@ -1559,30 +1581,71 @@ function find_cat()
 function categories_check()
 {
   var  categories=$('#categories').val();
+  var  brand=$('#brand').val();
+  if(brand == '')
+  {
+    brand ='no_val';
+  }
   $.ajax({  
         
         type: "GET",
         url: "{{ url('estimation/change_items/{id}') }}",
-        data: { id: categories },             
+        data: { categories: categories, brand: brand },             
              
         success: function(data){ 
-         
-        $('#codes').children('option:not(:first)').remove();                  
-            for (var i=0; i < data.length; i++)
+          
+
+          
+
+          
+        $('.row_brand').remove(); 
+        $('.row_category').remove(); 
+$(".append_item").html(data);
+return false;
+          var bar_code = [];
+          var item_id =[];
+          var item_code =[];
+          var item_name =[];
+          var item_brand_id =[];
+          var item_brand_name =[];
+          var item_category_name =[];
+          var item_category_id =[];
+          var item_ptc =[];
+          var barcode_last = data.length-1;
+          var item_last = data[barcode_last].length;
+          for(var i=0;i<barcode_last;i++)
+          {
+            
+             bar_code.push(data[i][0].barcode);
+             item_brand_name.push(data[i][0].brand_name)
+            
+          }
+          for(var j=0;j<item_last;j++)
             {
-             name =data[i].name;
-             code =data[i].code;
-             id=data[i].id;
-              names = name.replace('','');
-              codes = code.replace('','');
-              
-              var div_data="<option value="+id+">"+codes+"</option>";
+              item_code.push(data[item_last][j].item_code);
+              item_id.push(data[item_last][j].item_id);
+              item_name.push(data[item_last][j].item_name);
+              if(data[item_last][j].brand_id == 0)
+              {
+                item_brand_name.push('Not Applicable');
+              }
+              else
+              {
+                item_brand_id.push(data[item_last][j].brand_id);
+              }
+              item_category_name.push(data[item_last][j].category_name);
+              item_category_id.push(data[item_last][j].categories_id);
+              item_ptc.push(data[item_last][j].ptc);
+            }
+
+            for (var k=0; k < barcode_last; k++)
+            {
+
+              var table_data='<tr class="row_category"><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td></tr>';
                 
-                $(div_data).appendTo('#codes');
+                $(table_data).appendTo('.append_item');
 
             }
-            //$(".cat").dialog('close');
-            $("#items_codes").focus();
         }
 
 
@@ -1591,38 +1654,66 @@ function categories_check()
 
 function brand_check()
 {
-  var  categories=$('#categories').val();
+  
   var brand = $('.brand').val();
-  if(categories == '')
-  {
-    categories = 0;
-  }
+  
 
   $.ajax({
 
         type: "POST",
         url: "{{ url('estimation/brand_filter/') }}",
-        data: { categories: categories, brand: brand },             
+        data: {brand: brand },             
              
         success: function(data)
         {
-          $('#codes').children('option:not(:first)').remove();                  
-            for (var i=0; i < data.length; i++)
+          $('.row_category').remove();
+          $('.row_brand').remove();
+
+          var bar_code = [];
+          var item_id =[];
+          var item_code =[];
+          var item_name =[];
+          var item_brand_id =[];
+          var item_brand_name =[];
+          var item_category_name =[];
+          var item_category_id =[];
+          var item_ptc =[];
+          var barcode_last = data.length-1;
+          var item_last = data[barcode_last].length;
+          for(var i=0;i<barcode_last;i++)
+          {
+            //console.log(data[i][0].barcode);
+             bar_code.push(data[i][0].barcode);
+            
+          }
+          for(var j=0;j<item_last;j++)
             {
-             name =data[i].name;
-             code =data[i].code;
-             id=data[i].id;
-              names = name.replace('','');
-              codes = code.replace('','');
-              
-              var div_data="<option value="+id+">"+codes+"</option>";
+              item_code.push(data[item_last][j].item_code);
+              item_id.push(data[item_last][j].item_id);
+              item_name.push(data[item_last][j].item_name);
+              item_brand_id.push(data[item_last][j].brand_id);
+              item_brand_name.push(data[item_last][j].brand_name);
+              item_category_name.push(data[item_last][j].category_name);
+              item_category_id.push(data[item_last][j].categories_id);
+              item_ptc.push(data[item_last][j].ptc);
+            }
+
+            for (var k=0; k < barcode_last; k++)
+            {
+
+              var table_data='<tr class="row_brand"><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td></tr>';
                 
-                $(div_data).appendTo('#codes');
+                $(table_data).appendTo('.append_item');
 
             }
         }
 
   });
+}
+
+function add_data(val)
+{
+  item_codes($('.append_item_id'+val).val());
 }
 
 function code_check()

@@ -38,6 +38,10 @@ class EstimationController extends Controller
      */
     public function create()
     {
+
+         
+        
+        
         $date = date('Y-m-d');
         $categories = Category::all();
         $supplier = Supplier::all();
@@ -302,38 +306,130 @@ $count=0;
 
     public function change_items(Request $request,$id)
     {
-        $id=$request->id;
+        $categories=$request->categories;
+        $brand=$request->brand;
+        $result="";
+        $item=array();
+        if($categories !="" && $brand == "no_val"){
+             $item=Item::where('category_id',$categories)->get();
+        }else if($categories !="" && $brand != "" && $brand != "no_val" ){
+            $item=Item::where('category_id',$categories)->where('brand_id',$brand)->get();
+        }
+       
+        foreach($item as $key=>$value){
+            if($value->brand_id != 0)
+            {
+                $barnd_name=isset($value->brand->name) ? $value->brand->name : "";
+            }
+            else
+            {
+                $barnd_name='Not Applicable';
+            }
+            
+            $category_name=isset($value->category->name) ? $value->category->name : "";
+            $barcode="";
+            if(count($value->item_barcode_details)>0){
+                $barcode_array=[];
+                foreach($value->item_barcode_details as $row){
+                    $barcode_array[]=$row->barcode;
+                }
+                $barcode=implode(",",$barcode_array);
+            }
+             $result .='<tr class="row_category"><td><input type="hidden" value="'.$value->id.'" class="append_item_id'.$key.'"><input type="hidden" value="'.$value->code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->code.'</font></td><td><input type="hidden" value="'.$value->name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->name.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name .'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name .'</font></td><td><input type="hidden" value="'.$value->ptc.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->ptc.'</font></td><td><input type="hidden" value="'.$barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barcode.'</font></td><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td></tr>';
+            }
+         return $result;
         
-        $items = Item::where('category_id','=',$id)
-                     ->select('id','code','name')
-                     ->get();
+
+
+
+
+
+        
+        // if($brand != 'no_val')
+        // {
+        //     $items = Item::join('brands','brands.id','=','items.brand_id')
+        //              ->join('categories','categories.id','=','items.category_id')
+        //              ->where('items.category_id','=',$categories)
+        //              ->where('items.brand_id','=',$brand)
+        //              ->select('items.id as item_id','items.code as item_code','items.name as item_name','brands.id as brand_id','brands.name as brand_name','items.ptc','categories.id as categories_id','categories.name as category_name')
+        //              ->get();
+
+        // foreach ($items as $key => $value) {
+        //      $item_id=$value->item_id;
+
+        //      $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
+        //                                 ->select('barcode')
+        //                                 ->get();
+        //          }  
+
+        //      $data[] = $items;
+        // }
+        // else
+        // {
+        //     $items = Item::join('categories','categories.id','=','items.category_id')
+        //              ->where('items.category_id','=',$categories)
+        //              ->select('items.id as item_id','items.code as item_code','items.name as item_name','items.brand_id','items.ptc','categories.id as categories_id','categories.name as category_name')
+        //              ->get();
+
+        //              $items_1 = Item::all();
+        //             // ->select('items.id as item_id','items.code as item_code','items.name as item_name','items.brand_id','items.ptc','categories.id as categories_id','categories.name as category_name')
+                    
+
+        //              print_r($items_1); exit;
+
+
+        // // foreach ($items as $key => $values) {
+        // //                   if(isset($value->brand->name)  && !empty($value->brand->name)){
+        // //      $data[]=$value->brand->name;
+        // //     }
+        // //              }             
+
+        // foreach ($items as $key => $value) {
+        //      $item_id=$value->item_id;
+
+        //     //  if(isset($value->brand->name)  && !empty($value->brand->name)){
+        //     //  $brand_name=$value->brand->name;
+        //     // }
+        //      $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
+        //                                 ->select('barcode')
+        //                                 ->get();
+        //         // $data[$key]=$brand_name;
+        //          }  
+
+        //      $data[] = $items;
+        // }
+        
           
                    
 
-          return $items;
+        //   return $data;
 
     }
 
     public function brand_filter(Request $request)
     {
-        $categories=$request->categories;
+        
         $brand=$request->brand;
 
-        if($categories == 0)
-        {
-            $items = Item::where('brand_id','=',$brand)
-                     ->select('id','code','name')
+        
+        $items = Item::join('brands','brands.id','=','items.brand_id')
+                     ->join('categories','categories.id','=','items.category_id')
+                     ->where('items.brand_id','=',$brand)
+                     ->select('items.id as item_id','items.code as item_code','items.name as item_name','brands.id as brand_id','brands.name as brand_name','items.ptc','categories.id as categories_id','categories.name as category_name')
                      ->get();
-        }
-        else
-        {
-            $items = Item::where('category_id','=',$categories)
-                     ->where('brand_id','=',$brand)
-                     ->select('id','code','name')
-                     ->get();
-        }
 
-        return $items;
+        foreach ($items as $key => $value) {
+             $item_id=$value->item_id;
+
+             $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
+                                        ->select('barcode')
+                                        ->get();
+                 }  
+
+             $data[] = $items;      
+        
+
+        return $data;
           
 
     }
@@ -343,18 +439,25 @@ $count=0;
     {
         $id=$request->id;
 
-        
-        $item = Item::where('code','=',$id)
-                    ->select('id','name','mrp','hsn','code')
+        $item = Item::join('item_bracode_details','item_bracode_details.item_id','=','items.id')
+                    ->where('items.code','=',$id)
+                    ->orWhere('items.ptc','=',$id)
+                    ->orWhere('item_bracode_details.barcode','=',$id)
+                    ->select('items.id as item_id','items.name as items_name','items.mrp as item_mrp','items.hsn as item_hsn','items.code as item_code')
                     ->first();
 
-                   $item_id= $item->id;
+                    //return $item;
+
+                   $item_id= $item->item_id;
 
         $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
+                    ->join('item_bracode_details','item_bracode_details.item_id','=','items.id')
                     ->where('items.code','=',$id)
+                    ->orWhere('items.ptc','=',$id)
+                    ->orWhere('item_bracode_details.barcode','=',$id)
                     ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name')
                     ->first();
-
+                    
 
         $data[] =ItemTaxDetails::where('item_id','=',$item_id)
                                 ->select('igst')
