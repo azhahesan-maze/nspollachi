@@ -167,13 +167,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                             <div class="col-md-12">
                               <table class="item_code_table" style="width: 100%;">
                                   <thead>
+                                  <th style="font-family: Times New Roman;">Select One</th>
                                   <th style="font-family: Times New Roman;">Item Code</th>
                                   <th style="font-family: Times New Roman;">Item Name</th>
                                   <th style="font-family: Times New Roman;">Brand</th>
                                   <th style="font-family: Times New Roman;">Category</th>
                                   <th style="font-family: Times New Roman;">PTC Code</th>
                                   <th style="font-family: Times New Roman;">Barcode</th>
-                                  <th style="font-family: Times New Roman;">Select One</th>
+                                  
                                 </thead>
                                 <tbody class="append_item">
                                 </tbody>
@@ -1527,7 +1528,7 @@ var row_id=$('#last').val();
 
               //alert(gst);
                        
-             $('#item_code').val(code);
+             $('#item_code').val(item_code);
              $('#items_codes').val(id);
             $('#item_name').val(name);
              $('#mrp').val(mrp);
@@ -1576,11 +1577,10 @@ function find_cat()
   $('#brand').val("");
   $("select").select2();
   $('#cat').show();
-  //$('#code').dialog();
-  $('#cat').dialog({width:1000}).prev(".ui-dialog-titlebar").css("background","#3D9040");
   $('.row_brand').remove(); 
-  $('.row_category').remove();  
-
+  $('.row_category').remove();
+  $('#cat').dialog({width:1000}).prev(".ui-dialog-titlebar").css("background","#3D9040").prev("..ui-dialog.ui-widget-content");
+    
 }
 
 function categories_check()
@@ -1706,7 +1706,7 @@ function brand_check()
             for (var k=0; k < barcode_last; k++)
             {
 
-              var table_data='<tr class="row_brand"><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td></tr>';
+              var table_data='<tr class="row_brand"><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td></tr>';
                 
                 $(table_data).appendTo('.append_item');
 
@@ -1763,7 +1763,9 @@ function supplier_details()
 <script src="jquery.ui.position.js"></script>
 </script>
 
-
+<style type="text/css">
+  .ui-dialog.ui-widget-content { background: #90C092; }
+</style>
 <!-- <div class="form-row">
   <div class="col-md-3">
     <div class="form-group row">
