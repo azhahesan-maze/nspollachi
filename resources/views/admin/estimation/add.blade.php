@@ -185,6 +185,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th></th>
                                   <th></th>
                                   <th></th>
+                                  <th></th>
                                 </tfoot>
                               </table>
                             </div>
