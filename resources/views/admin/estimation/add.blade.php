@@ -1577,7 +1577,7 @@ function find_cat()
   $("select").select2();
   $('#cat').show();
   //$('#code').dialog();
-  $('#cat').dialog({width:1000});
+  $('#cat').dialog({width:1000}).prev(".ui-dialog-titlebar").css("background","#3D9040");
   $('.row_brand').remove(); 
   $('.row_category').remove();  
 
