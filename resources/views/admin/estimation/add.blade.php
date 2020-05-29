@@ -368,10 +368,10 @@ table, th, td {
                       <th></th>
                       <th></th>
                       <th></th>
-                      <th><label class="total_amount"></label></th>
+                      <th><label class="total_amount">0</label></th>
                       <th></th>
                       <th></th>
-                      <th><label class="total_net_price"></label></th>
+                      <th><label class="total_net_price">0</label></th>
                       <th style="background-color: #FAF860;"></th>
                       <th></th>
                     </tr>
@@ -414,7 +414,7 @@ table, th, td {
                         </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" oninput="expense_total_calc()" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
@@ -499,14 +499,64 @@ function calculate_total_discount()
 
 }
 
-// function expense_total_calc()
-// {
-//   // var expense_total=$('.expense_total').val();
-//   // alert(expense_total);
-//   var expense_amount = $(".expense_amount").val();
-//   expense = parseFloat(expense)+parseFloat(expense_amount);
-//   $('.expense_total').val(expense.toFixed(2));
-// }
+$(document).on("keyup",".expense_amount",function(){
+  total_expense_cal();
+})
+function total_expense_cal(){
+
+  var total_amount=calculate_total_net_price();
+  var total_expense_amount=0;
+  $(".expense_amount").each(function(){
+ if($(this).val() !=""){
+total_expense_amount=parseFloat(total_expense_amount)+parseFloat($(this).val());
+ }
+  });
+
+  var total_net_amount=parseFloat(total_amount)+parseFloat(total_expense_amount);
+   $('.total_net_value').text(total_net_amount.toFixed(2));
+}
+
+function expense_total_calc()
+{
+  var expense=0;
+  $('input[type="text"].expense_amount').each(function () {
+     if($(this).val() == '')
+      {
+
+      }
+      else
+      {
+
+        expense = parseFloat(expense)+parseFloat($(this).val());
+        $('.expense_total').val(expense.toFixed(2));
+       }
+  });
+    var sum_total_net_val = parseFloat($('.expense_total').val())+parseFloat($('.total_net_price').text());
+    
+    $('#total_price').val(sum_total_net_val.toFixed(2));
+    $('.total_net_value').text(sum_total_net_val.toFixed(2));
+}
+
+function expense_total_sub()
+{
+  var expense_sub=$('.total_net_price').text();
+  $('input[type="text"].expense_amount').each(function () {
+     if($(this).val() == '')
+      {
+        expense = parseFloat(expense_sub)+parseFloat($(this).val());
+        $('.expense_total').val(expense.toFixed(2));
+      }
+      else
+      {
+
+        expense = parseFloat(expense_sub)+parseFloat($(this).val());
+        $('.expense_total').val(expense.toFixed(2));
+      }
+  });
+    var sum_total_net_val = parseFloat($('.expense_total').val())+parseFloat(expense_sub);
+    $('#total_price').val(sum_total_net_val.toFixed(2));
+    $('.total_net_value').text(sum_total_net_val.toFixed(2));
+}
 function add_items()
 {
   var j=$('#mytable tr:last').attr('class');
@@ -1025,8 +1075,8 @@ $(document).on("click",".update_items",function(){
     $('.font_discount'+td_id).text($('.discount_rs').val());
     $('#input_discount'+td_id).val($('.discount_rs').val());
     var q=calculate_total_discount();
-    $('#total_discount').val(qtoFixed(2));
-    $('#disc_total').val(qtoFixed(2));
+    $('#total_discount').val(q.toFixed(2));
+    $('#disc_total').val(q.toFixed(2));
    }
 
   $('#net_price'+td_id).val($('.net_price').val());
@@ -1124,49 +1174,71 @@ $(document).on("click",".show_items",function(){
 function expense_add()
 {
 
-    var expense=0;
-    $('input[type="text"].expense_amount').each(function () {
-     expense = parseFloat(expense)+parseFloat($(this).val());
-    $('.expense_total').val(expense.toFixed(2));
-  });
-
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" id="expense_type" name="expense_type[]" ><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount" id="expense_amount" oninput="expense_total_calc()"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" data-placeholder="Choose Expense Type" name="expense_type[]" ><option value=""></option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
+  $("select").select2();
+  total_expense_cal();
+
   var length=$('.expense').length;
   $('#expense_count').val(length);
+  
 
-
+  // var expense_total = $('.expense_total').val();
+  // var total_price = $('.total_net_price').text();
+  // if(typeof expense_total == 'undefined')
+  // {
+  //   expense_total=0;
+  // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
+  // $('#total_price').val(sum_total_net_val.toFixed(2));
+  // $('.total_net_value').text(sum_total_net_val.toFixed(2));
+  // }
+  // else
+  // {
+  // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
+  // $('#total_price').val(sum_total_net_val.toFixed(2));
+  // $('.total_net_value').text(sum_total_net_val.toFixed(2)); 
+  // }
+  
   // var expense_amount = $(this).val();
   // alert(expense_amount);
 
 }
 
 $(document).on("click",".remove_expense",function(){
+ // expense_total_sub();
 
   if($(".remove_expense").length > 1){
-    $(this).closest('.expense').remove();
-    var expense=0;
-    $('input[type="text"].expense_amount').each(function () {
-      if($(this).val() == '')
-      {
-
-      }
-      else
-      {
-        expense = parseFloat(expense)+parseFloat($(this).val());
-     alert(expense);
-    $('.expense_total').val(expense.toFixed(2));
-      }
-     
-  });
     
-    var expense_count = $('#expense_count').val();
-       $('#expense_count').val(expense_count-1);
+    
+    // var expense_count = $('#expense_count').val();
+    // $('#expense_count').val(expense_count-1);
+    // var expense_total = $('.expense_total').val();
+    // alert(expense_total);
+    // var total_price = $('.total_net_price').text();
+    // if(typeof expense_total == 'undefined')
+    // {
+    //   expense_total=0;
+    // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
+    // $('#total_price').val(sum_total_net_val.toFixed(2));
+    // $('.total_net_value').text(sum_total_net_val.toFixed(2));
+    // }
+    // else
+    // {
+    // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
+    // $('#total_price').val(sum_total_net_val.toFixed(2));
+    // $('.total_net_value').text(sum_total_net_val.toFixed(2)); 
+    // }
+
+    $(this).closest('.expense').remove();
+    
   }
   else{
     alert("Atleast One row present");
+
   }
+  total_expense_cal();
 
   });
 
