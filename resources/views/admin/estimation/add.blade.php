@@ -501,6 +501,7 @@ function calculate_total_discount()
 
 $(document).on("keyup",".expense_amount",function(){
   total_expense_cal();
+  roundoff_cal();
 })
 function total_expense_cal(){
 
@@ -514,48 +515,39 @@ total_expense_amount=parseFloat(total_expense_amount)+parseFloat($(this).val());
 
   var total_net_amount=parseFloat(total_amount)+parseFloat(total_expense_amount);
    $('.total_net_value').text(total_net_amount.toFixed(2));
+   $('#total_price').val(total_net_amount.toFixed(2));
 }
-
-function expense_total_calc()
+function roundoff_cal()
 {
-  var expense=0;
-  $('input[type="text"].expense_amount').each(function () {
-     if($(this).val() == '')
-      {
-
-      }
-      else
-      {
-
-        expense = parseFloat(expense)+parseFloat($(this).val());
-        $('.expense_total').val(expense.toFixed(2));
-       }
-  });
-    var sum_total_net_val = parseFloat($('.expense_total').val())+parseFloat($('.total_net_price').text());
-    
-    $('#total_price').val(sum_total_net_val.toFixed(2));
-    $('.total_net_value').text(sum_total_net_val.toFixed(2));
+  var substr = $("#total_price").val().split('.');
+if(substr[1] >= 50)
+{
+  var round_off = 100-substr[1];
+  var symbol ='+'+'0.'+round_off;
+  $("#round_off").val(symbol);
 }
-
-function expense_total_sub()
+else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9)
 {
-  var expense_sub=$('.total_net_price').text();
-  $('input[type="text"].expense_amount').each(function () {
-     if($(this).val() == '')
-      {
-        expense = parseFloat(expense_sub)+parseFloat($(this).val());
-        $('.expense_total').val(expense.toFixed(2));
-      }
-      else
-      {
-
-        expense = parseFloat(expense_sub)+parseFloat($(this).val());
-        $('.expense_total').val(expense.toFixed(2));
-      }
-  });
-    var sum_total_net_val = parseFloat($('.expense_total').val())+parseFloat(expense_sub);
-    $('#total_price').val(sum_total_net_val.toFixed(2));
-    $('.total_net_value').text(sum_total_net_val.toFixed(2));
+  var sub = substr[1]+'0';
+  var round_off = 100-sub;
+  var symbol ='+'+'0.'+round_off;
+  $("#round_off").val(symbol);
+}
+else if(typeof substr[1] == 'undefined')
+{
+  var symbol = 0;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] == '00')
+{
+  var symbol = 0;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] < 50)
+{
+  var symbol ='-'+'0.'+substr[1];
+  $("#round_off").val(symbol);
+}
 }
 function add_items()
 {
@@ -707,39 +699,7 @@ var discount_total = parseFloat(discount_total)+parseFloat(discount_val);
 $('#disc_total').val(discount_total.toFixed(2));
 $('#total_discount').val(discount_total.toFixed(2));
 
-
-//$("#round_off").val(Math.round(total_net_price));
-// $("#total_price").val();
-var substr = $("#total_price").val().split('.');
-if(substr[1] >= 50)
-{
-  var round_off = 100-substr[1];
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9)
-{
-  var sub = substr[1]+'0';
-  var round_off = 100-sub;
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(typeof substr[1] == 'undefined')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == '00')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] < 50)
-{
-  var symbol ='-'+'0.'+substr[1];
-  $("#round_off").val(symbol);
-}
-
+roundoff_cal();
 var len=$('.tables').length;
 $('#counts').val(len);
 i++;
@@ -855,36 +815,7 @@ $(document).on("click",".remove_items",function(){
     $("#cgst").val(half_gst.toFixed(2));
     $("#sgst").val(half_gst.toFixed(2));
 
-var substr = $("#total_price").val().split('.');
-if(substr[1] >= 50)
-{
-  var round_off = 100-substr[1];
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9)
-{
-  var sub = substr[1]+'0';
-  var round_off = 100-sub;
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(typeof substr[1] == 'undefined')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == '00')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] < 50)
-{
-  var symbol ='-'+'0.'+substr[1];
-  $("#round_off").val(symbol);
-}
-
+    roundoff_cal();
     
 
     $.ajax({
@@ -1038,26 +969,7 @@ $(document).on("click",".update_items",function(){
   $('.tax_gst'+td_id).val($('.tax_rate').val());
   $('.font_gst'+td_id).text($('.gst').val());
 
-  // if($('.discount_rs').val() == '' && $('.discount_percentage').val() != '')
-  //  {
-  //   var discount_percentage = $('.discount_percentage').val();
-  //   var discount=discount_percentage+'%';
-  //   $('.discount_val'+td_id).val(discount);
-  //   $('.font_discount'+td_id).text(discount);
-  //  }
 
-  //  else 
-   //  if($('.discount_percentage').val() == '' && $('.discount_rs').val() != '')
-   // {
-   //  var discount=$('.discount_rs').val();
-   //  $('.discount_val'+td_id).val(discount);
-   //  $('.font_discount'+td_id).text(discount);
-   //  $('#input_discount'+td_id).val(discount);
-   //  var q=calculate_total_discount();
-   //  $('#total_discount').val(q);
-   //  $('#disc_total').val(q);
-
-   // }
    if($('.discount_percentage').val() == '' && $('.discount_rs').val() == '')
    {
     var discount=0;
@@ -1098,37 +1010,9 @@ $(document).on("click",".update_items",function(){
   $(".total_net_price").html(parseFloat(to_html_total_net));
   $(".total_amount").html(parseFloat(to_html_total_amount));
 
-  var substr = $("#total_price").val().split('.');
-if(substr[1] >= 50)
-{
-  var round_off = 100-substr[1];
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || substr[1] == 9) 
-{
-  var sub = substr[1]+'0';
-  var round_off = 100-sub;
-  var symbol ='+'+'0.'+round_off;
-  $("#round_off").val(symbol);
-}
-else if(typeof substr[1] == 'undefined')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] == '00')
-{
-  var symbol = 0;
-  $("#round_off").val(symbol);
-}
-else if(substr[1] < 50)
-{
-  var symbol ='-'+'0.'+substr[1];
-  $("#round_off").val(symbol);
-}
+  roundoff_cal();
 
-  // }
+  
 
   
   $('.item_sno').val('');
@@ -1180,56 +1064,16 @@ function expense_add()
   $('.append_expense').append(expense_details);
   $("select").select2();
   total_expense_cal();
-
+  roundoff_cal();
   var length=$('.expense').length;
   $('#expense_count').val(length);
   
 
-  // var expense_total = $('.expense_total').val();
-  // var total_price = $('.total_net_price').text();
-  // if(typeof expense_total == 'undefined')
-  // {
-  //   expense_total=0;
-  // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
-  // $('#total_price').val(sum_total_net_val.toFixed(2));
-  // $('.total_net_value').text(sum_total_net_val.toFixed(2));
-  // }
-  // else
-  // {
-  // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
-  // $('#total_price').val(sum_total_net_val.toFixed(2));
-  // $('.total_net_value').text(sum_total_net_val.toFixed(2)); 
-  // }
-  
-  // var expense_amount = $(this).val();
-  // alert(expense_amount);
-
 }
 
 $(document).on("click",".remove_expense",function(){
- // expense_total_sub();
 
   if($(".remove_expense").length > 1){
-    
-    
-    // var expense_count = $('#expense_count').val();
-    // $('#expense_count').val(expense_count-1);
-    // var expense_total = $('.expense_total').val();
-    // alert(expense_total);
-    // var total_price = $('.total_net_price').text();
-    // if(typeof expense_total == 'undefined')
-    // {
-    //   expense_total=0;
-    // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
-    // $('#total_price').val(sum_total_net_val.toFixed(2));
-    // $('.total_net_value').text(sum_total_net_val.toFixed(2));
-    // }
-    // else
-    // {
-    // var sum_total_net_val = parseFloat(expense_total)+parseFloat(total_price);
-    // $('#total_price').val(sum_total_net_val.toFixed(2));
-    // $('.total_net_value').text(sum_total_net_val.toFixed(2)); 
-    // }
 
     $(this).closest('.expense').remove();
     
@@ -1239,6 +1083,7 @@ $(document).on("click",".remove_expense",function(){
 
   }
   total_expense_cal();
+  roundoff_cal();
 
   });
 
