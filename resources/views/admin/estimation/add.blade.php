@@ -499,10 +499,11 @@ function calculate_total_discount()
 
 }
 
-$(document).on("keyup",".expense_amount",function(){
+$(document).on("keyup",".expense_amount",function()
+{
   total_expense_cal();
   roundoff_cal();
-})
+});
 function total_expense_cal(){
 
   var total_amount=calculate_total_net_price();
