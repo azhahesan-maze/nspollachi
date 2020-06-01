@@ -501,8 +501,20 @@ function calculate_total_discount()
 
 $(document).on("keyup",".expense_amount",function()
 {
-  total_expense_cal();
-  roundoff_cal();
+  var total = $('#total_price').val();
+  if(total == 0)
+  {
+    alert('You Cannot Add Expense Without Adding Item Details!!');
+    $('.expense_amount').val('');
+    $('.expense_type').val('');
+    $('Select').select2();
+  }
+  else
+  {
+    total_expense_cal();
+    roundoff_cal();
+  }
+  
 });
 function total_expense_cal(){
 
@@ -615,13 +627,13 @@ function add_items()
  {
   alert('Please Fill All The Input Fields');
  }
- if(item_name == '')
+ else if(item_name == '')
  {
   alert('Sorry There Is No  Such Item Code!!');
   $("#item_code").val('');
   $("#item_code").focus();
  }
- if(parseFloat(net_price)>parseFloat(mrp))
+ else if(parseFloat(net_price)>parseFloat(mrp))
  {
   alert('The Total Net Value Exceeds MRP!!');
     $('#discount').val('');
@@ -1058,8 +1070,14 @@ $(document).on("click",".show_items",function(){
 
 function expense_add()
 {
-
   
+  if($("#total_price").val() == 0 || $("#total_price").val() == '')
+  {
+    alert('You Cannot Add Expense Without Adding Item Details!!');
+  }
+  else
+  {
+
   var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" data-placeholder="Choose Expense Type" name="expense_type[]" ><option value=""></option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
@@ -1068,7 +1086,8 @@ function expense_add()
   roundoff_cal();
   var length=$('.expense').length;
   $('#expense_count').val(length);
-  
+
+  }
 
 }
 
