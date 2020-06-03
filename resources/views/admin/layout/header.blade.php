@@ -306,7 +306,7 @@
             
           </li>
 
-          <!-- <li class="nav-item dropdown menu-large">
+          <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Purchase
             </a>
@@ -317,8 +317,9 @@
                         <ul>
                             <li class="dropdown-header">Purchase</li>
                            
-                            <li><a href="{{ route('purchase.index') }}">Purchase</a></li>
-                            
+                            <li><a href="{{ route('purchase_order.create') }}">Purchase order</a></li>
+                            <li><a href="{{ route('purchase_gatepass_entry.create') }}">Purchase Gate Pass Entry</a></li>
+                            <li><a href="{{ route('purchase_entry.create') }}">Purchase Entry</a></li>
                         </ul>
                     </li>
                     
@@ -326,7 +327,31 @@
             </ul>        
             
             
-          </li> -->
+          </li>
+
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sales
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Sales</li>
+                           
+                            <li><a href="{{ route('sales_estimation.create') }}">Sales Estimation</a></li>
+                            <li><a href="{{ route('sales_order.create') }}">Sales Order</a></li>
+                            <li><a href="{{ route('sales_entry.create') }}">Sales Entry</a></li>
+                            <li><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gate Pass Entry</a></li>
+                        </ul>
+                    </li>
+                    
+                    
+            </ul>        
+            
+            
+          </li>
 
 
 

@@ -560,6 +560,50 @@ Route::get('estimation/getdata_item/{id}', 'EstimationController@getdata_item');
 
 /* Estimation End Here  */
 
+/* Purchase Order Start Here  */
+
+Route::resource('purchase_order', 'PurchaseOrderController',['middleware' => ['auth']]);
+
+/* Purchase Order End Here  */
+
+/* Purchase Gate Pass entry Start Here  */
+
+Route::resource('purchase_gatepass_entry', 'PurchaseGatepassEntryController',['middleware' => ['auth']]);
+
+/* Purchase Gate Pass entry End Here  */
+
+/* Purchase entry Start Here  */
+
+Route::resource('purchase_entry', 'PurchaseEntryController',['middleware' => ['auth']]);
+
+/* Purchase entry End Here  */
+
+/* Sales Estimation Start Here  */
+
+Route::resource('sales_estimation', 'SalesEstimationController',['middleware' => ['auth']]);
+
+/* Sales Estimation End Here  */
+
+/* Sales Order Start Here  */
+
+Route::resource('sales_order', 'SalesOrderController',['middleware' => ['auth']]);
+
+/* Sales Order End Here  */
+
+/* Sales entry Start Here  */
+
+Route::resource('sales_entry', 'SalesEntryController',['middleware' => ['auth']]);
+
+/* Sales entry End Here  */
+
+/* Sales Gate Pass entry Start Here  */
+
+Route::resource('sales_gatepass_entry', 'SalesGatepassEntryController',['middleware' => ['auth']]);
+
+/* Sales Gate Pass entry End Here  */
+
+
+
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
     Route::any('/', 'Ho_detailsController@index')->middleware('permission:location_list');
