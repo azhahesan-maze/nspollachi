@@ -121,9 +121,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Sales type</label><br>
                                   <input type="radio" name="purchase" value="cash" checked="">
-                                  <label style="font-family: Times new roman;">Cash Purchase</label>
+                                  <label style="font-family: Times new roman;">Cash Sales</label>
                                   <input type="radio" name="purchase" value="credit">
-                                  <label style="font-family: Times new roman;">Credit Purchase</label>
+                                  <label style="font-family: Times new roman;">Credit Sales</label>
                                 </div>
                               </div>
                               <br>
