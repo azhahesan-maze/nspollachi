@@ -70,4 +70,15 @@ class Item extends Model
         // delete the user
         return parent::delete();
     }
+
+     public function categories()
+    {
+        return $this->belongsTo(Category::class, 'category_id','id');
+    }
+ 
+    // This is method where we implement recursive relationship
+    public function childCategories()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('categories');
+    }
 }

@@ -37,9 +37,10 @@ class EstimationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
 
-         
+          
         
         
         $date = date('Y-m-d');
@@ -304,16 +305,67 @@ $count=0;
         return $data;
     }
 
+
+    function child_category($array)
+   {
+       $output_array=[];
+       foreach($array  as $value)
+       {
+           $result_array=[];
+           $result_array['id']=$value->id;
+           $output_array[]=$result_array;
+             if(count($value->childCategories)>0)
+             {
+                $test=$this->child_category($value->childCategories);
+                array_push($output_array,$test);
+             }  
+        }
+           return $output_array;
+   }
+
+   function get_category_id($category_id)
+   {
+    $category=category::with('childCategories')->where('id',$category_id)->get();
+    $output_array=[];
+    foreach($category as $value)
+    {
+        $result_array=[];
+        $result_array['id']=$value->id;
+        $output_array[]=$result_array;
+        if(count($value->childCategories)>0)
+        {
+            $result=$this->child_category($value->childCategories);
+            array_push($output_array,$result);
+        }  
+    }
+
+    $result=[];
+    foreach ($output_array as $key => $value)
+    {
+        if (is_array($value))
+        {
+            $result = array_merge($result, array_flatten($value));
+        } else
+        {
+            $result = array_merge($result, array($key => $value));
+        }
+    }
+    //$result=implode("','", $result);
+    //$result="'".$result."'";
+    return $result;
+   }
+
     public function change_items(Request $request,$id)
     {
         $categories=$request->categories;
+        $category_id=$this->get_category_id($categories);
         $brand=$request->brand;
         $result="";
         $item=array();
         if($categories !="" && $brand == "no_val"){
-             $item=Item::where('category_id',$categories)->get();
+             $item=Item::whereIn('category_id',$category_id)->get();
         }else if($categories !="" && $brand != "" && $brand != "no_val" ){
-            $item=Item::where('category_id',$categories)->where('brand_id',$brand)->get();
+            $item=Item::whereIn('category_id',$category_id)->where('brand_id',$brand)->get();
         }
        
         foreach($item as $key=>$value){
@@ -455,7 +507,7 @@ $count=0;
                     ->where('items.code','=',$id)
                     ->orWhere('items.ptc','=',$id)
                     ->orWhere('item_bracode_details.barcode','=',$id)
-                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name')
+                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name') 
                     ->first();
                     
 

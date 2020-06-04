@@ -236,15 +236,62 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <input type="text" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" oninput="gst_calc()" name="tax_rate" value="" id="tax_rate">
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
+
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
+                        <div class="form-group row">
+                          
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <select class="form-control parent_uom" name="parent_uom" >
+                                  <option></option>
+                                </select>
+                              </div>
+                              <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
+
+                            </div>
+                            
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
+                        <div class="form-group row">
+                          
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <select class="form-control  parent_uom" name="parent_uom">
+                                  <option></option>
+                                </select>
+                              </div>
+                              <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
+
+                            </div>
+                            
+                          </div>
+                        </div>
+
+                      </div>
+
+<!-- 
+
+
+
+
+
                       
                       <div class="col-md-2" id="rate_exclusive">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                       <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
-                      </div>
-                      <div class="col-md-2"  id="rate_inclusive">
+                      </div> -->
+                      <!-- <div class="col-md-2"  id="rate_inclusive">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
                       <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
-                      </div>
+                      </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
                       <input type="text" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
@@ -612,8 +659,6 @@ function add_items()
    //  var discount=discount;
    // }
    
-
- 
  if(amount == '')
  {
   var amount=0;
@@ -633,9 +678,10 @@ function add_items()
   $("#item_code").val('');
   $("#item_code").focus();
  }
- else if(parseFloat(net_price)>parseFloat(mrp))
+
+ else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
  {
-  alert('The Total Net Value Exceeds MRP!!');
+  alert('The Total Net Value Exceeds The MRP!!');
     $('#discount').val('');
     $('.discount_percentage').val('');
     $('#exclusive').val('');
@@ -722,29 +768,29 @@ i++;
 // var array_new=[voucher_date,receipt_note_no,supplier_invoice_no,supplier_invoice_date,
 //               supplier_details,order_details,transport_details,remarks,supplier_invoice_value];
 
-$.ajax({
-           type: "GET",
-            url: "{{ url('purchase/get_items/{id}') }}",
-            data: { id: len },
-           success: function(data) {
-             // console.log(data);
-             $('#items_codes').children('option:not(:first)').remove();
-             for (var k=0; k < data.length; k++)
-            {
-             name =data[k].name;
-             code =data[k].code;
-             id =data[k].id;
-              names = name.replace('','');
-              codes = code.replace('','');
+// $.ajax({
+//            type: "GET",
+//             url: "{{ url('purchase/get_items/{id}') }}",
+//             data: { id: len },
+//            success: function(data) {
+//              // console.log(data);
+//              $('#items_codes').children('option:not(:first)').remove();
+//              for (var k=0; k < data.length; k++)
+//             {
+//              name =data[k].name;
+//              code =data[k].code;
+//              id =data[k].id;
+//               names = name.replace('','');
+//               codes = code.replace('','');
               
-              var div_data="<option value="+id+">"+codes+"</option>";
+//               var div_data="<option value="+id+">"+codes+"</option>";
                 
-                $(div_data).appendTo('#items_codes');
+//                 $(div_data).appendTo('#items_codes');
 
-            }
-           }
+//             }
+//            }
            
-        });
+//         });
 
 // $.ajax({
 //            type: "POST",
