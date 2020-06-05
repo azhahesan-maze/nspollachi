@@ -493,7 +493,7 @@ table, th, td {
                       </div>
                       <div class="col-md-4" style="float: right;">
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;"></font> 
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
                        </div>
                        
                        <div class="row col-md-12">
@@ -717,6 +717,35 @@ for(var m=0;m<length+1;m++)
       if(invoice_num == invoice_num1)
       {
         alert('Item S.No is Alredy Taken!');
+        $('#row'+i).remove();
+      }
+      else
+      {
+        
+      }
+    }
+  }
+}
+
+for(var m=0;m<length+1;m++)
+{
+
+  var item_code_id_first = $('.item_code'+m).val();
+  
+  for(var n=m+1;n<=length+1;n++)
+  {
+    
+    if(typeof $('.item_code'+n).val() == 'undefined')
+    {
+
+    }
+    else
+    {
+      var item_code_id_second = $('.item_code'+n).val();
+
+      if(item_code_id_first == item_code_id_second)
+      {
+        alert('Item Code is Alredy Taken!');
         $('#row'+i).remove();
       }
       else
