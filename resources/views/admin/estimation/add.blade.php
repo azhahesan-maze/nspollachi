@@ -237,7 +237,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
 
-                      <div class="col-md-2">
+                      <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                         <div class="form-group row">
                           
@@ -275,9 +275,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           </div>
                         </div>
 
-                      </div>
+                      </div> -->
 
-<!-- 
+
 
 
 
@@ -287,11 +287,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <div class="col-md-2" id="rate_exclusive">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                       <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
-                      </div> -->
-                      <!-- <div class="col-md-2"  id="rate_inclusive">
+                      </div>
+                      <div class="col-md-2"  id="rate_inclusive">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
                       <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
-                      </div> -->
+                      </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
                       <input type="text" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
@@ -953,57 +953,40 @@ $(document).on("click",".update_items",function(){
   var discount_total = 0;
 
   var td_id = $('#dummy_table_id').val(); 
-  // if($('#discount').val() != '' && $('.discount_percentage').val() != '')
-  // {
-  //   alert('You cannot insert Both Discount,Choose Any One Of That!');
 
-  // var invoice_no = $('.invoice_no'+td_id).val(); 
-  // var item_code_id = $('.item_code'+td_id).val();
-  // var item_code_name = $('.items'+td_id).text(); 
-  // var item_name = $('.item_name'+td_id).val();
-  // var hsn = $('.hsn'+td_id).val(); 
-  // var mrp = $('.mrp'+td_id).val();
-  // var discount_val = $('.discount_val'+td_id).val(); 
-  // var exclusive = $('.exclusive'+td_id).val();
-  // var inclusive = $('.inclusive'+td_id).val(); 
-  // var quantity = $('.quantity'+td_id).val();
-  // var uom = $('.uom'+td_id).val(); 
-  // var uom_name = $('.font_uom'+td_id).text();
-  // var amnt = $('#amnt'+td_id).val();
-  // var tax = $('#tax'+td_id).val(); 
-  // var tax_gst = $('.tax_gst'+td_id).val();
-  // var net_price = $('#net_price'+td_id).val(); 
+ var invoice_no=$('.item_sno').val();
+ var item_code=$("#item_code").val();
+ var item_name=$('.item_name').val();
+ var mrp=$('.mrp').val();
+ var quantity=$('.quantity').val();
+ var exclusive=$('#exclusive').val();
+ var inclusive=$('#inclusive').val();
+ var net_price=$('.net_price').val();
+  
+  if(item_code == '' || invoice_no == '' || quantity == '' || exclusive == '' && inclusive == '')
+ {
+  alert('Please Fill All The Input Fields');
+ }
+ else if(item_name == '')
+ {
+  alert('Sorry There Is No  Such Item Code!!');
+  $("#item_code").val('');
+  $("#item_code").focus();
+ }
 
-  // $('.exclusive_rate').val(exclusive);
-  // $('.inclusive_rate').val(inclusive);
-  // $('.item_sno').val(invoice_no);
-  // $('.items_codes').val(item_code_id);
-  // $('.item_name').val(item_name);
-  // $('.item_code').val(item_code_name);
-  // $('.mrp').val(mrp);
-  // $('.hsn').val(hsn);
-  // $('.quantity').val(quantity);
-  // $('.tax_rate').val(tax_gst);
-  // $('.amount').val(amnt);
-  // $('.net_price').val(net_price);
-  // $('.gst').val(tax);
-  // $('.uom').val(uom);
-  // $('.uom_name').val(uom_name);
-  // var lastDigit = String(discount_val).substr(-1);
-  // if(lastDigit == '%')
-  // {
-  //   var discount = parseInt(discount_val); 
-  //   $('.discount_percentage').val(discount);
-  //   $('.discount_rs').val('');
-  // } 
-  // else
-  // {
-  //  $('.discount_rs').val(discount_val);
-  //  $('.discount_percentage').val(''); 
-  // }
-  // }
-  // else
-  // {
+ else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
+ {
+  alert('The Total Net Value Exceeds The MRP!!');
+    $('#discount').val('');
+    $('.discount_percentage').val('');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('.amount').val('');
+    $('.net_price').val('');
+    $('.gst').val('');
+ }
+ else
+ {
 
   $('.invoice_no'+td_id).val($('.item_sno').val());
   $('.item_no'+td_id).text($('.item_sno').val());
@@ -1092,7 +1075,8 @@ $(document).on("click",".update_items",function(){
 
   $('.update_items').hide();
   $('.add_items').show();
-
+  
+  }
   
   });
 
@@ -1540,7 +1524,15 @@ function get_details()
 {
 
   var item_code=$('#item_code').val();
-//alert(item_code);
+  //$('#item_code').val('');
+  $('#items_codes').val('');
+  $('#item_name').val('');
+  $('#mrp').val('');
+  $('#hsn').val('');
+  $('#uom').val('');
+  $('#uom_name').val('');
+  $('#tax_rate').val('');
+//
 var row_id=$('#last').val();
 
       $.ajax({  
@@ -1551,6 +1543,7 @@ var row_id=$('#last').val();
                         
         success: function(data){ 
           console.log(data);
+          //alert(data);
 
              id = data[0].item_id;
              name =data[0].item_name;
@@ -1560,18 +1553,14 @@ var row_id=$('#last').val();
              uom_id =data[0].uom_id;
              uom_name =data[0].uom_name;
              igst =data[1].igst;
-              //console.log(uom_name);
-              //var gst = igst/100;
 
-              //alert(gst);
-                       
              $('#item_code').val(item_code);
              $('#items_codes').val(id);
-            $('#item_name').val(name);
+             $('#item_name').val(name);
              $('#mrp').val(mrp);
              $('#hsn').val(hsn);
-              $('#uom').val(uom_id);
-              $('#uom_name').val(uom_name);
+             $('#uom').val(uom_id);
+             $('#uom_name').val(uom_name);
              $('#tax_rate').val(igst);
              $('#quantity').focus();
              $('#cat').hide();
