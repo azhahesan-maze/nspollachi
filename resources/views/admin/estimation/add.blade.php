@@ -1299,9 +1299,12 @@ function calc_inclusive()
     $('#inclusive').val('');
   }
   
-    //   var total = parseInt(quantity)*parseInt(rate_inclusive);
-    
-    // $('#amount').val(total.toFixed(2));
+  else if(parseFloat(rate_inclusive)>parseFloat(mrp))
+  {
+    alert('Rate Exceeds The MRP!!');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+  }
     else
     {
     if(tax_rate == '')
