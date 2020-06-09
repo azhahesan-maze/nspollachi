@@ -432,7 +432,7 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount(-)</label>
-                      <input type="text" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      <input type="text" readonly="" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                     </div>
 
@@ -480,17 +480,17 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Round Off(+/-)</label>
-                      <input type="text" class="form-control round_off" value="0" id="round_off" name="round_off" >
+                      <input type="text" class="form-control round_off" readonly="" value="0" id="round_off" name="round_off" >
                       </div>
                         
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">CGST</label>
-                      <input type="text" class="form-control cgst" id="cgst" name="cgst" value="0">
+                      <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="0">
                       </div>
 
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">SGST</label>
-                      <input type="text" class="form-control sgst" id="sgst" name="sgst" value="0">
+                      <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="0">
                       </div>
                       <div class="col-md-4" style="float: right;">
 
@@ -500,7 +500,7 @@ table, th, td {
                        <div class="row col-md-12">
                          <div class="col-md-2">
                            <label style="font-family: Times new roman;">IGST</label>
-                      <input type="text" class="form-control igst" id="igst" name="igst" value="0">
+                      <input type="text" class="form-control igst" readonly="" id="igst" name="igst" value="0">
                          </div>
                        </div>
 
@@ -681,17 +681,17 @@ function add_items()
   $("#item_code").focus();
  }
 
- else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
- {
-  alert('The Total Net Value Exceeds The MRP!!');
-    $('#discount').val('');
-    $('.discount_percentage').val('');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-    $('.amount').val('');
-    $('.net_price').val('');
-    $('.gst').val('');
- }
+ // else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
+ // {
+ //  alert('The Total Net Value Exceeds The MRP!!');
+ //    $('#discount').val('');
+ //    $('.discount_percentage').val('');
+ //    $('#exclusive').val('');
+ //    $('#inclusive').val('');
+ //    $('.amount').val('');
+ //    $('.net_price').val('');
+ //    $('.gst').val('');
+ // }
  else
  {
  
@@ -1226,6 +1226,12 @@ function calc_exclusive()
     $('#exclusive').val('');
     $('#inclusive').val('');
   }
+  // else if(parseFloat(rate_inclusive)>parseFloat(mrp))
+  // {
+  //   alert('Rate Exceeds The MRP!!');
+  //   $('#exclusive').val('');
+  //   $('#inclusive').val('');
+  // }
   
   else
   {
@@ -1245,14 +1251,23 @@ function calc_exclusive()
       var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
       var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
       $('#inclusive').val(gst_rate_inclusive.toFixed(2));
-
-      //alert(rate);
+      if($('#inclusive').val()>parseFloat(mrp))
+      {
+        alert('Rate Exceeds The MRP!!');
+        $('#exclusive').val('');
+        $('#inclusive').val('');
+      }
+      else
+      {
+        //alert(rate);
       var net_val = parseFloat(total)*parseFloat(rate);
       //alert(net_val);
       $('.gst').val(net_val.toFixed(2));
 
       var total_net_val = parseFloat(total)+parseFloat(net_val);
       $('#net_price').val(total_net_val.toFixed(2));
+      }
+      
 
     }
 
