@@ -288,6 +288,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                       <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
                       </div>
+                      <!-- <input type="text" name="" id="rate_exclusive_disc_val">
+                      <input type="text" name="" id="rate_inclusive_disc_val"> -->
                       <div class="col-md-2"  id="rate_inclusive">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
                       <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
@@ -942,16 +944,18 @@ $(document).on("click",".edit_items",function(){
   $('.gst').val(tax);
   $('.uom').val(uom);
   $('.uom_name').val(uom_name);
-  var lastDigit = String(discount_val).substr(-1);
-  if(lastDigit == '%')
-  {
-    var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
-  $('.discount_rs').val('');
-  } 
-  else
-  {
-   $('.discount_rs').val(discount_val);$('.discount_percentage').val(''); 
-  }
+  // var lastDigit = String(discount_val).substr(-1);
+  // if(lastDigit == '%')
+  // {
+  //   var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
+  // $('.discount_rs').val('');
+  // } 
+  // else
+  // {
+   $('.discount_rs').val(parseFloat(discount_val)/parseFloat(quantity));
+   discount_calc();
+   //$('.discount_percentage').val(); 
+  // }
 
   if(discount_val == 0)
   {
@@ -988,17 +992,17 @@ $(document).on("click",".update_items",function(){
   $("#item_code").focus();
  }
 
- else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
- {
-  alert('The Total Net Value Exceeds The MRP!!');
-    $('#discount').val('');
-    $('.discount_percentage').val('');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-    $('.amount').val('');
-    $('.net_price').val('');
-    $('.gst').val('');
- }
+ // else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
+ // {
+ //  alert('The Total Net Value Exceeds The MRP!!');
+ //    $('#discount').val('');
+ //    $('.discount_percentage').val('');
+ //    $('#exclusive').val('');
+ //    $('#inclusive').val('');
+ //    $('.amount').val('');
+ //    $('.net_price').val('');
+ //    $('.gst').val('');
+ // }
  else
  {
 
@@ -1394,6 +1398,11 @@ function discount_calc()
   else
   {
 
+  // var rate_exclusive_disc_val = parseFloat(exclusive) - parseFloat(discount);
+  // var rate_inclusive_disc_val = parseFloat(inclusive) - parseFloat(discount);
+
+  // $('#rate_exclusive_disc_val').val(rate_exclusive_disc_val.toFixed(2));
+  // $('#rate_inclusive_disc_val').val(rate_inclusive_disc_val.toFixed(2));
   var disc_amount_exclusive = parseFloat(discount)*100/parseFloat(exclusive);
 
    $(".discount_percentage").val(disc_amount_exclusive.toFixed(2));
