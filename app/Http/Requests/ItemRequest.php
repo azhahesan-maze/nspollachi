@@ -32,7 +32,8 @@ class ItemRequest extends FormRequest
                 'name' => 'required|unique:items,name,NULL,id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,NULL,id,deleted_at,NULL',
                  // 'barcode' => 'required|unique:items,barcode,NULL,id,deleted_at,NULL',
-                'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
+                'ptc' => 'required',
+                //'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
                 'mrp' => 'required',
@@ -74,7 +75,8 @@ class ItemRequest extends FormRequest
              if ($request->has('barcode'))
              {
                      foreach ($request->barcode as $barcode_key => $barcode_value) {
-                         $rule['barcode.' . $barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
+                         $rule['barcode.' . $barcode_key] = 'required';
+                        // $rule['barcode.' . $barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
                          $rule['barcode_confirmation.' . $barcode_key] = 'required|same:barcode.'.$barcode_key;
                      }
             }
@@ -118,7 +120,8 @@ class ItemRequest extends FormRequest
             $rule = [
                 'name' => 'required|unique:items,name,' . $this->id . ',id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,' . $this->id . ',id,deleted_at,NULL',
-                'ptc' => 'required|unique:items,ptc,' . $this->id . ',id,deleted_at,NULL',
+                'ptc' => 'required',
+                //'ptc' => 'required|unique:items,ptc,' . $this->id . ',id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
                 'mrp' => 'required',
@@ -162,7 +165,8 @@ class ItemRequest extends FormRequest
               {
                // $rule['barcode.*']="distinct";
                       foreach ($request->barcode as $barcode_key => $barcode_value) {
-                          $rule['barcode.' . $barcode_key] = 'required|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
+                          //$rule['barcode.' . $barcode_key] = 'required|unique:item_bracode_details,barcode,NULL,id,deleted_at,NULL';
+                          $rule['barcode.' . $barcode_key] = 'required';
                           $rule['barcode_confirmation.' . $barcode_key] = 'required|same:barcode.'.$barcode_key;
                       }
              }
@@ -170,7 +174,8 @@ class ItemRequest extends FormRequest
              if ($request->has('old_barcode'))
              {
                      foreach ($request->old_barcode as $old_barcode_key => $barcode_value) {
-                         $rule['old_barcode.' . $old_barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,'.$request->item_barcode_details_id[$old_barcode_key].',id,deleted_at,NULL';
+                         $rule['old_barcode.' . $old_barcode_key] = 'required';
+                        // $rule['old_barcode.' . $old_barcode_key] = 'required|distinct|unique:item_bracode_details,barcode,'.$request->item_barcode_details_id[$old_barcode_key].',id,deleted_at,NULL';
                          $rule['old_barcode_confirmation.' . $old_barcode_key] = 'required|same:old_barcode.'.$old_barcode_key;
                      }
             }

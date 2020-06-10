@@ -39,9 +39,6 @@ class EstimationController extends Controller
     public function create()
 
     {
-
-          
-        
         
         $date = date('Y-m-d');
         $categories = Category::all();
@@ -301,7 +298,27 @@ $count=0;
         else if($data[2]=='')  
         {
             $data[2]='';
-        }                                
+        }  
+
+        $item_id=$this->get_item_id($id);
+          //dd($item_id);
+         $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
+          
+        $uom=array();
+        $count=0;
+        foreach($item_uom as $value){
+            if(isset($value->uom->name) && !empty($value->uom->name))
+            {
+                $count++;
+                $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+                    //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
+            }
+
+        }
+
+        $result = array_unique($uom, SORT_REGULAR);
+
+        $data[]=$result;                              
         return $data;
     }
 
@@ -486,6 +503,71 @@ $count=0;
 
     }
 
+    // function uom_selection($item_id)
+    // {
+    //     $uoms = Item::where('id',$item_id)->select('uom_for_repack_item','uom_id')->first();
+    //     if($uoms->uom_for_repack_item == '')
+    //                {
+    //                 return $uoms;
+    //                }
+    //                else
+    //                {
+    //                 $parent_id=$uoms->id;
+    //                 $uoms = Item::where('id',$parent_id)->select('uom_for_repack_item','uom_id')->first();
+    //                 uom_selection($parent_id);
+    //                }
+    // }
+
+    function childItem($array)
+   {
+       $output_array=[];
+       foreach($array  as $value)
+       {
+           $result_array=[];
+           $result_array['id']=$value->id;
+           $output_array[]=$result_array;
+             if(count($value->childItem)>0)
+             {
+                $test=$this->childItem($value->childItem);
+                array_push($output_array,$test);
+             }  
+        }
+           return $output_array;
+   }
+
+   function get_item_id($item_id)
+   {
+
+     $item=item::with('childItem')->where('id',$item_id)->get();
+   
+    $output_array=[];
+    foreach($item as $value)
+    {
+        $result_array=[];
+        $result_array['id']=$value->id;
+        $output_array[]=$result_array;
+        if(count($value->childItem)>0)
+        {
+            $result=$this->childItem($value->childItem);
+            array_push($output_array,$result);
+        }  
+    }
+
+    $result=[];
+    foreach ($output_array as $key => $value)
+    {
+        if (is_array($value))
+        {
+            $result = array_merge($result, array_flatten($value));
+        } else
+        {
+            $result = array_merge($result, array($key => $value));
+        }
+    }
+    //$result=implode("','", $result);
+    //$result="'".$result."'";
+    return $result;
+   }
 
     public function getdata_item(Request $request,$id)
     {
@@ -498,9 +580,10 @@ $count=0;
                     ->select('items.id as item_id','items.name as items_name','items.mrp as item_mrp','items.hsn as item_hsn','items.code as item_code')
                     ->first();
 
-                    //return $item;
-
                    $item_id= $item->item_id;
+                   // $data[] = $this->uom_selection($item_id);
+                   
+                   
 
         $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
                     ->join('item_bracode_details','item_bracode_details.item_id','=','items.id')
@@ -513,11 +596,34 @@ $count=0;
 
         $data[] =ItemTaxDetails::where('item_id','=',$item_id)
                                 ->select('igst')
-                                ->first(); 
+                                ->first();
+
         if($data[1]=='')  
         {
             $data[1]=0;
-        }                                
+        }         
+
+
+        $item_id=$this->get_item_id($item_id);
+          //dd($item_id);
+         $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
+          
+        $uom=array();
+        $count=0;
+        foreach($item_uom as $value){
+            if(isset($value->uom->name) && !empty($value->uom->name))
+            {
+                $count++;
+                $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+                    //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
+            }
+
+        }
+
+        $result = array_unique($uom, SORT_REGULAR);
+
+        $data[]=$result;
+                                
         return $data;
     }
 

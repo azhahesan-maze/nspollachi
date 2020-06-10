@@ -81,4 +81,15 @@ class Item extends Model
     {
         return $this->hasMany(Category::class, 'parent_id')->with('categories');
     }
+
+     public function items()
+    {
+        return $this->belongsTo(Item::class, 'child_item_id','id');
+    }
+ 
+    // This is method where we implement recursive relationship
+    public function childItem()
+    {
+        return $this->hasMany(Item::class, 'id','child_item_id')->with('items');
+    }
 }

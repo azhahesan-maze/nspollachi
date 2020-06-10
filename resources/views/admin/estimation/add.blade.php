@@ -237,14 +237,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
 
-                      <!-- <div class="col-md-2">
+                      <div class="col-md-2">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                         <div class="form-group row">
                           
                           <div class="col-sm-12">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <select class="form-control parent_uom" name="parent_uom" >
+                                <select class="form-control uom_exclusive" name="uom_exclusive" onchange="parent_details()">
                                   <option></option>
                                 </select>
                               </div>
@@ -264,7 +264,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <div class="col-sm-12">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <select class="form-control  parent_uom" name="parent_uom">
+                                <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="parent_details()">
                                   <option></option>
                                 </select>
                               </div>
@@ -275,7 +275,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           </div>
                         </div>
 
-                      </div> -->
+                      </div>
 
 
 
@@ -284,16 +284,16 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
 
                       
-                      <div class="col-md-2" id="rate_exclusive">
+                      <!-- <div class="col-md-2" id="rate_exclusive">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
                       <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
                       </div>
-                      <!-- <input type="text" name="" id="rate_exclusive_disc_val">
-                      <input type="text" name="" id="rate_inclusive_disc_val"> -->
+                      <input type="text" name="" id="rate_exclusive_disc_val">
+                      <input type="text" name="" id="rate_inclusive_disc_val">
                       <div class="col-md-2"  id="rate_inclusive">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
                       <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
-                      </div>
+                      </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
                       <input type="text" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
@@ -435,6 +435,10 @@ table, th, td {
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount(-)</label>
                       <input type="text" readonly="" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Overall Discount</label>
+                      <input type="text" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discount()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                     </div>
 
@@ -636,7 +640,7 @@ function add_items()
  var discounts=$('#discounts').val();
  var discount=$('#discount').val();
  var discount_percentage=$('.discount_percentage').val();
- var discount_rs=$('#discount').val();
+ var discount_rs=$('.discount_rs').val();
  var net_price=$('.net_price').val();
  
  if(discount_rs == '')
@@ -652,7 +656,10 @@ function add_items()
   var discount = discount_rs;
  }
 
- 
+ if(discounts == '')
+ {
+  discounts =0;
+ }
   // if(discount == '' && discount_percentage != '')
   //  {
   //   var discount=discount_percentage+'%';
@@ -840,10 +847,13 @@ $('#exclusive').val('');
 $('#inclusive').val('');
 $('.amount').val('');
 $('#discount').val('');
+$('#discounts').val('');
 $('.discount_percentage').val('');
 $('.net_price').val('');
 $('.gst').val('');
 $('.item_code').val('');
+$('.uom_inclusive').children('option:not(:first)').remove();
+$('.uom_exclusive').children('option:not(:first)').remove();
 }
 } 
 $(document).on("click",".add_items",function(){
@@ -1492,7 +1502,8 @@ var row_id=$('#last').val();
                         
         success: function(data){ 
           //alert(data);
-             
+             $('.uom_exclusive').children('option:not(:first)').remove();
+             $('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1504,9 +1515,15 @@ var row_id=$('#last').val();
              igst =data[1].igst;
              barcode = data[2].barcode;
               
-              //var gst = igst/100;
+              for(var i=0;i<data[3].length;i++)
+             {
+              var item_id=data[3][i].id;
+              var item_name=data[3][i].name;
 
-              console.log(data);
+              var div_data='<option value="'+item_id+'">'+item_name+'</option>';
+              $('.uom_exclusive').append(div_data);
+              $('.uom_inclusive').append(div_data);
+             }
                        
              $('#item_code').val(code);
              $('#items_codes').val(id);
@@ -1561,6 +1578,7 @@ function get_details()
   $('#uom_name').val('');
   $('#tax_rate').val('');
 //
+$("select").select2();
 var row_id=$('#last').val();
 
       $.ajax({  
@@ -1571,8 +1589,8 @@ var row_id=$('#last').val();
                         
         success: function(data){ 
           console.log(data);
-          //alert(data);
-
+             $('.uom_exclusive').children('option:not(:first)').remove();
+             $('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1581,6 +1599,17 @@ var row_id=$('#last').val();
              uom_id =data[0].uom_id;
              uom_name =data[0].uom_name;
              igst =data[1].igst;
+
+             for(var i=0;i<data[2].length;i++)
+             {
+              var item_id=data[2][i].id;
+              var item_name=data[2][i].name;
+
+              var div_data='<option value="'+item_id+'">'+item_name+'</option>';
+              $('.uom_exclusive').append(div_data);
+              $('.uom_inclusive').append(div_data);
+             }
+
 
              $('#item_code').val(item_code);
              $('#items_codes').val(id);
@@ -1808,6 +1837,11 @@ function supplier_details()
         });
 }
 
+function parent_details()
+{
+
+}
+
 
 
 
@@ -1822,276 +1856,6 @@ function supplier_details()
 <style type="text/css">
   .ui-dialog.ui-widget-content { background: #a3d072; }
 </style>
-<!-- <div class="form-row">
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Item Code </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="item Code" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Item Name </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Item Name" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Mrp </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="MRP" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Qty</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Qty" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Tax Rate % </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Tax Rate % " name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Rate (Inclusive Tax)</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Rate (Inclusive Tax)" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Rate (Exclusive Tax)</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Rate (Exclusive Tax)" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Discount</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Discount" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Amount</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Amount" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3 text-left">
-    <button class="btn btn-success" name="add" type="submit">Add</button>
-  </div>
-</div> -->
-
-<!-- <div class="row">
-    <div class="col-md-12">
-<div class="form-row custom-table">
-               <table class="table table-bordered " style="margin-top: 20px;">
-                  <thead class="thead-gray"> -->
-                  <!-- <tr>
-                        <th class="text-center" rowspan="1" colspan="10">Common</th>
-                     </tr> -->
-                     <!-- <tr>
-                        <th class="text-center">S.No</th>
-                        <th class="text-center">Item Code</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Rate Rs.</th>
-                        <th class="text-center">Qty</th> -->
-                        <!-- <th class="text-center">UOM</th> -->
-                        <!-- <th class="text-center">Rate </th> -->
-<!--                         <th class="text-center">Amount</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Tax Rs.</th>
-                        <th class="text-center">Net Value</th>
-                        <th class="text-center">Action</th>
-                     </tr>
-                  </thead>
-
-                  <tfoot class="thead-gray">
-                    <tr>
-                      <th class="text-right" colspan="6">Total</th>
-                      <th class="text-center"></th>
-                      <th class="text-center"></th>
-                      <th class="text-center"></th>
-                      <th class="text-center" colspan="2"></th>
-                    
-                   </tr>
-                    </tfoot>
-                  <tbody class="append_barcode_dets">
-                    <?php for($i=0;$i<10;$i++) {?>
-                     <tr>
-                     <td> {{$i+1}} </td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                     </tr>
-                    <?php } ?>
-                
-                     
-                  </tbody>
-                 
-               </table>
-            </div>
-            </div>
-
-            <div class="col-md-5">
-              <div class="form-row custom-table price-tbl">
-                <table class="table table-bordered table-responsive">
-                    <tr class="thead-gray">
-                      <th rowspan="1" colspan="6">Price Level</th>
-                      <th rowspan="1" colspan="2">%</th>
-                      <th rowspan="1" colspan="2">Rate</th>
-                    </tr>
-                    <tr>
-                      <th>S.No</th>
-                      <th class="cus-wd">Item Name</th>
-                      <th class="cus-wd">Purchase Cost</th>
-                      <th>MRP</th>
-                      <th class="cus-wd">Last Purchase Rate(LPR)</th>
-                      <th class="cus-wd">Updated Sales Price</th>
-                      <th>Markup</th>
-                      <th>MarkDown</th>
-                      <th>Markup</th>
-                      <th>MarkDown</th>
-                    </tr>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-
-                  </table>
-              </div>      
-            </div>
-</div> -->
-
 
         
 
