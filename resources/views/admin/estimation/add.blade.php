@@ -438,7 +438,7 @@ table, th, td {
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Overall Discount</label>
-                      <input type="text" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discount()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="text" class="form-control overall_discount" id="overall_discount" name="overall_discount" onchange="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                     </div>
 
@@ -600,6 +600,11 @@ else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || 
   var symbol ='+'+'0.'+round_off;
   $("#round_off").val(symbol);
 }
+else if(substr[1] == '01' || substr[1] == '02' || substr[1] == '03' || substr[1] == '04' || substr[1] =='05' || substr[1] == '06' || substr[1] == '07' || substr[1] == '08' || substr[1] == '09')
+{
+  var symbol ='-'+'0.'+substr[1];
+  $("#round_off").val(symbol);
+}
 else if(typeof substr[1] == 'undefined')
 {
   var symbol = 0;
@@ -642,7 +647,7 @@ function add_items()
  var discount_percentage=$('.discount_percentage').val();
  var discount_rs=$('.discount_rs').val();
  var net_price=$('.net_price').val();
- 
+ alert(discounts);
  if(discount_rs == '')
  {
   var discount = 0;
@@ -738,34 +743,34 @@ for(var m=0;m<length+1;m++)
   }
 }
 
-for(var m=0;m<length+1;m++)
-{
+// for(var m=0;m<length+1;m++)
+// {
 
-  var item_code_id_first = $('.item_code'+m).val();
+//   var item_code_id_first = $('.item_code'+m).val();
   
-  for(var n=m+1;n<=length+1;n++)
-  {
+//   for(var n=m+1;n<=length+1;n++)
+//   {
     
-    if(typeof $('.item_code'+n).val() == 'undefined')
-    {
+//     if(typeof $('.item_code'+n).val() == 'undefined')
+//     {
 
-    }
-    else
-    {
-      var item_code_id_second = $('.item_code'+n).val();
+//     }
+//     else
+//     {
+//       var item_code_id_second = $('.item_code'+n).val();
 
-      if(item_code_id_first == item_code_id_second)
-      {
-        alert('Item Code is Alredy Taken!');
-        $('#row'+i).remove();
-      }
-      else
-      {
+//       if(item_code_id_first == item_code_id_second)
+//       {
+//         alert('Item Code is Alredy Taken!');
+//         $('#row'+i).remove();
+//       }
+//       else
+//       {
         
-      }
-    }
-  }
-}
+//       }
+//     }
+//   }
+// }
 
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();
@@ -789,7 +794,7 @@ $(".total_amount").html(parseFloat(to_html_total_amount));
 var q=calculate_total_discount();
 $('#total_discount').val(q.toFixed(2));
 $('#disc_total').val(q.toFixed(2));
-
+overall_discounts();
 roundoff_cal();
 
 var len=$('.tables').length;
@@ -872,7 +877,6 @@ $(document).on("click",".remove_items",function(){
      var q=calculate_total_discount();
      $('#total_discount').val(q.toFixed(2));
      $('#disc_total').val(q.toFixed(2));
-     
      var counts = $('#counts').val();
      $('#counts').val(counts-1); 
      item_details_sno();
@@ -899,7 +903,7 @@ $(document).on("click",".remove_items",function(){
     var half_gst = parseFloat(total_gst)/2;
     $("#cgst").val(half_gst.toFixed(2));
     $("#sgst").val(half_gst.toFixed(2));
-
+    overall_discounts();
     roundoff_cal();
     
 
@@ -954,19 +958,10 @@ $(document).on("click",".edit_items",function(){
   $('.gst').val(tax);
   $('.uom').val(uom);
   $('.uom_name').val(uom_name);
-  // var lastDigit = String(discount_val).substr(-1);
-  // if(lastDigit == '%')
-  // {
-  //   var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
-  // $('.discount_rs').val('');
-  // } 
-  // else
-  // {
-   $('.discount_rs').val(parseFloat(discount_val)/parseFloat(quantity));
+  var disc_value = parseFloat(discount_val)/parseFloat(quantity);
+   $('.discount_rs').val(disc_value.toFixed(2));
    discount_calc();
-   //$('.discount_percentage').val(); 
-  // }
-
+   
   if(discount_val == 0)
   {
     $('.discount_percentage').val('');
@@ -1079,7 +1074,7 @@ $(document).on("click",".update_items",function(){
   var to_html_total_amount = total_amount.toFixed(2);
   $(".total_net_price").html(parseFloat(to_html_total_net));
   $(".total_amount").html(parseFloat(to_html_total_amount));
-
+  overall_discounts();
   roundoff_cal();
 
   
@@ -1100,7 +1095,9 @@ $(document).on("click",".update_items",function(){
   $('.net_price').val('');
   $('.gst').val('');
   $('.item_code').val('');
-
+  $('#discounts').val('');
+  $('.uom_inclusive').children('option:not(:first)').remove();
+  $('.uom_exclusive').children('option:not(:first)').remove();
   $('.update_items').hide();
   $('.add_items').show();
   
@@ -1588,7 +1585,6 @@ var row_id=$('#last').val();
         data: { id: item_code },             
                         
         success: function(data){ 
-          console.log(data);
              $('.uom_exclusive').children('option:not(:first)').remove();
              $('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
@@ -1824,8 +1820,6 @@ function supplier_details()
             url: "{{ url('estimation/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
-
-            console.log(data);
             $('#address_line_1').val(data);
             // $('#address_line_2').val(data[1]);
             // $('#city_id').val(data[2]);
@@ -1842,7 +1836,43 @@ function parent_details()
 
 }
 
+ function overall_discounts()
+{
+    var sum=0;
+    var num=0;
+  $('.input_discounts').each(function(){
 
+      var count = $(this).attr('id').split("")[14];
+      var overall_discount = $('.overall_discount').val();
+      var amount = $('#amnt'+count).val();
+      var gst_rs = $('#tax'+count).val();
+      var total_amount =calculate_total_amount();
+      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
+      var total_discount = parseFloat($(this).val())+parseFloat(disc_distribution);
+      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(total_discount);
+      $('#input_discount'+count).val(total_discount);
+      $('.font_discount'+count).text(total_discount.toFixed(2));
+      $('.discount_val'+count).val(total_discount.toFixed(2));
+      $('#net_price'+count).val(net_value.toFixed(2));
+      $('.font_net_price'+count).text(net_value.toFixed(2));
+      num++;
+  });
+  // if(num == 0)
+  //   {
+  //     alert('you Cannot Add Overall Discount!');
+  //     $('.overall_discount').val(0);
+  //   }
+  var total_net_price = calculate_total_net_price();
+  $("#total_price").val(total_net_price.toFixed(2));
+  $(".total_net_value").text(total_net_price.toFixed(2));
+  var to_html_total_net = total_net_price.toFixed(2);
+  $(".total_net_price").html(parseFloat(to_html_total_net));
+  roundoff_cal();
+  var q=calculate_total_discount();
+  $('#total_discount').val(q.toFixed(2));
+  $('#disc_total').val(q.toFixed(2));
+  
+}
 
 
 </script>
