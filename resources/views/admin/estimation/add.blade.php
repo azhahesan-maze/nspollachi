@@ -2025,7 +2025,24 @@ function parent_details()
 
       var count = $(this).attr('id').split("")[14];
       var overall_discount = $('.overall_discount').val();
-      var amount = $('#amnt'+count).val();
+      if(parseFloat(overall_discount) == 0)
+      {
+        var amount = $('#amnt'+count).val();
+      var gst_rs = $('#tax'+count).val();
+      var total_amount =calculate_total_amount();
+      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
+      //var total_discount = parseFloat(disc_distribution);
+      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(disc_distribution);
+      $('#input_discount'+count).val(disc_distribution);
+      $('.font_discount'+count).text(disc_distribution.toFixed(2));
+      $('.discount_val'+count).val(disc_distribution.toFixed(2));
+      $('#net_price'+count).val(net_value.toFixed(2));
+      $('.font_net_price'+count).text(net_value.toFixed(2));
+      num++;
+      }
+      else
+      {
+        var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
       var total_amount =calculate_total_amount();
       var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
@@ -2037,6 +2054,8 @@ function parent_details()
       $('#net_price'+count).val(net_value.toFixed(2));
       $('.font_net_price'+count).text(net_value.toFixed(2));
       num++;
+      }
+      
   });
   // if(num == 0)
   //   {
