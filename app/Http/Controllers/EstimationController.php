@@ -649,6 +649,7 @@ $count=0;
                     ->orWhere('items.ptc','=',$id)
                     ->orWhere('item_bracode_details.barcode','=',$id)
                     ->select('*','item_bracode_details.barcode as item_barcode','items.id as item_id','items.code as item_code','items.name as item_name','mrp','hsn','ptc','code')
+                    //->distinct('items.code')
                     ->get();
 
         foreach($item as $key=>$value){

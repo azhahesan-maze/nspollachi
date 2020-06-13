@@ -1587,7 +1587,7 @@ if(append_value == 1)
              $('#tax_rate').val(igst);
 
              
-             // $('#cat').dialog('close');
+             $('.item_display').dialog('close');
              $('#quantity').focus();
 
              if($('#quantity').val() != '')
@@ -1979,8 +1979,9 @@ function brand_check()
 
 function add_data(val)
 {
-  $('#item_display').dialog('close');
-  $('#item_display').hide();
+  // $('.item_display').dialog('close');
+  // $('#item_display').hide();
+  alert($('.append_item_id'+val).val());
   item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
 }
 
