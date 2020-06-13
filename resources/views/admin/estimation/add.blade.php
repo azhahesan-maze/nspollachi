@@ -1980,8 +1980,6 @@ function brand_check()
 function add_data(val)
 {
   // $('.item_display').dialog('close');
-  // $('#item_display').hide();
-  alert($('.append_item_id'+val).val());
   item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
 }
 
