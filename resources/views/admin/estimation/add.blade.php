@@ -171,6 +171,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th style="font-family: Times New Roman;">Item Code</th>
                                   <th style="font-family: Times New Roman;">Item Name</th>
                                   <th style="font-family: Times New Roman;">MRP</th>
+                                  <th style="font-family: Times New Roman;">UOM</th>
                                   <th style="font-family: Times New Roman;">Brand</th>
                                   <th style="font-family: Times New Roman;">Category</th>
                                   <th style="font-family: Times New Roman;">PTC Code</th>
@@ -180,6 +181,50 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <tbody class="append_item">
                                 </tbody>
                                 <tfoot>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                        <!-- <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
+                          <option></option>
+                          @foreach($item as $items)
+                          <option value="{{ $items->id }}">{{ $items->code }}</option>
+                          @endforeach
+                        </select><br> -->
+                            
+                      </div>
+
+
+                      <div class="item_display" id="item_display" style="display: none;" title="Items With Same Data">
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                              <table class="item_code_table" style="width: 100%;">
+                                  <thead>
+                                  <th style="font-family: Times New Roman;">Select One</th>
+                                  <th style="font-family: Times New Roman;">Item Code</th>
+                                  <th style="font-family: Times New Roman;">Item Name</th>
+                                  <th style="font-family: Times New Roman;">MRP</th>
+                                  <th style="font-family: Times New Roman;">UOM</th>
+                                  <th style="font-family: Times New Roman;">Brand</th>
+                                  <th style="font-family: Times New Roman;">Category</th>
+                                  <th style="font-family: Times New Roman;">PTC Code</th>
+                                  <th style="font-family: Times New Roman;">Barcode</th>
+                                  
+                                </thead>
+                                <tbody class="append_item_display">
+                                </tbody>
+                                <tfoot>
+                                  <th></th>
                                   <th></th>
                                   <th></th>
                                   <th></th>
@@ -245,7 +290,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <select class="form-control uom_exclusive" name="uom_exclusive" onchange="parent_details()">
-                                  <option></option>
                                 </select>
                               </div>
                               <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
@@ -265,7 +309,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="parent_details()">
-                                  <option></option>
                                 </select>
                               </div>
                               <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
@@ -647,7 +690,6 @@ function add_items()
  var discount_percentage=$('.discount_percentage').val();
  var discount_rs=$('.discount_rs').val();
  var net_price=$('.net_price').val();
- alert(discounts);
  if(discount_rs == '')
  {
   var discount = 0;
@@ -1485,11 +1527,12 @@ function discount_calc1()
   
 }
 
-function item_codes(item_code)
+function item_codes(item_code,append_value)
 {
-//var item_code=$('#codes').val();
-//alert(item_code);
-var row_id=$('#last').val();
+
+if(append_value == 1)
+{
+  var row_id=$('#last').val();
 
       $.ajax({  
         
@@ -1499,8 +1542,94 @@ var row_id=$('#last').val();
                         
         success: function(data){ 
           //alert(data);
-             $('.uom_exclusive').children('option:not(:first)').remove();
-             $('.uom_inclusive').children('option:not(:first)').remove();
+             // $('.uom_exclusive').children('option:(:first)').remove();
+             // $('.uom_inclusive').children('option:(:first)').remove();
+             $('.uom_exclusive').children('option').remove();
+             $('.uom_inclusive').children('option').remove();
+
+             id = data[0].item_id;
+             name =data[0].item_name;
+             code =data[0].code;
+             mrp =data[0].mrp;
+             hsn =data[0].hsn;
+             uom_id =data[0].uom_id;
+             ptc_code =data[0].ptc;
+             uom_name =data[0].uom_name;
+             igst =data[1].igst;
+             barcode = data[2].barcode;
+              var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
+              for(var i=0;i<data[3].length;i++)
+             {
+              var item_uom_id=data[3][i].id;
+              var item_uom_name=data[3][i].name;
+              if(item_uom_name == uom_name)
+              {
+
+              }
+              else
+              {
+                var div_data='<option value="'+item_uom_id+'">'+item_uom_name+'</option>';
+                $('.uom_exclusive').append(div_data);
+                $('.uom_inclusive').append(div_data);
+              }
+              
+             }
+                       
+             //$('#item_code').val(code);
+             $('#items_codes').val(id);
+            $('#item_name').val(name);
+             $('#mrp').val(mrp);
+             $('#hsn').val(hsn);
+             $('#uom').val(uom_id);
+              $('#uom_name').val(uom_name);
+             $('#tax_rate').val(igst);
+
+             
+             // $('#cat').dialog('close');
+             $('#quantity').focus();
+
+             if($('#quantity').val() != '')
+             {
+              
+              var rate_exclusive = $('#exclusive').val();
+              var rate_inclusive = $('#inclusive').val();
+              var tax_rate = $('.tax_rate').val();
+              var rate = parseFloat(tax_rate)/100;
+              var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
+              var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
+              $('#inclusive').val(gst_rate_inclusive.toFixed(2));
+              var net_val = parseFloat(total)*parseFloat(rate);
+      
+              $('.gst').val(net_val.toFixed(2));
+
+              var total_net_val = parseFloat(total)+parseFloat(net_val);
+              $('#net_price').val(total_net_val.toFixed(2));
+             }
+            else
+            {
+
+            }
+        }
+
+    });
+}
+else
+{
+  var row_id=$('#last').val();
+
+      $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('estimation/getdata/{id}') }}",
+        data: { id: item_code },             
+                        
+        success: function(data){ 
+          //alert(data);
+              $('.uom_exclusive').children('option').remove();
+              $('.uom_inclusive').children('option').remove();
+             // $('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1512,14 +1641,25 @@ var row_id=$('#last').val();
              igst =data[1].igst;
              barcode = data[2].barcode;
               
+              var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+              console.log(first_data);
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
               for(var i=0;i<data[3].length;i++)
              {
-              var item_id=data[3][i].id;
-              var item_name=data[3][i].name;
+              var item_uom_id=data[3][i].id;
+              var item_uom_name=data[3][i].name;
+              if(item_uom_name == uom_name)
+              {
 
-              var div_data='<option value="'+item_id+'">'+item_name+'</option>';
-              $('.uom_exclusive').append(div_data);
-              $('.uom_inclusive').append(div_data);
+              }
+              else
+              {
+                var div_data='<option value="'+item_uom_id+'">'+item_uom_name+'</option>';
+                $('.uom_exclusive').append(div_data);
+                $('.uom_inclusive').append(div_data);
+              }
+              
              }
                        
              $('#item_code').val(code);
@@ -1559,6 +1699,8 @@ var row_id=$('#last').val();
         }
 
     });
+}
+
 
 }
 
@@ -1584,9 +1726,12 @@ var row_id=$('#last').val();
         url: "{{ url('estimation/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
-        success: function(data){ 
-             $('.uom_exclusive').children('option:not(:first)').remove();
-             $('.uom_inclusive').children('option:not(:first)').remove();
+        success: function(data){
+             if(data[3]==1)
+             {
+              $('.uom_exclusive').children('option').remove();
+              $('.uom_inclusive').children('option').remove();
+             //$('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1596,14 +1741,25 @@ var row_id=$('#last').val();
              uom_name =data[0].uom_name;
              igst =data[1].igst;
 
+             var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
+
              for(var i=0;i<data[2].length;i++)
              {
               var item_id=data[2][i].id;
               var item_name=data[2][i].name;
+              if(item_name == uom_name)
+              {
 
-              var div_data='<option value="'+item_id+'">'+item_name+'</option>';
+              }
+              else
+              {
+                var div_data='<option value="'+item_id+'">'+item_name+'</option>';
               $('.uom_exclusive').append(div_data);
               $('.uom_inclusive').append(div_data);
+              }
+
              }
 
 
@@ -1617,6 +1773,7 @@ var row_id=$('#last').val();
              $('#tax_rate').val(igst);
              $('#quantity').focus();
              $('#cat').hide();
+
 
              if($('#quantity').val() != '')
              {
@@ -1638,14 +1795,37 @@ var row_id=$('#last').val();
             else
             {
 
-            }       
+            }
 
+             }
+                    
+             else
+             {
+              item_with_same_data(item_code);
+             }
               
         }
 
     });
 
 
+}
+
+function item_with_same_data(item_code)
+{
+  $.ajax({
+
+        type: "GET",
+        url: "{{ url('estimation/same_items/{id}') }}",
+        data: { id: item_code },
+
+        success:function(data){
+          $('.item_display').show();
+          $('.item_display').dialog({width:1000});
+          $('.append_item_display').html(data);
+        }
+
+  })
 }
 
 
@@ -1799,7 +1979,9 @@ function brand_check()
 
 function add_data(val)
 {
-  item_codes($('.append_item_id'+val).val());
+  $('#item_display').dialog('close');
+  $('#item_display').hide();
+  item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
 }
 
 function code_check()

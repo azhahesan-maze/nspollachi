@@ -281,6 +281,7 @@ $count=0;
     public function getdata(Request $request,$id)
     {
         $id=$request->id;
+
         $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
                     ->where('items.id','=',$id)
                     ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name','items.ptc')
@@ -302,17 +303,17 @@ $count=0;
 
         $item_id=$this->get_item_id($id);
           //dd($item_id);
-         $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
+        $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
           
         $uom=array();
         $count=0;
         foreach($item_uom as $value){
-            if(isset($value->uom->name) && !empty($value->uom->name))
-            {
-                $count++;
-                $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
-                    //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
-            }
+        if(isset($value->uom->name) && !empty($value->uom->name))
+        {
+            $count++;
+            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+                //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
+        }
 
         }
 
@@ -396,6 +397,9 @@ $count=0;
             }
             
             $category_name=isset($value->category->name) ? $value->category->name : "";
+            $uom_id=isset($value->uom->id) ? $value->uom->id : "";
+            $uom_name=isset($value->uom->name) ? $value->uom->name : "";
+
             $barcode="";
             if(count($value->item_barcode_details)>0){
                 $barcode_array=[];
@@ -404,7 +408,7 @@ $count=0;
                 }
                 $barcode=implode(",",$barcode_array);
             }
-             $result .='<tr class="row_category"><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td><td><input type="hidden" value="'.$value->id.'" class="append_item_id'.$key.'"><input type="hidden" value="'.$value->code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->code.'</font></td><td><input type="hidden" value="'.$value->name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->name.'</font></td><td><input type="hidden" value="'.$value->mrp.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->mrp.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name .'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name .'</font></td><td><input type="hidden" value="'.$value->ptc.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->ptc.'</font></td><td><input type="hidden" value="'.$barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barcode.'</font></td></tr>';
+             $result .='<tr class="row_category"><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td><td><input type="hidden" value="'.$value->id.'" class="append_item_id'.$key.'"><input type="hidden" value="'.$value->code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->code.'</font></td><td><input type="hidden" value="'.$value->name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->name.'</font></td><td><input type="hidden" value="'.$value->mrp.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->mrp.'</font></td><td><input type="hidden" value="'.$uom_id.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$uom_name.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name .'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name .'</font></td><td><input type="hidden" value="'.$value->ptc.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->ptc.'</font></td><td><input type="hidden" value="'.$barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barcode.'</font></td></tr>';
             }
          return $result;
         
@@ -487,15 +491,16 @@ $count=0;
                      ->select('items.id as item_id','items.code as item_code','items.name as item_name','brands.id as brand_id','brands.name as brand_name','items.ptc','items.mrp','categories.id as categories_id','categories.name as category_name')
                      ->get();
 
-        foreach ($items as $key => $value) {
+        foreach ($items as $key => $value) 
+        {
              $item_id=$value->item_id;
 
              $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
                                         ->select('barcode')
                                         ->get();
-                 }  
+        }  
 
-             $data[] = $items;      
+        $data[] = $items;      
         
 
         return $data;
@@ -564,6 +569,7 @@ $count=0;
             $result = array_merge($result, array($key => $value));
         }
     }
+
     //$result=implode("','", $result);
     //$result="'".$result."'";
     return $result;
@@ -577,10 +583,15 @@ $count=0;
                     ->where('items.code','=',$id)
                     ->orWhere('items.ptc','=',$id)
                     ->orWhere('item_bracode_details.barcode','=',$id)
-                    ->select('items.id as item_id','items.name as items_name','items.mrp as item_mrp','items.hsn as item_hsn','items.code as item_code')
-                    ->first();
+                    ->select('*','items.id as item_id')
+                    ->get();
 
-                   $item_id= $item->item_id;
+                    $cnt=count($item);
+                    foreach ($item as $key => $value) 
+                    {
+                        $item_id= $value->item_id;
+                    }
+                   
                    // $data[] = $this->uom_selection($item_id);
                    
                    
@@ -606,26 +617,61 @@ $count=0;
 
         $item_id=$this->get_item_id($item_id);
           //dd($item_id);
-         $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
+        $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
           
         $uom=array();
         $count=0;
         foreach($item_uom as $value){
-            if(isset($value->uom->name) && !empty($value->uom->name))
-            {
-                $count++;
-                $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
-                    //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
-            }
+        if(isset($value->uom->name) && !empty($value->uom->name))
+        {
+            $count++;
+            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+                //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
+        }
 
         }
 
         $result = array_unique($uom, SORT_REGULAR);
 
         $data[]=$result;
+        $data[]=$cnt;
                                 
         return $data;
     }
 
-    
-}
+    public function same_items(Request $request,$id)
+    {
+
+        $id = $request->id;
+              $result="";  
+        $item = Item::join('item_bracode_details','item_bracode_details.item_id','=','items.id')
+                    ->where('items.code','=',$id)
+                    ->orWhere('items.ptc','=',$id)
+                    ->orWhere('item_bracode_details.barcode','=',$id)
+                    ->select('*','item_bracode_details.barcode as item_barcode','items.id as item_id','items.code as item_code','items.name as item_name','mrp','hsn','ptc','code')
+                    ->get();
+
+        foreach($item as $key=>$value){
+
+            if($value->brand_id != 0)
+            {
+                $barnd_name=isset($value->brand->name) ? $value->brand->name : "";
+            }
+            else
+            {
+                $barnd_name='Not Applicable';
+            }
+            
+            $category_name=isset($value->category->name) ? $value->category->name : "";
+            $uom_id=isset($value->uom->id) ? $value->uom->id : "";
+            $uom_name=isset($value->uom->name) ? $value->uom->name : "";
+            
+
+            $result .='<tr class="row_category"><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td><td><input type="hidden" value="'.$value->item_id.'" class="append_item_id'.$key.'"><input type="hidden" value="1" class="append_value'.$key.'"><input type="hidden" value="'.$value->item_code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->item_code.'</font></td><td><input type="hidden" value="'.$value->item_name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->item_name.'</font></td><td><input type="hidden" value="'.$value->mrp.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->mrp.'</font></td><td><input type="hidden" value="'.$uom_id.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$uom_name.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name.'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name.'</font></td><td><input type="hidden" value="'.$value->ptc.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->ptc.'</font></td><td><input type="hidden" value="'.$value->item_barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->item_barcode.'</font></td></tr>'; 
+            }        
+
+        return $result;
+
+    }
+
+    }
