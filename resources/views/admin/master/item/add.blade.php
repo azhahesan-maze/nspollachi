@@ -137,7 +137,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-6 child_div" style="display:none">
+               <!-- <div class="col-md-6 child_div" style="display:none">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">UOM For Parent Item <span class="mandatory">*</span></label>
                      <div class="col-sm-6">
@@ -156,7 +156,7 @@
                      <button type="button"  class="px-2 btn btn-success ml-2 " title="Add UOM"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_uom_for_repack_item_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
-               </div>
+               </div> -->
                <div class="col-md-6 bulk_item_div" style="display:none">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label"> Bulk Item </label>
