@@ -588,7 +588,6 @@ $count=0;
                     ->get();
 
                     $cnt=count($item);
-                    return $item;
                     foreach ($item as $key => $value) 
                     {
                         $item_id= $value->item_id;
