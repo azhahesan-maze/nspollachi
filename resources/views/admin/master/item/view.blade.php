@@ -70,7 +70,7 @@
               <td>{{ $value->print_name_in_language_3}}</td>
               <td class="amount">{{ $value->default_selling_price}}</td>
               <td class="amount">{{ $value->mrp}}</td>
-              <td>{{ $value->uom->name}}</td>
+              <td>{{ isset($value->uom->name) ? $value->uom->name : ""}}</td>
               
               <td> 
                 <a href="{{url('master/item/show/'.$value->id )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>

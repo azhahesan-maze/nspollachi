@@ -899,8 +899,9 @@ $('.discount_percentage').val('');
 $('.net_price').val('');
 $('.gst').val('');
 $('.item_code').val('');
-$('.uom_inclusive').children('option:not(:first)').remove();
-$('.uom_exclusive').children('option:not(:first)').remove();
+$('.uom_inclusive').children('option').remove();
+$('.uom_exclusive').children('option').remove();
+$("select").select2();
 }
 } 
 $(document).on("click",".add_items",function(){
@@ -947,6 +948,29 @@ $(document).on("click",".remove_items",function(){
     $("#sgst").val(half_gst.toFixed(2));
     overall_discounts();
     roundoff_cal();
+    
+    $('#cat').hide();
+    $('.item_sno').val('');
+    $('.items_codes').val('');
+    $('.item_name').val('');
+    $('.mrp').val('');
+    $('.hsn').val('');
+    $('.quantity').val('');
+    $('.tax_rate').val('');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('.amount').val('');
+    $('#discount').val('');
+    $('#discounts').val('');
+    $('.discount_percentage').val('');
+    $('.net_price').val('');
+    $('.gst').val('');
+    $('.item_code').val('');
+    $('.uom_inclusive').children('option').remove();
+    $('.uom_exclusive').children('option').remove();
+    $("select").select2();
+    $('.add_items').show();
+    $('.update_items').hide();
     
 
     $.ajax({
@@ -1009,7 +1033,7 @@ $(document).on("click",".edit_items",function(){
     $('.discount_percentage').val('');
   $('.discount_rs').val('');
   }
-   
+   get_details();
 
 });
 
@@ -1038,21 +1062,16 @@ $(document).on("click",".update_items",function(){
   $("#item_code").val('');
   $("#item_code").focus();
  }
+ else if(parseFloat(inclusive)>parseFloat(mrp))
+ {
+  alert('Rate Exceeds The MRP!!');
+  $('#exclusive').val('');
+  $('#inclusive').val('');
+ }
 
- // else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
- // {
- //  alert('The Total Net Value Exceeds The MRP!!');
- //    $('#discount').val('');
- //    $('.discount_percentage').val('');
- //    $('#exclusive').val('');
- //    $('#inclusive').val('');
- //    $('.amount').val('');
- //    $('.net_price').val('');
- //    $('.gst').val('');
- // }
  else
  {
-
+  
   $('.invoice_no'+td_id).val($('.item_sno').val());
   $('.item_no'+td_id).text($('.item_sno').val());
   $('.item_code'+td_id).val($('.items_codes').val());
@@ -1138,8 +1157,9 @@ $(document).on("click",".update_items",function(){
   $('.gst').val('');
   $('.item_code').val('');
   $('#discounts').val('');
-  $('.uom_inclusive').children('option:not(:first)').remove();
-  $('.uom_exclusive').children('option:not(:first)').remove();
+  $('.uom_inclusive').children('option').remove();
+  $('.uom_exclusive').children('option').remove();
+  $("select").select2();
   $('.update_items').hide();
   $('.add_items').show();
   
@@ -1982,6 +2002,10 @@ function add_data(val)
   // $('.item_display').dialog('close');
   item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
 }
+function add_append_data(val)
+{
+  item_codes($('.item_id'+val).val(),$('.append_value'+val).val());
+}
 
 function code_check()
 {
@@ -2025,24 +2049,7 @@ function parent_details()
 
       var count = $(this).attr('id').split("")[14];
       var overall_discount = $('.overall_discount').val();
-      if(parseFloat(overall_discount) == 0)
-      {
-        var amount = $('#amnt'+count).val();
-      var gst_rs = $('#tax'+count).val();
-      var total_amount =calculate_total_amount();
-      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
-      //var total_discount = parseFloat(disc_distribution);
-      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(disc_distribution);
-      $('#input_discount'+count).val(disc_distribution);
-      $('.font_discount'+count).text(disc_distribution.toFixed(2));
-      $('.discount_val'+count).val(disc_distribution.toFixed(2));
-      $('#net_price'+count).val(net_value.toFixed(2));
-      $('.font_net_price'+count).text(net_value.toFixed(2));
-      num++;
-      }
-      else
-      {
-        var amount = $('#amnt'+count).val();
+      var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
       var total_amount =calculate_total_amount();
       var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
@@ -2054,8 +2061,6 @@ function parent_details()
       $('#net_price'+count).val(net_value.toFixed(2));
       $('.font_net_price'+count).text(net_value.toFixed(2));
       num++;
-      }
-      
   });
   // if(num == 0)
   //   {
