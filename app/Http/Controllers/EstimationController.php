@@ -311,7 +311,7 @@ $count=0;
         if(isset($value->uom->name) && !empty($value->uom->name))
         {
             $count++;
-            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name,'item_id'=>$value->id);
                 //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
         }
 
@@ -555,7 +555,8 @@ $count=0;
         {
             $result=$this->childItem($value->childItem);
             array_push($output_array,$result);
-        }  
+        } 
+
     }
 
     $result=[];
@@ -587,6 +588,7 @@ $count=0;
                     ->get();
 
                     $cnt=count($item);
+                    return $item;
                     foreach ($item as $key => $value) 
                     {
                         $item_id= $value->item_id;
@@ -625,7 +627,7 @@ $count=0;
         if(isset($value->uom->name) && !empty($value->uom->name))
         {
             $count++;
-            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name);
+            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name,'item_code'=>$value->code);
                 //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
         }
 

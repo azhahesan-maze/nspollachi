@@ -289,7 +289,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <div class="col-sm-12">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <select class="form-control uom_exclusive" name="uom_exclusive" onchange="parent_details()">
+                                <select class="form-control uom_exclusive" name="uom_exclusive" onchange="uom_details_exclusive()">
                                 </select>
                               </div>
                               <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
@@ -308,7 +308,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <div class="col-sm-12">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="parent_details()">
+                                <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="uom_details_inclusive()">
                                 </select>
                               </div>
                               <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
@@ -1577,20 +1577,21 @@ if(append_value == 1)
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
-              var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+              var first_data='<option value="'+id+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
               for(var i=0;i<data[3].length;i++)
              {
               var item_uom_id=data[3][i].id;
               var item_uom_name=data[3][i].name;
+              var item_id=data[3][i].item_id;
               if(item_uom_name == uom_name)
               {
 
               }
               else
               {
-                var div_data='<option value="'+item_uom_id+'">'+item_uom_name+'</option>';
+                var div_data='<option value="'+item_id+'">'+item_uom_name+'</option>';
                 $('.uom_exclusive').append(div_data);
                 $('.uom_inclusive').append(div_data);
               }
@@ -1646,7 +1647,7 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          //alert(data);
+          //console.log(data[3])
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
@@ -1661,7 +1662,7 @@ else
              igst =data[1].igst;
              barcode = data[2].barcode;
               
-              var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+              var first_data='<option value="'+id+'">'+uom_name+'</option>';
               console.log(first_data);
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
@@ -1669,13 +1670,14 @@ else
              {
               var item_uom_id=data[3][i].id;
               var item_uom_name=data[3][i].name;
+              var item_id=data[3][i].item_id;
               if(item_uom_name == uom_name)
               {
 
               }
               else
               {
-                var div_data='<option value="'+item_uom_id+'">'+item_uom_name+'</option>';
+                var div_data='<option value="'+item_id+'">'+item_uom_name+'</option>';
                 $('.uom_exclusive').append(div_data);
                 $('.uom_inclusive').append(div_data);
               }
@@ -1747,6 +1749,7 @@ var row_id=$('#last').val();
         data: { id: item_code },             
                         
         success: function(data){
+         console.log(data);
              if(data[3]==1)
              {
               $('.uom_exclusive').children('option').remove();
@@ -1761,21 +1764,22 @@ var row_id=$('#last').val();
              uom_name =data[0].uom_name;
              igst =data[1].igst;
 
-             var first_data='<option value="'+uom_id+'">'+uom_name+'</option>';
+             var first_data='<option value="'+code+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
 
              for(var i=0;i<data[2].length;i++)
              {
-              var item_id=data[2][i].id;
-              var item_name=data[2][i].name;
-              if(item_name == uom_name)
+              var item_uom_id=data[2][i].id;
+              var item_uom_name=data[2][i].name;
+              var item_uom_code=data[2][i].item_code;
+              if(item_uom_name == uom_name)
               {
 
               }
               else
               {
-                var div_data='<option value="'+item_id+'">'+item_name+'</option>';
+                var div_data='<option value="'+item_uom_code+'">'+item_uom_name+'</option>';
               $('.uom_exclusive').append(div_data);
               $('.uom_inclusive').append(div_data);
               }
@@ -2036,9 +2040,18 @@ function supplier_details()
         });
 }
 
-function parent_details()
+function uom_details_inclusive()
+{
+var uom_inclusive=$('.uom_inclusive').val();
+
+item_codes(uom_inclusive);
+}
+
+function uom_details_exclusive()
 {
 
+var uom_exclusive=$('.uom_exclusive').val();
+item_codes(uom_exclusive);
 }
 
  function overall_discounts()
