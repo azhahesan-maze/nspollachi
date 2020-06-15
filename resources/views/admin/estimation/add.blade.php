@@ -74,7 +74,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Party Name</label><br>
                                 <select class="js-example-basic-multiple form-control supplier_id" 
                                 data-placeholder="Choose Supplier Name" required="" id="supplier_id" onchange="supplier_details()" name="supplier_id" >
@@ -83,8 +83,26 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                    <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
                                    @endforeach
                                  </select>
+
                                  
-                                </div>
+                                </div> -->
+
+                                <div class="col-md-3">
+                                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id" required>
+                           <option value="">Choose Supplier Name</option>
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
                                 <div class="col-md-4">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
@@ -103,7 +121,24 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="row col-md-12">
 
-                                <div class="col-md-2">
+                    <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Agent Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select agent_id" name="agent_id" id="agent_id" required>
+                           <option value="">Choose Agent Name</option>
+                           @foreach($agent as $agents)
+                           <option value="{{ $agents->id }}">{{ $agents->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/agent/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Agent"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_agent_id" title="Add Agent"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Agent Name</label><br>
                                 <select class="js-example-basic-multiple form-control" 
                                 data-placeholder="Choose Agent Name" required="" id="agent_id" name="agent_id" >
@@ -113,7 +148,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                    @endforeach
                                  </select>
                                  
-                                </div>
+                                </div> -->
                               </div>
                               <br>
     
@@ -1037,6 +1072,15 @@ $(document).on("click",".edit_items",function(){
 
 });
 
+$(document).on("click",".refresh_supplier_id",function(){
+      var supplier_dets=refresh_supplier_master_details();
+      $(".supplier_id").html(supplier_dets);
+   });
+
+$(document).on("click",".refresh_agent_id",function(){
+      var agent_dets=refresh_agent_master_details();
+      $(".agent_id").html(agent_dets);
+   });
 
 $(document).on("click",".update_items",function(){
   var discount_total = 0;

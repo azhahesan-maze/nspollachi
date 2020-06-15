@@ -242,3 +242,18 @@ function refresh_supplier_master_details() {
     return result;
 }
 /* Load Customer Master Data End Here  */
+
+/* Load Agent Master Data Start Here */
+function refresh_agent_master_details() {
+    var result = "";
+    $.ajax({
+        type: "post",
+        url: APP_URL + "/common-master-details/get-agent-master-details",
+        async: false,
+        success: function(res) {
+            result = res;
+        }
+    });
+    return result;
+}
+/* Load Customer Master Data End Here  */

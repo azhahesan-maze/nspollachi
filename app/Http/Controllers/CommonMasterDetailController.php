@@ -17,6 +17,7 @@ use App\Models\LocationType;
 use App\Models\State;
 use App\Models\Uom;
 use App\Models\Supplier;
+use App\Models\Agent;
 
 
 
@@ -160,6 +161,13 @@ class CommonMasterDetailController extends Controller
         $supplier_dets = Supplier::orderBy('name', 'asc')->get();
         echo $this->get_json_details($supplier_dets, $place_holder = "Supplier");
     }
+
+    public function get_agent_master_details()
+    {
+        $agent_dets = Agent::orderBy('name', 'asc')->get();
+        echo $this->get_json_details($agent_dets, $place_holder = "Agent");
+    }
+    
 
 
     public function get_json_details($master_data = array(), $id = "", $name = "", $code = "", $selected_id = "", $place_holder = "")
