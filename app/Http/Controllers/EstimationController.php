@@ -281,6 +281,7 @@ $count=0;
     public function getdata(Request $request,$id)
     {
         $id=$request->id;
+        $items=Item::where('id',$id)->first();
 
         $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
                     ->where('items.id','=',$id)
@@ -301,7 +302,11 @@ $count=0;
             $data[2]='';
         }  
 
-        $item_id=$this->get_item_id($id);
+        //return $items->item_type;
+
+        if($items->item_type != 'Parent')
+        {
+        $item_id=$this->get_parent_item_id($id);
           //dd($item_id);
         $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
           
@@ -321,6 +326,30 @@ $count=0;
 
         $data[]=$result;                              
         return $data;
+        }
+        else
+        {
+        $item_id=$this->get_item_id($id);
+
+        $item_uom=item::with('uom')->whereIn('id',$item_id)->get();
+          
+        $uom=array();
+        $count=0;
+        foreach($item_uom as $value){
+        if(isset($value->uom->name) && !empty($value->uom->name))
+        {
+            $count++;
+            $uom[]=array('id'=>$value->uom->id,'name'=>$value->uom->name,'item_id'=>$value->id);
+                //array_push($uom,array('id'=>$value->uom->id,'name'=>$value->uom->name));
+        }
+
+        }
+
+        $result = array_unique($uom, SORT_REGULAR);
+
+        $data[]=$result;                              
+        return $data;
+    }
     }
 
 
@@ -523,6 +552,59 @@ $count=0;
     //                }
     // }
 
+    function parentItem($array)
+   {
+       $output_array=[];
+       foreach($array  as $value)
+       {
+           $result_array=[];
+           $result_array['id']=$value->id;
+           $output_array[]=$result_array;
+             if(count($value->parentItem)>0)
+             {
+                $test=$this->parentItem($value->parentItem);
+                array_push($output_array,$test);
+             }  
+        }
+           return $output_array;
+   }
+
+   function get_parent_item_id($item_id)
+   {
+    //return $item_id;
+
+     $item=item::with('parentItem')->where('id',$item_id)->get();
+   
+    $output_array=[];
+    foreach($item as $value)
+    {
+        $result_array=[];
+        $result_array['id']=$value->id;
+        $output_array[]=$result_array;
+        if(count($value->parentItem)>0)
+        {
+            $result=$this->parentItem($value->parentItem);
+            array_push($output_array,$result);
+        } 
+
+    }
+$result=[];
+    foreach ($output_array as $key => $value)
+    {
+        if (is_array($value))
+        {
+            $result = array_merge($result, array_flatten($value));
+        } else
+        {
+            $result = array_merge($result, array($key => $value));
+        }
+    }
+
+    //$result=implode("','", $result);
+    //$result="'".$result."'";
+    return $result;
+}
+
     function childItem($array)
    {
        $output_array=[];
@@ -554,7 +636,8 @@ $count=0;
         if(count($value->childItem)>0)
         {
             $result=$this->childItem($value->childItem);
-            array_push($output_array,$result);
+            $result_val=$this->parentItem($value->childItem);
+            array_push($output_array,$result,$result_val);
         } 
 
     }

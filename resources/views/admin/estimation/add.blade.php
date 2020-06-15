@@ -204,7 +204,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       </div>
 
 
-                      <div class="item_display" id="item_display" style="display: none;" title="Items With Same Data">
+                      <div class="item_display" id="item_display" style="display: none;" title="Choose Item">
                         
                         <div class="form-row">
                             <div class="col-md-12">
@@ -1647,7 +1647,7 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          //console.log(data[3])
+          console.log(data);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
@@ -1845,7 +1845,7 @@ function item_with_same_data(item_code)
 
         success:function(data){
           $('.item_display').show();
-          $('.item_display').dialog({width:1000});
+          $('.item_display').dialog({width:1000},{height:250});
           $('.append_item_display').html(data);
         }
 
@@ -1862,7 +1862,7 @@ function find_cat()
   $('#cat').show();
   $('.row_brand').remove(); 
   $('.row_category').remove();
-  $('#cat').dialog({width:1000}).prev(".ui-dialog-titlebar").css("background","#28a745").prev("..ui-dialog.ui-widget-content");
+  $('#cat').dialog({width:1000},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev("..ui-dialog.ui-widget-content");
     
 }
 
