@@ -256,4 +256,19 @@ function refresh_agent_master_details() {
     });
     return result;
 }
-/* Load Customer Master Data End Here  */
+/* Load Agent Master Data End Here  */
+
+/* Load Expense Type Master Data Start Here */
+function refresh_expense_type_master_details() {
+    var result = "";
+    $.ajax({
+        type: "post",
+        url: APP_URL + "/common-master-details/get-expense-type-master-details",
+        async: false,
+        success: function(res) {
+            result = res;
+        }
+    });
+    return result;
+}
+/* Load Expense Type Master Data End Here  */

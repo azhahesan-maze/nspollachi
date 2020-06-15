@@ -532,7 +532,23 @@ table, th, td {
                         <div class="row col-md-12 append_expense">
 
                           <div class="row col-md-12 expense">
-                        <div class="col-md-2">
+                            <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Expense Type</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type" id="expense_type" required>
+                         <option value="">Choose Expense Type</option>
+                         @foreach($expense_type as $expense_types)
+                        <option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>
+                        @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/expense-type/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                        <!-- <div class="col-md-2">
                           <label style="font-family: Times new roman;">Expense Type</label>
                         <select class="js-example-basic-multiple form-control expense_type" 
                         data-placeholder="Choose Expense Type" id="expense_type" name="expense_type[]" >
@@ -543,7 +559,7 @@ table, th, td {
                            
                          </select>
                          
-                        </div>
+                        </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
                       <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
@@ -1082,6 +1098,11 @@ $(document).on("click",".refresh_agent_id",function(){
       $(".agent_id").html(agent_dets);
    });
 
+$(document).on("click",".refresh_expense_type_id",function(){
+      var expense_type_dets=refresh_expense_type_master_details();
+      $(".expense_type").html(expense_type_dets);
+   });
+
 $(document).on("click",".update_items",function(){
   var discount_total = 0;
 
@@ -1239,7 +1260,7 @@ function expense_add()
   else
   {
 
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" data-placeholder="Choose Expense Type" name="expense_type[]" ><option value=""></option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type" id="expense_type" required><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>@endforeach</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
   $("select").select2();
