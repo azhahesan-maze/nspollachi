@@ -87,8 +87,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div> -->
 
-                                <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Party Name</label><br>
+                <div class="col-md-3">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
                       <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id" required>
