@@ -513,26 +513,63 @@ $count=0;
         
         $brand=$request->brand;
 
+        $item=Item::where('brand_id',$brand)->get();
+        $result="";
+
+        foreach($item as $key=>$value){
+            if($value->brand_id != 0)
+            {
+                $barnd_name=isset($value->brand->name) ? $value->brand->name : "";
+            }
+            else
+            {
+                $barnd_name='Not Applicable';
+            }
+            
+            $category_name=isset($value->category->name) ? $value->category->name : "";
+            $uom_id=isset($value->uom->id) ? $value->uom->id : "";
+            $uom_name=isset($value->uom->name) ? $value->uom->name : "";
+
+            $barcode="";
+            if(count($value->item_barcode_details)>0){
+                $barcode_array=[];
+                foreach($value->item_barcode_details as $row){
+                    $barcode_array[]=$row->barcode;
+                }
+                $barcode=implode(",",$barcode_array);
+            }
+             $result .='<tr class="row_category"><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td><td><input type="hidden" value="'.$value->id.'" class="append_item_id'.$key.'"><input type="hidden" value="'.$value->code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->code.'</font></td><td><input type="hidden" value="'.$value->name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->name.'</font></td><td><input type="hidden" value="'.$value->mrp.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->mrp.'</font></td><td><input type="hidden" value="'.$uom_id.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$uom_name.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name .'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name .'</font></td><td><input type="hidden" value="'.$value->ptc.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$value->ptc.'</font></td><td><input type="hidden" value="'.$barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barcode.'</font></td></tr>';
+            }
+         return $result;
+
+
+
+
+
+        // if($brand == 0)
+        // {
+
+        // }
         
-        $items = Item::join('brands','brands.id','=','items.brand_id')
-                     ->join('categories','categories.id','=','items.category_id')
-                     ->where('items.brand_id','=',$brand)
-                     ->select('items.id as item_id','items.code as item_code','items.name as item_name','brands.id as brand_id','brands.name as brand_name','items.ptc','items.mrp','categories.id as categories_id','categories.name as category_name')
-                     ->get();
+        // $items = Item::join('brands','brands.id','=','items.brand_id')
+        //              ->join('categories','categories.id','=','items.category_id')
+        //              ->where('items.brand_id','=',$brand)
+        //              ->select('items.id as item_id','items.code as item_code','items.name as item_name','brands.id as brand_id','brands.name as brand_name','items.ptc','items.mrp','categories.id as categories_id','categories.name as category_name')
+        //              ->get();
 
-        foreach ($items as $key => $value) 
-        {
-             $item_id=$value->item_id;
+        // foreach ($items as $key => $value) 
+        // {
+        //      $item_id=$value->item_id;
 
-             $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
-                                        ->select('barcode')
-                                        ->get();
-        }  
+        //      $data[] =ItemBracodeDetails::where('item_bracode_details.item_id','=',$item_id)
+        //                                 ->select('barcode')
+        //                                 ->get();
+        // }  
 
-        $data[] = $items;      
+        // $data[] = $items;      
         
 
-        return $data;
+        // return $data;
           
 
     }

@@ -181,7 +181,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <div class="row col-md-8">
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
-                          <option></option>
+                          <option value="0">Not Applicable</option>
                           @foreach($brand as $brands)
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                           @endforeach
@@ -2019,8 +2019,11 @@ function brand_check()
              
         success: function(data)
         {
-          $('.row_category').remove();
-          $('.row_brand').remove();
+          console.log(data);
+          $('.row_brand').remove(); 
+          $('.row_category').remove(); 
+          $(".append_item").html(data);
+          return false;
 
           var bar_code = [];
           var item_id =[];
@@ -2045,8 +2048,16 @@ function brand_check()
               item_code.push(data[item_last][j].item_code);
               item_id.push(data[item_last][j].item_id);
               item_name.push(data[item_last][j].item_name);
-              item_brand_id.push(data[item_last][j].brand_id);
-              item_brand_name.push(data[item_last][j].brand_name);
+              if(data[item_last][j].brand_id == 0)
+              {
+                item_brand_id.push(data[item_last][j].brand_id);
+                item_brand_name.push('Not Applicable');
+              }
+              else
+              {
+                item_brand_id.push(data[item_last][j].brand_id);
+                item_brand_name.push(data[item_last][j].brand_name);
+              }
               item_category_name.push(data[item_last][j].category_name);
               item_category_id.push(data[item_last][j].categories_id);
               item_ptc.push(data[item_last][j].ptc);
@@ -2123,6 +2134,16 @@ item_codes(uom_exclusive);
 {
     var sum=0;
     var num=0;
+
+    var total = $('#total_price').val();
+  if(total == 0)
+  {
+    alert('You Cannot Add Overall Discount Without Adding Item Details!!');
+    $('.overall_discount').val(0);
+  }
+  else
+  {
+
   $('.input_discounts').each(function(){
 
       var count = $(this).attr('id').split("")[14];
@@ -2154,6 +2175,8 @@ item_codes(uom_exclusive);
   var q=calculate_total_discount();
   $('#total_discount').val(q.toFixed(2));
   $('#disc_total').val(q.toFixed(2));
+
+}
   
 }
 
