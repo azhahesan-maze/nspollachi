@@ -87,7 +87,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div> -->
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label style="font-family: Times new roman;">Party Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
@@ -121,7 +121,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="row col-md-12">
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                     <label style="font-family: Times new roman;">Agent Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
