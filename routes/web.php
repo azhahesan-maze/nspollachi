@@ -59,6 +59,7 @@ Route::any('common-master-details/get-customer-master-details', 'CommonMasterDet
 Route::any('common-master-details/get-brand-master-details', 'CommonMasterDetailController@get_brand_master_details');
 Route::any('common-master-details/get-child-item-master-details', 'CommonMasterDetailController@get_child_item_master_details');
 Route::any('common-master-details/get-supplier-master-details', 'CommonMasterDetailController@get_supplier_master_details');
+Route::any('common-master-details/get-agent-master-details', 'CommonMasterDetailController@get_agent_master_details');
 
 /* Common Master Details End Here */
 
