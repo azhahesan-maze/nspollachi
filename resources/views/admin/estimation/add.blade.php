@@ -187,6 +187,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                           @endforeach
                         </select>
+                        
                           </div>
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
