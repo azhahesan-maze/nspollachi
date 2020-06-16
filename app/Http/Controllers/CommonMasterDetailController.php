@@ -18,6 +18,10 @@ use App\Models\State;
 use App\Models\Uom;
 use App\Models\Supplier;
 use App\Models\Agent;
+<<<<<<< HEAD
+=======
+use App\Models\ExpenseType;
+>>>>>>> 192e3e5ef89337900b56f60f2486bdf9d5d16d4d
 
 
 
@@ -168,6 +172,14 @@ class CommonMasterDetailController extends Controller
         echo $this->get_json_details($agent_dets, $place_holder = "Agent");
     }
     
+<<<<<<< HEAD
+=======
+    public function get_expense_type_master_details()
+    {
+        $expensetype_dets = ExpenseType::all();
+        echo $this->get_json_details($expensetype_dets, $place_holder = "ExpenseType");
+    }
+>>>>>>> 192e3e5ef89337900b56f60f2486bdf9d5d16d4d
 
 
     public function get_json_details($master_data = array(), $id = "", $name = "", $code = "", $selected_id = "", $place_holder = "")

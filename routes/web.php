@@ -60,6 +60,10 @@ Route::any('common-master-details/get-brand-master-details', 'CommonMasterDetail
 Route::any('common-master-details/get-child-item-master-details', 'CommonMasterDetailController@get_child_item_master_details');
 Route::any('common-master-details/get-supplier-master-details', 'CommonMasterDetailController@get_supplier_master_details');
 Route::any('common-master-details/get-agent-master-details', 'CommonMasterDetailController@get_agent_master_details');
+<<<<<<< HEAD
+=======
+Route::any('common-master-details/get-expense-type-master-details', 'CommonMasterDetailController@get_expense_type_master_details');
+>>>>>>> 192e3e5ef89337900b56f60f2486bdf9d5d16d4d
 
 /* Common Master Details End Here */
 
