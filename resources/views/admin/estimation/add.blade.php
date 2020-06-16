@@ -181,6 +181,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <div class="row col-md-8">
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
+                          <option></option>
                           <option value="0">Not Applicable</option>
                           @foreach($brand as $brands)
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
@@ -1953,8 +1954,8 @@ function categories_check()
           
         $('.row_brand').remove(); 
         $('.row_category').remove(); 
-$(".append_item").html(data);
-return false;
+        $(".append_item").html(data);
+        return false;
           var bar_code = [];
           var item_id =[];
           var item_code =[];
@@ -2019,9 +2020,8 @@ function brand_check()
              
         success: function(data)
         {
-          console.log(data);
-          $('.row_brand').remove(); 
-          $('.row_category').remove(); 
+          $('.row_category').remove();
+          $('.row_brand').remove();
           $(".append_item").html(data);
           return false;
 
@@ -2048,16 +2048,8 @@ function brand_check()
               item_code.push(data[item_last][j].item_code);
               item_id.push(data[item_last][j].item_id);
               item_name.push(data[item_last][j].item_name);
-              if(data[item_last][j].brand_id == 0)
-              {
-                item_brand_id.push(data[item_last][j].brand_id);
-                item_brand_name.push('Not Applicable');
-              }
-              else
-              {
-                item_brand_id.push(data[item_last][j].brand_id);
-                item_brand_name.push(data[item_last][j].brand_name);
-              }
+              item_brand_id.push(data[item_last][j].brand_id);
+              item_brand_name.push(data[item_last][j].brand_name);
               item_category_name.push(data[item_last][j].category_name);
               item_category_id.push(data[item_last][j].categories_id);
               item_ptc.push(data[item_last][j].ptc);
