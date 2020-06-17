@@ -187,7 +187,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                           @endforeach
                         </select>
-                        
+
                           </div>
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
@@ -1043,6 +1043,7 @@ $(document).on("click",".remove_items",function(){
 $(document).on("click",".edit_items",function(){
   $('.update_items').show();
   $('.add_items').hide();
+
   var id = $(this).attr("id");
   $('#dummy_table_id').val(id);
   var invoice_no = $('.invoice_no'+id).val(); 
@@ -1080,6 +1081,8 @@ $(document).on("click",".edit_items",function(){
   var disc_value = parseFloat(discount_val)/parseFloat(quantity);
    $('.discount_rs').val(disc_value.toFixed(2));
    discount_calc();
+
+    alert($("#total_gst").val());
    
   if(discount_val == 0)
   {
@@ -1455,17 +1458,14 @@ function calc_inclusive()
     {
 
       var rate=parseFloat(tax_rate)/100+1;
-      //alert(rate_inclusive);
+      var actual_tax = parseFloat(tax_rate)/100;
       var gst_rate = parseFloat(rate_inclusive)/parseFloat(rate);
-      //var gst_rate_exclusive = parseFloat(rate_inclusive)-parseFloat(gst_rate);
-      var total = parseInt(quantity)*parseFloat(gst_rate);
+      alert(gst_rate.toFixed(2));
+      var total = parseInt(quantity)*parseFloat(gst_rate.toFixed(2));
       $('#amount').val(total.toFixed(2));
       $('#exclusive').val(gst_rate.toFixed(2));
-      //alert(rate);
-      var net_val = parseFloat(total)*parseFloat(rate);
-      //alert(net_val);
+      var net_val = parseFloat(total)*parseFloat(actual_tax);
       $('.gst').val(net_val.toFixed(2));
-
       var total_net_val = parseFloat(total)+parseFloat(net_val);
       $('#net_price').val(total_net_val.toFixed(2));
 
@@ -1683,7 +1683,15 @@ if(append_value == 1)
               
               var rate_exclusive = $('#exclusive').val();
               var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
               var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
+              
               var rate = parseFloat(tax_rate)/100;
               var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
               var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
@@ -1769,7 +1777,14 @@ else
               
               var rate_exclusive = $('#exclusive').val();
               var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
               var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
               var rate = parseFloat(tax_rate)/100;
               var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
               var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
@@ -1869,9 +1884,18 @@ var row_id=$('#last').val();
              if($('#quantity').val() != '')
              {
               
+              
               var rate_exclusive = $('#exclusive').val();
               var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
               var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
+              
               var rate = parseFloat(tax_rate)/100;
               var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
               var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
