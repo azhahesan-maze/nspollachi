@@ -1081,8 +1081,6 @@ $(document).on("click",".edit_items",function(){
   var disc_value = parseFloat(discount_val)/parseFloat(quantity);
    $('.discount_rs').val(disc_value.toFixed(2));
    discount_calc();
-
-    alert($("#total_gst").val());
    
   if(discount_val == 0)
   {
