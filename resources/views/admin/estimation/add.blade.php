@@ -1460,7 +1460,6 @@ function calc_inclusive()
       var rate=parseFloat(tax_rate)/100+1;
       var actual_tax = parseFloat(tax_rate)/100;
       var gst_rate = parseFloat(rate_inclusive)/parseFloat(rate);
-      alert(gst_rate.toFixed(2));
       var total = parseInt(quantity)*parseFloat(gst_rate.toFixed(2));
       $('#amount').val(total.toFixed(2));
       $('#exclusive').val(gst_rate.toFixed(2));
