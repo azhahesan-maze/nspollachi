@@ -73,6 +73,7 @@
               <input type="text" class="form-control  phone_no only_allow_digit required_for_valid" input-type="phone_no" pattern="[1-9]{1}[0-9]{9}" error-data="Enter valid Phone No" placeholder="Phone No" name="phone_no" value="{{old('phone_no',$agent->phone_no)}}" >
               <span class="mandatory"> {{ $errors->first('phone_no')  }} </span>
               <div class="invalid-feedback">
+                
                 Enter valid Phone No
               </div>
             </div>
