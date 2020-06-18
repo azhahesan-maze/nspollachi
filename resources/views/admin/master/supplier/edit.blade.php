@@ -167,10 +167,10 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Email</label>
               <div class="col-sm-8">
-                <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$supplier->email)}}" >
-                <span class="mandatory"> {{ $errors->first('email')  }} </span>
+                <input type="email" class="form-control email" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email',$supplier->email)}}" >
+                <!-- <span class="mandatory"> {{ $errors->first('email')  }} </span> -->
                 <div class="invalid-feedback">
                   Enter valid Email
                 </div>
@@ -199,10 +199,10 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$supplier->opening_balance)}}" >
-                <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span>
+                <input type="text" class="form-control" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance',$supplier->opening_balance)}}" >
+                <!-- <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span> -->
                 <div class="invalid-feedback">
                   Enter valid Opening Balance
                 </div>

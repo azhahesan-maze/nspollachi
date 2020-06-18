@@ -29,10 +29,10 @@ class SupplierRequest extends FormRequest
             $rule = array(
                 'company_name' => 'required|unique:suppliers,company_name,NULL,id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,NULL,id,deleted_at,NULL',
-                'email' => 'required|email|unique:suppliers,email,NULL,id,deleted_at,NULL',
+                'email' => 'nullable|email|unique:suppliers,email,NULL,id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
                 'gst_no' => 'required|unique:suppliers,gst_no,NULL,id,deleted_at,NULL',
-                'opening_balance' => 'required|numeric',
+                'opening_balance' => 'nullable|numeric',
                 'address_type_id .*' => 'required',
                 'address_line_1.*' => 'required',
                 'state_id.*' => 'required',
@@ -54,10 +54,10 @@ class SupplierRequest extends FormRequest
             $rule = array(
                 'company_name' => 'required|unique:suppliers,company_name,' . $this->id . ',id,deleted_at,NULL',
                 'phone_no' => 'required|numeric|digits:10|unique:suppliers,phone_no,' . $this->id . ',id,deleted_at,NULL',
-                'email' => 'required|email|unique:suppliers,email,' . $this->id . ',id,deleted_at,NULL',
+                'email' => 'nullable|email|unique:suppliers,email,' . $this->id . ',id,deleted_at,NULL',
                 'whatsapp_no' => 'nullable|numeric|digits:10',
                 'gst_no' => 'required|unique:suppliers,gst_no,' . $this->id . ',id,deleted_at,NULL',
-                'opening_balance' => 'required|numeric|min:1',
+                'opening_balance' => 'nullable|numeric|min:1',
             );
 
             if ($request->has('address_type_id')) {

@@ -95,7 +95,7 @@
           </div>
           <div class="col-md-6 new_supplier_div">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier Name<span class="mandatory">*</span> </label>
               <div class="col-sm-8">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -174,9 +174,9 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Email<!--  <span class="mandatory">*</span> --></label>
               <div class="col-sm-8">
-                <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email')}}" >
+                <input type="email" class="form-control email" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email')}}" >
                 <span class="mandatory"> {{ $errors->first('email')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Email
@@ -206,9 +206,9 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance<!--  <span class="mandatory">*</span> --></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control  opening_balance only_allow_digit required_for_valid" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance')}}" >
+                <input type="text" class="form-control  opening_balance only_allow_digit" input-type="opening_balance" error_data="Enter valid Opening Balance" placeholder="Opening Balance" name="opening_balance" value="{{old('opening_balance')}}" >
                 <span class="mandatory"> {{ $errors->first('opening_balance')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Opening Balance

@@ -84,9 +84,9 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Email <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Email</label>
               <div class="col-sm-8">
-                <input type="email" class="form-control email required_for_valid" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email')}}" >
+                <input type="email" class="form-control email" input-type="email" error_data="Enter valid Email" placeholder="Email" name="email" value="{{old('email')}}" >
                 <span class="mandatory"> {{ $errors->first('email')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Email
@@ -97,7 +97,7 @@
 
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">DOB <span class="mandatory">*</span></label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">DOB<span class="mandatory">*</span></label>
               <div class="col-sm-8">
                 <input type="text" class="form-control dob required_for_valid" error-data="Enter valid DOB" placeholder="dd-mm-yyyy" name="dob" value="{{old('dob')}}" >
                 <span class="mandatory"> {{ $errors->first('dob')  }} </span>
