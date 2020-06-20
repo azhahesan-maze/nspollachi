@@ -18,6 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name',255)->nullable();
             $table->integer('level')->default(0)->comment = '0=>Parent';
             $table->integer('parent_id')->nullable();
+            $table->string('hsn',255)->nullable();
+            $table->string('gst_no',255)->nullable();
             $table->string('remark',255)->nullable();
             $table->boolean('active_status')->default(true)->comment = '1=>Active,0=>DeActive ';
             $table->integer('created_by')->nullable();

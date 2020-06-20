@@ -46,8 +46,10 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->name       = $request->name;
-        $category->parent_id       = $request->parent_id;
-        $category->remark       = $request->remark;
+        $category->parent_id  = $request->parent_id;
+        $category->hsn        = $request->hsn;
+        $category->gst_no     = $request->gst_no;
+        $category->remark     = $request->remark;
         $category->created_by = 0;
         $category->updated_by = 0;
       if ($category->save()) {
@@ -98,8 +100,10 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
         $category->name       = $request->name;
-        $category->parent_id       = $request->parent_id;
-        $category->remark       = $request->remark;
+        $category->parent_id  = $request->parent_id;
+        $category->hsn        = $request->hsn;
+        $category->gst_no     = $request->gst_no;
+        $category->remark     = $request->remark;
        if ($category->save()) {
             return Redirect::back()->with('success', 'Updated Successfully');
         } else {

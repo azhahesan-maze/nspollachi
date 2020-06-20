@@ -25,6 +25,8 @@
             <th>S.No</th>
             <th>Category Name</th>
             <th>Parent Category</th>
+            <th>HSN</th>
+            <th>GST No</th>
             <th>Remark</th>
             <th>Action </th>
           </tr>
@@ -44,8 +46,10 @@
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name !="" ? $value->name : "" }}</td>
-            <td>{{ $parent}}</td>
-               <td>{{ $value->remark}}</td>
+              <td>{{ $parent}}</td>
+              <td>{{ $value->hsn}}</td>
+              <td>{{ $value->gst_no}}</td>
+              <td>{{ $value->remark}}</td>
               
            
               <td> 

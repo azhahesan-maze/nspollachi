@@ -54,6 +54,26 @@
             </div>
           </div>
 
+          <div class="col-md-7">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">HSN</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control hsn" placeholder="HSN" name="hsn" value="{{old('hsn')}}">
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">GST No</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control gst_no" placeholder="GST No" name="gst_no" value="{{old('gst_no')}}">
+                
+              </div>
+            </div>
+          </div>
+
           
 
             <div class="col-md-7">

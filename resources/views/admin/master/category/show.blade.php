@@ -32,6 +32,26 @@
           </div>
         </div>
 
+        <div class="col-md-7">
+              <div class="form-group row">
+                <label for="validationCustom01" class="col-sm-4 col-form-label">HSN :</label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label"> @if($category->hsn == '') 
+                N/A 
+             @else 
+            {{ $category->hsn }}@endif</label>
+              </div>
+            </div>
+
+        <div class="col-md-7">
+          <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">GST No :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">@if($category->gst_no == '') 
+               N/A 
+             @else 
+            {{ $category->gst_no }}@endif</label>
+          </div>
+        </div>
+
           <div class="col-md-7">
               <div class="form-group row">
                 <label for="validationCustom01" class="col-sm-4 col-form-label">Remark :</label>
