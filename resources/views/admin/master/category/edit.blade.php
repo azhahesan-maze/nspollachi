@@ -67,9 +67,9 @@
 
           <div class="col-md-7">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">GST Tax%</label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">GST %</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control gst_no" placeholder="GST Tax%" name="gst_no" value="{{old('gst_no',$category->gst_no)}}">
+                <input type="text" class="form-control gst_no" placeholder="GST %" name="gst_no" value="{{old('gst_no',$category->gst_no)}}">
               </div>
             </div>
           </div>

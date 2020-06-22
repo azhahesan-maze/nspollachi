@@ -44,7 +44,7 @@
 
         <div class="col-md-7">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">GST Tax% :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">GST % :</label>
             <label for="validationCustom01" class="col-sm-4 col-form-label">@if($category->gst_no == '') 
                N/A 
              @else 

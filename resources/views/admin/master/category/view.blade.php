@@ -26,7 +26,7 @@
             <th>Category Name</th>
             <th>Parent Category</th>
             <th>HSN</th>
-            <th>GST Tax%</th>
+            <th>GST %</th>
             <th>Remark</th>
             <th>Action </th>
           </tr>
