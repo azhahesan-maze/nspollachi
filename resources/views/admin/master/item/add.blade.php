@@ -445,9 +445,9 @@
                
                <div class="col-md-6">
                   <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier <span class="mandatory">*</span></label>
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier</label>
                      <div class="col-sm-6">
-                        <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" name="supplier_id" required>
+                        <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" name="supplier_id">
                            <option value="">Choose Supplier</option>
                            @foreach ($supplier as $value)
                            <option value="{{ $value->id }}" {{ old('supplier_id') == $value->id ? 'selected' : '' }}  >{{ $value->name }}</option>
