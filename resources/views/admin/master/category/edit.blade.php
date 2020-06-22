@@ -69,7 +69,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">GST %</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control gst_no" placeholder="GST %" name="gst_no" value="{{old('gst_no',$category->gst_no)}}">
+                <input type="text" class="form-control gst_no" placeholder="GST %" onkeypress="return isNumberKey(event)" name="gst_no" value="{{old('gst_no',$category->gst_no)}}">
               </div>
             </div>
           </div>
@@ -99,6 +99,17 @@
           <button class="btn btn-success" type="submit">Submit</button>
         </div>
       </form>
+      <SCRIPT language=Javascript>
+       function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+            return true;
+       }
+       
+    </SCRIPT>
     </div>
     <!-- card body end@ -->
   </div>
