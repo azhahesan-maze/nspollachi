@@ -121,7 +121,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="row col-md-12">
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                     <label style="font-family: Times new roman;">Agent Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
@@ -165,7 +165,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       <div class="row col-md-12">
         <div class="col-md-2">
           <label style="font-family: Times new roman;">Item Bill S.No</label>
-        <input type="text" class="form-control item_sno  required_for_proof_valid" placeholder="Item S.no" id="item_sno" name="item_sno" value="">
+        <input type="number" class="form-control item_sno " placeholder="Item S.no" id="item_sno" name="item_sno" value="">
          
         </div>
 
@@ -294,7 +294,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     </div>
                     <div class="col-md-2">
                       <label style="font-family: Times new roman;">MRP</label>
-                      <input type="text" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
+                      <input type="number" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
                        
                       </div>
 
@@ -306,7 +306,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                     <div class="col-md-2">
                         <label style="font-family: Times new roman;">Quantity</label>
-                      <input type="text" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" oninput="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" oninput="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       </div>
                       
@@ -315,7 +315,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <div class="row col-md-12">
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Tax Rate%</label>
-                      <input type="text" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" oninput="gst_calc()" name="tax_rate" value="" id="tax_rate">
+                      <input type="number" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" oninput="gst_calc()" name="tax_rate" value="" id="tax_rate">
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
 
@@ -329,7 +329,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <select class="form-control uom_exclusive" name="uom_exclusive" onchange="uom_details_exclusive()">
                                 </select>
                               </div>
-                              <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
+                              <input type="number" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
 
                             </div>
                             
@@ -348,7 +348,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="uom_details_inclusive()">
                                 </select>
                               </div>
-                              <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
+                              <input type="number" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
 
                             </div>
                             
@@ -376,7 +376,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
-                      <input type="text" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
 
                       <input type="hidden" class="form-control amount  required_for_proof_valid" placeholder="Amount" id="amount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount" value="" >
@@ -384,7 +384,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       
                       <div class="col-md-2">
                           <label style="font-family: Times new roman;">Discount Rs</label>
-                        <input type="text" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" oninput="discount_calc()" name="discount" value="" >
+                        <input type="number" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" oninput="discount_calc()" name="discount" value="" >
                         </div>
 
                         <input type="hidden" name="discounts" id="discounts" value="0">
@@ -514,11 +514,11 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount(-)</label>
-                      <input type="text" readonly="" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      <input type="number" readonly="" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Overall Discount</label>
-                      <input type="text" class="form-control overall_discount" id="overall_discount" name="overall_discount" onchange="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" onchange="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                     </div>
 
@@ -564,7 +564,7 @@ table, th, td {
                         </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
@@ -1263,7 +1263,7 @@ function expense_add()
   else
   {
 
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type" required><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>@endforeach</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type" required><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>@endforeach</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
   $("select").select2();
@@ -1595,7 +1595,7 @@ function discount_calc1()
   $(".discount_rs").val(disc_val_exclusive.toFixed(2));
   calc_exclusive();
   var amount = $(".amount").val();
-  var discounts = parseInt(quantity)*parseFloat(disc_val_exclusive);
+  var discounts = parseInt(quantity)*parseFloat(disc_val_exclusive.toFixed(2));
   $('#discounts').val(discounts.toFixed(2));
   var rate=parseFloat(tax_rate)/100;
   var net_val = parseFloat(amount)*parseFloat(rate);
@@ -2162,6 +2162,7 @@ item_codes(uom_exclusive);
 
       var count = $(this).attr('id').split("")[14];
       var overall_discount = $('.overall_discount').val();
+      console.log(overall_discount);
       var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
       var total_amount =calculate_total_amount();
@@ -2196,6 +2197,7 @@ item_codes(uom_exclusive);
 
 
 </script>
+<script src="{{asset('assets/js/validation/estimation_item_details.js')}}"></script>
 <script type="text/javascript">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

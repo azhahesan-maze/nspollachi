@@ -281,7 +281,7 @@
                         <ul>
                             <li class="dropdown-header">Estimation</li>
                            
-                            <li><a href="{{ route('estimation.create') }}">Estimation</a></li>
+                            <li><a href="{{ route('estimation.index') }}">Estimation</a></li>
                             
                             <!-- <li><a href="{{ route('cart.index') }}">Cart</a></li> -->
                             

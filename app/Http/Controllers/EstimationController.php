@@ -28,7 +28,7 @@ class EstimationController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.estimation.view');
     }
 
     /**
@@ -287,9 +287,19 @@ $count=0;
                     ->where('items.id','=',$id)
                     ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name','items.ptc')
                     ->first();
-        $data[] =ItemTaxDetails::where('item_id','=',$id)
+
+        if(isset($items->category->gst_no) && $items->category->gst_no != '' && $items->category->gst_no != 0)
+        {
+            
+            $data[] = array('igst' => $items->category->gst_no);
+        }  
+        else
+        {
+            $data[] =ItemTaxDetails::where('item_id','=',$id)
                                 ->select('igst')
-                                ->first(); 
+                                ->first();
+        }          
+         
         $data[] =ItemBracodeDetails::where('item_id','=',$id)
                                     ->select('barcode')
                                     ->first();
