@@ -518,7 +518,7 @@ table, th, td {
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Overall Discount</label>
-                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" onchange="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                     </div>
 
@@ -642,10 +642,22 @@ function calculate_total_gst(){
 function calculate_total_discount()
 {
   var q=0;
-  $(".input_discounts").each(function(){
-  q = parseFloat(q)+parseFloat($(this).val());
+  if($(".overall_discount").val() == '' || $(".overall_discount").val() == 0)
+  {
+    $(".input_discounts").each(function(){
+    q = parseFloat(q)+parseFloat($(this).val());
+    });
+    return q;
+  }
+  else
+  {
+    $(".font_discount").each(function(){
+    q = parseFloat(q)+parseFloat($(this).text());
   });
-  return q;
+    return q;
+  }
+  
+  
 
 }
 
@@ -804,7 +816,7 @@ function add_items()
  else
  {
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td class="last_purchase'+i+'" style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="last_purchase" value="" name="last_purchase[]"><center>'+0+'</center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td class="last_purchase'+i+'" style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="last_purchase" value="" name="last_purchase[]"><center>'+0+'</center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
 
   $('.append_proof_details').append(items);
 var length=$('#mytable tr:last').attr('class').split(' ')[0];
@@ -1168,7 +1180,7 @@ $(document).on("click",".update_items",function(){
    {
     var discount=0;
     $('.discount_val'+td_id).val(discount);
-    $('.font_discount'+td_id).text(discount);
+    $('#font_discount'+td_id).text(discount);
     $('#input_discount'+td_id).val(discount);
     var q=calculate_total_discount();
     $('#total_discount').val(q.toFixed(2));
@@ -1178,7 +1190,7 @@ $(document).on("click",".update_items",function(){
    else
    {
     $('.discount_val'+td_id).val($('#discounts').val());
-    $('.font_discount'+td_id).text($('#discounts').val());
+    $('#font_discount'+td_id).text($('#discounts').val());
     $('#input_discount'+td_id).val($('#discounts').val());
     var q=calculate_total_discount();
     $('#total_discount').val(q.toFixed(2));
@@ -1719,7 +1731,7 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          console.log(data);
+          //console.log(data);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
@@ -1735,7 +1747,7 @@ else
              barcode = data[2].barcode;
               
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
-              console.log(first_data);
+              //console.log(first_data);
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
               for(var i=0;i<data[3].length;i++)
@@ -1828,7 +1840,7 @@ var row_id=$('#last').val();
         data: { id: item_code },             
                         
         success: function(data){
-         console.log(data);
+         //console.log(data);
              if(data[3]==1)
              {
               $('.uom_exclusive').children('option').remove();
@@ -1932,6 +1944,7 @@ function item_with_same_data(item_code)
         data: { id: item_code },
 
         success:function(data){
+          console.log(data);
           $('.item_display').show();
           $('.item_display').dialog({width:1000},{height:250});
           $('.append_item_display').html(data);
@@ -1950,7 +1963,7 @@ function find_cat()
   $('#cat').show();
   $('.row_brand').remove(); 
   $('.row_category').remove();
-  $('#cat').dialog({width:1000},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev("..ui-dialog.ui-widget-content");
+  $('#cat').dialog({width:1000},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
     
 }
 
@@ -2149,7 +2162,13 @@ item_codes(uom_exclusive);
     var sum=0;
     var num=0;
 
-    var total = $('#total_price').val();
+    $(".overall_discount").blur(function() {
+    if ($(this).val() == "" || $(this).val() == 0) 
+    {
+        //$(this).val('0');
+        $(".overall_discount").val(0);
+
+        var total = $('#total_price').val();
   if(total == 0)
   {
     alert('You Cannot Add Overall Discount Without Adding Item Details!!');
@@ -2159,9 +2178,10 @@ item_codes(uom_exclusive);
   {
 
   $('.input_discounts').each(function(){
-
+      var overall_discount = 0;
       var count = $(this).attr('id').split("")[14];
-      var overall_discount = $('.overall_discount').val();
+      var overall_discount = $('#overall_discount').val();
+
       console.log(overall_discount);
       var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
@@ -2169,8 +2189,8 @@ item_codes(uom_exclusive);
       var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
       var total_discount = parseFloat($(this).val())+parseFloat(disc_distribution);
       var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(total_discount);
-      $('#input_discount'+count).val(total_discount);
-      $('.font_discount'+count).text(total_discount.toFixed(2));
+      //$('#input_discount'+count).val(total_discount);
+      $('#font_discount'+count).text(total_discount.toFixed(2));
       $('.discount_val'+count).val(total_discount.toFixed(2));
       $('#net_price'+count).val(net_value.toFixed(2));
       $('.font_net_price'+count).text(net_value.toFixed(2));
@@ -2192,18 +2212,65 @@ item_codes(uom_exclusive);
   $('#disc_total').val(q.toFixed(2));
 
 }
-  
+    }
+    else
+    {
+
+    var total = $('#total_price').val();
+  if(total == 0)
+  {
+    alert('You Cannot Add Overall Discount Without Adding Item Details!!');
+    $('.overall_discount').val(0);
+  }
+  else
+  {
+
+  $('.input_discounts').each(function(){
+      var overall_discount = 0;
+      var count = $(this).attr('id').split("")[14];
+      var overall_discount = $('#overall_discount').val();
+
+      console.log(overall_discount);
+      var amount = $('#amnt'+count).val();
+      var gst_rs = $('#tax'+count).val();
+      var total_amount =calculate_total_amount();
+      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
+      var total_discount = parseFloat($(this).val())+parseFloat(disc_distribution);
+      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(total_discount);
+      //$('#input_discount'+count).val(total_discount);
+      $('#font_discount'+count).text(total_discount.toFixed(2));
+      $('.discount_val'+count).val(total_discount.toFixed(2));
+      $('#net_price'+count).val(net_value.toFixed(2));
+      $('.font_net_price'+count).text(net_value.toFixed(2));
+      num++;
+  });
+  // if(num == 0)
+  //   {
+  //     alert('you Cannot Add Overall Discount!');
+  //     $('.overall_discount').val(0);
+  //   }
+  var total_net_price = calculate_total_net_price();
+  $("#total_price").val(total_net_price.toFixed(2));
+  $(".total_net_value").text(total_net_price.toFixed(2));
+  var to_html_total_net = total_net_price.toFixed(2);
+  $(".total_net_price").html(parseFloat(to_html_total_net));
+  roundoff_cal();
+  var q=calculate_total_discount();
+  $('#total_discount').val(q.toFixed(2));
+  $('#disc_total').val(q.toFixed(2));
+
+}
+}
+ }); 
 }
 
 
 </script>
-<script src="{{asset('assets/js/validation/estimation_item_details.js')}}"></script>
-<script type="text/javascript">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
 <script src="jquery.ui.position.js"></script>
-</script>
+
 
 <style type="text/css">
   .ui-dialog.ui-widget-content { background: #a3d072; }
