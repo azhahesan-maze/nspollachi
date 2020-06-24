@@ -2165,17 +2165,9 @@ item_codes(uom_exclusive);
     $(".overall_discount").blur(function() {
     if ($(this).val() == "" || $(this).val() == 0) 
     {
-        //$(this).val('0');
-        $(".overall_discount").val(0);
+        $(this).val('0');
+        //$(".overall_discount").val(0);
 
-        var total = $('#total_price').val();
-  if(total == 0)
-  {
-    alert('You Cannot Add Overall Discount Without Adding Item Details!!');
-    $('.overall_discount').val(0);
-  }
-  else
-  {
 
   $('.input_discounts').each(function(){
       var overall_discount = 0;
@@ -2211,7 +2203,7 @@ item_codes(uom_exclusive);
   $('#total_discount').val(q.toFixed(2));
   $('#disc_total').val(q.toFixed(2));
 
-}
+
     }
     else
     {
