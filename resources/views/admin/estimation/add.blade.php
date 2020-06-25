@@ -211,7 +211,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th style="font-family: Times New Roman;">UOM</th>
                                   <th style="font-family: Times New Roman;">Brand</th>
                                   <th style="font-family: Times New Roman;">Category</th>
-                                  <th style="font-family: Times New Roman;">PTC Code</th>
+                                  <!-- <th style="font-family: Times New Roman;">PTC Code</th> -->
                                   <th style="font-family: Times New Roman;">Barcode</th>
                                   
                                 </thead>
@@ -226,7 +226,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th></th>
                                   <th></th>
                                   <th></th>
-                                  <th></th>
+                                  <!-- <th></th> -->
                                 </tfoot>
                               </table>
                             </div>
@@ -254,7 +254,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th style="font-family: Times New Roman;">UOM</th>
                                   <th style="font-family: Times New Roman;">Brand</th>
                                   <th style="font-family: Times New Roman;">Category</th>
-                                  <th style="font-family: Times New Roman;">PTC Code</th>
+                                  <!-- <th style="font-family: Times New Roman;">PTC Code</th> -->
                                   <th style="font-family: Times New Roman;">Barcode</th>
                                   
                                 </thead>
@@ -269,7 +269,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th></th>
                                   <th></th>
                                   <th></th>
-                                  <th></th>
+                                  <!-- <th></th> -->
                                 </tfoot>
                               </table>
                             </div>
@@ -1099,7 +1099,7 @@ $(document).on("click",".edit_items",function(){
     $('.discount_percentage').val('');
   $('.discount_rs').val('');
   }
-   get_details();
+   item_codes(item_code_id);
 
 });
 
@@ -1963,7 +1963,7 @@ function find_cat()
   $('#cat').show();
   $('.row_brand').remove(); 
   $('.row_category').remove();
-  $('#cat').dialog({width:1000},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
+  $('#cat').dialog({width:900},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
     
 }
 
@@ -2174,7 +2174,7 @@ item_codes(uom_exclusive);
       var count = $(this).attr('id').split("")[14];
       var overall_discount = $('#overall_discount').val();
 
-      console.log(overall_discount);
+      //console.log(overall_discount);
       var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
       var total_amount =calculate_total_amount();
@@ -2222,7 +2222,7 @@ item_codes(uom_exclusive);
       var count = $(this).attr('id').split("")[14];
       var overall_discount = $('#overall_discount').val();
 
-      console.log(overall_discount);
+      // console.log(overall_discount);
       var amount = $('#amnt'+count).val();
       var gst_rs = $('#tax'+count).val();
       var total_amount =calculate_total_amount();
