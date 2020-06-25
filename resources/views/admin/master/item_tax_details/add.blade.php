@@ -100,7 +100,7 @@
         <th>IGST (%) <div class="col-sm-12"><input type="text" class="form-control common_igst" placeholder="IGST (%)"> </div></th>
         <th>CGST (%)</th>
         <th >SGST (%) </th>
-        <th >Effective From <input type="text" class="form-control common_effective_from" placeholder="dd-mm-yyyy"> </th>
+        <th >Effective From <input type="text" class="form-control valid_from" placeholder="dd-mm-yyyy"> </th>
       </tr>
     </thead>
     <tbody class="append_row">
