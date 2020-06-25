@@ -242,7 +242,7 @@
                      </div>
                   </div>
                </div>
-               <div class="col-md-6">
+               <!-- <div class="col-md-6">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">PTC Code <span class="mandatory">*</span></label>
                      <div class="col-sm-8">
@@ -253,7 +253,7 @@
                         </div>
                      </div>
                   </div>
-               </div>
+               </div> -->
                
                <div class="col-md-6">
                   <div class="form-group row">

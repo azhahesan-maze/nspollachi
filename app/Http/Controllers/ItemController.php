@@ -121,7 +121,7 @@ class ItemController extends Controller
         $item->print_name_in_language_1 = $request->print_name_in_language_1;
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
-        $item->ptc = $request->ptc;
+        //$item->ptc = $request->ptc;
         // $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
         $item->hsn = $request->hsn;
@@ -278,7 +278,7 @@ class ItemController extends Controller
         $item->print_name_in_language_1 = $request->print_name_in_language_1;
         $item->print_name_in_language_2 = $request->print_name_in_language_2;
         $item->print_name_in_language_3 = $request->print_name_in_language_3;
-        $item->ptc = $request->ptc;
+        //$item->ptc = $request->ptc;
         // $item->barcode = $request->barcode;
         $item->mrp = $request->mrp;
         $item->hsn = $request->hsn;

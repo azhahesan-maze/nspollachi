@@ -32,7 +32,7 @@ class ItemRequest extends FormRequest
                 'name' => 'required|unique:items,name,NULL,id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,NULL,id,deleted_at,NULL',
                  // 'barcode' => 'required|unique:items,barcode,NULL,id,deleted_at,NULL',
-                'ptc' => 'required',
+                // 'ptc' => 'required',
                 //'ptc' => 'required|unique:items,ptc,NULL,id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
@@ -120,7 +120,7 @@ class ItemRequest extends FormRequest
             $rule = [
                 'name' => 'required|unique:items,name,' . $this->id . ',id,deleted_at,NULL',
                 'code' => 'required|unique:items,code,' . $this->id . ',id,deleted_at,NULL',
-                'ptc' => 'required',
+                // 'ptc' => 'required',
                 //'ptc' => 'required|unique:items,ptc,' . $this->id . ',id,deleted_at,NULL',
                 'category_id' => 'required',
                 'brand_id' => 'required',
