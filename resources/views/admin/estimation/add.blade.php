@@ -165,7 +165,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       <div class="row col-md-12">
         <div class="col-md-2">
           <label style="font-family: Times new roman;">Item Bill S.No</label>
-        <input type="number" class="form-control item_sno " placeholder="Item S.no" id="item_sno" name="item_sno" value="">
+        <input type="text" class="form-control item_sno " placeholder="Item S.no" id="item_sno" name="item_sno" value="">
          
         </div>
 
