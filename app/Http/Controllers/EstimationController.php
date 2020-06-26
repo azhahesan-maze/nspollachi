@@ -818,4 +818,19 @@ $result=[];
         return view('admin.estimation.expense_details',compact('expense_details'));
     }
 
+    public function last_purchase_rate(Request $request)
+    {
+        $id = $request->id;
+
+        $item_data = Estimation_Item::where('item_id',$id)
+                                    ->orderBy('estimation_date','DESC')
+                                    ->first();
+
+        $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+        $gst_rs = $amount * $item_data->gst / 100;
+        $net_value = $amount + $gst_rs - $item_data->discount; 
+
+        return $net_value;                          
+    }
+
 }
