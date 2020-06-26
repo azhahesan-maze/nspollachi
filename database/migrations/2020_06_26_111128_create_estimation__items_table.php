@@ -15,7 +15,7 @@ class CreateEstimationItemsTable extends Migration
     {
         Schema::create('estimation__items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('estimaion_no');
+            $table->string('estimation_no');
             $table->date('estimation_date')->nullable();
             $table->string('item_sno');
             $table->bigInteger('item_id')->unsigned();

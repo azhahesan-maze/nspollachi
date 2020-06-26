@@ -118,7 +118,7 @@ class EstimationController extends Controller
         {
             $estimation_items = new Estimation_Item();
 
-            $estimation_items->estimaion_no = $voucher_no;
+            $estimation_items->estimation_no = $voucher_no;
             $estimation_items->estimation_date = $request->voucher_date;
             $estimation_items->item_sno = $request->invoice_sno[$i];
             $estimation_items->item_id = $request->item_code[$i];
@@ -802,7 +802,7 @@ $result=[];
     public function item_details($id)
     {
 
-        $item_details = Estimation_Item::where('estimaion_no',$id)->get();
+        $item_details = Estimation_Item::where('estimation_no',$id)->get();
         foreach ($item_details as $key => $value) 
         {
             $amount[] = $value->qty * $value->rate_exclusive_tax;
