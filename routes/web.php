@@ -561,7 +561,8 @@ Route::get('estimation/change_items/{id}', 'EstimationController@change_items');
 Route::post('estimation/brand_filter/', 'EstimationController@brand_filter');
 Route::get('estimation/getdata_item/{id}', 'EstimationController@getdata_item');
 Route::get('estimation/same_items/{id}', 'EstimationController@same_items');
-
+Route::get('estimation/item_details/{id}', 'EstimationController@item_details');
+Route::get('estimation/expense_details/{id}', 'EstimationController@expense_details');
 /* Estimation End Here  */
 
 /* Purchase Order Start Here  */

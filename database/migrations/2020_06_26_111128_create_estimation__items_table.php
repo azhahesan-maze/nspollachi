@@ -16,20 +16,16 @@ class CreateEstimationItemsTable extends Migration
         Schema::create('estimation__items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estimaion_no');
+            $table->date('estimation_date')->nullable();
             $table->string('item_sno');
-            $table->string('item_code');
-            $table->string('item_name');
-            $table->string('hsn');
-            $table->string('mrp');
-            $table->string('tax_rate');
-            $table->string('exclusive_tax');
-            $table->string('inclusive_tax');
-            $table->string('qty');
-            $table->string('uom');
-            $table->string('amount');
-            $table->string('discount');
-            $table->string('gst');
-            $table->string('net_value');
+            $table->bigInteger('item_id')->unsigned();
+            $table->float('mrp')->nullable();
+            $table->float('gst');
+            $table->decimal('rate_exclusive_tax');
+            $table->decimal('rate_inclusive_tax');
+            $table->integer('qty');
+            $table->bigInteger('uom_id')->unsigned();
+            $table->decimal('discount')->nullable();
             $table->timestamps();
         });
     }

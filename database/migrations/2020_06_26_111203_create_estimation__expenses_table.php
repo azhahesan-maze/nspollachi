@@ -16,9 +16,9 @@ class CreateEstimationExpensesTable extends Migration
         Schema::create('estimation__expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estimation_no');
-            $table->string('estimation_date');
-            $table->string('expense_type')->nullable();
-            $table->string('expense_amount')->nullable();
+            $table->date('estimation_date');
+            $table->bigInteger('expense_type')->unsigned()->nullable();
+            $table->decimal('expense_amount')->nullable();
             $table->timestamps();
         });
     }

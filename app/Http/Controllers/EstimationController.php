@@ -29,7 +29,8 @@ class EstimationController extends Controller
      */
     public function index()
     {
-        return view('admin.estimation.view');
+        $estimation = Estimation::all();
+        return view('admin.estimation.view',compact('estimation'));
     }
 
     /**
@@ -102,18 +103,10 @@ class EstimationController extends Controller
          $estimation->estimation_no = $voucher_no;
          $estimation->estimation_date = $request->voucher_date;
          $estimation->supplier_id = $request->supplier_id;
-         $estimation->address_line_1 = $request->address_line_1;
-         $estimation->address_line_2 = $request->address_line_2;
-         $estimation->city_id = $request->city_id;
-         $estimation->district_id = $request->district_id;
-         $estimation->state_id = $request->state_id;
-         $estimation->postal_code = $request->postal_code;
          $estimation->agent_id = $request->agent_id;
-         $estimation->total_discount = $request->total_discount;
-         $estimation->total_amount = $request->total_amount;
+         $estimation->overall_discount = $request->overall_discount;
          $estimation->total_net_value = $request->total_price;
          $estimation->round_off = $request->round_off;
-         $estimation->gst = $request->igst;
 
          $estimation->save();
 
@@ -126,20 +119,16 @@ class EstimationController extends Controller
             $estimation_items = new Estimation_Item();
 
             $estimation_items->estimaion_no = $voucher_no;
+            $estimation_items->estimation_date = $request->voucher_date;
             $estimation_items->item_sno = $request->invoice_sno[$i];
-            $estimation_items->item_code = $request->item_code[$i];
-            $estimation_items->item_name = $request->item_name[$i];
-            $estimation_items->hsn = $request->hsn[$i];
+            $estimation_items->item_id = $request->item_code[$i];
             $estimation_items->mrp = $request->mrp[$i];
-            $estimation_items->tax_rate = $request->tax_rate[$i];
-            $estimation_items->exclusive_tax = $request->exclusive[$i];
-            $estimation_items->inclusive_tax = $request->inclusive[$i];
+            $estimation_items->gst = $request->tax_rate[$i];
+            $estimation_items->rate_exclusive_tax = $request->exclusive[$i];
+            $estimation_items->rate_inclusive_tax = $request->inclusive[$i];
             $estimation_items->qty = $request->quantity[$i];
-            $estimation_items->uom = $request->uom[$i];
-            $estimation_items->amount = $request->amount[$i];
+            $estimation_items->uom_id = $request->uom[$i];
             $estimation_items->discount = $request->discount[$i];
-            $estimation_items->gst = $request->gst[$i];
-            $estimation_items->net_value = $request->net_price[$i];
 
             $estimation_items->save();
         }
@@ -148,6 +137,7 @@ class EstimationController extends Controller
          for($j=0;$j<$expense_count;$j++)
 
         {
+        
             $estimation_expense = new Estimation_Expense();
 
             $estimation_expense->estimation_no = $voucher_no;
@@ -156,6 +146,7 @@ class EstimationController extends Controller
             $estimation_expense->expense_amount = $request->expense_amount[$j];
 
             $estimation_expense->save();
+            
         }
 
         return redirect()->back();
@@ -807,5 +798,24 @@ $result=[];
         return $result;
 
     }
+    
+    public function item_details($id)
+    {
 
+        $item_details = Estimation_Item::where('estimaion_no',$id)->get();
+        foreach ($item_details as $key => $value) 
+        {
+            $amount[] = $value->qty * $value->rate_exclusive_tax;
+            $gst_rs[] = $amount[$key] * $value->gst / 100;
+            $net_value[] = $amount[$key] + $gst_rs[$key] - $value->discount;
+        }
+    return view('admin.estimation.item_details',compact('item_details','gst_rs','amount','net_value'));
     }
+
+    public function expense_details($id)
+    {
+        $expense_details = Estimation_Expense::where('estimation_no',$id)->get();
+        return view('admin.estimation.expense_details',compact('expense_details'));
+    }
+
+}
