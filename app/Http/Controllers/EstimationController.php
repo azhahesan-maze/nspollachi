@@ -179,7 +179,111 @@ class EstimationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $supplier = Supplier::all();
+        $item = Item::all();
+        $agent = Agent::all();
+        $brand = Brand::all();
+        $expense_type = ExpenseType::all();
+        $estimation = Estimation::where('estimation_no',$id)->first();
+        $estimation_item = Estimation_Item::where('estimation_no',$id)->get();
+        $estimation_expense = Estimation_Expense::where('estimation_no',$id)->get();
+
+        $item_row_count = count($estimation_item);
+        $expense_row_count = count($estimation_expense);
+
+
+        if(isset($estimation->supplier->name) && !empty($estimation->supplier->name))
+        {
+            $supplier_id = $estimation->supplier->id;
+
+            $address_details = AddressDetails::where('address_ref_id',$supplier_id)
+                                            ->where('address_table','=','Supplier')
+                                            ->first();
+
+
+       $count=0;
+
+       $address="";
+      
+        if(isset($address_details->address_line_1) && !empty($address_details->address_line_1)){
+            $address.=$address_details->address_line_1.", \n";
+            
+          }
+
+          if(isset($address_details->address_line_2) && !empty($address_details->address_line_2)){
+            $address.=$address_details->address_line_2.",  \n ";
+            
+          }
+
+
+         if(isset($address_details->city->name)  || isset($address_details->district->name)){
+
+            if(!empty($address_details->city->name)){
+                $address.=$address_details->city->name." ,";
+               
+            }
+           
+
+            if(!empty($address_details->district->name)){
+                $address.=$address_details->district->name." ,";
+                $data[] = $address_details->district->id;
+            }
+            
+
+            $address.="\n";
+
+         }
+
+
+
+         if(isset($address_details->state->name)  && !empty($address_details->state->name)){
+             $address.=$address_details->state->name." -";
+             
+        if(isset($address_details->postal_code) && !empty($address_details->postal_code)){
+            // $address.=" - ";
+            $address.=$address_details->postal_code.',';
+            
+        }
+             
+             $address.="\n";
+         }
+         $address.="GST Number :".$address_details->gst_no;                                 
+        }
+        else
+        {
+            $address = '';
+        }   
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+        foreach($estimation_item as $key => $value)  
+        {
+            $item_amount[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs[] = $item_amount[$key] * $value->gst / 100;
+            $item_net_value[] = $item_amount[$key] + $item_gst_rs[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amount[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_value[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rs[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+            $item_data = Estimation_Item::where('item_id',$value->item_id)
+                                    ->orderBy('estimation_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value[] = $amount + $gst_rs - $item_data->discount;
+
+        }     
+
+        $item_sgst = $item_gst_rs_sum/2;
+        $item_cgst = $item_gst_rs_sum/2;    
+
+        return view('admin.estimation.edit',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
     }
 
     /**
@@ -191,7 +295,81 @@ class EstimationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $estimation_data = Estimation::where('estimation_no',$id);
+        $estimation_data->delete();
+
+        $estimation_item_data = Estimation_Item::where('estimation_no',$id);
+        $estimation_item_data->delete();
+
+        $estimation_expense_data = Estimation_Expense::where('estimation_no',$id);
+        $estimation_expense_data->delete();
+
+        $voucher_date = $request->voucher_date;
+
+         $estimation = new Estimation();
+
+         $estimation->estimation_no = $request->voucher_no;
+         $estimation->estimation_date = $request->voucher_date;
+         $estimation->supplier_id = $request->supplier_id;
+         $estimation->agent_id = $request->agent_id;
+         $estimation->overall_discount = $request->overall_discount;
+         $estimation->total_net_value = $request->total_price;
+         $estimation->round_off = $request->round_off;
+
+         $estimation->save();
+
+         $items_count = $request->counts;
+         $expense_count = $request->expense_count;
+         if($expense_count == 0)
+         {
+            $expense_count =1;
+         }
+
+         for($i=0;$i<$items_count;$i++)
+
+        {
+            $estimation_items = new Estimation_Item();
+
+            $estimation_items->estimation_no = $request->voucher_no;
+            $estimation_items->estimation_date = $request->voucher_date;
+            $estimation_items->item_sno = $request->invoice_sno[$i];
+            $estimation_items->item_id = $request->item_code[$i];
+            $estimation_items->mrp = $request->mrp[$i];
+            $estimation_items->gst = $request->tax_rate[$i];
+            $estimation_items->rate_exclusive_tax = $request->exclusive[$i];
+            $estimation_items->rate_inclusive_tax = $request->inclusive[$i];
+            $estimation_items->qty = $request->quantity[$i];
+            $estimation_items->uom_id = $request->uom[$i];
+            $estimation_items->discount = $request->discount[$i];
+
+            $estimation_items->save();
+        }
+         
+
+
+         for($j=0;$j<$expense_count;$j++)
+
+        {
+            if($expense_count == 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
+            {
+
+            }
+            else
+            {
+                $estimation_expense = new Estimation_Expense();
+
+                $estimation_expense->estimation_no = $request->voucher_no;
+                $estimation_expense->estimation_date = $voucher_date;
+                $estimation_expense->expense_type = $request->expense_type[$j];
+                $estimation_expense->expense_amount = $request->expense_amount[$j];
+
+                $estimation_expense->save();
+            }
+           
+            
+        }
+        return redirect('estimation/');
     }
 
     /**
@@ -202,7 +380,26 @@ class EstimationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estimation_data = Estimation::where('estimation_no',$id);
+        $estimation_item_data = Estimation_Item::where('estimation_no',$id);
+        $estimation_expense_data = Estimation_Expense::where('estimation_no',$id);
+        
+        if($estimation_data)
+        {
+            $estimation_data->delete();
+        }
+         if($estimation_item_data)
+         {
+            $estimation_item_data->delete();
+         }
+
+         if($estimation_expense_data)
+         {
+            $estimation_expense_data->delete();
+         }   
+        
+        return redirect('estimation/');
+        
     }
 
     public function address_details(Request $request)
@@ -263,14 +460,6 @@ $count=0;
              $address.="\n";
          }
          $address.="GST Number :".$getdata->gst_no;
-
-       // $data[] = $address_line_1;
-       // $data[] = $address_line_2;
-       // $data[] = $city_id;
-       // $data[] = $district_id;
-       // $data[] = $state_id;
-       // $data[] = $postal_code;
-       //$data[] = $address;
 
 
 
