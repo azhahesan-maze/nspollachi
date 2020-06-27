@@ -34,7 +34,7 @@
            <th>Discount</th>
            <th>Amount</th>
            <th>Net Price</th>
-           <th>Action</th>
+           <!-- <th>Action</th> -->
           </tr>
         </thead>
         <tbody>
@@ -67,11 +67,11 @@
               <td>{{ $value->discount }}</td>
               <td>{{ $amount[$key] }}</td>
               <td>{{ $net_value[$key] }}</td>
-              <td> 
+              <!-- <td> 
                 <a href="" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a onclick="return confirm('Are you sure ?')" href="" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
-              </td>
+              </td> -->
             </tr>
             @endforeach
         </tbody>
