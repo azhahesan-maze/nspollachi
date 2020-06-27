@@ -30,9 +30,9 @@
            <th>Rate Inclusive Tax</th>
            <th>Quantity</th>
            <th>UOM</th>
+           <th>Amount</th>
            <th>GST Rs</th>
            <th>Discount</th>
-           <th>Amount</th>
            <th>Net Price</th>
            <!-- <th>Action</th> -->
           </tr>
@@ -63,9 +63,9 @@
               @else
               <td></td>
               @endif
+              <td>{{ $amount[$key] }}</td>
               <td>{{ $gst_rs[$key] }}</td>
               <td>{{ $value->discount }}</td>
-              <td>{{ $amount[$key] }}</td>
               <td>{{ $net_value[$key] }}</td>
               <!-- <td> 
                 <a href="" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
