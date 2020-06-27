@@ -134,18 +134,26 @@ class EstimationController extends Controller
         }
          
 
+
          for($j=0;$j<$expense_count;$j++)
 
         {
-        
-            $estimation_expense = new Estimation_Expense();
+            if($expense_count == 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
+            {
 
-            $estimation_expense->estimation_no = $voucher_no;
-            $estimation_expense->estimation_date = $voucher_date;
-            $estimation_expense->expense_type = $request->expense_type[$j];
-            $estimation_expense->expense_amount = $request->expense_amount[$j];
+            }
+            else
+            {
+                $estimation_expense = new Estimation_Expense();
 
-            $estimation_expense->save();
+                $estimation_expense->estimation_no = $voucher_no;
+                $estimation_expense->estimation_date = $voucher_date;
+                $estimation_expense->expense_type = $request->expense_type[$j];
+                $estimation_expense->expense_amount = $request->expense_amount[$j];
+
+                $estimation_expense->save();
+            }
+           
             
         }
 
