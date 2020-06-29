@@ -571,7 +571,16 @@ Route::get('estimation/delete/{id}', 'EstimationController@destroy');
 /* Purchase Order Start Here  */
 
 Route::resource('purchase_order', 'PurchaseOrderController',['middleware' => ['auth']]);
-
+Route::post('purchase_order/address_details/', 'PurchaseOrderController@address_details');
+Route::get('purchase_order/getdata/{id}', 'PurchaseOrderController@getdata');
+Route::get('purchase_order/change_items/{id}', 'PurchaseOrderController@change_items');
+Route::post('purchase_order/brand_filter/', 'PurchaseOrderController@brand_filter');
+Route::get('purchase_order/getdata_item/{id}', 'PurchaseOrderController@getdata_item');
+Route::get('purchase_order/same_items/{id}', 'PurchaseOrderController@same_items');
+Route::get('purchase_order/item_details/{id}', 'PurchaseOrderController@item_details');
+Route::get('purchase_order/expense_details/{id}', 'PurchaseOrderController@expense_details');
+Route::post('purchase_order/last_purchase_rate/', 'PurchaseOrderController@last_purchase_rate');
+Route::get('purchase_order/delete/{id}', 'PurchaseOrderController@destroy');
 /* Purchase Order End Here  */
 
 /* Purchase Gate Pass entry Start Here  */

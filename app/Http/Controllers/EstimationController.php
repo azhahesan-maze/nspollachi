@@ -272,7 +272,7 @@ class EstimationController extends Controller
         return view('admin.estimation.show',compact('estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
 
 
-        return view('admin.estimation.show');
+        //return view('admin.estimation.show');
     }
 
     /**

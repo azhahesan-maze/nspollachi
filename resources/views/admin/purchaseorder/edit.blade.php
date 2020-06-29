@@ -21,11 +21,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Edit Estimation</h3>
+          <h3>Edit Purchase Order</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{ route('estimation.index') }}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ route('purchase_order.index') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -53,7 +53,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 </style>
 
 
-<form  method="post" class="form-horizontal" action="{{ route('estimation.update',$estimation->estimation_no) }}" id="dataInput" enctype="multipart/form-data">
+<form  method="post" class="form-horizontal" action="{{ route('purchase_order.update',$purchaseorder->po_no) }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
       
@@ -62,8 +62,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $estimation->estimation_no }}">
-                                    <font size="2">{{ $estimation->estimation_no }}</font>
+                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $purchaseorder->estimation_no }}">
+                                    <font size="2">{{ $purchaseorder->po_no }}</font>
                                   </div>
                                 
                                  
@@ -71,29 +71,33 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $estimation->estimation_date }}">
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $purchaseorder->po_date }}">
                                  
                                 </div>
-                                <!-- <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Party Name</label><br>
-                                <select class="js-example-basic-multiple form-control supplier_id" 
-                                data-placeholder="Choose Supplier Name" required="" id="supplier_id" onchange="supplier_details()" name="supplier_id" >
-                                <option value=""></option>
-                                   @foreach($supplier as $suppliers)
-                                   <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                                   @endforeach
-                                 </select>
+                     <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation No</label><br>
+                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no">
+                           <option value="">Choose Estimation No</option>
+                           @foreach($estimation as $estimations)
+                           <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
+                           @endforeach
+                        </select>
+                   
+                  </div>
 
-                                 
-                                </div> -->
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation Date</label><br>
+                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $date }}">
+                   
+                  </div>
 
                 <div class="col-md-4">
                   <label style="font-family: Times new roman;">Party Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
                       <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
-                        @if(isset($estimation->supplier->name) && !empty($estimation->supplier->name))
-                           <option value="{{ $estimation->supplier->id }}">{{ $estimation->supplier->name }}</option>
+                        @if(isset($purchaseorder->supplier->name) && !empty($purchaseorder->supplier->name))
+                           <option value="{{ $purchaseorder->supplier->id }}">{{ $purchaseorder->supplier->name }}</option>
                            @else
                            <option value="">Choose Supplier Name</option>
                            @endif
@@ -107,56 +111,44 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
-                                <div class="col-md-4">
-                                  <label style="font-family: Times new roman;">Party Address</label><br>
-                                  <input type="hidden" name="address_line_1" id="address_line_1">
-                                  <!-- <input type="text" name="address_line_2" id="address_line_2">
-                                  <input type="text" name="city_id" id="city_id">
-                                  <input type="text" name="district_id" id="district_id">
-                                  <input type="text" name="state_id" id="state_id">
-                                  <input type="text" name="postal_code" id="postal_code"> -->
-                                  <div class="address">
-                                    {{ $address }}
-                                  </div>
                                 
-                                 
-                                </div>
-                                </div>
+                    </div>
 
-                                <div class="row col-md-12">
+                    <div class="row col-md-12">
+
+
+                      <div class="col-md-4">
+                      <label style="font-family: Times new roman;">Party Address</label><br>
+                      <input type="hidden" name="address_line_1" id="address_line_1">
+
+                      <div class="address">
+                        {{ $address }}
+                      </div>
+                    
+                     
+                    </div>
 
                     <div class="col-md-3">
-                    <label style="font-family: Times new roman;">Agent Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select agent_id" name="agent_id" id="agent_id" >
-                           @if(isset($estimation->agent->name) && !empty($estimation->agent->name))
-                           <option value="{{ $estimation->agent->id }}">{{ $estimation->agent->name }}</option>
-                           @else
-                           <option value="">Choose Agent Name</option>
-                           @endif
-                           @foreach($agent as $agents)
-                           <option value="{{ $agents->id }}">{{ $agents->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/agent/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Agent"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_agent_id" title="Add Agent"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    <label style="font-family: Times new roman;">Purchase type</label><br>
+                    @if($purchaseorder->purchase_type == 1)
+                    
+                    <input type="radio" name="purchase_type" value="1" checked="">
+                    <label style="font-family: Times new roman;">Cash Purchase</label>
+                    <input type="radio" name="purchase_type" value="0">
+                    <label style="font-family: Times new roman;">Credit Purchase</label>
+                    
+                    
+                    @else
+                    
+                    <input type="radio" name="purchase_type" value="1">
+                    <label style="font-family: Times new roman;">Cash Purchase</label>
+                    <input type="radio" name="purchase_type" value="0" checked="">
+                    <label style="font-family: Times new roman;">Credit Purchase</label>
+                    
+                    
+                    @endif
                   </div>
-               </div>
 
-                                <!-- <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Agent Name</label><br>
-                                <select class="js-example-basic-multiple form-control" 
-                                data-placeholder="Choose Agent Name" required="" id="agent_id" name="agent_id" >
-                                <option value=""></option>
-                                   @foreach($agent as $agents)
-                                   <option value="{{ $agents->id }}">{{ $agents->name }}</option>
-                                   @endforeach
-                                 </select>
-                                 
-                                </div> -->
                               </div>
                               <br>
     
@@ -445,10 +437,10 @@ table, th, td {
                   <input type="hidden" name="expense_count" value="{{$expense_row_count}}" id="expense_count">
                   <input type="hidden" name="total_amount" value="{{$item_amount_sum}}" id="total_amount">
                   <input type="hidden" name="total_gst" value="{{$item_gst_rs_sum}}" id="total_gst">
-                  <input type="hidden" name="total_price" value="{{$estimation->total_net_value}}" id="total_price">
+                  <input type="hidden" name="total_price" value="{{$purchaseorder->total_net_value}}" id="total_price">
                   <input type="hidden" name="last_purchase_rate" value="0" id="last_purchase_rate">
 
-                  @foreach($estimation_item as $key => $value)
+                  @foreach($purchaseorder_items as $key => $value)
                   
 
                   <tr id="row{{ $key }}" class="{{ $key }} tables"><td><span class="item_s_no"> {{ $key+1 }} </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no{{ $key }}" type="hidden" id="invoice{{ $key }}" value="{{ $value->item_sno }}" name="invoice_sno[]"><font class="item_no{{ $key }}">{{ $value->item_sno }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code{{ $key }}" value="{{ $value->item_id }}" name="item_code[]"><font class="items{{ $key }}">{{ $value->item->code }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name{{ $key }}" type="hidden" value="{{ $value->item->name }}" name="item_name[]"><font class="font_item_name{{ $key }}">{{ $value->item->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn{{ $key }}" type="hidden" value="{{ $value->item->hsn }}" name="hsn[]"><font class="font_hsn{{ $key }}">{{ $value->item->hsn }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp{{ $key }}" value="{{ $value->mrp }}" name="mrp[]"><font class="font_mrp{{ $key }}">{{ $value->mrp }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive{{ $key }}" value="{{ $value->rate_exclusive_tax }}" name="exclusive[]"><font class="font_exclusive{{ $key }}">{{ $value->rate_exclusive_tax }}</font><input type="hidden" class="inclusive{{ $key }}" value="{{ $value->rate_inclusive_tax }}" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity{{ $key }}" value="{{ $value->qty }}" name="quantity[]"><font class="font_quantity{{ $key }}">{{ $value->qty }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom{{ $key }}" value="{{ $value->uom->id }}" name="uom[]"><font class="font_uom{{ $key }}">{{ $value->uom->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt{{ $key }}" value="{{ $item_amount[$key] }}" name="amount[]"><font class="font_amount{{ $key }}"> {{$item_amount[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="{{ $value->discount }}" id="input_discount{{ $key }}" ><input class="discount_val{{ $key }}" type="hidden" value="{{ $value->discount }}" name="discount[]"><font class="font_discount" id="font_discount{{ $key }}">{{ $value->discount }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax{{ $key }}" value="{{$item_gst_rs[$key]}}" name="gst[]"><input type="hidden" class="tax_gst{{ $key }}"  value="{{ $value->gst }}" name="tax_rate[]"><font class="font_gst{{ $key }}"> {{$item_gst_rs[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price{{ $key }}" value="{{ $item_net_value[$key] }}" name="net_price[]"><font class="font_net_price{{ $key }}">{{ $item_net_value[$key] }}</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase{{ $key }}">{{ $net_value[$key] }}</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="{{ $key }}" aria-hidden="true"></i></td></tr>
@@ -534,7 +526,7 @@ table, th, td {
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Overall Discount</label>
-                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $estimation->overall_discount }}">
+                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $purchaseorder->overall_discount }}">
                       </div>
                     </div>
 
@@ -549,7 +541,7 @@ table, th, td {
                           </div> -->
                         <div class="row col-md-12 append_expense">
                           @if($expense_row_count > 0)
-                          @foreach($estimation_expense as $key => $value)
+                          @foreach($purchaseorder_expense as $key => $value)
                           <div class="row col-md-12 expense">
                             <div class="col-md-3">
                     <label style="font-family: Times new roman;">Expense Type</label><br>
@@ -646,7 +638,7 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Round Off(+/-)</label>
-                      <input type="text" class="form-control round_off" readonly="" value="{{ $estimation->round_off }}" id="round_off" name="round_off" >
+                      <input type="text" class="form-control round_off" readonly="" value="{{ $purchaseorder->round_off }}" id="round_off" name="round_off" >
                       </div>
                         
                         <div class="col-md-2">
@@ -660,7 +652,7 @@ table, th, td {
                       </div>
                       <div class="col-md-4" style="float: right;">
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$estimation->total_net_value}}</font> 
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$purchaseorder->total_net_value}}</font> 
                        </div>
                        
                        <div class="row col-md-12">

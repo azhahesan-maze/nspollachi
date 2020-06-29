@@ -53,80 +53,85 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 </style>
 
 
-<form  method="post" class="form-horizontal" action="{{ route('estimation.store') }}" id="dataInput" enctype="multipart/form-data">
+<form  method="post" class="form-horizontal" action="{{ route('purchase_order.store') }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
 
       
-                       <div class="row col-md-12">
+         <div class="row col-md-10">
 
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Voucher No</label><br>
-                                  <div class="">
-                                    <!-- <input type="text" readonly="" class="form-control proof_file  required_for_proof_valid" id="voucher_no" placeholder="Auto Generate Voucher No" name="voucher_no" value=""> -->
-                                    <font size="2">1</font>
-                                  </div>
-                                
-                                 
-                                </div>
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Voucher No</label><br>
+                    <div class="">
+                      <font size="2">{{ $voucher_no }}</font>
+                    </div>
+                  
+                   
+                  </div>
 
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
-                                 
-                                </div>
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Voucher Date</label><br>
+                  <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                   
+                  </div>
 
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Estimaton No</label><br>
-                                <select class="js-example-basic-multiple form-control estimation_no" 
-                                data-placeholder="Choose Estimation No" required="" id="estimation_no" onchange="supplier_details()" name="estimation_no" >
-                                <option value=""></option>
-                                  
-                                 </select>
-                                 
-                                </div>
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Estimaton Date</label><br>
-                                <input type="date" class="form-control estimaton_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimaton_date" value="{{ $date }}">
-                                 
-                                </div>
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Party Name</label><br>
-                                <select class="js-example-basic-multiple form-control supplier_id" 
-                                data-placeholder="Choose Supplier Name" required="" id="supplier_id" onchange="supplier_details()" name="supplier_id" >
-                                <option value=""></option>
-                                   @foreach($supplier as $suppliers)
-                                   <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                                   @endforeach
-                                 </select>
-                                 
-                                </div>
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Party Address</label><br>
-                                  <input type="hidden" name="address_line_1" id="address_line_1">
-                                  <!-- <input type="text" name="address_line_2" id="address_line_2">
-                                  <input type="text" name="city_id" id="city_id">
-                                  <input type="text" name="district_id" id="district_id">
-                                  <input type="text" name="state_id" id="state_id">
-                                  <input type="text" name="postal_code" id="postal_code"> -->
-                                  <div class="address">
-                                    
-                                  </div>
-                                
-                                 
-                                </div>
-                                </div>
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation No</label><br>
+                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no">
+                           <option value="">Choose Estimation No</option>
+                           @foreach($estimation as $estimations)
+                           <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
+                           @endforeach
+                        </select>
+                   
+                  </div>
 
-                                <div class="row col-md-12">
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation Date</label><br>
+                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $date }}">
+                   
+                  </div>
 
-                                <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Purchase type</label><br>
-                                  <input type="radio" name="purchase" value="cash" checked="">
-                                  <label style="font-family: Times new roman;">Cash Purchase</label>
-                                  <input type="radio" name="purchase" value="credit">
-                                  <label style="font-family: Times new roman;">Credit Purchase</label>
-                                </div>
-                              </div>
-                              <br>
+
+                <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
+                           <option value="">Choose Supplier Name</option>
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                  
+                  </div>
+
+                  <div class="row col-md-12">
+
+                    <div class="col-md-4">
+                    <label style="font-family: Times new roman;">Party Address</label><br>
+                    <input type="hidden" name="address_line_1" id="address_line_1">
+                    <div class="address">
+                      
+                    </div>
+                  
+                   
+                  </div>
+
+                  <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Purchase type</label><br>
+                    <input type="radio" name="purchase_type" value="1" checked="">
+                    <label style="font-family: Times new roman;">Cash Purchase</label>
+                    <input type="radio" name="purchase_type" value="0">
+                    <label style="font-family: Times new roman;">Credit Purchase</label>
+                  </div>
+                </div>
+                <br>
     
       <div class="col-md-8">
                        <div class="form-group row">
@@ -141,7 +146,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       <div class="row col-md-12">
         <div class="col-md-2">
           <label style="font-family: Times new roman;">Item Bill S.No</label>
-        <input type="text" class="form-control item_sno  required_for_proof_valid" placeholder="Item S.no" id="item_sno" name="item_sno" value="">
+        <input type="text" class="form-control item_sno " placeholder="Item S.no" id="item_sno" name="item_sno" value="">
          
         </div>
 
@@ -158,10 +163,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
                           <option></option>
+                          <option value="0">Not Applicable</option>
                           @foreach($brand as $brands)
                           <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                           @endforeach
                         </select>
+
                           </div>
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control categories" id="categories" name="category" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Category" onchange="categories_check()">
@@ -182,9 +189,10 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th style="font-family: Times New Roman;">Item Code</th>
                                   <th style="font-family: Times New Roman;">Item Name</th>
                                   <th style="font-family: Times New Roman;">MRP</th>
+                                  <th style="font-family: Times New Roman;">UOM</th>
                                   <th style="font-family: Times New Roman;">Brand</th>
                                   <th style="font-family: Times New Roman;">Category</th>
-                                  <th style="font-family: Times New Roman;">PTC Code</th>
+                                  <!-- <th style="font-family: Times New Roman;">PTC Code</th> -->
                                   <th style="font-family: Times New Roman;">Barcode</th>
                                   
                                 </thead>
@@ -199,16 +207,50 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <th></th>
                                   <th></th>
                                   <th></th>
+                                  <!-- <th></th> -->
                                 </tfoot>
                               </table>
                             </div>
                           </div>
-                        <!-- <select class="js-example-basic-multiple form-control codes" id="codes" name="codes" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Item Code" onchange="code_check()">
-                          <option></option>
-                          @foreach($item as $items)
-                          <option value="{{ $items->id }}">{{ $items->code }}</option>
-                          @endforeach
-                        </select><br> -->
+    
+                            
+                      </div>
+
+
+                      <div class="item_display" id="item_display" style="display: none;" title="Choose Item">
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                              <table class="item_code_table" style="width: 100%;">
+                                  <thead>
+                                  <th style="font-family: Times New Roman;">Select One</th>
+                                  <th style="font-family: Times New Roman;">Item Code</th>
+                                  <th style="font-family: Times New Roman;">Item Name</th>
+                                  <th style="font-family: Times New Roman;">MRP</th>
+                                  <th style="font-family: Times New Roman;">UOM</th>
+                                  <th style="font-family: Times New Roman;">Brand</th>
+                                  <th style="font-family: Times New Roman;">Category</th>
+                                  <!-- <th style="font-family: Times New Roman;">PTC Code</th> -->
+                                  <th style="font-family: Times New Roman;">Barcode</th>
+                                  
+                                </thead>
+                                <tbody class="append_item_display">
+                                </tbody>
+                                <tfoot>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <!-- <th></th> -->
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                        
                             
                       </div>
 
@@ -223,7 +265,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     </div>
                     <div class="col-md-2">
                       <label style="font-family: Times new roman;">MRP</label>
-                      <input type="text" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
+                      <input type="number" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
                        
                       </div>
 
@@ -235,7 +277,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                     <div class="col-md-2">
                         <label style="font-family: Times new roman;">Quantity</label>
-                      <input type="text" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" oninput="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" oninput="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       </div>
                       
@@ -244,21 +286,51 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <div class="row col-md-12">
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Tax Rate%</label>
-                      <input type="text" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" oninput="gst_calc()" name="tax_rate" value="" id="tax_rate">
+                      <input type="number" class="form-control tax_rate  required_for_proof_valid"  placeholder="Tax Rate%" oninput="gst_calc()" name="tax_rate" value="" id="tax_rate">
                       </div>
                       <input type="hidden" class="form-control gst  required_for_proof_valid" readonly="" placeholder="Tax Rate" name="gst" value="" id="gst">
-                      
-                      <div class="col-md-2" id="rate_exclusive">
+
+                      <div class="col-md-2">
                         <label style="font-family: Times new roman;">Rate Exclusive Tax</label>
-                      <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                        <div class="form-group row">
+                          
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <select class="form-control uom_exclusive" name="uom_exclusive" onchange="uom_details_exclusive()">
+                                </select>
+                              </div>
+                              <input type="number" class="form-control exclusive_rate" id="exclusive" placeholder="Exclusive Tax" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" aria-label="Text input with dropdown button" value="">
+
+                            </div>
+                            
+                          </div>
+                        </div>
+
                       </div>
-                      <div class="col-md-2"  id="rate_inclusive">
+
+                      <div class="col-md-2">
                         <label style="font-family: Times new roman;">Rate Inclusive Tax</label>
-                      <input type="text" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+                        <div class="form-group row">
+                          
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <select class="form-control  uom_inclusive" name="uom_inclusive" onchange="uom_details_inclusive()">
+                                </select>
+                              </div>
+                              <input type="number" class="form-control inclusive_rate" id="inclusive" placeholder="Inclusive Tax" oninput="calc_inclusive()" name="inclusive" pattern="[0-9][0-9 . 0-9]{0,100}" aria-label="Text input with dropdown button" title="Numbers Only" value="">
+
+                            </div>
+                            
+                          </div>
+                        </div>
+
                       </div>
+
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount %</label>
-                      <input type="text" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control discount_percentage" oninput="discount_calc1()" id="discount_percentage"  placeholder="Discount %" name="discount_percentage" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
 
                       <input type="hidden" class="form-control amount  required_for_proof_valid" placeholder="Amount" id="amount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount" value="" >
@@ -266,9 +338,10 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       
                       <div class="col-md-2">
                           <label style="font-family: Times new roman;">Discount Rs</label>
-                        <input type="text" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" oninput="discount_calc()" name="discount" value="" >
+                        <input type="number" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" oninput="discount_calc()" name="discount" value="" >
                         </div>
 
+                        <input type="hidden" name="discounts" id="discounts" value="0">
                         <input type="hidden" name="disc_total" id="disc_total" value="0">
 
                         <input type="hidden" class="form-control net_price  required_for_proof_valid" id="net_price" placeholder="Net Price" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="net_price" value="">
@@ -319,6 +392,7 @@ table, th, td {
                   <input type="hidden" name="total_amount" value="0" id="total_amount">
                   <input type="hidden" name="total_gst" value="0" id="total_gst">
                   <input type="hidden" name="total_price" value="0" id="total_price">
+                  <input type="hidden" name="last_purchase_rate" value="0" id="last_purchase_rate">
 
                   <div class="item_show" id="item_show" style="display: none;" title="Item Details">
                     <div class="row col-md-12">
@@ -395,37 +469,38 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Discount(-)</label>
-                      <input type="text" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      <input type="number" readonly="" class="form-control total_discount" id="total_discount" name="total_discount" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Overall Discount</label>
+                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="0">
                       </div>
                     </div>
 
 
-                    <!-- <div class="row col-md-12">
-                            <div class="col-md-2">
-                              <label style="font-family: Times new roman;">Expense Type</label>
-                            </div>
-                            <div class="col-md-2">
-                              <label style="font-family: Times new roman;">Expense Amount</label>
-                            </div>
-                          </div> -->
                         <div class="row col-md-12 append_expense">
 
                           <div class="row col-md-12 expense">
-                        <div class="col-md-2">
-                          <label style="font-family: Times new roman;">Expense Type</label>
-                        <select class="js-example-basic-multiple form-control expense_type" 
-                        data-placeholder="Choose Expense Type" id="expense_type" name="expense_type[]" >
-                        <option value=""></option>
-                        @foreach($expense_type as $expense_types)
-                        <option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>
+                            <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Expense Type</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]" id="expense_type" >
+                         <option value="">Choose Expense Type</option>
+                         @foreach($expense_type as $expense_types)
+                        <option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>
                         @endforeach
-                           
-                         </select>
-                         
-                        </div>
+                        </select>
+                     </div>
+                     <a href="{{ url('master/expense-type/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                        
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="text" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
@@ -443,34 +518,34 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Round Off(+/-)</label>
-                      <input type="text" class="form-control round_off" value="0" id="round_off" name="round_off" >
+                      <input type="text" class="form-control round_off" readonly="" value="0" id="round_off" name="round_off" >
                       </div>
                         
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">CGST</label>
-                      <input type="text" class="form-control cgst" id="cgst" name="cgst" value="0">
+                      <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="0">
                       </div>
 
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">SGST</label>
-                      <input type="text" class="form-control sgst" id="sgst" name="sgst" value="0">
+                      <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="0">
                       </div>
                       <div class="col-md-4" style="float: right;">
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;"></font> 
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
                        </div>
                        
                        <div class="row col-md-12">
                          <div class="col-md-2">
                            <label style="font-family: Times new roman;">IGST</label>
-                      <input type="text" class="form-control igst" id="igst" name="igst" value="0">
+                      <input type="text" class="form-control igst" readonly="" id="igst" name="igst" value="0">
                          </div>
                        </div>
 
                        
 
                        <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save" disabled="">
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save">
         </div>
       </form>
                        
@@ -503,10 +578,22 @@ function calculate_total_gst(){
 function calculate_total_discount()
 {
   var q=0;
-  $(".input_discounts").each(function(){
-  q = parseFloat(q)+parseFloat($(this).val());
+  if($(".overall_discount").val() == '' || $(".overall_discount").val() == 0)
+  {
+    $(".input_discounts").each(function(){
+    q = parseFloat(q)+parseFloat($(this).val());
+    });
+    return q;
+  }
+  else
+  {
+    $(".font_discount").each(function(){
+    q = parseFloat(q)+parseFloat($(this).text());
   });
-  return q;
+    return q;
+  }
+  
+  
 
 }
 
@@ -522,6 +609,16 @@ $(document).on("keyup",".expense_amount",function()
   }
   else
   {
+
+    $(".expense_type").each(function(){
+      if($(this).val() == '')
+    {
+      $(this).attr('required','required');
+      //$('.expense_amount').val('');
+    }
+    });
+
+    
     total_expense_cal();
     roundoff_cal();
   }
@@ -555,6 +652,11 @@ else if(substr[1] == 5 || substr[1] == 6 || substr[1] == 7 || substr[1] == 8 || 
   var sub = substr[1]+'0';
   var round_off = 100-sub;
   var symbol ='+'+'0.'+round_off;
+  $("#round_off").val(symbol);
+}
+else if(substr[1] == '01' || substr[1] == '02' || substr[1] == '03' || substr[1] == '04' || substr[1] =='05' || substr[1] == '06' || substr[1] == '07' || substr[1] == '08' || substr[1] == '09')
+{
+  var symbol ='-'+'0.'+substr[1];
   $("#round_off").val(symbol);
 }
 else if(typeof substr[1] == 'undefined')
@@ -594,11 +696,12 @@ function add_items()
  var exclusive=$('#exclusive').val();
  var inclusive=$('#inclusive').val();
  var amount=$('.amount').val();
+ var discounts=$('#discounts').val();
  var discount=$('#discount').val();
  var discount_percentage=$('.discount_percentage').val();
- var discount_rs=$('#discount').val();
+ var discount_rs=$('.discount_rs').val();
  var net_price=$('.net_price').val();
- 
+
  if(discount_rs == '')
  {
   var discount = 0;
@@ -612,7 +715,10 @@ function add_items()
   var discount = discount_rs;
  }
 
- 
+ if(discounts == '')
+ {
+  discounts =0;
+ }
   // if(discount == '' && discount_percentage != '')
   //  {
   //   var discount=discount_percentage+'%';
@@ -623,8 +729,6 @@ function add_items()
    //  var discount=discount;
    // }
    
-
- 
  if(amount == '')
  {
   var amount=0;
@@ -644,21 +748,25 @@ function add_items()
   $("#item_code").val('');
   $("#item_code").focus();
  }
- else if(parseFloat(net_price)>parseFloat(mrp))
- {
-  alert('The Total Net Value Exceeds MRP!!');
-    $('#discount').val('');
-    $('.discount_percentage').val('');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-    $('.amount').val('');
-    $('.net_price').val('');
-    $('.gst').val('');
- }
+
+ // else if(parseFloat(net_price)>parseFloat(mrp) && parseFloat(mrp) != 0)
+ // {
+ //  alert('The Total Net Value Exceeds The MRP!!');
+ //    $('#discount').val('');
+ //    $('.discount_percentage').val('');
+ //    $('#exclusive').val('');
+ //    $('#inclusive').val('');
+ //    $('.amount').val('');
+ //    $('.net_price').val('');
+ //    $('.gst').val('');
+ // }
  else
  {
+
+
+  var last_purchase_rate = $('#last_purchase_rate').val();
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="bank_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discount+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discount+'" name="discount[]"><font class="font_discount'+i+'">'+discount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td class="last_purchase'+i+'" style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="last_purchase" value="" name="last_purchase[]"><center>'+0+'</center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'+i+'">'+last_purchase_rate+'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
 
   $('.append_proof_details').append(items);
 var length=$('#mytable tr:last').attr('class').split(' ')[0];
@@ -692,6 +800,35 @@ for(var m=0;m<length+1;m++)
   }
 }
 
+// for(var m=0;m<length+1;m++)
+// {
+
+//   var item_code_id_first = $('.item_code'+m).val();
+  
+//   for(var n=m+1;n<=length+1;n++)
+//   {
+    
+//     if(typeof $('.item_code'+n).val() == 'undefined')
+//     {
+
+//     }
+//     else
+//     {
+//       var item_code_id_second = $('.item_code'+n).val();
+
+//       if(item_code_id_first == item_code_id_second)
+//       {
+//         alert('Item Code is Alredy Taken!');
+//         $('#row'+i).remove();
+//       }
+//       else
+//       {
+        
+//       }
+//     }
+//   }
+// }
+
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();
 var total_gst=calculate_total_gst();
@@ -711,19 +848,12 @@ $(".total_net_price").html(parseFloat(to_html_total_net));
 $(".total_amount").html(parseFloat(to_html_total_amount));
 
 
-var discount_val = $('.discount_rs').val();
-
-var discount_total = $('#total_discount').val();
-if(discount_val == '')
-{
-  var discount_val = 0;
-}
-var discount_total = parseFloat(discount_total)+parseFloat(discount_val);
-
-$('#disc_total').val(discount_total.toFixed(2));
-$('#total_discount').val(discount_total.toFixed(2));
-
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+overall_discounts();
 roundoff_cal();
+
 var len=$('.tables').length;
 $('#counts').val(len);
 i++;
@@ -733,39 +863,31 @@ i++;
 // var array_new=[voucher_date,receipt_note_no,supplier_invoice_no,supplier_invoice_date,
 //               supplier_details,order_details,transport_details,remarks,supplier_invoice_value];
 
-$.ajax({
-           type: "GET",
-            url: "{{ url('purchase/get_items/{id}') }}",
-            data: { id: len },
-           success: function(data) {
-             // console.log(data);
-             $('#items_codes').children('option:not(:first)').remove();
-             for (var k=0; k < data.length; k++)
-            {
-             name =data[k].name;
-             code =data[k].code;
-             id =data[k].id;
-              names = name.replace('','');
-              codes = code.replace('','');
-              
-              var div_data="<option value="+id+">"+codes+"</option>";
-                
-                $(div_data).appendTo('#items_codes');
-
-            }
-           }
-           
-        });
-
 // $.ajax({
-//            type: "POST",
-//             url: "{{ url('purchase/storedata/') }}",
-//             data: { array: array, array_new: array_new },
+//            type: "GET",
+//             url: "{{ url('purchase/get_items/{id}') }}",
+//             data: { id: len },
 //            success: function(data) {
 //              // console.log(data);
-             
+//              $('#items_codes').children('option:not(:first)').remove();
+//              for (var k=0; k < data.length; k++)
+//             {
+//              name =data[k].name;
+//              code =data[k].code;
+//              id =data[k].id;
+//               names = name.replace('','');
+//               codes = code.replace('','');
+              
+//               var div_data="<option value="+id+">"+codes+"</option>";
+                
+//                 $(div_data).appendTo('#items_codes');
+
+//             }
 //            }
+           
 //         });
+
+
 
 $('#cat').hide();
 $('.item_sno').val('');
@@ -779,42 +901,36 @@ $('#exclusive').val('');
 $('#inclusive').val('');
 $('.amount').val('');
 $('#discount').val('');
+$('#discounts').val('');
 $('.discount_percentage').val('');
 $('.net_price').val('');
 $('.gst').val('');
 $('.item_code').val('');
+$('#last_purchase_rate').val(0);
+$('.uom_inclusive').children('option').remove();
+$('.uom_exclusive').children('option').remove();
+$("select").select2();
 }
 } 
 $(document).on("click",".add_items",function(){
     add_items();
-    bank_details_sno();
+    item_details_sno();
 
   });
 
 $(document).on("click",".remove_items",function(){
   
 
-       var button_id = $(this).attr("id");
-       var invoice_no=$('.invoice_no'+button_id).val();
-       var discount_val = $('.discount_val'+button_id).val();
-       var lastDigit = String(discount_val).substr(-1);
-       if(lastDigit != '%')
-       {
-        var discount_total = $('#total_discount').val();
-    
-        var discount_total = parseFloat(discount_total)-parseFloat(discount_val);
+     var button_id = $(this).attr("id");
+     var invoice_no=$('.invoice_no'+button_id).val();
 
-        $('#disc_total').val(discount_total.toFixed(2));
-        $('#total_discount').val(discount_total.toFixed(2));
-       }
-
-       $('#row'+button_id).remove();
-
-       
-       var counts = $('#counts').val();
-       $('#counts').val(counts-1); 
-       bank_details_sno();
-       //--i;
+     $('#row'+button_id).remove();
+     var q=calculate_total_discount();
+     $('#total_discount').val(q.toFixed(2));
+     $('#disc_total').val(q.toFixed(2));
+     var counts = $('#counts').val();
+     $('#counts').val(counts-1); 
+     item_details_sno();
 
        
         
@@ -838,8 +954,32 @@ $(document).on("click",".remove_items",function(){
     var half_gst = parseFloat(total_gst)/2;
     $("#cgst").val(half_gst.toFixed(2));
     $("#sgst").val(half_gst.toFixed(2));
-
+    overall_discounts();
     roundoff_cal();
+    
+    $('#cat').hide();
+    $('.item_sno').val('');
+    $('.items_codes').val('');
+    $('.item_name').val('');
+    $('.mrp').val('');
+    $('.hsn').val('');
+    $('.quantity').val('');
+    $('.tax_rate').val('');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('.amount').val('');
+    $('#discount').val('');
+    $('#discounts').val('');
+    $('.discount_percentage').val('');
+    $('.net_price').val('');
+    $('.gst').val('');
+    $('.item_code').val('');
+    $('#last_purchase_rate').val(0);
+    $('.uom_inclusive').children('option').remove();
+    $('.uom_exclusive').children('option').remove();
+    $("select").select2();
+    $('.add_items').show();
+    $('.update_items').hide();
     
 
     $.ajax({
@@ -859,6 +999,7 @@ $(document).on("click",".remove_items",function(){
 $(document).on("click",".edit_items",function(){
   $('.update_items').show();
   $('.add_items').hide();
+
   var id = $(this).attr("id");
   $('#dummy_table_id').val(id);
   var invoice_no = $('.invoice_no'+id).val(); 
@@ -877,6 +1018,7 @@ $(document).on("click",".edit_items",function(){
   var tax = $('#tax'+id).val(); 
   var tax_gst = $('.tax_gst'+id).val();
   var net_price = $('#net_price'+id).val(); 
+  var last_purchase_rate = $('.last_purchase'+id).text();
 
   $('.exclusive_rate').val(exclusive);
   $('.inclusive_rate').val(inclusive);
@@ -893,83 +1035,69 @@ $(document).on("click",".edit_items",function(){
   $('.gst').val(tax);
   $('.uom').val(uom);
   $('.uom_name').val(uom_name);
-  var lastDigit = String(discount_val).substr(-1);
-  if(lastDigit == '%')
-  {
-    var discount = parseInt(discount_val); $('.discount_percentage').val(discount);
-  $('.discount_rs').val('');
-  } 
-  else
-  {
-   $('.discount_rs').val(discount_val);$('.discount_percentage').val(''); 
-  }
-
+  $('#last_purchase_rate').val(last_purchase_rate);
+  var disc_value = parseFloat(discount_val)/parseFloat(quantity);
+   $('.discount_rs').val(disc_value.toFixed(2));
+   discount_calc();
+   
   if(discount_val == 0)
   {
     $('.discount_percentage').val('');
   $('.discount_rs').val('');
   }
-   
+   item_codes(item_code_id);
 
 });
 
+$(document).on("click",".refresh_supplier_id",function(){
+      var supplier_dets=refresh_supplier_master_details();
+      $(".supplier_id").html(supplier_dets);
+   });
+
+$(document).on("click",".refresh_agent_id",function(){
+      var agent_dets=refresh_agent_master_details();
+      $(".agent_id").html(agent_dets);
+   });
+
+$(document).on("click",".refresh_expense_type_id",function(){
+      var expense_type_dets=refresh_expense_type_master_details();
+      $(".expense_type").html(expense_type_dets);
+   });
 
 $(document).on("click",".update_items",function(){
   var discount_total = 0;
 
   var td_id = $('#dummy_table_id').val(); 
-  // if($('#discount').val() != '' && $('.discount_percentage').val() != '')
-  // {
-  //   alert('You cannot insert Both Discount,Choose Any One Of That!');
 
-  // var invoice_no = $('.invoice_no'+td_id).val(); 
-  // var item_code_id = $('.item_code'+td_id).val();
-  // var item_code_name = $('.items'+td_id).text(); 
-  // var item_name = $('.item_name'+td_id).val();
-  // var hsn = $('.hsn'+td_id).val(); 
-  // var mrp = $('.mrp'+td_id).val();
-  // var discount_val = $('.discount_val'+td_id).val(); 
-  // var exclusive = $('.exclusive'+td_id).val();
-  // var inclusive = $('.inclusive'+td_id).val(); 
-  // var quantity = $('.quantity'+td_id).val();
-  // var uom = $('.uom'+td_id).val(); 
-  // var uom_name = $('.font_uom'+td_id).text();
-  // var amnt = $('#amnt'+td_id).val();
-  // var tax = $('#tax'+td_id).val(); 
-  // var tax_gst = $('.tax_gst'+td_id).val();
-  // var net_price = $('#net_price'+td_id).val(); 
+ var invoice_no=$('.item_sno').val();
+ var item_code=$("#item_code").val();
+ var item_name=$('.item_name').val();
+ var mrp=$('.mrp').val();
+ var quantity=$('.quantity').val();
+ var exclusive=$('#exclusive').val();
+ var inclusive=$('#inclusive').val();
+ var net_price=$('.net_price').val();
+  
+  if(item_code == '' || invoice_no == '' || quantity == '' || exclusive == '' && inclusive == '')
+ {
+  alert('Please Fill All The Input Fields');
+ }
+ else if(item_name == '')
+ {
+  alert('Sorry There Is No  Such Item Code!!');
+  $("#item_code").val('');
+  $("#item_code").focus();
+ }
+ else if(parseFloat(inclusive)>parseFloat(mrp))
+ {
+  alert('Rate Exceeds The MRP!!');
+  $('#exclusive').val('');
+  $('#inclusive').val('');
+ }
 
-  // $('.exclusive_rate').val(exclusive);
-  // $('.inclusive_rate').val(inclusive);
-  // $('.item_sno').val(invoice_no);
-  // $('.items_codes').val(item_code_id);
-  // $('.item_name').val(item_name);
-  // $('.item_code').val(item_code_name);
-  // $('.mrp').val(mrp);
-  // $('.hsn').val(hsn);
-  // $('.quantity').val(quantity);
-  // $('.tax_rate').val(tax_gst);
-  // $('.amount').val(amnt);
-  // $('.net_price').val(net_price);
-  // $('.gst').val(tax);
-  // $('.uom').val(uom);
-  // $('.uom_name').val(uom_name);
-  // var lastDigit = String(discount_val).substr(-1);
-  // if(lastDigit == '%')
-  // {
-  //   var discount = parseInt(discount_val); 
-  //   $('.discount_percentage').val(discount);
-  //   $('.discount_rs').val('');
-  // } 
-  // else
-  // {
-  //  $('.discount_rs').val(discount_val);
-  //  $('.discount_percentage').val(''); 
-  // }
-  // }
-  // else
-  // {
-
+ else
+ {
+  
   $('.invoice_no'+td_id).val($('.item_sno').val());
   $('.item_no'+td_id).text($('.item_sno').val());
   $('.item_code'+td_id).val($('.items_codes').val());
@@ -992,13 +1120,14 @@ $(document).on("click",".update_items",function(){
   $('#tax'+td_id).val($('.gst').val());
   $('.tax_gst'+td_id).val($('.tax_rate').val());
   $('.font_gst'+td_id).text($('.gst').val());
+  $('.last_purchase'+td_id).text($('#last_purchase_rate').val());
 
 
    if($('.discount_percentage').val() == '' && $('.discount_rs').val() == '')
    {
     var discount=0;
     $('.discount_val'+td_id).val(discount);
-    $('.font_discount'+td_id).text(discount);
+    $('#font_discount'+td_id).text(discount);
     $('#input_discount'+td_id).val(discount);
     var q=calculate_total_discount();
     $('#total_discount').val(q.toFixed(2));
@@ -1007,9 +1136,9 @@ $(document).on("click",".update_items",function(){
    }
    else
    {
-    $('.discount_val'+td_id).val($('.discount_rs').val());
-    $('.font_discount'+td_id).text($('.discount_rs').val());
-    $('#input_discount'+td_id).val($('.discount_rs').val());
+    $('.discount_val'+td_id).val($('#discounts').val());
+    $('#font_discount'+td_id).text($('#discounts').val());
+    $('#input_discount'+td_id).val($('#discounts').val());
     var q=calculate_total_discount();
     $('#total_discount').val(q.toFixed(2));
     $('#disc_total').val(q.toFixed(2));
@@ -1033,7 +1162,7 @@ $(document).on("click",".update_items",function(){
   var to_html_total_amount = total_amount.toFixed(2);
   $(".total_net_price").html(parseFloat(to_html_total_net));
   $(".total_amount").html(parseFloat(to_html_total_amount));
-
+  overall_discounts();
   roundoff_cal();
 
   
@@ -1054,10 +1183,15 @@ $(document).on("click",".update_items",function(){
   $('.net_price').val('');
   $('.gst').val('');
   $('.item_code').val('');
-
+  $('#discounts').val('');
+  $('#last_purchase_rate').val(0);
+  $('.uom_inclusive').children('option').remove();
+  $('.uom_exclusive').children('option').remove();
+  $("select").select2();
   $('.update_items').hide();
   $('.add_items').show();
-
+  
+  }
   
   });
 
@@ -1089,7 +1223,7 @@ function expense_add()
   else
   {
 
-  var expense_details='<div class="row col-md-12 expense"><div class="col-md-2"><label style="font-family: Times new roman;">Expense Type</label><select class="js-example-basic-multiple form-control expense_type" required="" data-placeholder="Choose Expense Type" name="expense_type[]" ><option value=""></option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>@endforeach</select></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="text" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]"><option value="">Choose Expense Type</option>@foreach($expense_type as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>@endforeach</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
 
   $('.append_expense').append(expense_details);
   $("select").select2();
@@ -1107,7 +1241,9 @@ $(document).on("click",".remove_expense",function(){
   if($(".remove_expense").length > 1){
 
     $(this).closest('.expense').remove();
-    
+    var length = $('#expense_count').val();
+
+    $('#expense_count').val(length-1);
   }
   else{
     alert("Atleast One row present");
@@ -1118,8 +1254,8 @@ $(document).on("click",".remove_expense",function(){
 
   });
 
-function bank_details_sno(){
-  $(".bank_s_no").each(function(key,index){
+function item_details_sno(){
+  $(".item_s_no").each(function(key,index){
       $(this).html((key+1));
     });
 }
@@ -1193,6 +1329,12 @@ function calc_exclusive()
     $('#exclusive').val('');
     $('#inclusive').val('');
   }
+  // else if(parseFloat(rate_inclusive)>parseFloat(mrp))
+  // {
+  //   alert('Rate Exceeds The MRP!!');
+  //   $('#exclusive').val('');
+  //   $('#inclusive').val('');
+  // }
   
   else
   {
@@ -1212,14 +1354,23 @@ function calc_exclusive()
       var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
       var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
       $('#inclusive').val(gst_rate_inclusive.toFixed(2));
-
-      //alert(rate);
+      if($('#inclusive').val()>parseFloat(mrp))
+      {
+        alert('Rate Exceeds The MRP!!');
+        $('#exclusive').val('');
+        $('#inclusive').val('');
+      }
+      else
+      {
+        //alert(rate);
       var net_val = parseFloat(total)*parseFloat(rate);
       //alert(net_val);
       $('.gst').val(net_val.toFixed(2));
 
       var total_net_val = parseFloat(total)+parseFloat(net_val);
       $('#net_price').val(total_net_val.toFixed(2));
+      }
+      
 
     }
 
@@ -1251,9 +1402,12 @@ function calc_inclusive()
     $('#inclusive').val('');
   }
   
-    //   var total = parseInt(quantity)*parseInt(rate_inclusive);
-    
-    // $('#amount').val(total.toFixed(2));
+  else if(parseFloat(rate_inclusive)>parseFloat(mrp))
+  {
+    alert('Rate Exceeds The MRP!!');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+  }
     else
     {
     if(tax_rate == '')
@@ -1264,17 +1418,13 @@ function calc_inclusive()
     {
 
       var rate=parseFloat(tax_rate)/100+1;
-      //alert(rate_inclusive);
+      var actual_tax = parseFloat(tax_rate)/100;
       var gst_rate = parseFloat(rate_inclusive)/parseFloat(rate);
-      //var gst_rate_exclusive = parseFloat(rate_inclusive)-parseFloat(gst_rate);
-      var total = parseInt(quantity)*parseFloat(gst_rate);
+      var total = parseInt(quantity)*parseFloat(gst_rate.toFixed(2));
       $('#amount').val(total.toFixed(2));
       $('#exclusive').val(gst_rate.toFixed(2));
-      //alert(rate);
-      var net_val = parseFloat(total)*parseFloat(rate);
-      //alert(net_val);
+      var net_val = parseFloat(total)*parseFloat(actual_tax);
       $('.gst').val(net_val.toFixed(2));
-
       var total_net_val = parseFloat(total)+parseFloat(net_val);
       $('#net_price').val(total_net_val.toFixed(2));
 
@@ -1343,32 +1493,28 @@ function discount_calc()
   else
   {
 
+  // var rate_exclusive_disc_val = parseFloat(exclusive) - parseFloat(discount);
+  // var rate_inclusive_disc_val = parseFloat(inclusive) - parseFloat(discount);
+
+  // $('#rate_exclusive_disc_val').val(rate_exclusive_disc_val.toFixed(2));
+  // $('#rate_inclusive_disc_val').val(rate_inclusive_disc_val.toFixed(2));
   var disc_amount_exclusive = parseFloat(discount)*100/parseFloat(exclusive);
-  //var disc_amount_inclusive = parseFloat(inclusive)-parseFloat(discount);
 
    $(".discount_percentage").val(disc_amount_exclusive.toFixed(2));
-  // $("#inclusive").val(disc_amount_inclusive.toFixed(2));
 
   calc_exclusive();
   var amount = $(".amount").val();
-
+  var discounts = parseInt(quantity)*parseFloat(discount);
+  $('#discounts').val(discounts.toFixed(2));
   var rate=parseFloat(tax_rate)/100;
-      //alert(rate);
-      var net_val = parseFloat(amount)*parseFloat(rate);
-      //alert(net_val);
-      $('.gst').val(net_val.toFixed(2));
+  var net_val = parseFloat(amount)*parseFloat(rate);
+  $('.gst').val(net_val.toFixed(2));
 
-      var total_net_val = parseFloat(amount)+parseFloat(net_val);
-      total_net_val = parseFloat(total_net_val)-parseFloat(discount);
-      $('#net_price').val(total_net_val.toFixed(2));
+  var total_net_val = parseFloat(amount)+parseFloat(net_val);
+  total_net_val = parseFloat(total_net_val)-parseFloat(discounts);
+  $('#net_price').val(total_net_val.toFixed(2));
 
   }
-    // var discount_total = $('#disc_total').val();
-    
-    // var discount_total = parseInt(discount_total)+parseInt(discount);
-
-    // $('#disc_total').val(discount_total);
-    // $('#total_discount').val(discount_total);
   
 }
 
@@ -1409,43 +1555,44 @@ function discount_calc1()
   var disc_amount_inclusive = parseFloat(inclusive)-parseFloat(disc_val_inclusive);
 
   $(".discount_rs").val(disc_val_exclusive.toFixed(2));
-  //$("#inclusive").val(disc_amount_inclusive.toFixed(2));
   calc_exclusive();
   var amount = $(".amount").val();
-  //alert(disc_amount);
-
+  var discounts = parseInt(quantity)*parseFloat(disc_val_exclusive.toFixed(2));
+  $('#discounts').val(discounts.toFixed(2));
   var rate=parseFloat(tax_rate)/100;
-      //alert(rate);
-      var net_val = parseFloat(amount)*parseFloat(rate);
-      //alert(net_val);
-      $('.gst').val(net_val.toFixed(2));
+  var net_val = parseFloat(amount)*parseFloat(rate);
+  $('.gst').val(net_val.toFixed(2));
 
-      var total_net_val = parseFloat(amount)+parseFloat(net_val);
-      total_net_val = parseFloat(total_net_val)-parseFloat(disc_val_exclusive);
-      $('#net_price').val(total_net_val.toFixed(2));
+  var total_net_val = parseFloat(amount)+parseFloat(net_val);
+  total_net_val = parseFloat(total_net_val)-parseFloat(discounts);
+  $('#net_price').val(total_net_val.toFixed(2));
 
   }
-    //$(".net_price").val((parseFloat(amount)-parseFloat(discount)).toFixed(2));
   
   
   
 }
 
-function item_codes(item_code)
+function item_codes(item_code,append_value)
 {
-//var item_code=$('#codes').val();
-//alert(item_code);
-var row_id=$('#last').val();
+
+if(append_value == 1)
+{
+  var row_id=$('#last').val();
 
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata/{id}') }}",
+        url: "{{ url('purchase_order/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
           //alert(data);
-             
+             // $('.uom_exclusive').children('option:(:first)').remove();
+             // $('.uom_inclusive').children('option:(:first)').remove();
+             $('.uom_exclusive').children('option').remove();
+             $('.uom_inclusive').children('option').remove();
+
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
@@ -1456,12 +1603,28 @@ var row_id=$('#last').val();
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
-              
-              //var gst = igst/100;
+              var first_data='<option value="'+id+'">'+uom_name+'</option>';
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
+              for(var i=0;i<data[3].length;i++)
+             {
+              var item_uom_id=data[3][i].id;
+              var item_uom_name=data[3][i].name;
+              var item_id=data[3][i].item_id;
+              if(item_uom_name == uom_name)
+              {
 
-              console.log(data);
+              }
+              else
+              {
+                var div_data='<option value="'+item_id+'">'+item_uom_name+'</option>';
+                $('.uom_exclusive').append(div_data);
+                $('.uom_inclusive').append(div_data);
+              }
+              
+             }
                        
-             $('#item_code').val(code);
+             //$('#item_code').val(code);
              $('#items_codes').val(id);
             $('#item_name').val(name);
              $('#mrp').val(mrp);
@@ -1471,7 +1634,7 @@ var row_id=$('#last').val();
              $('#tax_rate').val(igst);
 
              
-             $('#cat').dialog('close');
+             $('.item_display').dialog('close');
              $('#quantity').focus();
 
              if($('#quantity').val() != '')
@@ -1479,7 +1642,15 @@ var row_id=$('#last').val();
               
               var rate_exclusive = $('#exclusive').val();
               var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
               var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
+              
               var rate = parseFloat(tax_rate)/100;
               var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
               var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
@@ -1499,54 +1670,90 @@ var row_id=$('#last').val();
 
     });
 
+      $.ajax({
+           type: "POST",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
+            data: { id: item_code },
+           success: function(data) {
+             $('#last_purchase_rate').val(data);
+             
+           }
+        });
 }
-
-function get_details()
+else
 {
-
-  var item_code=$('#item_code').val();
-//alert(item_code);
-var row_id=$('#last').val();
+  var row_id=$('#last').val();
 
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata_item/{id}') }}",
+        url: "{{ url('purchase_order/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
-          console.log(data);
-
+          //console.log(data);
+              $('.uom_exclusive').children('option').remove();
+              $('.uom_inclusive').children('option').remove();
+             // $('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
              name =data[0].item_name;
              code =data[0].code;
              mrp =data[0].mrp;
              hsn =data[0].hsn;
              uom_id =data[0].uom_id;
+             ptc_code =data[0].ptc;
              uom_name =data[0].uom_name;
              igst =data[1].igst;
-              //console.log(uom_name);
-              //var gst = igst/100;
+             barcode = data[2].barcode;
+              
+              var first_data='<option value="'+id+'">'+uom_name+'</option>';
+              //console.log(first_data);
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
+              for(var i=0;i<data[3].length;i++)
+             {
+              var item_uom_id=data[3][i].id;
+              var item_uom_name=data[3][i].name;
+              var item_id=data[3][i].item_id;
+              if(item_uom_name == uom_name)
+              {
 
-              //alert(gst);
+              }
+              else
+              {
+                var div_data='<option value="'+item_id+'">'+item_uom_name+'</option>';
+                $('.uom_exclusive').append(div_data);
+                $('.uom_inclusive').append(div_data);
+              }
+              
+             }
                        
-             $('#item_code').val(item_code);
+             $('#item_code').val(code);
              $('#items_codes').val(id);
             $('#item_name').val(name);
              $('#mrp').val(mrp);
              $('#hsn').val(hsn);
-              $('#uom').val(uom_id);
+             $('#uom').val(uom_id);
               $('#uom_name').val(uom_name);
              $('#tax_rate').val(igst);
+
+             
+             $('#cat').dialog('close');
              $('#quantity').focus();
-             $('#cat').hide();
 
              if($('#quantity').val() != '')
              {
               
               var rate_exclusive = $('#exclusive').val();
               var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
               var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
               var rate = parseFloat(tax_rate)/100;
               var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
               var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
@@ -1561,14 +1768,171 @@ var row_id=$('#last').val();
             else
             {
 
-            }       
-
-              
+            }
         }
 
     });
 
+      $.ajax({
+           type: "POST",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
+            data: { id: item_code },
+           success: function(data) {
+             // console.log(data);
+             $('#last_purchase_rate').val(data);
+             
+           }
+        });
+}
 
+
+}
+
+function get_details()
+{
+
+  var item_code=$('#item_code').val();
+  //$('#item_code').val('');
+  $('#items_codes').val('');
+  $('#item_name').val('');
+  $('#mrp').val('');
+  $('#hsn').val('');
+  $('#uom').val('');
+  $('#uom_name').val('');
+  $('#tax_rate').val('');
+//
+$("select").select2();
+var row_id=$('#last').val();
+
+      $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('purchase_order/getdata_item/{id}') }}",
+        data: { id: item_code },             
+                        
+        success: function(data){
+         //console.log(data);
+             if(data[3]==1)
+             {
+              $('.uom_exclusive').children('option').remove();
+              $('.uom_inclusive').children('option').remove();
+             //$('.uom_inclusive').children('option:not(:first)').remove();
+             id = data[0].item_id;
+             name =data[0].item_name;
+             code =data[0].code;
+             mrp =data[0].mrp;
+             hsn =data[0].hsn;
+             uom_id =data[0].uom_id;
+             uom_name =data[0].uom_name;
+             igst =data[1].igst;
+
+             var first_data='<option value="'+code+'">'+uom_name+'</option>';
+              $('.uom_exclusive').append(first_data);
+              $('.uom_inclusive').append(first_data);
+
+             for(var i=0;i<data[2].length;i++)
+             {
+              var item_uom_id=data[2][i].id;
+              var item_uom_name=data[2][i].name;
+              var item_uom_code=data[2][i].item_code;
+              if(item_uom_name == uom_name)
+              {
+
+              }
+              else
+              {
+                var div_data='<option value="'+item_uom_code+'">'+item_uom_name+'</option>';
+              $('.uom_exclusive').append(div_data);
+              $('.uom_inclusive').append(div_data);
+              }
+
+             }
+
+
+             $('#item_code').val(item_code);
+             $('#items_codes').val(id);
+             $('#item_name').val(name);
+             $('#mrp').val(mrp);
+             $('#hsn').val(hsn);
+             $('#uom').val(uom_id);
+             $('#uom_name').val(uom_name);
+             $('#tax_rate').val(igst);
+             $('#quantity').focus();
+             $('#cat').hide();
+
+
+             if($('#quantity').val() != '')
+             {
+              
+              
+              var rate_exclusive = $('#exclusive').val();
+              var rate_inclusive = $('#inclusive').val();
+              var quantity = $('#quantity').val();
+              var tax_rate = $('.tax_rate').val();
+              var total = parseInt(quantity)*parseFloat(rate_exclusive);
+              $('#amount').val(total.toFixed(2));
+              if(tax_rate == '')
+              {
+                $('#net_price').val(total.toFixed(2));
+              }
+              
+              var rate = parseFloat(tax_rate)/100;
+              var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
+              var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
+              $('#inclusive').val(gst_rate_inclusive.toFixed(2));
+              var net_val = parseFloat(total)*parseFloat(rate);
+      
+              $('.gst').val(net_val.toFixed(2));
+
+              var total_net_val = parseFloat(total)+parseFloat(net_val);
+              $('#net_price').val(total_net_val.toFixed(2));
+             }
+            else
+            {
+
+            }
+
+             }
+                    
+             else
+             {
+              item_with_same_data(item_code);
+             }
+              
+        }
+
+    });
+      var item_id=$('#items_codes').val();
+      $.ajax({
+
+           type: "POST",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
+            data: { id: item_id },
+           success: function(data) {
+             $('#last_purchase_rate').val(data);
+             
+           }
+        });
+
+
+}
+
+function item_with_same_data(item_code)
+{
+  $.ajax({
+
+        type: "GET",
+        url: "{{ url('purchase_order/same_items/{id}') }}",
+        data: { id: item_code },
+
+        success:function(data){
+          console.log(data);
+          $('.item_display').show();
+          $('.item_display').dialog({width:1000},{height:250});
+          $('.append_item_display').html(data);
+        }
+
+  })
 }
 
 
@@ -1581,7 +1945,7 @@ function find_cat()
   $('#cat').show();
   $('.row_brand').remove(); 
   $('.row_category').remove();
-  $('#cat').dialog({width:1000}).prev(".ui-dialog-titlebar").css("background","#28a745").prev("..ui-dialog.ui-widget-content");
+  $('#cat').dialog({width:900},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
     
 }
 
@@ -1596,7 +1960,7 @@ function categories_check()
   $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/change_items/{id}') }}",
+        url: "{{ url('purchase_order/change_items/{id}') }}",
         data: { categories: categories, brand: brand },             
              
         success: function(data){ 
@@ -1607,8 +1971,8 @@ function categories_check()
           
         $('.row_brand').remove(); 
         $('.row_category').remove(); 
-$(".append_item").html(data);
-return false;
+        $(".append_item").html(data);
+        return false;
           var bar_code = [];
           var item_id =[];
           var item_code =[];
@@ -1668,13 +2032,15 @@ function brand_check()
   $.ajax({
 
         type: "POST",
-        url: "{{ url('estimation/brand_filter/') }}",
+        url: "{{ url('purchase_order/brand_filter/') }}",
         data: {brand: brand },             
              
         success: function(data)
         {
           $('.row_category').remove();
           $('.row_brand').remove();
+          $(".append_item").html(data);
+          return false;
 
           var bar_code = [];
           var item_id =[];
@@ -1722,7 +2088,12 @@ function brand_check()
 
 function add_data(val)
 {
-  item_codes($('.append_item_id'+val).val());
+  // $('.item_display').dialog('close');
+  item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
+}
+function add_append_data(val)
+{
+  item_codes($('.item_id'+val).val(),$('.append_value'+val).val());
 }
 
 function code_check()
@@ -1740,11 +2111,9 @@ function supplier_details()
 
   $.ajax({
            type: "POST",
-            url: "{{ url('estimation/address_details/') }}",
+            url: "{{ url('purchase_order/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
-
-            console.log(data);
             $('#address_line_1').val(data);
             // $('#address_line_2').val(data[1]);
             // $('#city_id').val(data[2]);
@@ -1756,290 +2125,130 @@ function supplier_details()
         });
 }
 
+function uom_details_inclusive()
+{
+var uom_inclusive=$('.uom_inclusive').val();
 
+item_codes(uom_inclusive);
+}
+
+function uom_details_exclusive()
+{
+
+var uom_exclusive=$('.uom_exclusive').val();
+item_codes(uom_exclusive);
+}
+
+ function overall_discounts()
+{
+    var sum=0;
+    var num=0;
+
+    $(".overall_discount").blur(function() {
+    if ($(this).val() == "" || $(this).val() == 0) 
+    {
+        $(this).val('0');
+        //$(".overall_discount").val(0);
+
+
+  $('.input_discounts').each(function(){
+      var overall_discount = 0;
+      var count = $(this).attr('id').split("")[14];
+      var overall_discount = $('#overall_discount').val();
+
+      //console.log(overall_discount);
+      var amount = $('#amnt'+count).val();
+      var gst_rs = $('#tax'+count).val();
+      var total_amount =calculate_total_amount();
+      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
+      var total_discount = parseFloat($(this).val())+parseFloat(disc_distribution);
+      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(total_discount);
+      //$('#input_discount'+count).val(total_discount);
+      $('#font_discount'+count).text(total_discount.toFixed(2));
+      $('.discount_val'+count).val(total_discount.toFixed(2));
+      $('#net_price'+count).val(net_value.toFixed(2));
+      $('.font_net_price'+count).text(net_value.toFixed(2));
+      num++;
+  });
+  // if(num == 0)
+  //   {
+  //     alert('you Cannot Add Overall Discount!');
+  //     $('.overall_discount').val(0);
+  //   }
+  var total_net_price = calculate_total_net_price();
+  $("#total_price").val(total_net_price.toFixed(2));
+  $(".total_net_value").text(total_net_price.toFixed(2));
+  var to_html_total_net = total_net_price.toFixed(2);
+  $(".total_net_price").html(parseFloat(to_html_total_net));
+  roundoff_cal();
+  var q=calculate_total_discount();
+  $('#total_discount').val(q.toFixed(2));
+  $('#disc_total').val(q.toFixed(2));
+
+
+    }
+    else
+    {
+
+    var total = $('#total_price').val();
+  if(total == 0)
+  {
+    alert('You Cannot Add Overall Discount Without Adding Item Details!!');
+    $('.overall_discount').val(0);
+  }
+  else
+  {
+
+  $('.input_discounts').each(function(){
+      var overall_discount = 0;
+      var count = $(this).attr('id').split("")[14];
+      var overall_discount = $('#overall_discount').val();
+
+      // console.log(overall_discount);
+      var amount = $('#amnt'+count).val();
+      var gst_rs = $('#tax'+count).val();
+      var total_amount =calculate_total_amount();
+      var disc_distribution = parseFloat(overall_discount)/parseFloat(total_amount)*parseFloat(amount);
+      var total_discount = parseFloat($(this).val())+parseFloat(disc_distribution);
+      var net_value = parseFloat(amount)+parseFloat(gst_rs)-parseFloat(total_discount);
+      //$('#input_discount'+count).val(total_discount);
+      $('#font_discount'+count).text(total_discount.toFixed(2));
+      $('.discount_val'+count).val(total_discount.toFixed(2));
+      $('#net_price'+count).val(net_value.toFixed(2));
+      $('.font_net_price'+count).text(net_value.toFixed(2));
+      num++;
+  });
+  // if(num == 0)
+  //   {
+  //     alert('you Cannot Add Overall Discount!');
+  //     $('.overall_discount').val(0);
+  //   }
+  var total_net_price = calculate_total_net_price();
+  $("#total_price").val(total_net_price.toFixed(2));
+  $(".total_net_value").text(total_net_price.toFixed(2));
+  var to_html_total_net = total_net_price.toFixed(2);
+  $(".total_net_price").html(parseFloat(to_html_total_net));
+  roundoff_cal();
+  var q=calculate_total_discount();
+  $('#total_discount').val(q.toFixed(2));
+  $('#disc_total').val(q.toFixed(2));
+
+}
+}
+ }); 
+}
 
 
 </script>
-<script type="text/javascript">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
 <script src="jquery.ui.position.js"></script>
-</script>
+
 
 <style type="text/css">
   .ui-dialog.ui-widget-content { background: #a3d072; }
 </style>
-<!-- <div class="form-row">
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Item Code </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="item Code" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Item Name </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Item Name" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Mrp </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="MRP" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Qty</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Qty" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Tax Rate % </label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Tax Rate % " name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Rate (Inclusive Tax)</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Rate (Inclusive Tax)" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Rate (Exclusive Tax)</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Rate (Exclusive Tax)" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Discount</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Discount" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="col-md-3">
-    <div class="form-group row">
-      <label for="voucher_no" class="col-sm-5 col-form-label">Amount</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control voucher_no only_allow_alp_num_dot_com_amp" placeholder="Amount" name="voucher_no" value="{{old('voucher_no')}}" required>
-        <span class="mandatory"> {{ $errors->first('voucher_no')  }} </span>
-        <div class="invalid-feedback">
-          Enter valid Voucher No
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3 text-left">
-    <button class="btn btn-success" name="add" type="submit">Add</button>
-  </div>
-</div> -->
-
-<!-- <div class="row">
-    <div class="col-md-12">
-<div class="form-row custom-table">
-               <table class="table table-bordered " style="margin-top: 20px;">
-                  <thead class="thead-gray"> -->
-                  <!-- <tr>
-                        <th class="text-center" rowspan="1" colspan="10">Common</th>
-                     </tr> -->
-                     <!-- <tr>
-                        <th class="text-center">S.No</th>
-                        <th class="text-center">Item Code</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Rate Rs.</th>
-                        <th class="text-center">Qty</th> -->
-                        <!-- <th class="text-center">UOM</th> -->
-                        <!-- <th class="text-center">Rate </th> -->
-<!--                         <th class="text-center">Amount</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Tax Rs.</th>
-                        <th class="text-center">Net Value</th>
-                        <th class="text-center">Action</th>
-                     </tr>
-                  </thead>
-
-                  <tfoot class="thead-gray">
-                    <tr>
-                      <th class="text-right" colspan="6">Total</th>
-                      <th class="text-center"></th>
-                      <th class="text-center"></th>
-                      <th class="text-center"></th>
-                      <th class="text-center" colspan="2"></th>
-                    
-                   </tr>
-                    </tfoot>
-                  <tbody class="append_barcode_dets">
-                    <?php for($i=0;$i<10;$i++) {?>
-                     <tr>
-                     <td> {{$i+1}} </td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                     </tr>
-                    <?php } ?>
-                
-                     
-                  </tbody>
-                 
-               </table>
-            </div>
-            </div>
-
-            <div class="col-md-5">
-              <div class="form-row custom-table price-tbl">
-                <table class="table table-bordered table-responsive">
-                    <tr class="thead-gray">
-                      <th rowspan="1" colspan="6">Price Level</th>
-                      <th rowspan="1" colspan="2">%</th>
-                      <th rowspan="1" colspan="2">Rate</th>
-                    </tr>
-                    <tr>
-                      <th>S.No</th>
-                      <th class="cus-wd">Item Name</th>
-                      <th class="cus-wd">Purchase Cost</th>
-                      <th>MRP</th>
-                      <th class="cus-wd">Last Purchase Rate(LPR)</th>
-                      <th class="cus-wd">Updated Sales Price</th>
-                      <th>Markup</th>
-                      <th>MarkDown</th>
-                      <th>Markup</th>
-                      <th>MarkDown</th>
-                    </tr>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-
-                  </table>
-              </div>      
-            </div>
-</div> -->
-
 
         
 

@@ -317,7 +317,7 @@
                         <ul>
                             <li class="dropdown-header">Purchase</li>
                            
-                            <li><a href="{{ route('purchase_order.create') }}">Purchase order</a></li>
+                            <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
                             <li><a href="{{ route('purchase_gatepass_entry.create') }}">Purchase Gate Pass Entry</a></li>
                             <li><a href="{{ route('purchase_entry.create') }}">Purchase Entry</a></li>
                         </ul>
@@ -338,12 +338,11 @@
                    
                     <li class="col-md-3 dropdown-item">
                         <ul>
-                            <li class="dropdown-header">Sales</li>
-                           
-                            <li><a href="{{ route('sales_estimation.create') }}">Sales Estimation</a></li>
-                            <li><a href="{{ route('sales_order.create') }}">Sales Order</a></li>
-                            <li><a href="{{ route('sales_entry.create') }}">Sales Entry</a></li>
-                            <li><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gate Pass Entry</a></li>
+                        <li class="dropdown-header">Sales</li>
+                        <li><a href="{{ route('sales_order.index') }}">Sales Order</a></li>
+                        <li><a href="{{ route('sales_estimation.create') }}">Sales Estimation</a></li>
+                        <li><a href="{{ route('sales_entry.create') }}">Sales Entry</a></li>
+                        <li><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gate Pass Entry</a></li>
                         </ul>
                     </li>
                     
