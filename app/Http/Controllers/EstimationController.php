@@ -168,7 +168,110 @@ class EstimationController extends Controller
      */
     public function show($id)
     {
-        //
+        $estimation = Estimation::where('estimation_no',$id)->first();
+        $estimation_item = Estimation_Item::where('estimation_no',$id)->get();
+        $estimation_expense = Estimation_Expense::where('estimation_no',$id)->get();
+
+        $item_row_count = count($estimation_item);
+        $expense_row_count = count($estimation_expense);
+
+
+        if(isset($estimation->supplier->name) && !empty($estimation->supplier->name))
+        {
+            $supplier_id = $estimation->supplier->id;
+
+            $address_details = AddressDetails::where('address_ref_id',$supplier_id)
+                                            ->where('address_table','=','Supplier')
+                                            ->first();
+                                            
+
+       $count=0;
+
+       $address="";
+      
+        if(isset($address_details->address_line_1) && !empty($address_details->address_line_1))
+          {
+            $address.=$address_details->address_line_1.", \n";
+            
+          }
+
+          if(isset($address_details->address_line_2) && !empty($address_details->address_line_2)){
+            $address.=$address_details->address_line_2.",  \n ";
+            
+          }
+
+
+         if(isset($address_details->city->name)  || isset($address_details->district->name)){
+
+            if(!empty($address_details->city->name)){
+                $address.=$address_details->city->name." ,";
+               
+            }
+           
+
+            if(!empty($address_details->district->name)){
+                $address.=$address_details->district->name." ,";
+                $data[] = $address_details->district->id;
+            }
+            
+
+            $address.="\n";
+
+         }
+
+
+
+         if(isset($address_details->state->name)  && !empty($address_details->state->name)){
+             $address.=$address_details->state->name." -";
+             
+        if(isset($address_details->postal_code) && !empty($address_details->postal_code)){
+            // $address.=" - ";
+            $address.=$address_details->postal_code.',';
+            
+        }
+             
+             $address.="\n";
+             $address.="GST Number :".$address_details->supplier->gst_no;
+         }
+                                          
+        }
+        else
+        {
+            $address = '';
+        }   
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+        foreach($estimation_item as $key => $value)  
+        {
+            $item_amount[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs[] = $item_amount[$key] * $value->gst / 100;
+            $item_net_value[] = $item_amount[$key] + $item_gst_rs[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amount[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_value[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rs[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+            $item_data = Estimation_Item::where('item_id',$value->item_id)
+                                    ->orderBy('estimation_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value[] = $amount + $gst_rs - $item_data->discount;
+
+        }     
+
+        $item_sgst = $item_gst_rs_sum/2;
+        $item_cgst = $item_gst_rs_sum/2;    
+
+        return view('admin.estimation.show',compact('estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+
+
+        return view('admin.estimation.show');
     }
 
     /**

@@ -51,7 +51,7 @@
               <td>{{ $value->round_off }}</td>
               <td>{{ $value->total_net_value }}</td>
               <td> 
-                <a href="" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                <a href="{{ route('estimation.show',$value->estimation_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('estimation.edit',$value->estimation_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{{url('estimation/delete/'.$value->estimation_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
 

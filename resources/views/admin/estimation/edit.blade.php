@@ -21,7 +21,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Estimation</h3>
+          <h3>Edit Estimation</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
@@ -673,7 +673,7 @@ table, th, td {
                        
 
                        <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save">
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Update">
         </div>
       </form>
                        
