@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 
 
@@ -138,7 +139,7 @@ class EstimationController extends Controller
          for($j=0;$j<$expense_count;$j++)
 
         {
-            if($expense_count == 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
+            if($expense_count >= 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
             {
 
             }
@@ -157,7 +158,7 @@ class EstimationController extends Controller
             
         }
 
-        return redirect()->back();
+        return Redirect::back()->with('success', 'Saved Successfully');
     }
 
     /**
@@ -474,7 +475,7 @@ class EstimationController extends Controller
            
             
         }
-        return redirect('estimation/');
+        return Redirect::back()->with('success', 'Updated Successfully');
     }
 
     /**
@@ -503,7 +504,7 @@ class EstimationController extends Controller
             $estimation_expense_data->delete();
          }   
         
-        return redirect('estimation/');
+        return Redirect::back()->with('success', 'Deleted Successfully');
         
     }
 

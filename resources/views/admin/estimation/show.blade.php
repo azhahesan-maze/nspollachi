@@ -89,14 +89,11 @@
 
 
 
-
-                         
-
 <div class="form-row">
              
               <div>
                 
-                <table class="table table-bordered table-responsive" style="width: 93%; height: 100%;">
+                <table class="table table-bordered table-responsive" style="max-width: 93%; height: 100%;">
                   <thead>
                     <th> S.no </th>
                     <th> Item S.no </th>

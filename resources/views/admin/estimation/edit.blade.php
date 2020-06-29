@@ -585,7 +585,7 @@ table, th, td {
                         </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $value->expense_amount }}">
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="{{ $value->expense_amount }}">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
@@ -628,7 +628,7 @@ table, th, td {
                         </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
