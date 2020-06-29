@@ -24,4 +24,8 @@ class AddressDetails extends Model
     public function address_type(){
         return $this->belongsTo('App\Models\AddressType','address_type_id','id');
     }
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class,'address_ref_id','id');
+    }
 }

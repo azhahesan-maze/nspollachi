@@ -29,7 +29,7 @@ class EstimationController extends Controller
      */
     public function index()
     {
-        $estimation = Estimation::all();
+        $estimation = Estimation::orderBy('estimation_no','ASC')->get();
         return view('admin.estimation.view',compact('estimation'));
     }
 
@@ -200,13 +200,14 @@ class EstimationController extends Controller
             $address_details = AddressDetails::where('address_ref_id',$supplier_id)
                                             ->where('address_table','=','Supplier')
                                             ->first();
-
+                                            
 
        $count=0;
 
        $address="";
       
-        if(isset($address_details->address_line_1) && !empty($address_details->address_line_1)){
+        if(isset($address_details->address_line_1) && !empty($address_details->address_line_1))
+          {
             $address.=$address_details->address_line_1.", \n";
             
           }
@@ -247,8 +248,9 @@ class EstimationController extends Controller
         }
              
              $address.="\n";
+             $address.="GST Number :".$address_details->supplier->gst_no;
          }
-         $address.="GST Number :".$address_details->gst_no;                                 
+                                          
         }
         else
         {
