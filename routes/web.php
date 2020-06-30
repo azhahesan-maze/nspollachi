@@ -592,6 +592,16 @@ Route::resource('purchase_gatepass_entry', 'PurchaseGatepassEntryController',['m
 /* Purchase entry Start Here  */
 
 Route::resource('purchase_entry', 'PurchaseEntryController',['middleware' => ['auth']]);
+Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
+Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
+Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
+Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
+Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
+Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
+Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
+Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
+Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
+Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
 
 /* Purchase entry End Here  */
 

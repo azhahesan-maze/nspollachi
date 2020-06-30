@@ -62,7 +62,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $purchaseorder->so_no }}">
+                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $purchaseorder->po_no }}">
                                     <font size="2">{{ $purchaseorder->po_no }}</font>
                                   </div>
                                 

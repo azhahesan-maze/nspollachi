@@ -319,7 +319,7 @@
                            
                             <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
                             <li><a href="{{ route('purchase_gatepass_entry.create') }}">Purchase Gate Pass Entry</a></li>
-                            <li><a href="{{ route('purchase_entry.create') }}">Purchase Entry</a></li>
+                            <li><a href="{{ route('purchase_entry.index') }}">Purchase Entry</a></li>
                         </ul>
                     </li>
                     
