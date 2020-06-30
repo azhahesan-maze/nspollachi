@@ -720,6 +720,8 @@ function calculate_total_discount()
 $(document).on("keyup",".expense_amount",function()
 {
   var total = $('#total_price').val();
+  var e_amount = $('.expense_amount').val();
+  alert(e_amount);
   if(total == 0)
   {
     alert('You Cannot Add Expense Without Adding Item Details!!');
@@ -729,15 +731,26 @@ $(document).on("keyup",".expense_amount",function()
   }
   else
   {
-
-    $(".expense_type").each(function(){
+    if(e_amount == '' || e_amount == 0)
+    {
+      $(".expense_type").each(function(){
+      if($(this).val() == '')
+    {
+      $(this).removeAttr('required');
+      //$('.expense_amount').val('');
+    }
+    });
+    }
+    else
+    {
+      $(".expense_type").each(function(){
       if($(this).val() == '')
     {
       $(this).attr('required','required');
       //$('.expense_amount').val('');
     }
     });
-
+    }
     
     total_expense_cal();
     roundoff_cal();
