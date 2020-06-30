@@ -77,7 +77,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                      <div class="col-md-2">
                     <label style="font-family: Times new roman;">Estimation No</label><br>
                   <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
-                           <option value="">Choose Estimation No</option>
+                           <option value="{{ $purchaseorder->estimation_no }}">{{ $purchaseorder->estimation_no }}</option>
                            @foreach($estimation as $estimations)
                            <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
                            @endforeach
