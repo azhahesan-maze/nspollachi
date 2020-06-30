@@ -62,7 +62,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $purchaseorder->estimation_no }}">
+                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $purchaseorder->so_no }}">
                                     <font size="2">{{ $purchaseorder->po_no }}</font>
                                   </div>
                                 
@@ -76,7 +76,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                      <div class="col-md-2">
                     <label style="font-family: Times new roman;">Estimation No</label><br>
-                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no">
+                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
                            <option value="">Choose Estimation No</option>
                            @foreach($estimation as $estimations)
                            <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
