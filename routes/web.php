@@ -608,6 +608,16 @@ Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
 /* Sales Estimation Start Here  */
 
 Route::resource('sales_estimation', 'SalesEstimationController',['middleware' => ['auth']]);
+Route::post('sales_estimation/address_details/', 'SalesEstimationController@address_details');
+Route::get('sales_estimation/getdata/{id}', 'SalesEstimationController@getdata');
+Route::get('sales_estimation/change_items/{id}', 'SalesEstimationController@change_items');
+Route::post('sales_estimation/brand_filter/', 'SalesEstimationController@brand_filter');
+Route::get('sales_estimation/getdata_item/{id}', 'SalesEstimationController@getdata_item');
+Route::get('sales_estimation/same_items/{id}', 'SalesEstimationController@same_items');
+Route::get('sales_estimation/item_details/{id}', 'SalesEstimationController@item_details');
+Route::get('sales_estimation/expense_details/{id}', 'SalesEstimationController@expense_details');
+Route::post('sales_estimation/last_purchase_rate/', 'SalesEstimationController@last_purchase_rate');
+Route::get('sales_estimation/delete/{id}', 'SalesEstimationController@destroy');
 
 /* Sales Estimation End Here  */
 

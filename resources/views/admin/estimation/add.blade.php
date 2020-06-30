@@ -666,7 +666,6 @@ $(document).on("keyup",".expense_amount",function()
 {
   var total = $('#total_price').val();
   var e_amount = $('.expense_amount').val();
-  alert(e_amount);
   if(total == 0)
   {
     alert('You Cannot Add Expense Without Adding Item Details!!');
