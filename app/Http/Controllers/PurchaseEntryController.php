@@ -304,7 +304,7 @@ class PurchaseEntryController extends Controller
 
         $purchase_entry = PurchaseEntry::where('p_no',$id)->first();
         $purchase_entry_items = PurchaseEntryItem::where('p_no',$id)->get();
-        $purchase_entry_expense = PurchaseEntryExpense::where('po_no',$id)->get();
+        $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$id)->get();
 
         $item_row_count = count($purchase_entry_items);
         $expense_row_count = count($purchase_entry_expense);
@@ -479,7 +479,7 @@ class PurchaseEntryController extends Controller
             }
             else
             {
-                $purchase_entry_expense = new PurchaseOrderExpense();
+                $purchase_entry_expense = new PurchaseEntryExpense();
 
                 $purchase_entry_expense->p_no = $voucher_no;
                 $purchase_entry_expense->p_date = $voucher_date;

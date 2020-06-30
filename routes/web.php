@@ -640,6 +640,16 @@ Route::get('sale_order/delete/{id}', 'SalesOrderController@destroy');
 /* Sales entry Start Here  */
 
 Route::resource('sales_entry', 'SalesEntryController',['middleware' => ['auth']]);
+Route::post('sales_entry/address_details/', 'SalesEntryController@address_details');
+Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
+Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
+Route::post('sales_entry/brand_filter/', 'SalesEntryController@brand_filter');
+Route::get('sales_entry/getdata_item/{id}', 'SalesEntryController@getdata_item');
+Route::get('sales_entry/same_items/{id}', 'SalesEntryController@same_items');
+Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details');
+Route::get('sales_entry/expense_details/{id}', 'SalesEntryController@expense_details');
+Route::post('sales_entry/last_purchase_rate/', 'SalesEntryController@last_purchase_rate');
+Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
 
 /* Sales entry End Here  */
 
