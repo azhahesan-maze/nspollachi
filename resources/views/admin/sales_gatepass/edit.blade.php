@@ -21,7 +21,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Sales Gate Pass Entry</h3>
+          <h3>Edit Sales Gate Pass Entry</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
@@ -53,8 +53,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 </style>
 
 
-<form  method="post" class="form-horizontal" action="{{ route('sales_gatepass_entry.store') }}" id="dataInput" enctype="multipart/form-data">
+<form  method="post" class="form-horizontal" action="{{ route('sales_gatepass_entry.update',$sales_gatepass->sales_gatepass_no) }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
+      @method('PATCH')
 
       
                        <div class="row col-md-12">
@@ -62,8 +63,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <!-- <input type="text" readonly="" class="form-control proof_file  required_for_proof_valid" id="voucher_no" placeholder="Auto Generate Voucher No" name="voucher_no" value=""> -->
-                                    <font size="2">{{ $voucher_no }}</font>
+                                    <input type="hidden" readonly="" class="form-control proof_file  required_for_proof_valid" id="voucher_no" placeholder="Auto Generate Voucher No" name="voucher_no" value="{{ $sales_gatepass->sales_gatepass_no }}">
+                                    <font size="2">{{ $sales_gatepass->sales_gatepass_no }}</font>
                                   </div>
                                 
                                  
@@ -71,7 +72,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $sales_gatepass->sales_gatepass_date }}">
                                  
                                 </div>
 
@@ -79,7 +80,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Sales Order No</label><br>
                                 <select class="js-example-basic-multiple form-control so_no" 
                                 data-placeholder="Choose Sales Order No" id="so_no"  name="so_no" >
-                                <option value="">Choose Sale Order No</option>
+                                <option value="{{ $sales_gatepass->so_no }}">{{ $sales_gatepass->so_no }}</option>
                                 @foreach($saleorder as $saleorders)
                                 <option value="{{ $saleorders->so_no }}">{{ $saleorders->so_no }}</option>
                                   @endforeach
@@ -88,7 +89,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Order Date</label><br>
-                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Purchase Order Date" name="so_date" value="{{ $date }}">
+                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Purchase Order Date" name="so_date" value="{{ $sales_gatepass->so_date }}">
                                  
                                 </div>
 
@@ -96,7 +97,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Estimaton No</label><br>
                                 <select class="js-example-basic-multiple form-control estimation_no" 
                                 data-placeholder="Choose Estimation No" required="" id="estimation_no" name="estimation_no" >
-                                <option value="">Choose Estimation No</option>
+                                <option value="{{ $sales_gatepass->estimation_no }}">{{ $sales_gatepass->estimation_no }}</option>
                                 @foreach($estimation as $estimations)
                                 <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
                                   @endforeach
@@ -106,7 +107,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton Date</label><br>
-                                <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimation_date" value="{{ $date }}">
+                                <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimation_date" value="{{ $sales_gatepass->estimation_date }}">
                                  
                                 </div>
                                 
@@ -119,7 +120,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                   <div class="form-group row">
                      <div class="col-sm-8">
                       <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
-                           <option value="">Choose Customer Name</option>
+                           <option value="{{ $sales_gatepass->customer->id }}">{{$sales_gatepass->customer->name}}</option>
                            @foreach($customer as $customers)
                            <option value="{{ $customers->id }}">{{ $customers->name }}</option>
                            @endforeach
@@ -186,23 +187,22 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                       <div class="col-md-2">
                       <label style="font-family: Times new roman;">Load Bill</label><br>
-                      <input type="text" class="form-control" name="load_bill" id="load_bill" placeholder="Load Bill">
+                      <input type="text" class="form-control" name="load_bill" id="load_bill" placeholder="Load Bill" value="{{ $sales_gatepass->load_bill }}">
                       </div>
 
                       <div class="col-md-2">
                       <label style="font-family: Times new roman;">Unload Bill</label><br>
-                      <input type="text" class="form-control" name="unload_bill" id="unload_bill" placeholder="Unload Bill">
+                      <input type="text" class="form-control" name="unload_bill" id="unload_bill" placeholder="Unload Bill" value="{{ $sales_gatepass->unload_bill }}">
                       </div>
                       
                       <div class="col-md-2">
                       <label style="font-family: Times new roman;">Load Live</label><br>
-                      <input type="text" class="form-control" name="load_live" id="load_live" placeholder="Load Live">
+                      <input type="text" class="form-control" name="load_live" id="load_live" placeholder="Load Live" value="{{ $sales_gatepass->load_live }}">
                       </div>
 
                       <div class="col-md-2">
                       <label style="font-family: Times new roman;">Unload Live</label><br>
-                      <input type="text" class="form-control" name="unload_live" id="unload_live" placeholder="Unload Live
-                      ">
+                      <input type="text" class="form-control" name="unload_live" id="unload_live" placeholder="Unload Live" value="{{ $sales_gatepass->unload_live }}">
                       </div>          
                                  
               </div>
@@ -213,7 +213,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        
 
                        <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save">
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Update">
         </div>
       </form>
                        

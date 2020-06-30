@@ -342,7 +342,7 @@
                         <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
                         <li><a href="{{ route('sales_estimation.index') }}">Sales Estimation</a></li>
                         <li><a href="{{ route('sales_entry.index') }}">Sales Entry</a></li>
-                        <li><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gate Pass Entry</a></li>
+                        <li><a href="{{ route('sales_gatepass_entry.index') }}">Sales Gate Pass Entry</a></li>
                         </ul>
                     </li>
                     
