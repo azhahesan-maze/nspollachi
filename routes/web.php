@@ -603,7 +603,17 @@ Route::resource('sales_estimation', 'SalesEstimationController',['middleware' =>
 
 /* Sales Order Start Here  */
 
-Route::resource('sales_order', 'SalesOrderController',['middleware' => ['auth']]);
+Route::resource('sale_order', 'SalesOrderController',['middleware' => ['auth']]);
+Route::post('sale_order/address_details/', 'SalesOrderController@address_details');
+Route::get('sale_order/getdata/{id}', 'SalesOrderController@getdata');
+Route::get('sale_order/change_items/{id}', 'SalesOrderController@change_items');
+Route::post('sale_order/brand_filter/', 'SalesOrderController@brand_filter');
+Route::get('sale_order/getdata_item/{id}', 'SalesOrderController@getdata_item');
+Route::get('sale_order/same_items/{id}', 'SalesOrderController@same_items');
+Route::get('sale_order/item_details/{id}', 'SalesOrderController@item_details');
+Route::get('sale_order/expense_details/{id}', 'SalesOrderController@expense_details');
+Route::post('sale_order/last_purchase_rate/', 'SalesOrderController@last_purchase_rate');
+Route::get('sale_order/delete/{id}', 'SalesOrderController@destroy');
 
 /* Sales Order End Here  */
 

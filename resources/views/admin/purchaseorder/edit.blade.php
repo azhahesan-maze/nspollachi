@@ -1703,7 +1703,7 @@ if(append_value == 1)
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata/{id}') }}",
+        url: "{{ url('purchase_order/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1792,7 +1792,7 @@ if(append_value == 1)
 
       $.ajax({
            type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -1807,7 +1807,7 @@ else
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata/{id}') }}",
+        url: "{{ url('purchase_order/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1895,7 +1895,7 @@ else
 
       $.ajax({
            type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              // console.log(data);
@@ -1927,7 +1927,7 @@ var row_id=$('#last').val();
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata_item/{id}') }}",
+        url: "{{ url('purchase_order/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){
@@ -2026,7 +2026,7 @@ var row_id=$('#last').val();
       $.ajax({
 
            type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
+            url: "{{ url('purchase_order/last_purchase_rate/') }}",
             data: { id: item_id },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -2042,7 +2042,7 @@ function item_with_same_data(item_code)
   $.ajax({
 
         type: "GET",
-        url: "{{ url('estimation/same_items/{id}') }}",
+        url: "{{ url('purchase_order/same_items/{id}') }}",
         data: { id: item_code },
 
         success:function(data){
@@ -2080,7 +2080,7 @@ function categories_check()
   $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/change_items/{id}') }}",
+        url: "{{ url('purchase_order/change_items/{id}') }}",
         data: { categories: categories, brand: brand },             
              
         success: function(data){ 
@@ -2152,7 +2152,7 @@ function brand_check()
   $.ajax({
 
         type: "POST",
-        url: "{{ url('estimation/brand_filter/') }}",
+        url: "{{ url('purchase_order/brand_filter/') }}",
         data: {brand: brand },             
              
         success: function(data)
@@ -2231,7 +2231,7 @@ function supplier_details()
 
   $.ajax({
            type: "POST",
-            url: "{{ url('estimation/address_details/') }}",
+            url: "{{ url('purchase_order/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
             $('#address_line_1').val(data);

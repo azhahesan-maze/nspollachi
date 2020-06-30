@@ -457,7 +457,7 @@ class EstimationController extends Controller
          for($j=0;$j<$expense_count;$j++)
 
         {
-            if($expense_count == 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
+            if($expense_count >= 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
             {
 
             }

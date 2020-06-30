@@ -28,4 +28,8 @@ class AddressDetails extends Model
     public function supplier(){
         return $this->belongsTo(Supplier::class,'address_ref_id','id');
     }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class,'address_ref_id','id');
+    }
 }

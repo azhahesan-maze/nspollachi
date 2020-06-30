@@ -339,7 +339,7 @@
                     <li class="col-md-3 dropdown-item">
                         <ul>
                         <li class="dropdown-header">Sales</li>
-                        <li><a href="{{ route('sales_order.index') }}">Sales Order</a></li>
+                        <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
                         <li><a href="{{ route('sales_estimation.create') }}">Sales Estimation</a></li>
                         <li><a href="{{ route('sales_entry.create') }}">Sales Entry</a></li>
                         <li><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gate Pass Entry</a></li>
