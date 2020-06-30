@@ -30,6 +30,11 @@ class CreateHoDetailsTable extends Migration
               $table->integer('updated_by')->nullable();
               $table->timestamps();
               $table->softDeletes();
+
+              $table->foreign('state_id')
+            ->references('id')
+            ->on('states')
+            ->onDelete('cascade');
         });
     }
 
