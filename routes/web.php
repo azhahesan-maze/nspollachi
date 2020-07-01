@@ -586,6 +586,8 @@ Route::get('purchase_order/delete/{id}', 'PurchaseOrderController@destroy');
 /* Purchase Gate Pass entry Start Here  */
 
 Route::resource('purchase_gatepass_entry', 'PurchaseGatepassEntryController',['middleware' => ['auth']]);
+Route::post('purchase_gatepass_entry/address_details/', 'PurchaseGatepassEntryController@address_details');
+Route::get('purchase_gatepass_entry/delete/{id}', 'PurchaseGatepassEntryController@destroy');
 
 /* Purchase Gate Pass entry End Here  */
 

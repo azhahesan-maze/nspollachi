@@ -63,7 +63,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <!-- <input type="text" readonly="" class="form-control proof_file  required_for_proof_valid" id="voucher_no" placeholder="Auto Generate Voucher No" name="voucher_no" value=""> -->
-                                    <font size="2">{{ $voucher_no }}</font>
+                                    <font size="2">1</font>
                                   </div>
                                 
                                  
@@ -78,11 +78,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order No</label><br>
                                 <select class="js-example-basic-multiple form-control po_no" 
-                                data-placeholder="Choose Purchase Order No" id="po_no"  name="po_no" >
-                                <option value="">Choose Purchase Order No</option>
-                                @foreach($purchaseorder as $purchaseorders)
-                                <option value="{{ $purchaseorders->po_no }}">{{ $purchaseorders->po_no }}</option>
-                                  @endforeach
+                                data-placeholder="Choose Purchase Order No" required="" id="po_no" onchange="supplier_details()" name="po_no" >
+                                <option value=""></option>
+                                  
                                  </select>
                                  
                                 </div>
@@ -95,18 +93,15 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton No</label><br>
                                 <select class="js-example-basic-multiple form-control estimation_no" 
-                                data-placeholder="Choose Estimation No" required="" id="estimation_no" name="estimation_no" >
-                                <option value="">Choose Estimation No</option>
-                                @foreach($estimation as $estimations)
-                                <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
-                                  @endforeach
+                                data-placeholder="Choose Estimation No" required="" id="estimation_no" onchange="supplier_details()" name="estimation_no" >
+                                <option value=""></option>
                                   
                                  </select>
                                  
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton Date</label><br>
-                                <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimation_date" value="{{ $date }}">
+                                <input type="date" class="form-control estimaton_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimaton_date" value="{{ $date }}">
                                  
                                 </div>
                                 
@@ -114,22 +109,17 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="row col-md-12">
 
-                                  <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Party Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
-                           <option value="">Choose Supplier Name</option>
-                           @foreach($supplier as $suppliers)
-                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/supplier/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
+                                  <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Party Name</label><br>
+                                <select class="js-example-basic-multiple form-control supplier_id" 
+                                data-placeholder="Choose Supplier Name" required="" id="supplier_id" onchange="supplier_details()" name="supplier_id" >
+                                <option value=""></option>
+                                   @foreach($supplier as $suppliers)
+                                   <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                                   @endforeach
+                                 </select>
+                                 
+                                </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
@@ -140,9 +130,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Type</label><br>
-                                  <input type="hidden" name="sales_type" id="sales_type">
+                                  <input type="hidden" name="purchase_type" id="purchase_type">
 
-                                  <div class="sales_type">
+                                  <div class="purchase_type">
                                     
                                   </div>
                                 </div>
@@ -213,7 +203,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        
 
                        <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save">
+          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save" disabled="">
         </div>
       </form>
                        
@@ -228,7 +218,7 @@ function supplier_details()
 
   $.ajax({
            type: "POST",
-            url: "{{ url('purchase_gatepass_entry/address_details/') }}",
+            url: "{{ url('estimation/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
 
@@ -239,12 +229,6 @@ function supplier_details()
            }
         });
 }
-
-
-$(document).on("click",".refresh_supplier_id",function(){
-      var supplier_dets=refresh_supplier_master_details();
-      $(".supplier_id").html(supplier_dets);
-   });
 
 
 
