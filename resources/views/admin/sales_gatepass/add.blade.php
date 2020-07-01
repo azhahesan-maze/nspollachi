@@ -78,7 +78,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Order No</label><br>
                                 <select class="js-example-basic-multiple form-control so_no" 
-                                data-placeholder="Choose Sales Order No" id="so_no"  name="so_no" >
+                                data-placeholder="Choose Sales Order No" onchange="so_details()" id="so_no"  name="so_no" >
                                 <option value="">Choose Sale Order No</option>
                                 @foreach($saleorder as $saleorders)
                                 <option value="{{ $saleorders->so_no }}">{{ $saleorders->so_no }}</option>
@@ -95,7 +95,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton No</label><br>
                                 <select class="js-example-basic-multiple form-control estimation_no" 
-                                data-placeholder="Choose Estimation No" required="" id="estimation_no" name="estimation_no" >
+                                data-placeholder="Choose Estimation No" id="estimation_no" name="estimation_no" >
                                 <option value="">Choose Estimation No</option>
                                 @foreach($estimation as $estimations)
                                 <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
@@ -245,6 +245,37 @@ $(document).on("click",".refresh_customer_id",function(){
       var customer_dets=refresh_customer_master_details();
       $(".customer_id").html(customer_dets);
    });
+
+
+function so_details()
+{
+
+  var so_no=$('.so_no').val();
+  $.ajax({
+           type: "POST",
+            url: "{{ url('sales_gatepass_entry/so_details/') }}",
+            data: { so_no : so_no },
+           success: function(data) {
+            console.log(data);
+            var result=JSON.parse(data);
+          $('.taxable_value').text(result.item_amount_sum);
+          $('.tax_value').text(result.item_gst_rs_sum);
+          $('.invoice_value').text(result.item_net_value_sum);
+          $('#so_date').val(result.date_so);
+          if(result.sales_type == 1)
+          {
+           $('.sales_type').text('Cash Sale'); 
+          }
+          else
+          {
+            $('.sales_type').text('Credit Sale'); 
+          }
+          
+
+            
+           }
+        });
+}
 
 
 

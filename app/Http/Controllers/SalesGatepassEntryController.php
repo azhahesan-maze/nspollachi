@@ -18,6 +18,8 @@ use App\Models\ExpenseType;
 use App\Models\Customer;
 use App\Models\SaleGatepassEntry;
 use App\Models\SaleOrder;
+use App\Models\SaleOrderItem;
+use App\Models\SaleOrderExpense;
 use Illuminate\Support\Facades\Redirect;
 
 class SalesGatepassEntryController extends Controller
@@ -325,4 +327,111 @@ $count=0;
    return $address;   
         
     }
+    public function so_details(Request $request)
+    {
+
+        $so_no = $request->so_no;
+
+        // return $so_no;
+
+        $date = date('Y-m-d');
+        $categories = Category::all();
+        $supplier = Supplier::all();
+        $item = Item::all();
+        $agent = Agent::all();
+        $brand = Brand::all();
+        $expense_type = ExpenseType::all();
+        $customer = Customer::all();
+        $estimation = Estimation::all();
+
+        $sale_gatepass_num=SaleGatepassEntry::orderBy('sales_gatepass_no','DESC')
+                           ->select('sales_gatepass_no')
+                           ->first();
+
+         if ($sale_gatepass_num == null) 
+         {
+             $voucher_no=1;
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$sale_gatepass_num->sales_gatepass_no;
+             $voucher_no=$current_voucher_num+1;
+        
+         }
+
+        $saleorder = SaleOrder::where('so_no',$so_no)->first();
+        $saleorder_item = SaleOrderItem::where('so_no',$so_no)->get();
+
+         
+         $date_so = $saleorder->so_date;
+         $sales_type =$saleorder->sale_type;
+
+
+        
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+
+        
+        foreach($saleorder_item as $key => $value)  
+        {
+            
+            
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+
+            $item_data = SaleOrderItem::where('item_id',$value->item_id)
+                                    ->orderBy('so_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value = $amount + $gst_rs - $item_data->discount;
+
+
+            
+
+            $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
+            $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amounts[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_values[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rss[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+        
+
+        }  
+        
+        $result_array=array('item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'date_so'=>$date_so,'sales_type'=>$sales_type);
+        echo json_encode($result_array);exit;
+    echo $table_tbody;exit;  
+
+        $item_sgst = $item_gst_rs_sum/2;
+        $item_cgst = $item_gst_rs_sum/2;    
+
+
+
+        
+
+
+
+echo "<pre>"; print_r($data); exit;
+                       return $data;
+
+
+
+
+        return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
+    }
+
+    
+    
 }

@@ -663,6 +663,7 @@ Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
 Route::resource('sales_gatepass_entry', 'SalesGatepassEntryController',['middleware' => ['auth']]);
 Route::post('sales_gatepass_entry/address_details/', 'SalesGatepassEntryController@address_details');
 Route::get('sales_gatepass_entry/delete/{id}', 'SalesGatepassEntryController@destroy');
+Route::post('sales_gatepass_entry/so_details/', 'SalesGatepassEntryController@so_details');
 
 /* Sales Gate Pass entry End Here  */
 
