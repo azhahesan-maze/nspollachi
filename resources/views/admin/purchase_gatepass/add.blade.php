@@ -78,7 +78,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order No</label><br>
                                 <select class="js-example-basic-multiple form-control po_no" 
-                                data-placeholder="Choose Purchase Order No" id="po_no"  name="po_no" >
+                                data-placeholder="Choose Purchase Order No" onchange="po_details()" id="po_no"  name="po_no">
                                 <option value="">Choose Purchase Order No</option>
                                 @foreach($purchaseorder as $purchaseorders)
                                 <option value="{{ $purchaseorders->po_no }}">{{ $purchaseorders->po_no }}</option>
@@ -140,9 +140,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Type</label><br>
-                                  <input type="hidden" name="sales_type" id="sales_type">
+                                  <input type="hidden" name="purchase_type" id="purchase_type">
 
-                                  <div class="sales_type">
+                                  <div class="purchase_type">
                                     
                                   </div>
                                 </div>
@@ -245,6 +245,35 @@ $(document).on("click",".refresh_supplier_id",function(){
       var supplier_dets=refresh_supplier_master_details();
       $(".supplier_id").html(supplier_dets);
    });
+
+function po_details()
+{
+  var po_no=$('.po_no').val();
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('purchase_gatepass_entry/po_details/') }}",
+            data: { po_no : po_no },
+           success: function(data) {
+            var result=JSON.parse(data);
+          $('.taxable_value').text(result.item_amount_sum);
+          $('.tax_value').text(result.item_gst_rs_sum);
+          $('.invoice_value').text(result.item_net_value_sum);
+          $('#po_date').val(result.date_po);
+          if(result.purchase_type == 1)
+          {
+           $('.purchase_type').text('Cash Purchase'); 
+          }
+          else
+          {
+            $('.purchase_type').text('Credit Purchase'); 
+          }
+          
+
+            
+           }
+        });
+}
 
 
 

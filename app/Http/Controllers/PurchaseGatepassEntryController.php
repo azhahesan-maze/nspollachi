@@ -18,6 +18,8 @@ use App\Models\ExpenseType;
 use App\Models\Customer;
 use App\Models\PurchaseGatepassEntry;
 use App\Models\Purchase_Order;
+use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderExpense;
 use Illuminate\Support\Facades\Redirect;
 
 class PurchaseGatepassEntryController extends Controller
@@ -321,4 +323,110 @@ $count=0;
    return $address;   
         
     }
+
+
+    public function po_details(Request $request)
+    {
+        $po_no = $request->po_no;
+
+        $date = date('Y-m-d');
+        $categories = Category::all();
+        $supplier = Supplier::all();
+        $item = Item::all();
+        $agent = Agent::all();
+        $brand = Brand::all();
+        $expense_type = ExpenseType::all();
+        $customer = Customer::all();
+        $purchaseorder = Purchase_Order::all();
+        $estimation = Estimation::all();
+
+        $purchase_gatepass_num=PurchaseGatepassEntry::orderBy('purchase_gatepass_no','DESC')
+                           ->select('purchase_gatepass_no')
+                           ->first();
+
+         if ($purchase_gatepass_num == null) 
+         {
+             $voucher_no=1;
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$purchase_gatepass_num->purchase_gatepass_no;
+             $voucher_no=$current_voucher_num+1;
+        
+         }
+
+        $purchaseorder = Purchase_Order::where('po_no',$po_no)->first();
+        $purchaseorder_item = PurchaseOrderItem::where('po_no',$po_no)->get();
+        $purchaseorder_expense = PurchaseOrderExpense::where('po_no',$po_no)->get();
+
+         $round_off = $purchaseorder->round_off;
+         $purchase_type = $purchaseorder->purchase_type;
+         $date_po = $purchaseorder->po_date;
+
+
+        
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+
+        
+        foreach($purchaseorder_item as $key => $value)  
+        {
+            
+            
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+
+            $item_data = PurchaseOrderItem::where('item_id',$value->item_id)
+                                    ->orderBy('po_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value = $amount + $gst_rs - $item_data->discount;
+
+
+            
+
+            $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
+            $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amounts[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_values[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rss[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+        
+
+        }  
+        
+        $result_array=array('item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'date_po'=>$date_po,'purchase_type'=>$purchase_type);
+        echo json_encode($result_array);exit;
+    echo $table_tbody;exit;  
+
+        $item_sgst = $item_gst_rs_sum/2;
+        $item_cgst = $item_gst_rs_sum/2;    
+
+
+
+        
+
+
+
+echo "<pre>"; print_r($data); exit;
+                       return $data;
+
+
+
+
+        return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
+    }
+
 }

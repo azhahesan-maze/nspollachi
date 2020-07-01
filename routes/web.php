@@ -589,6 +589,7 @@ Route::post('purchase_order/estimation_details/', 'PurchaseOrderController@estim
 Route::resource('purchase_gatepass_entry', 'PurchaseGatepassEntryController',['middleware' => ['auth']]);
 Route::post('purchase_gatepass_entry/address_details/', 'PurchaseGatepassEntryController@address_details');
 Route::get('purchase_gatepass_entry/delete/{id}', 'PurchaseGatepassEntryController@destroy');
+Route::post('purchase_gatepass_entry/po_details/', 'PurchaseGatepassEntryController@po_details');
 
 /* Purchase Gate Pass entry End Here  */
 
