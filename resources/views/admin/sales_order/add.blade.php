@@ -601,7 +601,6 @@ $(document).on("keyup",".expense_amount",function()
 {
   var total = $('#total_price').val();
   var e_amount = $('.expense_amount').val();
-  alert(e_amount);
   if(total == 0)
   {
     alert('You Cannot Add Expense Without Adding Item Details!!');
@@ -866,6 +865,7 @@ $('#total_discount').val(q.toFixed(2));
 $('#disc_total').val(q.toFixed(2));
 overall_discounts();
 roundoff_cal();
+total_expense_cal();
 
 var len=$('.tables').length;
 $('#counts').val(len);
@@ -2133,6 +2133,65 @@ function customer_details()
            success: function(data) {
             $('#address_line_1').val(data);
            $('.address').text(data);
+           }
+        });
+}
+
+function estimation_details()
+{
+
+  var estimation_no=$('.estimation_no').val();
+
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('sales_order/estimation_details/') }}",
+            data: { estimation_no : estimation_no },
+           success: function(data) {
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1){
+$('.append_expense').append(result.expense_typess);
+}else{
+  $('.append_expense').html(result.expense_typess);
+}
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
            }
         });
 }

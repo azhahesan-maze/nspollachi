@@ -581,6 +581,7 @@ Route::get('purchase_order/item_details/{id}', 'PurchaseOrderController@item_det
 Route::get('purchase_order/expense_details/{id}', 'PurchaseOrderController@expense_details');
 Route::post('purchase_order/last_purchase_rate/', 'PurchaseOrderController@last_purchase_rate');
 Route::get('purchase_order/delete/{id}', 'PurchaseOrderController@destroy');
+Route::post('purchase_order/estimation_details/', 'PurchaseOrderController@estimation_details');
 /* Purchase Order End Here  */
 
 /* Purchase Gate Pass entry Start Here  */
@@ -636,6 +637,7 @@ Route::get('sale_order/item_details/{id}', 'SalesOrderController@item_details');
 Route::get('sale_order/expense_details/{id}', 'SalesOrderController@expense_details');
 Route::post('sale_order/last_purchase_rate/', 'SalesOrderController@last_purchase_rate');
 Route::get('sale_order/delete/{id}', 'SalesOrderController@destroy');
+Route::post('sales_order/estimation_details/', 'SalesOrderController@estimation_details');
 
 /* Sales Order End Here  */
 
