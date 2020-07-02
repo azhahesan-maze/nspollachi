@@ -218,7 +218,57 @@ class SalesGatepassEntryController extends Controller
 
         $sales_gatepass = SaleGatepassEntry::where('sales_gatepass_no',$id)->first();
 
-        return view('admin.sales_gatepass.edit',compact('date','customer','categories','supplier','item','agent','brand','expense_type','saleorder','estimation','sales_gatepass'));
+        $so_no = $sales_gatepass->so_no;
+
+        $saleorders = SaleOrder::where('so_no',$so_no)->first();
+        $saleorder_item = SaleOrderItem::where('so_no',$so_no)->get();
+
+         
+         $date_so = $saleorders->so_date;
+         $sales_type =$saleorders->sale_type;
+
+
+        
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+
+        foreach($saleorder_item as $key => $value)  
+        {
+            
+            
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+
+            $item_data = SaleOrderItem::where('item_id',$value->item_id)
+                                    ->orderBy('so_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value = $amount + $gst_rs - $item_data->discount;
+
+
+            
+
+            $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
+            $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amounts[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_values[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rss[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+        
+
+        }
+
+        return view('admin.sales_gatepass.edit',compact('date','customer','categories','supplier','item','agent','brand','expense_type','saleorder','estimation','sales_gatepass','item_amount_sum','item_net_value_sum','item_gst_rs_sum','date_so','sales_type'));
     }
 
     /**

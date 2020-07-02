@@ -75,7 +75,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Purchase Order No</label><br>
                                 <select class="js-example-basic-multiple form-control po_no" 
                                 data-placeholder="Choose Purchase Order No" onchange="po_details()" id="po_no"  name="po_no">
@@ -86,13 +86,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  </select>
                                  
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                 <input type="date" class="form-control po_date  required_for_proof_valid" id="po_date" placeholder="Purchase Order Date" name="po_date" value="{{ $date }}">
                                  
                                 </div>
 
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton No</label><br>
                                 <select class="js-example-basic-multiple form-control estimation_no" 
                                 data-placeholder="Choose Estimation No" required="" id="estimation_no" name="estimation_no" >
@@ -108,7 +108,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Estimaton Date</label><br>
                                 <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimation_date" value="{{ $date }}">
                                  
-                                </div>
+                                </div> -->
                                 
                                 </div>
 

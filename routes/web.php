@@ -606,6 +606,8 @@ Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_det
 Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
 Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
 Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
+Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
+
 
 /* Purchase entry End Here  */
 
@@ -655,6 +657,7 @@ Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details')
 Route::get('sales_entry/expense_details/{id}', 'SalesEntryController@expense_details');
 Route::post('sales_entry/last_purchase_rate/', 'SalesEntryController@last_purchase_rate');
 Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
+Route::post('sales_entry/so_details/', 'SalesEntryController@so_details');
 
 /* Sales entry End Here  */
 

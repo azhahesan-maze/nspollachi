@@ -76,7 +76,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Sales Order No</label><br>
                                 <select class="js-example-basic-multiple form-control so_no" 
                                 data-placeholder="Choose Sales Order No" onchange="so_details()" id="so_no"  name="so_no" >
@@ -87,13 +87,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  </select>
                                  
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Sales Order Date</label><br>
                                 <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Purchase Order Date" name="so_date" value="{{ $sales_gatepass->so_date }}">
                                  
                                 </div>
 
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimaton No</label><br>
                                 <select class="js-example-basic-multiple form-control estimation_no" 
                                 data-placeholder="Choose Estimation No" id="estimation_no" name="estimation_no" >
@@ -109,7 +109,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Estimaton Date</label><br>
                                 <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimaton_date" placeholder="Estimaton Date" name="estimation_date" value="{{ $sales_gatepass->estimation_date }}">
                                  
-                                </div>
+                                </div> -->
                                 
                                 </div>
 
@@ -144,7 +144,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="sales_type" id="sales_type">
 
                                   <div class="sales_type">
-                                    
+                                    @if($sales_type == 1)
+                                    Cash Sale
+                                    @else 
+                                    Credit Sale
+                                    @endif
                                   </div>
                                 </div>
                                 <div class="col-md-2">
@@ -152,7 +156,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="taxable_value" id="taxable_value">
 
                                   <div class="taxable_value">
-                                    
+                                    {{ $item_amount_sum }}
                                   </div>
                                 </div>
                                 <div class="col-md-2">
@@ -160,7 +164,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="tax_value" id="tax_value">
 
                                   <div class="tax_value">
-                                    
+                                    {{ $item_gst_rs_sum }}
                                   </div>
                                 </div>
                                 <div class="col-md-2">
@@ -168,7 +172,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="invoice_value" id="invoice_value">
 
                                   <div class="invoice_value">
-                                    
+                                    {{ $item_net_value_sum }}
                                   </div>
                                 </div>
                               </div>

@@ -59,7 +59,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Purchase Order No</label><br>
                                 <select class="js-example-basic-multiple form-control po_no" 
                                 data-placeholder="Choose Purchase Order No" id="po_no" name="po_no" >
@@ -71,7 +71,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                 <input type="date" class="form-control po_date  required_for_proof_valid" id="po_date" placeholder="Voucher Date" name="po_date" value="{{ $date }}">
                                  
@@ -92,7 +92,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control gatepass_no" 
                                 data-placeholder="Choose Gate Pass Entry No"  id="gatepass_no" name="gatepass_no" >
@@ -105,7 +105,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <label style="font-family: Times new roman;">Gate Pass Entry Date</label><br>
                                 <input type="date" class="form-control gatepass_date  required_for_proof_valid" id="gatepass_date" placeholder="Gate Pass Entry Date" name="gatepass_date" value="{{ $date }}">
                                  
-                                </div>
+                                </div> -->
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
@@ -2306,6 +2306,78 @@ function supplier_details()
             // $('#state_id').val(data[4]);
             // $('#postal_code').val(data[5]);
            $('.address').text(data);
+           }
+        });
+}
+
+function po_details()
+{
+
+  var po_no=$('.po_no').val();
+
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('purchase_entry/po_details/') }}",
+            data: { po_no : po_no },
+           success: function(data) {
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1){
+$('.append_expense').append(result.expense_typess);
+}else{
+  $('.append_expense').html(result.expense_typess);
+}
+$('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
+$('.no_items').text(result.status);
+$('.invoice_val').text(result.item_net_value_sum);
+if(result.purchase_type == 1)
+$('.purchase_type').text('Cash Purchase');
+else
+$('.purchase_type').text('Credit Purchase');
+$('.purchase_date').text(result.date_purchaseorder);
+$('.estimation_date').text(result.date_estimation);
+$('.estimation_no').text(result.estimation_no);
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+ $('#po_date').val(result.date_purchaseorder);
+ 
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
            }
         });
 }

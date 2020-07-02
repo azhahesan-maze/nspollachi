@@ -2167,6 +2167,8 @@ $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
  $('.estimation_date').val(result.date_estimation);
+ $('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
 
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();

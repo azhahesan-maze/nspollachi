@@ -99,7 +99,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         @if(isset($saleorder->customer->name) && !empty($saleorder->customer->name))
                            <option value="{{ $saleorder->customer->id }}">{{ $saleorder->customer->name }}</option>
                            @else
-                           <option value="">Choose Supplier Name</option>
+                           <option value="">Choose Customer Name</option>
                            @endif
                            @foreach($customer as $customers)
                            <option value="{{ $customers->id }}">{{ $customers->name }}</option>
@@ -2295,6 +2295,8 @@ $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
  $('#estimation_date').val(result.date_estimation);
+ $('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
 
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();

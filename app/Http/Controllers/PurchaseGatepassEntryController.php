@@ -213,8 +213,52 @@ class PurchaseGatepassEntryController extends Controller
         $estimation = Estimation::all();
 
         $purchase_gatepass = purchaseGatepassEntry::where('purchase_gatepass_no',$id)->first();
+        $po_no = $purchase_gatepass->po_no;
+        $purchaseorders = Purchase_Order::where('po_no',$po_no)->first();
+        $purchase_type = $purchaseorders->purchase_type;
+         $date_po = $purchaseorders->po_date;
+        $purchaseorder_item = PurchaseOrderItem::where('po_no',$po_no)->get();
 
-        return view('admin.purchase_gatepass.edit',compact('date','supplier','categories','supplier','item','agent','brand','expense_type','purchaseorder','estimation','purchase_gatepass'));
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+
+        foreach($purchaseorder_item as $key => $value)  
+        {
+            
+            
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+
+            $item_data = PurchaseOrderItem::where('item_id',$value->item_id)
+                                    ->orderBy('po_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value = $amount + $gst_rs - $item_data->discount;
+
+
+            
+
+            $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
+            $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amounts[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_values[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rss[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+        
+
+        }
+
+        return view('admin.purchase_gatepass.edit',compact('date','supplier','categories','supplier','item','agent','brand','expense_type','purchaseorder','estimation','purchase_gatepass','item_amount_sum','item_net_value_sum','item_gst_rs_sum','date_po','purchase_type'));
     }
 
     /**
