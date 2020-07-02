@@ -670,6 +670,77 @@ Route::post('sales_gatepass_entry/so_details/', 'SalesGatepassEntryController@so
 
 /* Sales Gate Pass entry End Here  */
 
+/* Receipt Note Start Here  */
+
+Route::resource('receipt_note', 'ReceiptNoteController',['middleware' => ['auth']]);
+Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
+Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
+Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
+Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
+Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
+Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
+Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
+Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
+Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
+Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
+Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
+
+
+/* Receipt Note End Here  */
+
+/* Debit Note Start Here  */
+
+Route::resource('debit_note', 'DebitNoteController',['middleware' => ['auth']]);
+Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
+Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
+Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
+Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
+Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
+Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
+Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
+Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
+Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
+Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
+Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
+
+
+/* Debit Note End Here  */
+
+/* Delivery Note Start Here  */
+
+Route::resource('delivery_note', 'DeliveryNoteController',['middleware' => ['auth']]);
+Route::post('sales_entry/address_details/', 'SalesEntryController@address_details');
+Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
+Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
+Route::post('sales_entry/brand_filter/', 'SalesEntryController@brand_filter');
+Route::get('sales_entry/getdata_item/{id}', 'SalesEntryController@getdata_item');
+Route::get('sales_entry/same_items/{id}', 'SalesEntryController@same_items');
+Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details');
+Route::get('sales_entry/expense_details/{id}', 'SalesEntryController@expense_details');
+Route::post('sales_entry/last_purchase_rate/', 'SalesEntryController@last_purchase_rate');
+Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
+Route::post('sales_entry/so_details/', 'SalesEntryController@so_details');
+
+/* Delivery Note End Here  */
+
+/* Credit Note Start Here  */
+
+Route::resource('credit_note', 'CreditNoteController',['middleware' => ['auth']]);
+Route::post('sales_entry/address_details/', 'SalesEntryController@address_details');
+Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
+Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
+Route::post('sales_entry/brand_filter/', 'SalesEntryController@brand_filter');
+Route::get('sales_entry/getdata_item/{id}', 'SalesEntryController@getdata_item');
+Route::get('sales_entry/same_items/{id}', 'SalesEntryController@same_items');
+Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details');
+Route::get('sales_entry/expense_details/{id}', 'SalesEntryController@expense_details');
+Route::post('sales_entry/last_purchase_rate/', 'SalesEntryController@last_purchase_rate');
+Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
+Route::post('sales_entry/so_details/', 'SalesEntryController@so_details');
+
+/* Credit Note End Here  */
+
+
 
 
 /* Head Office Details Master Group Start Here  */

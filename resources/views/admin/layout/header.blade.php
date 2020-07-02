@@ -318,8 +318,11 @@
                             <li class="dropdown-header">Purchase</li>
                            
                             <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
-                            <li><a href="{{ route('purchase_gatepass_entry.index') }}">Purchase Gate Pass Entry</a></li>
+                            <li><a href="{{ route('receipt_note.index') }}">Receipt Note</a></li>
                             <li><a href="{{ route('purchase_entry.index') }}">Purchase Entry</a></li>
+                            <li><a href="{{ route('purchase_gatepass_entry.index') }}">Purchase Gate Pass Entry</a></li>
+                            <li><a href="{{ route('debit_note.index') }}">Debit Note</a></li>
+                            
                         </ul>
                     </li>
                     
@@ -341,8 +344,10 @@
                         <li class="dropdown-header">Sales</li>
                         <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
                         <li><a href="{{ route('sales_estimation.index') }}">Sales Estimation</a></li>
+                        <li><a href="{{ route('delivery_note.index') }}">Delivery Note</a></li>
                         <li><a href="{{ route('sales_entry.index') }}">Sales Entry</a></li>
                         <li><a href="{{ route('sales_gatepass_entry.index') }}">Sales Gate Pass Entry</a></li>
+                        <li><a href="{{ route('credit_note.index') }}">Credit Note</a></li>
                         </ul>
                     </li>
                     
