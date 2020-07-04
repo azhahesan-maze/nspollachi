@@ -1031,6 +1031,7 @@ $(document).on("click",".remove_items",function(){
     var half_gst = parseFloat(total_gst)/2;
     $("#cgst").val(half_gst.toFixed(2));
     $("#sgst").val(half_gst.toFixed(2));
+    total_expense_cal();
     overall_discounts();
     roundoff_cal();
     
@@ -1239,6 +1240,7 @@ $(document).on("click",".update_items",function(){
   var to_html_total_amount = total_amount.toFixed(2);
   $(".total_net_price").html(parseFloat(to_html_total_net));
   $(".total_amount").html(parseFloat(to_html_total_amount));
+  total_expense_cal();
   overall_discounts();
   roundoff_cal();
 

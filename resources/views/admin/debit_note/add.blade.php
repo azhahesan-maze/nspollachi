@@ -62,7 +62,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control p_no" 
-                                data-placeholder="Choose Purchase Entry No" onchange="po_details()" id="p_no" name="p_no" >
+                                data-placeholder="Choose Purchase Entry No" onchange="p_details()" id="p_no" name="p_no" >
                                 <option value="">Choose Purchase Entry No</option>
                                 @foreach($purchase_entry as $purchase)
                                 <option value="{{ $purchase->p_no }}">{{ $purchase->p_no }}</option>
@@ -73,14 +73,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Entry Date</label><br>
-                                <input type="date" class="form-control po_date  required_for_proof_valid" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $date }}">
+                                <input type="date" class="form-control p_date  required_for_proof_valid" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $date }}">
                                  
                                 </div>
                                 
                                 <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <font size="2">1</font>
+                                    <font size="2">{{ $voucher_no }}</font>
                                   </div>
                                 
                                  
@@ -128,7 +128,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                  
                                 </div>
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Type</label><br>
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
@@ -136,7 +136,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                     
                                   </div>
                                 
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
@@ -147,31 +147,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Estimation No</label><br>
-                                  <input type="hidden" name="estimation_no" id="estimation_no">
-                                  
-                                  <div class="estimation_no">
-                                    
-                                  </div>
-                                
-                                 
-                                </div>
-
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Estimation Date</label><br>
-                                  <input type="hidden" name="estimation_date" id="estimation_date">
-                                  
-                                  <div class="estimation_date">
-                                    
-                                  </div>
-                                
-                                 
-                                </div>
-
-                              </div>
-                              <br>
-                              <div class="row col-md-12">
                                 <div class="col-md-4">
                   <label style="font-family: Times new roman;">Party Name</label><br>
                   <div class="form-group row">
@@ -197,7 +172,57 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
+                                <!-- <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Estimation No</label><br>
+                                  <input type="hidden" name="estimation_no" id="estimation_no">
+                                  
+                                  <div class="estimation_no">
+                                    
+                                  </div>
+                                
+                                 
+                                </div> -->
+
+                                <!-- <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Estimation Date</label><br>
+                                  <input type="hidden" name="estimation_date" id="estimation_date">
+                                  
+                                  <div class="estimation_date">
+                                    
+                                  </div>
+                                
+                                 
+                                </div> -->
+
                               </div>
+                              <br>
+                              <!-- <div class="row col-md-12">
+                                <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
+                           <option value="">Choose Supplier Name</option>
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Party Address</label><br>
+                                  <input type="hidden" name="address_line_1" id="address_line_1">
+                                  
+                                  <div class="address">
+                                    
+                                  </div>
+                                </div>
+
+                              </div> -->
                               <br>
     
       <div class="col-md-8">
@@ -930,6 +955,7 @@ $(".total_amount").html(parseFloat(to_html_total_amount));
 var q=calculate_total_discount();
 $('#total_discount').val(q.toFixed(2));
 $('#disc_total').val(q.toFixed(2));
+total_expense_cal();
 overall_discounts();
 roundoff_cal();
 
@@ -1033,6 +1059,7 @@ $(document).on("click",".remove_items",function(){
     var half_gst = parseFloat(total_gst)/2;
     $("#cgst").val(half_gst.toFixed(2));
     $("#sgst").val(half_gst.toFixed(2));
+    total_expense_cal();
     overall_discounts();
     roundoff_cal();
     
@@ -1241,6 +1268,7 @@ $(document).on("click",".update_items",function(){
   var to_html_total_amount = total_amount.toFixed(2);
   $(".total_net_price").html(parseFloat(to_html_total_net));
   $(".total_amount").html(parseFloat(to_html_total_amount));
+  total_expense_cal();
   overall_discounts();
   roundoff_cal();
 
@@ -1662,7 +1690,7 @@ if(append_value == 1)
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('purchase_entry/getdata/{id}') }}",
+        url: "{{ url('debit_note/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1751,7 +1779,7 @@ if(append_value == 1)
 
       $.ajax({
            type: "POST",
-            url: "{{ url('purchase_entry/last_purchase_rate/') }}",
+            url: "{{ url('debit_note/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -1766,7 +1794,7 @@ else
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('purchase_entry/getdata/{id}') }}",
+        url: "{{ url('debit_note/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1854,7 +1882,7 @@ else
 
       $.ajax({
            type: "POST",
-            url: "{{ url('purchase_entry/last_purchase_rate/') }}",
+            url: "{{ url('debit_note/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              // console.log(data);
@@ -1886,7 +1914,7 @@ var row_id=$('#last').val();
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('purchase_entry/getdata_item/{id}') }}",
+        url: "{{ url('debit_note/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){
@@ -1985,7 +2013,7 @@ var row_id=$('#last').val();
       $.ajax({
 
            type: "POST",
-            url: "{{ url('purchase_entry/last_purchase_rate/') }}",
+            url: "{{ url('debit_note/last_purchase_rate/') }}",
             data: { id: item_id },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -2001,7 +2029,7 @@ function item_with_same_data(item_code)
   $.ajax({
 
         type: "GET",
-        url: "{{ url('purchase_entry/same_items/{id}') }}",
+        url: "{{ url('debit_note/same_items/{id}') }}",
         data: { id: item_code },
 
         success:function(data){
@@ -2039,7 +2067,7 @@ function categories_check()
   $.ajax({  
         
         type: "GET",
-        url: "{{ url('purchase_entry/change_items/{id}') }}",
+        url: "{{ url('debit_note/change_items/{id}') }}",
         data: { categories: categories, brand: brand },             
              
         success: function(data){ 
@@ -2111,7 +2139,7 @@ function brand_check()
   $.ajax({
 
         type: "POST",
-        url: "{{ url('purchase_entry/brand_filter/') }}",
+        url: "{{ url('debit_note/brand_filter/') }}",
         data: {brand: brand },             
              
         success: function(data)
@@ -2190,7 +2218,7 @@ function supplier_details()
 
   $.ajax({
            type: "POST",
-            url: "{{ url('purchase_entry/address_details/') }}",
+            url: "{{ url('debit_note/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
             $('#address_line_1').val(data);
@@ -2204,16 +2232,16 @@ function supplier_details()
         });
 }
 
-function po_details()
+function p_details()
 {
 
-  var po_no=$('.po_no').val();
+  var p_no=$('.p_no').val();
 
 
   $.ajax({
            type: "POST",
-            url: "{{ url('purchase_entry/po_details/') }}",
-            data: { po_no : po_no },
+            url: "{{ url('debit_note/p_details/') }}",
+            data: { p_no : p_no },
            success: function(data) {
             var result=JSON.parse(data);
             if(result.status>0){
@@ -2228,13 +2256,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-if(result.purchase_type == 1)
-$('.purchase_type').text('Cash Purchase');
-else
-$('.purchase_type').text('Credit Purchase');
 $('.purchase_date').text(result.date_purchaseorder);
-$('.estimation_date').text(result.date_estimation);
-$('.estimation_no').text(result.estimation_no);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);

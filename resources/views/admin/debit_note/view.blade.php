@@ -23,8 +23,8 @@
             <th>S.No</th>
             <th>Voucher No </th>
             <th>Voucher Date </th>
-            <th>Purchase Order No </th>
-            <th>Purchase Order Date </th>
+            <th>Purchase Entry No </th>
+            <th>Purchase Entry Date </th>
             <th>Supplier Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -38,8 +38,8 @@
               <td>{{ $key+1 }}</td>
               <td>{{ $value->dn_no }}</td>
               <td>{{ $value->dn_date }}</td>
-              <td>{{ $value->po_no }}</td>
-              <td>{{ $value->po_date }}</td>
+              <td>{{ $value->p_no }}</td>
+              <td>{{ $value->p_date }}</td>
               @if(isset($value->supplier->name) && !empty($value->supplier->name))
               <td>{{ $value->supplier->name }}</td>
               @else

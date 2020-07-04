@@ -673,17 +673,17 @@ Route::post('sales_gatepass_entry/so_details/', 'SalesGatepassEntryController@so
 /* Receipt Note Start Here  */
 
 Route::resource('receipt_note', 'ReceiptNoteController',['middleware' => ['auth']]);
-Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
-Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
-Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
-Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
-Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
-Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
-Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
-Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
-Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
-Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
-Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
+Route::post('receipt_note/address_details/', 'ReceiptNoteController@address_details');
+Route::get('receipt_note/getdata/{id}', 'ReceiptNoteController@getdata');
+Route::get('receipt_note/change_items/{id}', 'ReceiptNoteController@change_items');
+Route::post('receipt_note/brand_filter/', 'ReceiptNoteController@brand_filter');
+Route::get('receipt_note/getdata_item/{id}', 'ReceiptNoteController@getdata_item');
+Route::get('receipt_note/same_items/{id}', 'ReceiptNoteController@same_items');
+Route::get('receipt_note/item_details/{id}', 'ReceiptNoteController@item_details');
+Route::get('receipt_note/expense_details/{id}', 'ReceiptNoteController@expense_details');
+Route::post('receipt_note/last_purchase_rate/', 'ReceiptNoteController@last_purchase_rate');
+Route::get('receipt_note/delete/{id}', 'ReceiptNoteController@destroy');
+Route::post('receipt_note/po_details/', 'ReceiptNoteController@po_details');
 
 
 /* Receipt Note End Here  */
@@ -691,17 +691,17 @@ Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
 /* Debit Note Start Here  */
 
 Route::resource('debit_note', 'DebitNoteController',['middleware' => ['auth']]);
-Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
-Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
-Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
-Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
-Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
-Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
-Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
-Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expense_details');
-Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
-Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
-Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
+Route::post('debit_note/address_details/', 'DebitNoteController@address_details');
+Route::get('debit_note/getdata/{id}', 'DebitNoteController@getdata');
+Route::get('debit_note/change_items/{id}', 'DebitNoteController@change_items');
+Route::post('debit_note/brand_filter/', 'DebitNoteController@brand_filter');
+Route::get('debit_note/getdata_item/{id}', 'DebitNoteController@getdata_item');
+Route::get('debit_note/same_items/{id}', 'DebitNoteController@same_items');
+Route::get('debit_note/item_details/{id}', 'DebitNoteController@item_details');
+Route::get('debit_note/expense_details/{id}', 'DebitNoteController@expense_details');
+Route::post('debit_note/last_purchase_rate/', 'DebitNoteController@last_purchase_rate');
+Route::get('debit_note/delete/{id}', 'DebitNoteController@destroy');
+Route::post('debit_note/p_details/', 'DebitNoteController@p_details');
 
 
 /* Debit Note End Here  */
