@@ -726,17 +726,17 @@ Route::post('delivery_note/se_details/', 'DeliveryNoteController@se_details');
 /* Credit Note Start Here  */
 
 Route::resource('credit_note', 'CreditNoteController',['middleware' => ['auth']]);
-Route::post('sales_entry/address_details/', 'SalesEntryController@address_details');
-Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
-Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
-Route::post('sales_entry/brand_filter/', 'SalesEntryController@brand_filter');
-Route::get('sales_entry/getdata_item/{id}', 'SalesEntryController@getdata_item');
-Route::get('sales_entry/same_items/{id}', 'SalesEntryController@same_items');
-Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details');
-Route::get('sales_entry/expense_details/{id}', 'SalesEntryController@expense_details');
-Route::post('sales_entry/last_purchase_rate/', 'SalesEntryController@last_purchase_rate');
-Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
-Route::post('sales_entry/so_details/', 'SalesEntryController@so_details');
+Route::post('credit_note/address_details/', 'CreditNoteController@address_details');
+Route::get('credit_note/getdata/{id}', 'CreditNoteController@getdata');
+Route::get('credit_note/change_items/{id}', 'CreditNoteController@change_items');
+Route::post('credit_note/brand_filter/', 'CreditNoteController@brand_filter');
+Route::get('credit_note/getdata_item/{id}', 'CreditNoteController@getdata_item');
+Route::get('credit_note/same_items/{id}', 'CreditNoteController@same_items');
+Route::get('credit_note/item_details/{id}', 'CreditNoteController@item_details');
+Route::get('credit_note/expense_details/{id}', 'CreditNoteController@expense_details');
+Route::post('credit_note/last_purchase_rate/', 'CreditNoteController@last_purchase_rate');
+Route::get('credit_note/delete/{id}', 'CreditNoteController@destroy');
+Route::post('credit_note/s_details/', 'CreditNoteController@s_details');
 
 /* Credit Note End Here  */
 
