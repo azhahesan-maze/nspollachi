@@ -80,7 +80,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <div class="col-md-3">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <font size="2">1</font>
+                                    <font size="2">{{$voucher_no}}</font>
                                   </div>
                                 
                                  
