@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>View Sale Entry Details</h3>
+          <h3>View Delivery Note Details</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('sales_entry.index')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{route('delivery_note.index')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -22,7 +22,7 @@
             <div class="col-md-6">
               <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Voucher No :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->s_no }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->d_no }}</label>
           </div>
               </div>
                                  
@@ -30,7 +30,7 @@
           <div class="col-md-6">
             <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Voucher Date :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->s_date }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->d_date }}</label>
           </div>
               </div>
             </div>
@@ -39,16 +39,16 @@
 
             <div class="col-md-6">
               <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Order No :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->so_no }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Estimation No :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->sale_estimation_no }}</label>
           </div>
               </div>
                                  
 
           <div class="col-md-6">
             <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Order Date :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->so_date }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Estimation Date :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->sale_estimation_date }}</label>
           </div>
               </div>
             </div>
@@ -60,8 +60,8 @@
               <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Customer Name :</label>
             <label for="validationCustom01" class="col-sm-4 col-form-label"> 
-              @if(isset($sale_entry->customer->name) && !empty($sale_entry->customer->name))
-              {{ $sale_entry->customer->name }}
+              @if(isset($delivery_note->customer->name) && !empty($delivery_note->customer->name))
+              {{ $delivery_note->customer->name }}
               @else
                N/A 
               @endif
@@ -84,7 +84,7 @@
               <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Purchase Type :</label>
             <label for="validationCustom01" class="col-sm-4 col-form-label"> 
-              @if($sale_entry->purchase_type == 1)
+              @if($delivery_note->purchase_type == 1)
               Cash Purchase
               @else
                Credit purchase
@@ -130,7 +130,7 @@
                     
                   </thead>
                   <tbody>
-                   @foreach($sale_entry_items as $key => $value)
+                   @foreach($delivery_note_items as $key => $value)
                     <tr id="row{{ $key }}" class="{{ $key }} tables"><td><span class="item_s_no"> {{ $key+1 }} </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no{{ $key }}" type="hidden" id="invoice{{ $key }}" value="{{ $value->item_sno }}" name="invoice_sno[]"><font class="item_no{{ $key }}">{{ $value->item_sno }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code{{ $key }}" value="{{ $value->item_id }}" name="item_code[]"><font class="items{{ $key }}">{{ $value->item->code }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name{{ $key }}" type="hidden" value="{{ $value->item->name }}" name="item_name[]"><font class="font_item_name{{ $key }}">{{ $value->item->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn{{ $key }}" type="hidden" value="{{ $value->item->hsn }}" name="hsn[]"><font class="font_hsn{{ $key }}">{{ $value->item->hsn }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp{{ $key }}" value="{{ $value->mrp }}" name="mrp[]"><font class="font_mrp{{ $key }}">{{ $value->mrp }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive{{ $key }}" value="{{ $value->rate_exclusive_tax }}" name="exclusive[]"><font class="font_exclusive{{ $key }}">{{ $value->rate_exclusive_tax }}</font><input type="hidden" class="inclusive{{ $key }}" value="{{ $value->rate_inclusive_tax }}" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity{{ $key }}" value="{{ $value->qty }}" name="quantity[]"><font class="font_quantity{{ $key }}">{{ $value->qty }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom{{ $key }}" value="{{ $value->uom->id }}" name="uom[]"><font class="font_uom{{ $key }}">{{ $value->uom->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt{{ $key }}" value="{{ $item_amount[$key] }}" name="amount[]"><font class="font_amount{{ $key }}"> {{$item_amount[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="{{ $value->discount }}" id="input_discount{{ $key }}" ><input class="discount_val{{ $key }}" type="hidden" value="{{ $value->discount }}" name="discount[]"><font class="font_discount" id="font_discount{{ $key }}">{{ $value->discount }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax{{ $key }}" value="{{$item_gst_rs[$key]}}" name="gst[]"><input type="hidden" class="tax_gst{{ $key }}"  value="{{ $value->gst }}" name="tax_rate[]"><font class="font_gst{{ $key }}"> {{$item_gst_rs[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price{{ $key }}" value="{{ $item_net_value[$key] }}" name="net_price[]"><font class="font_net_price{{ $key }}">{{ $item_net_value[$key] }}</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase{{ $key }}">{{ $net_value[$key] }}</font></center></div></div></td></tr>
                   
                     @endforeach
@@ -155,7 +155,7 @@
           <div class="col-md-6">
             <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Overall Discount :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->overall_discount }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->overall_discount }}</label>
           </div>
               </div>
             </div>
@@ -173,7 +173,7 @@
             
           </thead>
               <tbody>
-               @foreach($sale_entry_expense as $key => $value)
+               @foreach($delivery_note_expense as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
                 <td>@if(isset($value->expense_types->type) && !empty($value->expense_types->type))
@@ -195,7 +195,7 @@
             <div class="col-md-6">
               <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Round Off(+/-) :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $sale_entry->round_off }}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{ $delivery_note->round_off }}</label>
           </div>
               </div>
                                  
@@ -233,7 +233,7 @@
             <div class="col-md-6">
               <div class="form-group row">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Net Value :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$sale_entry->total_net_value}}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$delivery_note->total_net_value}}</label>
           </div>
               </div>
             </div>

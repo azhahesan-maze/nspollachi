@@ -484,14 +484,14 @@ class SalesEntryController extends Controller
             {
                 $sale_entry_expense = new SaleEntryExpense();
 
-                $purchase_entry_expense->p_no = $voucher_no;
-                $purchase_entry_expense->p_date = $voucher_date;
-                $purchase_entry_expense->po_no = $request->po_no;
-                $purchase_entry_expense->po_date = $request->po_date;
-                $purchase_entry_expense->expense_type = $request->expense_type[$j];
-                $purchase_entry_expense->expense_amount = $request->expense_amount[$j];
+                $sale_entry_expense->s_no = $voucher_no;
+                $sale_entry_expense->s_date = $voucher_date;
+                $sale_entry_expense->so_no = $request->so_no;
+                $sale_entry_expense->so_date = $request->so_date;
+                $sale_entry_expense->expense_type = $request->expense_type[$j];
+                $sale_entry_expense->expense_amount = $request->expense_amount[$j];
 
-                $purchase_entry_expense->save();
+                $sale_entry_expense->save();
             }
            
             

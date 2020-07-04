@@ -21,11 +21,11 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Edit Sales Entry</h3>
+          <h3>Edit Delivery Note</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{ route('sales_entry.index') }}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ route('delivery_note.index') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -53,35 +53,35 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 </style>
 
 
-<form  method="post" class="form-horizontal" action="{{ route('sales_entry.update',$sale_entry->s_no) }}" id="dataInput" enctype="multipart/form-data">
+<form  method="post" class="form-horizontal" action="{{ route('delivery_note.update',$delivery_note->d_no) }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
       
                        <div class="row col-md-12">
 
                         <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sale Order No</label><br>
-                                <select class="js-example-basic-multiple form-control so_no" 
-                                data-placeholder="Choose Purchase Order No" onchange="so_details()" id="so_no" name="so_no" >
-                                <option value="{{ $sale_entry->so_no }}">{{ $sale_entry->po_no }}</option>
+                                  <label style="font-family: Times new roman;">Sale Estimation No</label><br>
+                                <select class="js-example-basic-multiple form-control sale_estimation_no" 
+                                data-placeholder="Choose Estimation No" onchange="se_details()" id="sale_estimation_no" name="sale_estimation_no" >
+                                <option value="{{ $delivery_note->sale_estimation_no }}">{{ $delivery_note->sale_estimation_no }}</option>
                                 @foreach($saleorder as $saleorders)
-                                <option value="{{ $saleorders->so_no }}">{{ $saleorders->so_no }}</option>
+                                <option value="{{ $saleorders->sale_estimation_no }}">{{ $saleorders->sale_estimation_no }}</option>
                                   @endforeach 
                                  </select>
                                  
                                 </div>
 
                         <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sale Order Date</label><br>
-                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Voucher Date" name="so_date" value="{{ $date }}">
+                                  <label style="font-family: Times new roman;">Sale Estimation Date</label><br>
+                                <input type="date" class="form-control sale_estimation_date  required_for_proof_valid" id="sale_estimation_date" placeholder="Voucher Date" name="sale_estimation_date" value="{{ $date }}">
                                  
                                 </div>
                                 
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
-                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $sale_entry->s_no }}">
-                                    <font size="2">{{ $sale_entry->s_no }}</font>
+                                    <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $delivery_note->d_no }}">
+                                    <font size="2">{{ $delivery_note->d_no }}</font>
                                   </div>
                                 
                                  
@@ -89,7 +89,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $delivery_note->d_date }}">
                                  
                                 </div>
                                 <!-- <div class="col-md-2">
@@ -129,7 +129,36 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                  
                                 </div>
+
+                                <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Customer Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
+                           @if(isset($delivery_note->customer->name) && !empty($delivery_note->customer->name))
+                           <option value="{{ $delivery_note->customer->id }}">{{ $delivery_note->customer->name }}</option>
+                           @else
+                           <option value="">Choose Customer Name</option>
+                           @endif
+                           @foreach($customer as $customers)
+                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/customer/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
                                 <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Customer Address</label><br>
+                                  <input type="hidden" name="address_line_1" id="address_line_1">
+                                  
+                                  <div class="address">
+                                    
+                                  </div>
+                                </div>
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Type</label><br>
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
@@ -168,18 +197,18 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 
                                  
-                                </div>
+                                </div> -->
 
                               </div>
                               <br>
                               <div class="row col-md-12">
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                   <label style="font-family: Times new roman;">Customer Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
                       <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
-                           @if(isset($sale_entry->customer->name) && !empty($sale_entry->customer->name))
-                           <option value="{{ $sale_entry->customer->id }}">{{ $sale_entry->customer->name }}</option>
+                           @if(isset($delivery_note->customer->name) && !empty($delivery_note->customer->name))
+                           <option value="{{ $delivery_note->customer->id }}">{{ $delivery_note->customer->name }}</option>
                            @else
                            <option value="">Choose Customer Name</option>
                            @endif
@@ -200,7 +229,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <div class="address">
                                     
                                   </div>
-                                </div>
+                                </div> -->
 
                               </div>
                               <br>
@@ -490,10 +519,10 @@ table, th, td {
                   <input type="hidden" name="expense_count" value="{{$expense_row_count}}" id="expense_count">
                   <input type="hidden" name="total_amount" value="{{$item_amount_sum}}" id="total_amount">
                   <input type="hidden" name="total_gst" value="{{$item_gst_rs_sum}}" id="total_gst">
-                  <input type="hidden" name="total_price" value="{{$sale_entry->total_net_value}}" id="total_price">
+                  <input type="hidden" name="total_price" value="{{$delivery_note->total_net_value}}" id="total_price">
                   <input type="hidden" name="last_purchase_rate" value="0" id="last_purchase_rate">
 
-                  @foreach($sale_entry_items as $key => $value)
+                  @foreach($delivery_note_items as $key => $value)
                   
 
                   <tr id="row{{ $key }}" class="{{ $key }} tables"><td><span class="item_s_no"> {{ $key+1 }} </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no{{ $key }}" type="hidden" id="invoice{{ $key }}" value="{{ $value->item_sno }}" name="invoice_sno[]"><font class="item_no{{ $key }}">{{ $value->item_sno }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code{{ $key }}" value="{{ $value->item_id }}" name="item_code[]"><font class="items{{ $key }}">{{ $value->item->code }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name{{ $key }}" type="hidden" value="{{ $value->item->name }}" name="item_name[]"><font class="font_item_name{{ $key }}">{{ $value->item->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn{{ $key }}" type="hidden" value="{{ $value->item->hsn }}" name="hsn[]"><font class="font_hsn{{ $key }}">{{ $value->item->hsn }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp{{ $key }}" value="{{ $value->mrp }}" name="mrp[]"><font class="font_mrp{{ $key }}">{{ $value->mrp }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive{{ $key }}" value="{{ $value->rate_exclusive_tax }}" name="exclusive[]"><font class="font_exclusive{{ $key }}">{{ $value->rate_exclusive_tax }}</font><input type="hidden" class="inclusive{{ $key }}" value="{{ $value->rate_inclusive_tax }}" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity{{ $key }}" value="{{ $value->qty }}" name="quantity[]"><font class="font_quantity{{ $key }}">{{ $value->qty }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom{{ $key }}" value="{{ $value->uom->id }}" name="uom[]"><font class="font_uom{{ $key }}">{{ $value->uom->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt{{ $key }}" value="{{ $item_amount[$key] }}" name="amount[]"><font class="font_amount{{ $key }}"> {{$item_amount[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="{{ $value->discount }}" id="input_discount{{ $key }}" ><input class="discount_val{{ $key }}" type="hidden" value="{{ $value->discount }}" name="discount[]"><font class="font_discount" id="font_discount{{ $key }}">{{ $value->discount }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax{{ $key }}" value="{{$item_gst_rs[$key]}}" name="gst[]"><input type="hidden" class="tax_gst{{ $key }}"  value="{{ $value->gst }}" name="tax_rate[]"><font class="font_gst{{ $key }}"> {{$item_gst_rs[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price{{ $key }}" value="{{ $item_net_value[$key] }}" name="net_price[]"><font class="font_net_price{{ $key }}">{{ $item_net_value[$key] }}</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase{{ $key }}">{{ $net_value[$key] }}</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="{{ $key }}" aria-hidden="true"></i></td></tr>
@@ -579,7 +608,7 @@ table, th, td {
                       </div>
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Overall Discount</label>
-                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $sale_entry->overall_discount }}">
+                      <input type="number" class="form-control overall_discount" id="overall_discount" name="overall_discount" oninput="overall_discounts()" pattern="[0-9]{0,100}" title="Numbers Only" value="{{ $delivery_note->overall_discount }}">
                       </div>
                     </div>
 
@@ -594,7 +623,7 @@ table, th, td {
                           </div> -->
                         <div class="row col-md-12 append_expense">
                           @if($expense_row_count > 0)
-                          @foreach($sale_entry_expense as $key => $value)
+                          @foreach($delivery_note_expense as $key => $value)
                           <div class="row col-md-12 expense">
                             <div class="col-md-3">
                     <label style="font-family: Times new roman;">Expense Type</label><br>
@@ -691,7 +720,7 @@ table, th, td {
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Round Off(+/-)</label>
-                      <input type="text" class="form-control round_off" readonly="" value="{{ $sale_entry->round_off }}" id="round_off" name="round_off" >
+                      <input type="text" class="form-control round_off" readonly="" value="{{ $delivery_note->round_off }}" id="round_off" name="round_off" >
                       </div>
                         
                         <div class="col-md-2">
@@ -705,7 +734,7 @@ table, th, td {
                       </div>
                       <div class="col-md-4" style="float: right;">
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$sale_entry->total_net_value}}</font> 
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$delivery_note->total_net_value}}</font> 
                        </div>
                        
                        <div class="row col-md-12">
@@ -1771,7 +1800,7 @@ if(append_value == 1)
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('sales_entry/getdata/{id}') }}",
+        url: "{{ url('delivery_note/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1860,7 +1889,7 @@ if(append_value == 1)
 
       $.ajax({
            type: "POST",
-            url: "{{ url('sales_entry/last_purchase_rate/') }}",
+            url: "{{ url('delivery_note/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -1875,7 +1904,7 @@ else
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('sales_entry/getdata/{id}') }}",
+        url: "{{ url('delivery_note/getdata/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){ 
@@ -1963,7 +1992,7 @@ else
 
       $.ajax({
            type: "POST",
-            url: "{{ url('sales_entry/last_purchase_rate/') }}",
+            url: "{{ url('delivery_note/last_purchase_rate/') }}",
             data: { id: item_code },
            success: function(data) {
              // console.log(data);
@@ -1995,7 +2024,7 @@ var row_id=$('#last').val();
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('sales_entry/getdata_item/{id}') }}",
+        url: "{{ url('delivery_note/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){
@@ -2094,7 +2123,7 @@ var row_id=$('#last').val();
       $.ajax({
 
            type: "POST",
-            url: "{{ url('sales_entry/last_purchase_rate/') }}",
+            url: "{{ url('delivery_note/last_purchase_rate/') }}",
             data: { id: item_id },
            success: function(data) {
              $('#last_purchase_rate').val(data);
@@ -2110,7 +2139,7 @@ function item_with_same_data(item_code)
   $.ajax({
 
         type: "GET",
-        url: "{{ url('sales_entry/same_items/{id}') }}",
+        url: "{{ url('delivery_note/same_items/{id}') }}",
         data: { id: item_code },
 
         success:function(data){
@@ -2148,7 +2177,7 @@ function categories_check()
   $.ajax({  
         
         type: "GET",
-        url: "{{ url('sales_entry/change_items/{id}') }}",
+        url: "{{ url('delivery_note/change_items/{id}') }}",
         data: { categories: categories, brand: brand },             
              
         success: function(data){ 
@@ -2220,7 +2249,7 @@ function brand_check()
   $.ajax({
 
         type: "POST",
-        url: "{{ url('sales_entry/brand_filter/') }}",
+        url: "{{ url('delivery_note/brand_filter/') }}",
         data: {brand: brand },             
              
         success: function(data)
@@ -2299,7 +2328,7 @@ function customer_details()
 
   $.ajax({
            type: "POST",
-            url: "{{ url('sales_entry/address_details/') }}",
+            url: "{{ url('delivery_note/address_details/') }}",
             data: { customer_id : customer_id },
            success: function(data) {
             $('#address_line_1').val(data);
@@ -2313,16 +2342,16 @@ function customer_details()
         });
 }
 
-function so_details()
+function se_details()
 {
 
-  var so_no=$('.so_no').val();
+  var se_no=$('.sale_estimation_no').val();
 
 
   $.ajax({
            type: "POST",
-            url: "{{ url('sales_entry/so_details/') }}",
-            data: { so_no : so_no },
+            url: "{{ url('delivery_note/se_details/') }}",
+            data: { se_no : se_no },
            success: function(data) {
             var result=JSON.parse(data);
             if(result.status>0){
@@ -2337,13 +2366,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-if(result.sale_type == 1)
-$('.sale_type').text('Cash Sale');
-else
-$('.sale_type').text('Credit Sale');
-$('.sale_date').text(result.date_saleorder);
-$('.estimation_date').text(result.date_estimation);
-$('.estimation_no').text(result.estimation_no);
+$('.sale_estimation_date').val(result.date);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
@@ -2353,7 +2376,6 @@ $('#total_discount').val(result.item_discount_sum);
 $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
- $('#so_date').val(result.date_saleorder);
  
 
 var total_net_price=calculate_total_net_price();
