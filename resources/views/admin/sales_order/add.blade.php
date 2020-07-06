@@ -2154,9 +2154,16 @@ function estimation_details()
             if(result.status>0){
 $('.append_proof_details').append(result.data);
 var expense_length=$(".expense_type").length;
-if(expense_length >1){
+if(expense_length >1)
+{
 $('.append_expense').append(result.expense_typess);
-}else{
+}
+else if(result.expense_cnt == 0)
+{
+  
+}
+else
+{
   $('.append_expense').html(result.expense_typess);
 }
 
