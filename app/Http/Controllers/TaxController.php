@@ -38,6 +38,15 @@ class TaxController extends Controller
     public function store(Request $request)
     {
         $tax = new Tax();
+        $tax_details = Tax::all();
+
+        foreach ($tax_details as $key => $value) {
+            if($request->name == $value->name)
+            {
+                return Redirect::back()->with('success', 'Name Already Taken');
+            }
+        }
+        
 
         $tax->name = $request->name;
         $tax->remark = $request->remark;
@@ -81,6 +90,15 @@ class TaxController extends Controller
     public function update(Request $request, $id)
     {
         $tax = Tax::find($id);
+
+        $tax_details = Tax::all();
+
+        foreach ($tax_details as $key => $value) {
+            if($request->name == $value->name)
+            {
+                return Redirect::back()->with('success', 'Name Already Taken');
+            }
+        }
 
         $tax->name = $request->name;
         $tax->remark = $request->remark;
