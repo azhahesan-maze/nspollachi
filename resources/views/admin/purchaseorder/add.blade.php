@@ -2154,7 +2154,8 @@ function estimation_details()
            success: function(data) {
             var result=JSON.parse(data);
             if(result.status>0){
-              console.log(result.expense_cnt);
+              //console.log(result.expense_cnt);
+              //console.log($('.append_proof_details').length);
 $('.append_proof_details').append(result.data);
 var expense_length=$(".expense_type").length;
 if(expense_length >1)

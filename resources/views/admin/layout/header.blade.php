@@ -223,6 +223,7 @@
                           @can('uom_list')
                           <li><a href="{{url('master/uom')}}">Uom</a></li>
                           @endcan
+                          <li><a href="{{route('tax.index')}}">Tax</a></li>
                           @can('item_master_list')
                           <li><a href="{{url('master/item')}}">Item</a></li>
                           @endcan

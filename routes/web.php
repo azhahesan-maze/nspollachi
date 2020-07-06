@@ -468,6 +468,13 @@ Route::group(['prefix' => 'master/item', 'middleware' => ['auth']], function () 
 });
 /* Item Master End Here  */
 
+/*Tax Master Start Here*/
+
+Route::resource('tax', 'TaxController',['middleware' => ['auth']]);
+Route::any('tax/delete/{id}', 'TaxController@destroy');
+
+/*Tax Master End Here*/
+
 
 /* Item Master  Start Here  */
 Route::group(['prefix' => 'master/item-tax-details', 'middleware' => ['auth']], function () {
