@@ -39,9 +39,10 @@ class TaxController extends Controller
     {
         $tax = new Tax();
         $tax_details = Tax::all();
-
+        $name = strtolower($request->name);
         foreach ($tax_details as $key => $value) {
-            if($request->name == $value->name)
+            $name_data = strtolower($value->name);
+            if($name == $name_data)
             {
                 return Redirect::back()->with('success', 'Name Already Taken');
             }
@@ -92,10 +93,13 @@ class TaxController extends Controller
         $tax = Tax::find($id);
 
         $tax_details = Tax::all();
+        $name = strtolower($request->name);
 
         foreach ($tax_details as $key => $value) {
-            if($request->name == $value->name)
+            $name_data = strtolower($value->name);
+            if($name == $name_data && $value->remark == $request->remark)
             {
+
                 return Redirect::back()->with('success', 'Name Already Taken');
             }
         }
