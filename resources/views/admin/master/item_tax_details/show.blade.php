@@ -32,46 +32,15 @@
           </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_1}} :</label>
-              <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item_tax_details->category_one->name) ? $item_tax_details->category_one->name : "" }} </label>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-              <div class="form-group row">
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_2}} :</label>
-                <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item_tax_details->category_two->name) ? $item_tax_details->category_two->name : "" }} </label>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $category_3}} :</label>
-                  <label for="validationCustom01" class="col-sm-4 col-form-label">{{ isset($item_tax_details->category_three->name) ? $item_tax_details->category_three->name : "" }} </label>
-                </div>
-              </div>
-
+        
+            @foreach($tax as $key => $value)
               <div class="col-md-6">
                   <div class="form-group row">
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">IGST (%) :</label>
-                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item_tax_details->igst  }} </label>
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{$value->name}} (%) :</label>
+                    <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item_tax_details->value  }} </label>
                   </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">CGST (%) :</label>
-                      <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item_tax_details->cgst  }} </label>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="validationCustom01" class="col-sm-4 col-form-label">SGST (%) :</label>
-                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item_tax_details->sgst  }} </label>
-                      </div>
-                    </div>
+                @endforeach
 
                     <div class="col-md-6">
                         <div class="form-group row">

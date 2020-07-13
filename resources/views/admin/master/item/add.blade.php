@@ -467,31 +467,36 @@
 
 
             </div>
+            <input type="hidden" name="count" id="count" value="1">
             <div class="form-row">
                <table class="table">
                   <thead class="thead-gray">
                      <tr>
                         <th class="text-center">S.No</th>
-                        <th class="text-center">IGST (%) <input type="text" class="w-50 border-radius common_igst" placeholder="IGST (%)"> </th>
-                        <th class="text-center">CGST (%)</th>
-                        <th class="text-center">SGST (%) </th>
+                        @foreach($tax as $key => $value)
+                        <th class="text-center">{{$value->name}} (%) </th>
+                        @endforeach
                         <th class="text-center">Effective From  </th>
                         <th class="text-center">Action</th>
                      </tr>
                   </thead>
                   <tbody class="append_row">
-                     <tr>
+                     <tr class="row_count">
                         <td class="s_no">1</td>
+                        @foreach($tax as $key => $value)
                         <td>
                            <div class="col-sm-12">
-                              <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]"  placeholder="IGST" value="{{ old('igst.0') }}" required>
-                              <span class="mandatory"> {{ $errors->first('igst.0')  }} </span>
+                              <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{$value->name}}" id="{{ $value->name }}_id{{ $key }}" value="" required>
+
+                              <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">
+                              <span class="mandatory">  </span>
                               <div class="invalid-feedback">
                                  Enter valid IGST
                               </div>
                            </div>
                         </td>
-                        <td>
+                        @endforeach
+                        <!-- <td>
                            <div class="col-sm-12">
                               <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" readonly placeholder="CGST" value="{{ old('cgst.0') }}" required>
                               <span class="mandatory"> {{ $errors->first('cgst.0')  }} </span>
@@ -508,7 +513,7 @@
                                  Enter valid SGST
                               </div>
                            </div>
-                        </td>
+                        </td> -->
                         <td>
                            <div class="col-sm-12">
                               <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.0') }}" required>
@@ -677,7 +682,7 @@
       <!-- card body end@ -->
    </div>
 </div>
-<script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script>
+<!-- <script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script> -->
 <script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
 <script>
 
@@ -689,6 +694,125 @@ $(document).on("submit",".submit_form2",function(){
     return false;
   }
 });
+var i = 0;
+function add_item_tax_details() {
+   i++;
+    var item_tax_dets = "";
+    item_tax_dets += '<tr class="row_count">\
+                        <td class="s_no">1</td>\
+                        @foreach($tax as $key => $value)\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control {{$value->name}}_id only_allow_digit_and_dot common" name="{{$value->name}}_id[]"  placeholder="{{$value->name}}" id="{{$value->name}}_id'+i+'"  required>\
+                              <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">\
+                              <span class="mandatory">  </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid IGST\
+                              </div>\
+                           </div>\
+                        </td>\
+                        @endforeach\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="" required>\
+                              <span class="mandatory"> </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid Effective From Date\
+                              </div>\
+                           </div>\
+                        </td>\
+                        <td>\
+                           <div class="form-group row">\
+                              <div class="col-sm-3 mr-1">\
+                                 <label class="btn btn-success add_tax_details">+</label>\
+                              </div>\
+                              <div class="col-sm-3 mx-2">\
+                                 <label class="btn btn-danger remove_tax_details">-</label>\
+                              </div>\
+                           </div>\
+                        </td>\
+                     </tr>';
+
+    $(".append_row").append(item_tax_dets);
+    $(".append_row").length;
+    $('#count').val($(".row_count").length);
+    var currentDate = new Date();
+    $('.valid_from').datepicker({
+        format: "dd-mm-yyyy",
+        todayHighlight: true,
+        startDate: currentDate,
+        endDate: '',
+        setDate: currentDate,
+        autoclose: true
+    });
+    s_no();
+    //common_igst_calculation();
+}
+
+   
+   $(document).on("click", ".remove_tax_details", function() {
+    var $tr = $(this).closest("tr");
+    if ($(".remove_tax_details").length > 1) {
+        $(this).closest("tr").remove();
+        s_no();
+        i--;
+        $('#count').val($(".row_count").length);
+    } else {
+        alert("Atleast One Row Present");
+    }
+});
+
+   $(document).on("change", ".common", function() {
+
+      var common=$(this).val();
+   //newfun($(this).attr('id'),common);
+   
+   var tax_name = $(this).attr('class').split(' ')[1].slice(0,-3).toLowerCase();
+   //alert(tax_name);
+   if(tax_name == 'igst')
+   {
+      //alert('hi');
+    var gst_lower = $(this).attr('class').split(' ')[1].slice(0,-3).toLowerCase();
+    var gst_upper = $(this).attr('class').split(' ')[1].slice(0,-3).toUpperCase();
+    var gst=tax_name.substr(0,1).toUpperCase()+tax_name.substr(1);
+    var igst_upper = $(this).closest("tr").find("."+gst_upper+"_id").val();
+    var igst_lower = $(this).closest("tr").find("."+gst_lower+"_id").val();
+    var igst = $(this).closest("tr").find("."+gst+"_id").val();
+    var half_lower = parseFloat(igst_lower)/2;
+    var half_upper = parseFloat(igst_upper)/2;
+    var half = parseFloat(igst)/2;
+
+    var lower_cgst = 'cgst'.toLowerCase();
+    var upper_cgst = 'cgst'.toUpperCase();
+    var name_cgst = lower_cgst.substr(0,1).toUpperCase()+lower_cgst.substr(1);
+
+    var lower_sgst = 'sgst'.toLowerCase();
+    var upper_sgst = 'sgst'.toUpperCase();
+    var name_sgst = lower_sgst.substr(0,1).toUpperCase()+lower_sgst.substr(1);
+
+    $(this).closest("tr").find("."+lower_cgst+"_id").val(half_lower);
+    $(this).closest("tr").find("."+upper_cgst+"_id").val(half_upper);
+    $(this).closest("tr").find("."+name_cgst+"_id").val(half);
+
+    $(this).closest("tr").find("."+lower_sgst+"_id").val(half_lower);
+    $(this).closest("tr").find("."+upper_sgst+"_id").val(half_upper);
+    $(this).closest("tr").find("."+name_sgst+"_id").val(half);
+
+   // calc_gst(half,half_upper,half_lower);
+ }
+   });
+
+   function calc_gst(half,half_upper,half_lower)
+   {
+
+      $(this).closest("tr").find(".cgst").val(cgst);
+   }
+
+   function s_no() {
+    $(".s_no").each(function(key) {
+        $(this).html(key + 1)
+    });
+}
 
    $(document).on("click",".add_tax_details",function(){
      add_item_tax_details();

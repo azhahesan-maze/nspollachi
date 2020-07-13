@@ -1,50 +1,38 @@
 function add_item_tax_details() {
     var item_tax_dets = "";
     item_tax_dets += '<tr>\
-    <td class="s_no">1</td>  \
-    <td>\
-        <div class="col-sm-12">\
-        <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="" required>\
-        <div class="invalid-feedback">\
-            Enter valid IGST\
-          </div>\
-        </div>\
-      </td>\
-    <td>\
-        <div class="col-sm-12">\
-        <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" readonly placeholder="CGST" value="" required>\
-         <div class="invalid-feedback">\
-            Enter valid CGST\
-          </div>\
-        </div>\
-      </td>\
- <td>\
-            <div class="col-sm-12">\
-            <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" readonly placeholder="SGST" value="" required>\
-            <div class="invalid-feedback">\
-                Enter valid SGST\
-              </div>\
-            </div>\
-          </td>\
- <td>\
-              <div class="col-sm-12">\
-               <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="" required autocomplete="off">\
-                <div class="invalid-feedback">\
-                  Enter valid Effective From Date\
-                </div>\
-              </div>\
-            </td>\
-            <td>\
-              <div class="form-group row">\
-               <div class="col-sm-3 mr-1">\
-                 <label class="btn btn-success add_tax_details">+</label>\
-               </div>\
-               <div class="col-sm-3 mx-2">\
-                 <label class="btn btn-danger remove_tax_details">-</label>\
-               </div>\
-             </div>\
-            </td>\
-</tr>';
+                        <td class="s_no">1</td>\
+                        @foreach($tax as $key => $value)\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control {{$value->name}} only_allow_digit_and_dot" name="{{$value->name}}[]"  placeholder="{{$value->name}}" value="{{ old('igst.0') }}" required>\
+                              <span class="mandatory">  </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid IGST\
+                              </div>\
+                           </div>\
+                        </td>\
+                        @endforeach\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.0') }}" required>\
+                              <span class="mandatory"> </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid Effective From Date\
+                              </div>\
+                           </div>\
+                        </td>\
+                        <td>\
+                           <div class="form-group row">\
+                              <div class="col-sm-3 mr-1">\
+                                 <label class="btn btn-success add_tax_details">+</label>\
+                              </div>\
+                              <div class="col-sm-3 mx-2">\
+                                 <label class="btn btn-danger remove_tax_details">-</label>\
+                              </div>\
+                           </div>\
+                        </td>\
+                     </tr>';
 
     $(".append_row").append(item_tax_dets);
     var currentDate = new Date();

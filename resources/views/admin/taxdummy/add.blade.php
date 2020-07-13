@@ -97,22 +97,17 @@
       <tr>
         <th>S.No</th>
         <th>Item</th>
-        @foreach($taxes as $key => $value)
-        <th>{{ $value->name }}(%) <input type="text" class="form-control common" id="{{ $value->name }}_id" placeholder="{{ $value->name }} (%)"> </th>
-
-        @endforeach
-        <th >Effective From <input type="text" class="form-control valid_from" onchange="effective_from($(this).val())" placeholder="dd-mm-yyyy"> </th> 
-        <!-- <th>CGST (%)</th>
+        <th>IGST (%) <div class="col-sm-12"><input type="text" class="form-control common_igst" placeholder="IGST (%)"> </div></th>
+        <th>CGST (%)</th>
         <th >SGST (%) </th>
-        <th >Effective From <input type="text" class="form-control valid_from" placeholder="dd-mm-yyyy"> </th> -->
+        <th >Effective From <input type="text" class="form-control valid_from" placeholder="dd-mm-yyyy"> </th>
       </tr>
     </thead>
-    <input type="hidden" name="table_count" id="table_count">
     <tbody class="append_row">
       
      @if (old('item_id'))
          @foreach (old('item_id') as $old_key=>$old_value)
-  <tr>
+  
          <td class="s_no"></td> 
          <td>
              <p> {{ old('item_name.'.$old_key) }} </p>
@@ -205,13 +200,6 @@ $(document).ready(function () {
 
 
   });
-function effective_from(value)    
-{
-  $(".valid_from").each(function(){
-    $(this).val(value);
-  });
-}
-
 
 
 $(document).on("change",".category_id",function(){
@@ -403,9 +391,7 @@ $(document).on("click",".search_btn",function(){
               success: function (res)
               {
                 result = JSON.parse(res);
-
                 $(".append_row").html(result.page);
-                $("#table_count").val(result.count);
 
                 $(".response_div").css("display","block");
                 s_no_generation();
@@ -415,87 +401,25 @@ $(document).on("click",".search_btn",function(){
 
 
 
-$(document).on("blur",".common",function(){
+$(document).on("blur",".common_igst",function(){
 
-   var common=$(this).val();
-   newfun($(this).attr('id'),common);
-   
-   var tax_name = $(this).attr('id').slice(0,-3).toLowerCase();
-   if(tax_name == 'igst')
-   {
-    var gst_lower = $(this).attr('id').slice(0,-3).toLowerCase();
-    var gst_upper = $(this).attr('id').slice(0,-3).toUpperCase();
-    var gst=tax_name.substr(0,1).toUpperCase()+tax_name.substr(1);
-    var igst_upper = $("#"+gst_upper+"_id").val();
-    var igst_lower = $("#"+gst_lower+"_id").val();
-    var igst = $("#"+gst+"_id").val();
-    var half_lower = parseFloat(igst_lower)/2;
-    var half_upper = parseFloat(igst_upper)/2;
-    var half = parseFloat(igst)/2;
+  var common_igst=$(this).val();
+  var common_cgst_and_sgst=parseInt(common_igst)/2;
+  $(".igst").val(common_igst);
+  $(".cgst").val(common_cgst_and_sgst);
+  $(".sgst").val(common_cgst_and_sgst); 
 
-    $('#cgst_id').val(half_lower);
-    $('#sgst_id').val(half_lower);
-    $('#Cgst_id').val(half);
-    $('#Sgst_id').val(half);
-    $('#CGST_id').val(half_upper);
-    $('#SGST_id').val(half_upper);
-
-    calc_gst(half,half_upper,half_lower);
-
-   }
-  
-  
 });
 
-function newfun(id,value)
-{
-  $("."+id).each(function(){
-    $(this).val(value);
-  });
-}
+$(document).on("blur",".igst",function(){
 
-function calc_gst(half,half_upper,half_lower)
-{
-  var lower_cgst = 'cgst'.toLowerCase();
-  var upper_cgst = 'cgst'.toUpperCase();
-  var name_cgst = lower_cgst.substr(0,1).toUpperCase()+lower_cgst.substr(1);
+var common_igst=$(this).val();
+var common_cgst_and_sgst=parseInt(common_igst)/2;
 
-  var lower_sgst = 'sgst'.toLowerCase();
-  var upper_sgst = 'sgst'.toUpperCase();
-  var name_sgst = lower_sgst.substr(0,1).toUpperCase()+lower_sgst.substr(1);
+$(this).closest("tr").find(".cgst").val(common_cgst_and_sgst);
+$(this).closest("tr").find(".sgst").val(common_cgst_and_sgst); 
 
-  $("."+lower_cgst).each(function(){
-    $(this).val(half_lower);
-  });
-  $("."+upper_cgst).each(function(){
-    $(this).val(half_upper);
-  });
-  $("."+name_cgst).each(function(){
-    $(this).val(half);
-  });
-  $("."+lower_sgst).each(function(){
-    $(this).val(half_lower);
-  });
-  $("."+upper_sgst).each(function(){
-    $(this).val(half_upper);
-  });
-  $("."+name_sgst).each(function(){
-    $(this).val(half);
-  });
-
-  console.log(half_upper);
-}
-
-
-// $(document).on("blur",".igst",function(){
-
-// var common_igst=$(this).val();
-// var common_cgst_and_sgst=parseInt(common_igst)/2;
-
-// $(this).closest("tr").find(".cgst").val(common_cgst_and_sgst);
-// $(this).closest("tr").find(".sgst").val(common_cgst_and_sgst); 
-
-// });
+});
     
 
 

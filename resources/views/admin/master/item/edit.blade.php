@@ -15,6 +15,7 @@
         </div>
       </div>
     </div>
+    
     <!-- card header end@ -->
     <div class="card-body">
       <form  method="post" class="form-horizontal needs-validation" novalidate action="{{url('master/item/update/'.$item->id)}}" enctype="multipart/form-data">
@@ -475,66 +476,44 @@
   <h4> Item Tax Details :</h4>
   </div>
 </div>
-
+<input type="hidden" name="count" id="count" value="{{ $tax_detail_count }}">
  <div class="form-row">
 
   <table class="table">
     <thead class="thead-gray">
       <tr>
         <th class="text-center">S.No</th>
-        <th class="text-center">IGST (%) <input type="text" class="w-50 border-radius common_igst" placeholder="IGST (%)"> </th>
-        <th class="text-center">CGST (%)</th>
-        <th class="text-center">SGST (%) </th>
+        <!-- <th class="text-center">IGST (%) <input type="text" class="w-50 border-radius common_igst" placeholder="IGST (%)"> </th>
+        <th class="text-center">CGST (%)</th> -->
+        @foreach($tax as $key => $value)
+        <th class="text-center">{{$value->name}} (%) </th>
+        @endforeach
         <th class="text-center">Effective From  </th>
-        <th class="text-center">Action  <label class="btn btn-success add_tax_details">+</label></th>
+        <th class="text-center">Action  <!-- <label class="btn btn-success add_tax_details">+</label></th> -->
       </tr>
     </thead>
     <tbody class="append_row">
-      @foreach ($item->item_tax_details as $item_tax_key=>$item_tax_details)
+      @foreach($tax_details as $i =>$val) 
       <tr>
-      <td class="s_no">{{$item_tax_key + 1}}</td> 
+         <td class="s_no">{{$i+1}}</td>
+        @foreach($tax as $key=> $value)
+        
         <td>
             <div class="col-sm-12">
-            <input type="hidden" name="item_tax_details_id" class="" value="{{ old('item_tax_details_id.'.$item_tax_key,$item_tax_details->id) }}">
-            <input type="text" class="form-control igst only_allow_digit_and_dot" name="old_igst[]"  placeholder="IGST" value="{{ old('old_igst.'.$item_tax_key,$item_tax_details->igst) }}" required >
-            <span class="mandatory"> {{ $errors->first('old_igst.'.$item_tax_key)  }} </span>
-            <div class="invalid-feedback">
-                Enter valid IGST
-              </div>
+            <input type="hidden" name="{{$value->name}}[]" class="" id="{{$value->name}}[]" value="{{$value->id }}">
+            <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{ $value->name }}" value="{{ $tax_value[$i][$key]['value'] }}" required >
+           
             </div>
           </td>
-        <td>
-            <div class="col-sm-12">
-            <input type="text" class="form-control cgst only_allow_digit_and_dot" name="old_cgst[]" readonly placeholder="CGST" value="{{ old('old_cgst.'.$item_tax_key,$item_tax_details->cgst) }}" required>
-            <span class="mandatory"> {{ $errors->first('old_cgst.'.$item_tax_key)  }} </span>
-            <div class="invalid-feedback">
-                Enter valid CGST
-              </div>
-            </div>
+         
+          @endforeach
+          <td>
+             <div class="col-sm-12">
+                <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ $tax_value[$i][$key]['valid_from'] }}" required>
+                <span class="mandatory"> {{ $errors->first('valid_from.0')  }} 
+             </div>
           </td>
-
-      <td>
-                <div class="col-sm-12">
-                <input type="text" class="form-control sgst only_allow_digit_and_dot" name="old_sgst[]" readonly placeholder="SGST" value="{{ old('old_sgst.'.$item_tax_key,$item_tax_details->cgst) }}" required>
-                <span class="mandatory"> {{ $errors->first('old_sgst.'.$item_tax_key)  }} </span>
-                <div class="invalid-feedback">
-                    Enter valid SGST
-                  </div>
-                </div>
-              </td>
-
-              <td>
-                  <div class="col-sm-12">
-                    @php
-                        $valid_from=isset($item_tax_details->valid_from) && !empty($item_tax_details->valid_from) ? date('d-m-Y',strtotime($item_tax_details->valid_from)) : "";
-                    @endphp
-                   <input type="text" class="form-control valid_from" name="old_valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('old_valid_from.'.$item_tax_key,$valid_from) }}" required autocomplete="off">
-                   <span class="mandatory"> {{ $errors->first('old_valid_from.'.$item_tax_key)  }} </span>
-                   <div class="invalid-feedback">
-                      Enter valid Effective From Date
-                    </div>
-                  </div>
-                </td>
+        
                 <td>
                   <div class="form-group row">
                    <div class="col-sm-3 mr-1">
@@ -545,6 +524,7 @@
                    </div>
                  </div>
                 </td>
+                
     </tr>
       @endforeach
       
@@ -706,9 +686,125 @@
   </div>
 </div>
 
-<script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script>
+<!-- <script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script> -->
 <script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
 <script>
+
+var count = $('#count').val();
+function add_item_tax_details() {
+    var item_tax_dets = "";
+    item_tax_dets += '<tr class="row_count">\
+                        <td class="s_no">1</td>\
+                        @foreach($tax as $key => $value)\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control {{$value->name}}_id only_allow_digit_and_dot common" name="{{$value->name}}_id[]"  placeholder="{{$value->name}}"  required>\
+                              <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">\
+                              <span class="mandatory">  </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid IGST\
+                              </div>\
+                           </div>\
+                        </td>\
+                        @endforeach\
+                        <td>\
+                           <div class="col-sm-12">\
+                              <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="" required>\
+                              <span class="mandatory"> </span>\
+                              <div class="invalid-feedback">\
+                                 Enter valid Effective From Date\
+                              </div>\
+                           </div>\
+                        </td>\
+                        <td>\
+                           <div class="form-group row">\
+                              <div class="col-sm-3 mr-1">\
+                                 <label class="btn btn-success add_tax_details">+</label>\
+                              </div>\
+                              <div class="col-sm-3 mx-2">\
+                                 <label class="btn btn-danger remove_tax_details">-</label>\
+                              </div>\
+                           </div>\
+                        </td>\
+                     </tr>';
+
+    $(".append_row").append(item_tax_dets);
+    $(".append_row").length;
+    count++;
+    $('#count').val(count);
+    var currentDate = new Date();
+    $('.valid_from').datepicker({
+        format: "dd-mm-yyyy",
+        todayHighlight: true,
+        startDate: currentDate,
+        endDate: '',
+        setDate: currentDate,
+        autoclose: true
+    });
+    s_no();
+    //common_igst_calculation();
+}
+
+function s_no() {
+    $(".s_no").each(function(key) {
+        $(this).html(key + 1)
+    });
+}
+   
+   $(document).on("click", ".remove_tax_details", function() {
+    var $tr = $(this).closest("tr");
+    if ($(".remove_tax_details").length > 1) {
+        $(this).closest("tr").remove();
+        s_no();
+        count--;
+        $('#count').val(count);
+    } else {
+        alert("Atleast One Row Present");
+    }
+});
+
+  
+  $(document).on("input", ".common", function() {
+
+      var common=$(this).val();
+   //newfun($(this).attr('id'),common);
+   
+   var tax_name = $(this).attr('class').split(' ')[1].slice(0,-3).toLowerCase();
+   //alert(tax_name);
+   if(tax_name == 'igst')
+   {
+      //alert('hi');
+    var gst_lower = $(this).attr('class').split(' ')[1].slice(0,-3).toLowerCase();
+    var gst_upper = $(this).attr('class').split(' ')[1].slice(0,-3).toUpperCase();
+    var gst=tax_name.substr(0,1).toUpperCase()+tax_name.substr(1);
+    var igst_upper = $(this).closest("tr").find("."+gst_upper+"_id").val();
+    var igst_lower = $(this).closest("tr").find("."+gst_lower+"_id").val();
+    var igst = $(this).closest("tr").find("."+gst+"_id").val();
+    var half_lower = parseFloat(igst_lower)/2;
+    var half_upper = parseFloat(igst_upper)/2;
+    var half = parseFloat(igst)/2;
+
+    var lower_cgst = 'cgst'.toLowerCase();
+    var upper_cgst = 'cgst'.toUpperCase();
+    var name_cgst = lower_cgst.substr(0,1).toUpperCase()+lower_cgst.substr(1);
+
+    var lower_sgst = 'sgst'.toLowerCase();
+    var upper_sgst = 'sgst'.toUpperCase();
+    var name_sgst = lower_sgst.substr(0,1).toUpperCase()+lower_sgst.substr(1);
+
+    $(this).closest("tr").find("."+lower_cgst+"_id").val(half_lower);
+    $(this).closest("tr").find("."+upper_cgst+"_id").val(half_upper);
+    $(this).closest("tr").find("."+name_cgst+"_id").val(half);
+
+    $(this).closest("tr").find("."+lower_sgst+"_id").val(half_lower);
+    $(this).closest("tr").find("."+upper_sgst+"_id").val(half_upper);
+    $(this).closest("tr").find("."+name_sgst+"_id").val(half);
+
+   // calc_gst(half,half_upper,half_lower);
+ }
+   });
+
+
 $(document).on("click",".add_tax_details",function(){
   add_item_tax_details();
 });

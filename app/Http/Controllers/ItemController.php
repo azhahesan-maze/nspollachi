@@ -11,6 +11,7 @@ use App\Models\Category_one;
 use App\Models\Category_three;
 use App\Models\Category_two;
 use App\Models\Item;
+use App\Models\Tax;
 use App\Models\ItemBracodeDetails;
 use App\Models\ItemTaxDetails;
 use App\Models\Language;
@@ -78,9 +79,10 @@ class ItemController extends Controller
         $brand = Brand::orderBy('name', 'asc')->get();
         $supplier = Supplier::orderBy('name', 'asc')->get();
         $uom = Uom::all();
+        $tax = Tax::all();
         $language = Language::all();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
-        return view('admin.master.item.add', compact('supplier', 'brand', 'category', 'bulk_item', 'uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3'));
+        return view('admin.master.item.add', compact('supplier', 'brand', 'category', 'bulk_item', 'uom', 'language', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3','tax'));
     }
 
     /**
@@ -161,32 +163,59 @@ class ItemController extends Controller
                 }
             }
 
+            $item_id = $item->id;
+
 
 
             /* Store Barcode Details End Here  */
-            if ($request->has('igst')) {
+            $count = $request->count;
+            $tax = Tax::all();
 
-                $batch_insert = [];
-                foreach ($request->igst as $tax_key => $tax_value) {
-                    if ($tax_value != "") {
-                        $data = [
-                            'item_id' => $item->id,
-                            'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-                            'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
-                            'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-                            'valid_from' => isset($request->valid_from[$tax_key]) && !empty($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
-                            'created_by' => 0,
-                            'created_at' => $now,
-                            'updated_at' => $now,
-                        ];
+            for($i=0;$i<$count;$i++)
+            {
+                foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+                    
 
-                        $batch_insert[] = $data;
+                       $tax_details = new ItemTaxDetails;
+                       $tax_details->item_id =$item_id;
+                       $tax_details->tax_master_id =$request->$tax_name[$i];
+                       $tax_details->value =$request->$value_name[$i];
+                       $date = date("Y-m-d", strtotime($request->valid_from[$i]));
+                       $tax_details->valid_from =$date;
+
+                       $tax_details->save();
+
                     }
+                    //break;
                 }
-            }
-            if (count($batch_insert) > 0) {
-                ItemTaxDetails::insert($batch_insert);
-            }
+            
+            // if ($request->has('igst')) {
+
+            //     $batch_insert = [];
+            //     foreach ($request->igst as $tax_key => $tax_value) {
+            //         if ($tax_value != "") {
+            //             $data = [
+            //                 'item_id' => $item->id,
+            //                 'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+            //                 'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
+            //                 'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+            //                 'valid_from' => isset($request->valid_from[$tax_key]) && !empty($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
+            //                 'created_by' => 0,
+            //                 'created_at' => $now,
+            //                 'updated_at' => $now,
+            //             ];
+
+            //             $batch_insert[] = $data;
+            //         }
+            //     }
+            // }
+            // if (count($batch_insert) > 0) {
+            //     ItemTaxDetails::insert($batch_insert);
+            // }
 
             if (count($batch_barcode_insert) > 0) {
                 ItemBracodeDetails::insert($batch_barcode_insert);
@@ -223,6 +252,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item, $id)
     {
+
         $category_1 = $this->category_1;
         $category_2 = $this->category_2;
         $category_3 = $this->category_3;
@@ -234,12 +264,38 @@ class ItemController extends Controller
         $category_two = Category_two::all();
         $category_three = Category_three::all();
         $uom = Uom::all();
+        $tax = Tax::all();
+
+        $tax_details = ItemTaxDetails::where('item_id',$id)
+                                    ->select('item_id','valid_from')
+                                    ->groupBy('item_id','valid_from')
+                                    ->get();
+                                    // echo "<pre>"; print_r(count($tax_details));
+
+                                    
+                                    //  exit();
+         foreach ($tax_details as $key => $value) 
+         {
+                $tax_value[] = ItemTaxDetails::where('item_id',$value->item_id)
+                                            ->where('valid_from',$value->valid_from)
+                                            ->get();
+        }                               
+//         echo "<pre>"; print_r($tax_value[0][2]); 
+
+               
+                                       
+        $tax_count = count($tax);
+        $tax_detail_count = count($tax_details);
+
+        //$row_count = $tax_value_count/$tax_count;
+
+
         $brand = Brand::orderBy('name', 'asc')->get();
         $category = Category::orderBy('name', 'asc')->get();
         $bulk_item = Item::where('item_type', 'Bulk')->get();
         $child_item = Item::all();
         $supplier = Supplier::orderBy('name', 'asc')->get();
-        return view('admin.master.item.edit', compact('supplier', 'brand', 'bulk_item', 'category', 'item', 'child_item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three', 'uom'));
+        return view('admin.master.item.edit', compact('supplier', 'brand', 'bulk_item', 'category', 'item', 'child_item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three','tax','tax_details', 'tax_value','uom','tax_count','tax_detail_count'));
     }
 
     /**
@@ -337,38 +393,67 @@ class ItemController extends Controller
                 }
             }
 
-            if ($request->has('igst')) {
-                foreach ($request->igst as $tax_key => $tax_value) {
-                    if ($tax_value != "") {
-                        $data = [
-                            'item_id' => $item->id,
-                            'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-                            'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
-                            'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-                            'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
-                            'created_by' => 0,
-                            'created_at' => $now,
-                            'updated_at' => $now,
-                        ];
-                        $batch_insert[] = $data;
+            $tax_detail = ItemTaxDetails::where('item_id',$id);
+
+            $tax_detail->delete();
+
+            $count = $request->count;
+            $tax = Tax::all();
+
+            for($i=0;$i<$count;$i++)
+            {
+                foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+                    
+
+                       $tax_details = new ItemTaxDetails;
+                       $tax_details->item_id =$id;
+                       $tax_details->tax_master_id =$request->$tax_name[$i];
+                       $tax_details->value =$request->$value_name[$i];
+                       $date = date("Y-m-d", strtotime($request->valid_from[$i]));
+                       $tax_details->valid_from =$date;
+
+                       $tax_details->save();
+
                     }
+                    //break;
                 }
-            }
+
+            // if ($request->has('igst')) {
+            //     foreach ($request->igst as $tax_key => $tax_value) {
+            //         if ($tax_value != "") {
+            //             $data = [
+            //                 'item_id' => $item->id,
+            //                 'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+            //                 'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
+            //                 'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
+            //                 'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
+            //                 'created_by' => 0,
+            //                 'created_at' => $now,
+            //                 'updated_at' => $now,
+            //             ];
+            //             $batch_insert[] = $data;
+            //         }
+            //     }
+            // }
 
             /* Update Exsiting Item Tax Details Start Here */
-            if ($request->has('old_igst')) {
-                $now = Carbon::now()->toDateTimeString();
-                foreach ($request->old_igst as $tax_key => $tax_value) {
-                    $old_item_tax_details = ItemTaxDetails::find($request->item_tax_details_id);
-                    $old_item_tax_details->item_id = $item->id;
-                    $old_item_tax_details->cgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
-                    $old_item_tax_details->igst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] : "";
-                    $old_item_tax_details->sgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
-                    $old_item_tax_details->valid_from = isset($request->old_valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->old_valid_from[$tax_key])) : "";
-                    $old_item_tax_details->updated_by = 0;
-                    $old_item_tax_details->save();
-                }
-            }
+            // if ($request->has('old_igst')) {
+            //     $now = Carbon::now()->toDateTimeString();
+            //     foreach ($request->old_igst as $tax_key => $tax_value) {
+            //         $old_item_tax_details = ItemTaxDetails::find($request->item_tax_details_id);
+            //         $old_item_tax_details->item_id = $item->id;
+            //         $old_item_tax_details->cgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
+            //         $old_item_tax_details->igst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] : "";
+            //         $old_item_tax_details->sgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
+            //         $old_item_tax_details->valid_from = isset($request->old_valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->old_valid_from[$tax_key])) : "";
+            //         $old_item_tax_details->updated_by = 0;
+            //         $old_item_tax_details->save();
+            //     }
+            // }
             /* Update Exsiting Item Tax Details End Here */
 
 

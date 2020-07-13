@@ -484,8 +484,11 @@ Route::group(['prefix' => 'master/item-tax-details', 'middleware' => ['auth']], 
     Route::any('store', 'ItemTaxDetailsController@store')->middleware('permission:item_tax_details_create');
     Route::any('show/{id}', 'ItemTaxDetailsController@show')->middleware('permission:item_tax_details_list');
     Route::any('edit/{id}', 'ItemTaxDetailsController@edit')->middleware('permission:item_tax_details_edit');
-    Route::any('update/{id}', 'ItemTaxDetailsController@update')->middleware('permission:item_tax_details_edit');
+    Route::any('update/{id}', 'ItemTaxDetailsController@update');
     Route::any('delete/{id}', 'ItemTaxDetailsController@destroy')->middleware('permission:item_tax_details_delete');
+    Route::any('tax_details/{id}', 'ItemTaxDetailsController@tax_details');
+
+    
 });
 /* Item Master End Here  */
 
@@ -768,8 +771,11 @@ Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], functi
 
 
 
+/*tax dummy strat*/
 
+Route::resource('taxdummy','Taxdummy',['middleware' => ['auth']]);
 
+/*tax dummy end*/
 
 
 

@@ -28,6 +28,10 @@ class ItemTaxDetails extends Model
         return $this->belongsTo(Item::class,'item_id','id');
     }
 
+    public function tax(){
+        return $this->belongsTo(Tax::class,'tax_master_id','id');
+    }
+
     
 }
 
