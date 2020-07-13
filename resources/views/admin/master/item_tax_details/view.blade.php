@@ -10,6 +10,8 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
+            
+            <li><button type="button" onclick="refresh()" style="width: 40px; height: 25px;" class="btn btn-success fa fa-refresh"></button></li>
             <li><button type="button" class="btn btn-success"><a href="{{url('master/item-tax-details/create')}}">Add Item Tax Details </a></button></li>
           </ul>
         </div>
@@ -72,6 +74,12 @@
       </table>
 
     </div>
+    <script type="text/javascript">
+      function refresh()
+      {
+        window.location.reload();
+      }
+    </script>
     <!-- card body end@ -->
   </div>
 </div>
