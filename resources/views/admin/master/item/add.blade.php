@@ -762,7 +762,7 @@ function add_item_tax_details() {
     }
 });
 
-   $(document).on("change", ".common", function() {
+   $(document).on("input", ".common", function() {
 
       var common=$(this).val();
    //newfun($(this).attr('id'),common);
