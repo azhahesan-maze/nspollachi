@@ -517,10 +517,7 @@
                         <td>
                            <div class="col-sm-12">
                               <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.0') }}" required>
-                              <span class="mandatory"> {{ $errors->first('valid_from.0')  }} </span>
-                              <div class="invalid-feedback">
-                                 Enter valid Effective From Date
-                              </div>
+                              
                            </div>
                         </td>
                         <td>
@@ -534,61 +531,7 @@
                            </div>
                         </td>
                      </tr>
-                     @if (old('igst'))
-                     @foreach (old('igst') as $old_key=>$old_value)
-                     @if ($old_key >0)
-                     <tr>
-                        <td class="s_no"></td>
-                        <td>
-                           <div class="col-sm-12">
-                              <input type="text" class="form-control igst only_allow_digit_and_dot" name="igst[]" placeholder="IGST" value="{{ old('igst.'.$old_key) }}" required>
-                              <span class="mandatory"> {{ $errors->first('igst.'.$old_key)  }} </span>
-                              <div class="invalid-feedback">
-                                 Enter valid IGST
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div class="col-sm-12">
-                              <input type="text" class="form-control cgst only_allow_digit_and_dot" name="cgst[]" readonly placeholder="CGST" value="{{ old('cgst.'.$old_key) }}" required>
-                              <span class="mandatory"> {{ $errors->first('cgst.'.$old_key)  }} </span>
-                              <div class="invalid-feedback">
-                                 Enter valid CGST
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div class="col-sm-12">
-                              <input type="text" class="form-control sgst only_allow_digit_and_dot" name="sgst[]" readonly placeholder="SGST" value="{{ old('sgst.'.$old_key) }}" required>
-                              <span class="mandatory"> {{ $errors->first('sgst.'.$old_key)  }} </span>
-                              <div class="invalid-feedback">
-                                 Enter valid SGST
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div class="col-sm-12">
-                              <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.'.$old_key) }}" required>
-                              <span class="mandatory"> {{ $errors->first('valid_from.'.$old_key)  }} </span>
-                              <div class="invalid-feedback">
-                                 Enter valid Effective From Date
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div class="form-group row">
-                              <div class="col-sm-3 mr-1">
-                                 <label class="btn btn-success add_tax_details">+</label>
-                              </div>
-                              <div class="col-sm-3 mx-2">
-                                 <label class="btn btn-danger remove_tax_details">-</label>
-                              </div>
-                           </div>
-                        </td>
-                     </tr>
-                     @endif
-                     @endforeach
-                     @endif
+                     
                   </tbody>
                </table>
             </div>
@@ -774,10 +717,12 @@ function add_item_tax_details() {
       //alert('hi');
     var gst_lower = $(this).attr('class').split(' ')[1].slice(0,-3).toLowerCase();
     var gst_upper = $(this).attr('class').split(' ')[1].slice(0,-3).toUpperCase();
-    var gst=tax_name.substr(0,1).toUpperCase()+tax_name.substr(1);
+    var gst = tax_name.substr(0,1).toUpperCase()+tax_name.substr(1);
+
     var igst_upper = $(this).closest("tr").find("."+gst_upper+"_id").val();
     var igst_lower = $(this).closest("tr").find("."+gst_lower+"_id").val();
     var igst = $(this).closest("tr").find("."+gst+"_id").val();
+
     var half_lower = parseFloat(igst_lower)/2;
     var half_upper = parseFloat(igst_upper)/2;
     var half = parseFloat(igst)/2;
@@ -801,6 +746,15 @@ function add_item_tax_details() {
    // calc_gst(half,half_upper,half_lower);
  }
    });
+
+   // $(document).on("change", ".valid_from", function() {
+   //    var valid_from = new Array();
+   //    $('.valid_from').each(function(key){
+   //       //alert(key);
+   //    valid_from = $(this).val();
+   //  });
+   //  console.log(valid_from);
+   // });
 
    function calc_gst(half,half_upper,half_lower)
    {
