@@ -472,7 +472,7 @@ table, th, td {
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
-                    <th> GST Rs</th>
+                    <th> Tax Rs</th>
                     <th> Net Value</th>
                     <th style="background-color: #FAF860;"> Last Purchase Rate(LPR)</th>
                     <th>Action </th>
@@ -1919,90 +1919,92 @@ var row_id=$('#last').val();
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('delivery_note/getdata_item/{id}') }}",
+        url: "{{ url('estimation/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){
-         //console.log(data);
+         console.log(data);
              if(data[3]==1)
              {
-              $('.uom_exclusive').children('option').remove();
-              $('.uom_inclusive').children('option').remove();
+              // $('.uom_exclusive').children('option').remove();
+              // $('.uom_inclusive').children('option').remove();
              //$('.uom_inclusive').children('option:not(:first)').remove();
              id = data[0].item_id;
-             name =data[0].item_name;
-             code =data[0].code;
-             mrp =data[0].mrp;
-             hsn =data[0].hsn;
-             uom_id =data[0].uom_id;
-             uom_name =data[0].uom_name;
-             igst =data[1].igst;
 
-             var first_data='<option value="'+code+'">'+uom_name+'</option>';
-              $('.uom_exclusive').append(first_data);
-              $('.uom_inclusive').append(first_data);
+             item_codes(id);
+            //  name =data[0].item_name;
+            //  code =data[0].code;
+            //  mrp =data[0].mrp;
+            //  hsn =data[0].hsn;
+            //  uom_id =data[0].uom_id;
+            //  uom_name =data[0].uom_name;
+            //  igst =data[1].igst;
 
-             for(var i=0;i<data[2].length;i++)
-             {
-              var item_uom_id=data[2][i].id;
-              var item_uom_name=data[2][i].name;
-              var item_uom_code=data[2][i].item_code;
-              if(item_uom_name == uom_name)
-              {
+            //  var first_data='<option value="'+code+'">'+uom_name+'</option>';
+            //   $('.uom_exclusive').append(first_data);
+            //   $('.uom_inclusive').append(first_data);
 
-              }
-              else
-              {
-                var div_data='<option value="'+item_uom_code+'">'+item_uom_name+'</option>';
-              $('.uom_exclusive').append(div_data);
-              $('.uom_inclusive').append(div_data);
-              }
+            //  for(var i=0;i<data[2].length;i++)
+            //  {
+            //   var item_uom_id=data[2][i].id;
+            //   var item_uom_name=data[2][i].name;
+            //   var item_uom_code=data[2][i].item_code;
+            //   if(item_uom_name == uom_name)
+            //   {
 
-             }
+            //   }
+            //   else
+            //   {
+            //     var div_data='<option value="'+item_uom_code+'">'+item_uom_name+'</option>';
+            //   $('.uom_exclusive').append(div_data);
+            //   $('.uom_inclusive').append(div_data);
+            //   }
 
-
-             $('#item_code').val(item_code);
-             $('#items_codes').val(id);
-             $('#item_name').val(name);
-             $('#mrp').val(mrp);
-             $('#hsn').val(hsn);
-             $('#uom').val(uom_id);
-             $('#uom_name').val(uom_name);
-             $('#tax_rate').val(igst);
-             $('#quantity').focus();
-             $('#cat').hide();
+            //  }
 
 
-             if($('#quantity').val() != '')
-             {
+            //  $('#item_code').val(item_code);
+            //  $('#items_codes').val(id);
+            //  $('#item_name').val(name);
+            //  $('#mrp').val(mrp);
+            //  $('#hsn').val(hsn);
+            //  $('#uom').val(uom_id);
+            //  $('#uom_name').val(uom_name);
+            //  $('#tax_rate').val(igst);
+            //  $('#quantity').focus();
+            //  $('#cat').hide();
+
+
+            //  if($('#quantity').val() != '')
+            //  {
               
               
-              var rate_exclusive = $('#exclusive').val();
-              var rate_inclusive = $('#inclusive').val();
-              var quantity = $('#quantity').val();
-              var tax_rate = $('.tax_rate').val();
-              var total = parseInt(quantity)*parseFloat(rate_exclusive);
-              $('#amount').val(total.toFixed(2));
-              if(tax_rate == '')
-              {
-                $('#net_price').val(total.toFixed(2));
-              }
+            //   var rate_exclusive = $('#exclusive').val();
+            //   var rate_inclusive = $('#inclusive').val();
+            //   var quantity = $('#quantity').val();
+            //   var tax_rate = $('.tax_rate').val();
+            //   var total = parseInt(quantity)*parseFloat(rate_exclusive);
+            //   $('#amount').val(total.toFixed(2));
+            //   if(tax_rate == '')
+            //   {
+            //     $('#net_price').val(total.toFixed(2));
+            //   }
               
-              var rate = parseFloat(tax_rate)/100;
-              var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
-              var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
-              $('#inclusive').val(gst_rate_inclusive.toFixed(2));
-              var net_val = parseFloat(total)*parseFloat(rate);
+            //   var rate = parseFloat(tax_rate)/100;
+            //   var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
+            //   var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
+            //   $('#inclusive').val(gst_rate_inclusive.toFixed(2));
+            //   var net_val = parseFloat(total)*parseFloat(rate);
       
-              $('.gst').val(net_val.toFixed(2));
+            //   $('.gst').val(net_val.toFixed(2));
 
-              var total_net_val = parseFloat(total)+parseFloat(net_val);
-              $('#net_price').val(total_net_val.toFixed(2));
-             }
-            else
-            {
+            //   var total_net_val = parseFloat(total)+parseFloat(net_val);
+            //   $('#net_price').val(total_net_val.toFixed(2));
+            //  }
+            // else
+            // {
 
-            }
+            // }
 
              }
                     
@@ -2018,7 +2020,7 @@ var row_id=$('#last').val();
       $.ajax({
 
            type: "POST",
-            url: "{{ url('delivery_note/last_purchase_rate/') }}",
+            url: "{{ url('estimation/last_purchase_rate/') }}",
             data: { id: item_id },
            success: function(data) {
              $('#last_purchase_rate').val(data);

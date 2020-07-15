@@ -25,13 +25,13 @@
            <th>Item Name</th>
            <th>MRP</th>
            <th>HSN</th>
-           <th>GST</th>
+           <th>Tax %</th>
            <th>Rate Exclusive Tax</th>
            <th>Rate Inclusive Tax</th>
            <th>Quantity</th>
            <th>UOM</th>
            <th>Amount</th>
-           <th>GST Rs</th>
+           <th>Tax Rs</th>
            <th>Discount</th>
            <th>Net Price</th>
            <!-- <th>Action</th> -->

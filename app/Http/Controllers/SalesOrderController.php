@@ -15,6 +15,7 @@ use App\Models\AddressDetails;
 use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
+use App\Models\Tax;
 use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -601,15 +602,34 @@ class SalesOrderController extends Controller
         if(isset($items->category->gst_no) && $items->category->gst_no != '' && $items->category->gst_no != 0)
         {
             
-            $data[] = array('igst' => $items->category->gst_no);
+            $tax_master_cgst = Tax::where('name','cgst')->first();
+            $tax_master_sgst = Tax::where('name','sgst')->first();
+
+            $tax_value = ItemTaxDetails::where('item_id',$id)
+                                        ->orderBy('valid_from','DESC')
+                                        ->whereDate('valid_from', '<=', Carbon::now())
+                                        ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                        ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                        ->sum('value');
+
+            $sum = $tax_value + $items->category->gst_no;                            
+            $data[] = array('igst' => $sum);
+
         }  
         else
         {
-            $data[] =ItemTaxDetails::where('item_id','=',$id)
+            $tax_master_cgst = Tax::where('name','cgst')->first();
+            $tax_master_sgst = Tax::where('name','sgst')->first();
+
+            $tax_value =ItemTaxDetails::where('item_id','=',$id)
                                 ->orderBy('valid_from','DESC')
                                 ->whereDate('valid_from', '<=', Carbon::now())
-                                ->select('igst')
-                                ->first();
+                                ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                ->sum('value');
+
+            $data[] = array('igst' => $tax_value);
+            
         }          
          
         $data[] =ItemBracodeDetails::where('item_id','=',$id)
