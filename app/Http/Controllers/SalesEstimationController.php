@@ -584,12 +584,19 @@ $count=0;
             $tax_master_cgst = Tax::where('name','cgst')->first();
             $tax_master_sgst = Tax::where('name','sgst')->first();
 
-            $tax_value = ItemTaxDetails::where('item_id',$id)
+            $tax_date = ItemTaxDetails::where('item_id',$id)
                                         ->orderBy('valid_from','DESC')
                                         ->whereDate('valid_from', '<=', Carbon::now())
                                         ->where('tax_master_id','!=',$tax_master_cgst->id)
                                         ->where('tax_master_id','!=',$tax_master_sgst->id)
-                                        ->sum('value');
+                                        ->first('valid_from');
+                                        // return $tax_date; exit;
+
+            $tax_value =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                ->sum('value');
 
             $sum = $tax_value + $items->category->gst_no;                            
             $data[] = array('igst' => $sum);
@@ -601,15 +608,21 @@ $count=0;
             $tax_master_cgst = Tax::where('name','cgst')->first();
             $tax_master_sgst = Tax::where('name','sgst')->first();
 
+            $tax_date = ItemTaxDetails::where('item_id',$id)
+                                        ->orderBy('valid_from','DESC')
+                                        ->whereDate('valid_from', '<=', Carbon::now())
+                                        ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                        ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                        ->first('valid_from');
+
             $tax_value =ItemTaxDetails::where('item_id','=',$id)
-                                ->orderBy('valid_from','DESC')
-                                ->whereDate('valid_from', '<=', Carbon::now())
+                                ->where('valid_from',$tax_date->valid_from)
                                 ->where('tax_master_id','!=',$tax_master_cgst->id)
                                 ->where('tax_master_id','!=',$tax_master_sgst->id)
                                 ->sum('value');
 
             $data[] = array('igst' => $tax_value);    
-                            
+
         }          
          
         $data[] =ItemBracodeDetails::where('item_id','=',$id)

@@ -1770,7 +1770,7 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          //console.log(data);
+          // console.log(data);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
