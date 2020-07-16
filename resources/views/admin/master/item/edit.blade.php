@@ -687,6 +687,7 @@
 </div>
 
 <!-- <script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script> -->
+<script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 <script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
 <script>
 

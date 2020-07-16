@@ -731,6 +731,7 @@
 <script src="{{asset('assets/js/master/add_more_address_details.js')}}"></script>
 <script src="{{asset('assets/js/master/add_more_branch_details.js')}}"></script>
 <script src="{{asset('assets/js/validation/common_validation.js')}}"></script>
+<script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 
 <script>
   function customer_type(type) {

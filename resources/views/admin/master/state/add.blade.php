@@ -83,7 +83,7 @@
     <!-- card body end@ -->
   </div>
 </div>
-
+<script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 <script>
  /*  $(document).on("click",".add_row",function()
   {

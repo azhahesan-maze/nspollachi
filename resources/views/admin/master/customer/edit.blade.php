@@ -869,6 +869,7 @@
     <!-- card body end@ -->
   </div>
 </div>
+<script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 <script src="{{asset('assets/js/master/add_more_branch_details.js')}}"></script>
 <script>
 
