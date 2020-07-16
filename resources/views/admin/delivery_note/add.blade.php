@@ -1919,7 +1919,7 @@ var row_id=$('#last').val();
       $.ajax({  
         
         type: "GET",
-        url: "{{ url('estimation/getdata_item/{id}') }}",
+        url: "{{ url('delivery_note/getdata_item/{id}') }}",
         data: { id: item_code },             
                         
         success: function(data){
@@ -2020,7 +2020,7 @@ var row_id=$('#last').val();
       $.ajax({
 
            type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
+            url: "{{ url('delivery_note/last_purchase_rate/') }}",
             data: { id: item_id },
            success: function(data) {
              $('#last_purchase_rate').val(data);

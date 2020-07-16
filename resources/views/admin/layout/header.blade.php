@@ -321,6 +321,7 @@
                             <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
                             <li><a href="{{ route('receipt_note.index') }}">Receipt Note</a></li>
                             <li><a href="{{ route('purchase_entry.index') }}">Purchase Entry</a></li>
+                            <li><a href="{{ route('rejection_out.index') }}">Rejection Out</a></li>
                             <li><a href="{{ route('purchase_gatepass_entry.index') }}">Purchase Gate Pass Entry</a></li>
                             <li><a href="{{ route('debit_note.index') }}">Debit Note</a></li>
                             
@@ -347,6 +348,7 @@
                         <li><a href="{{ route('sales_estimation.index') }}">Sales Estimation</a></li>
                         <li><a href="{{ route('delivery_note.index') }}">Delivery Note</a></li>
                         <li><a href="{{ route('sales_entry.index') }}">Sales Entry</a></li>
+                        <li><a href="{{ route('rejection_in.index') }}">Rejection In</a></li>
                         <li><a href="{{ route('sales_gatepass_entry.index') }}">Sales Gate Pass Entry</a></li>
                         <li><a href="{{ route('credit_note.index') }}">Credit Note</a></li>
                         </ul>

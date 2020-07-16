@@ -751,6 +751,41 @@ Route::post('credit_note/s_details/', 'CreditNoteController@s_details');
 /* Credit Note End Here  */
 
 
+/* Rejection In Start Here  */
+
+Route::resource('rejection_in', 'RejectionInController',['middleware' => ['auth']]);
+Route::post('rejection_in/address_details/', 'RejectionInController@address_details');
+Route::get('rejection_in/getdata/{id}', 'RejectionInController@getdata');
+Route::get('rejection_in/change_items/{id}', 'RejectionInController@change_items');
+Route::post('rejection_in/brand_filter/', 'RejectionInController@brand_filter');
+Route::get('rejection_in/getdata_item/{id}', 'RejectionInController@getdata_item');
+Route::get('rejection_in/same_items/{id}', 'RejectionInController@same_items');
+Route::get('rejection_in/item_details/{id}', 'RejectionInController@item_details');
+Route::get('rejection_in/expense_details/{id}', 'RejectionInController@expense_details');
+Route::post('rejection_in/last_purchase_rate/', 'RejectionInController@last_purchase_rate');
+Route::get('rejection_in/delete/{id}', 'RejectionInController@destroy');
+Route::post('rejection_in/s_details/', 'RejectionInController@s_details');
+
+/* Rejection In End Here  */
+
+
+/* Rejection Out Start Here  */
+
+Route::resource('rejection_out', 'RejectionOutController',['middleware' => ['auth']]);
+Route::post('rejection_out/address_details/', 'RejectionOutController@address_details');
+Route::get('rejection_out/getdata/{id}', 'RejectionOutController@getdata');
+Route::get('rejection_out/change_items/{id}', 'RejectionOutController@change_items');
+Route::post('rejection_out/brand_filter/', 'RejectionOutController@brand_filter');
+Route::get('rejection_out/getdata_item/{id}', 'RejectionOutController@getdata_item');
+Route::get('rejection_out/same_items/{id}', 'RejectionOutController@same_items');
+Route::get('rejection_out/item_details/{id}', 'RejectionOutController@item_details');
+Route::get('rejection_out/expense_details/{id}', 'RejectionOutController@expense_details');
+Route::post('rejection_out/last_purchase_rate/', 'RejectionOutController@last_purchase_rate');
+Route::get('rejection_out/delete/{id}', 'RejectionOutController@destroy');
+Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
+
+/* Rejection Out End Here  */
+
 
 
 /* Head Office Details Master Group Start Here  */
