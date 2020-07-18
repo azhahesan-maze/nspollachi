@@ -1410,12 +1410,12 @@ function calc_exclusive()
     $('#inclusive').val('');
     $('#quantity').focus();
   }
-  else if(mrp == '')
-  {
-    alert('Please Select Any Item');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-  }
+  // else if(mrp == '')
+  // {
+  //   alert('Please Select Any Item');
+  //   $('#exclusive').val('');
+  //   $('#inclusive').val('');
+  // }
   // else if(parseFloat(rate_inclusive)>parseFloat(mrp))
   // {
   //   alert('Rate Exceeds The MRP!!');
@@ -1443,9 +1443,17 @@ function calc_exclusive()
       $('#inclusive').val(gst_rate_inclusive.toFixed(2));
       if($('#inclusive').val()>parseFloat(mrp))
       {
-        alert('Rate Exceeds The MRP!!');
+        if(mrp == 0 || mrp == '')
+        {
+
+        }
+        else
+        {
+          alert('Rate Exceeds The MRP!!');
         $('#exclusive').val('');
         $('#inclusive').val('');
+        }
+        
       }
       else
       {
@@ -1482,19 +1490,26 @@ function calc_inclusive()
     $('#inclusive').val('');
     $('#quantity').focus();
   }
-  else if(mrp == '')
-  {
-    alert('Please Select Any Item');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-  }
+  // else if(mrp == '')
+  // {
+  //   alert('Please Select Any Item');
+  //   $('#exclusive').val('');
+  //   $('#inclusive').val('');
+  // }
   
-  else if(parseFloat(rate_inclusive)>parseFloat(mrp))
-  {
-    alert('Rate Exceeds The MRP!!');
-    $('#exclusive').val('');
-    $('#inclusive').val('');
-  }
+  // else if(parseFloat(rate_inclusive)>parseFloat(mrp))
+  // {
+  //   if(mrp == 0 || mrp == '')
+  //       {
+
+  //       }
+  //       else
+  //       {
+  //         alert('Rate Exceeds The MRP!!');
+  //       $('#exclusive').val('');
+  //       $('#inclusive').val('');
+  //       }
+  // }
     else
     {
     if(tax_rate == '')
@@ -1510,6 +1525,19 @@ function calc_inclusive()
       var total = parseInt(quantity)*parseFloat(gst_rate.toFixed(2));
       $('#amount').val(total.toFixed(2));
       $('#exclusive').val(gst_rate.toFixed(2));
+      if(parseFloat(rate_inclusive)>parseFloat(mrp))
+      {
+        if(mrp == 0 || mrp == '')
+            {
+
+            }
+            else
+            {
+              alert('Rate Exceeds The MRP!!');
+            $('#exclusive').val('');
+            $('#inclusive').val('');
+            }
+      }
       var net_val = parseFloat(total)*parseFloat(actual_tax);
       $('.gst').val(net_val.toFixed(2));
       var total_net_val = parseFloat(total)+parseFloat(net_val);
