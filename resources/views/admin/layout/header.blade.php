@@ -344,8 +344,8 @@
                     <li class="col-md-3 dropdown-item">
                         <ul>
                         <li class="dropdown-header">Sales</li>
-                        <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
                         <li><a href="{{ route('sales_estimation.index') }}">Sales Estimation</a></li>
+                        <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
                         <li><a href="{{ route('delivery_note.index') }}">Delivery Note</a></li>
                         <li><a href="{{ route('sales_entry.index') }}">Sales Entry</a></li>
                         <li><a href="{{ route('rejection_in.index') }}">Rejection In</a></li>
