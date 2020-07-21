@@ -19,6 +19,8 @@ class CreateDeliveryNoteExpensesTable extends Migration
             $table->date('d_date');
             $table->string('sale_estimation_no')->nullable();
             $table->date('sale_estimation_date')->nullable();
+            $table->string('so_no')->nullable();
+            $table->date('so_date')->nullable();
             $table->bigInteger('expense_type')->unsigned()->nullable();
             $table->decimal('expense_amount')->nullable();
             $table->timestamps();

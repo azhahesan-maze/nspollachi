@@ -25,6 +25,8 @@
             <th>Voucher Date </th>
             <th>Sale Estimation No </th>
             <th>Sale Estimation Date </th>
+            <th>Sale Order No </th>
+            <th>Sale Order Date </th>
             <th>Customer Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -40,6 +42,8 @@
               <td>{{ $value->d_date }}</td>
               <td>{{ $value->sale_estimation_no }}</td>
               <td>{{ $value->sale_estimation_date }}</td>
+              <td>{{ $value->so_no }}</td>
+              <td>{{ $value->so_date }}</td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
               @else

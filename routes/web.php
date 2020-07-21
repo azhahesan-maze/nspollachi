@@ -732,6 +732,7 @@ Route::get('delivery_note/expense_details/{id}', 'DeliveryNoteController@expense
 Route::post('delivery_note/last_purchase_rate/', 'DeliveryNoteController@last_purchase_rate');
 Route::get('delivery_note/delete/{id}', 'DeliveryNoteController@destroy');
 Route::post('delivery_note/se_details/', 'DeliveryNoteController@se_details');
+Route::post('delivery_note/so_details/', 'DeliveryNoteController@so_details');
 
 /* Delivery Note End Here  */
 

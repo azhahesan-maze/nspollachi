@@ -59,7 +59,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sale Estimation No</label><br>
                                 <select class="js-example-basic-multiple form-control sale_estimation_no" 
                                 data-placeholder="Choose Estimation No" onchange="se_details()" id="sale_estimation_no" name="sale_estimation_no" >
@@ -71,7 +71,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sale Estimation Date</label><br>
                                 <input type="date" class="form-control sale_estimation_date  required_for_proof_valid" id="sale_estimation_date" placeholder="Voucher Date" name="sale_estimation_date" value="{{ $date }}">
                                  
@@ -92,20 +92,23 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $delivery_note->d_date }}">
                                  
                                 </div>
-                                <!-- <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control gatepass_no" 
-                                data-placeholder="Choose Gate Pass Entry No"  id="gatepass_no" name="gatepass_no" >
-                                <option value=""></option>
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sales Order No</label><br>
+                                <select class="js-example-basic-multiple form-control so_no" 
+                                data-placeholder="Choose Sale Order No" onchange="so_details()" id="so_no" name="so_no" >
+                                <option value="{{ $delivery_note->so_no }}">{{ $delivery_note->so_no }}</option>
+                                @foreach($saleorder as $key => $value)
+                                <option value="{{ $value->so_no }}">{{ $value->so_no }}</option>
+                                @endforeach
                                   
                                  </select>
                                  
                                 </div>
                                 <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry Date</label><br>
-                                <input type="date" class="form-control gatepass_date  required_for_proof_valid" id="gatepass_date" placeholder="Gate Pass Entry Date" name="gatepass_date" value="{{ $date }}">
+                                  <label style="font-family: Times new roman;">Sale Order Date</label><br>
+                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Sale Order Date" name="so_date" value="{{ $delivery_note->so_date }}">
                                  
-                                </div> -->
+                                </div>
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
@@ -2376,13 +2379,15 @@ function se_details()
 {
 
   var se_no=$('.sale_estimation_no').val();
-
+  $('.so_no').val('');
+  $('select').select2();
 
   $.ajax({
            type: "POST",
             url: "{{ url('delivery_note/se_details/') }}",
             data: { se_no : se_no },
            success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2413,6 +2418,87 @@ $('#total_discount').val(result.item_discount_sum);
 $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
+ 
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
+           }
+        });
+}
+
+function so_details()
+{
+
+  var so_no=$('.so_no').val();
+  $('.sale_estimation_no').val('');
+  $('select').select2();
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('delivery_note/so_details/') }}",
+            data: { so_no : so_no },
+           success: function(data) {
+            $('.tables').remove();
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1)
+{
+$('.append_expense').append(result.expense_typess);
+}
+else if(result.expense_cnt == 0)
+{
+  
+}
+else
+{
+  $('.append_expense').html(result.expense_typess);
+}
+$('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
+$('.no_items').text(result.status);
+$('.invoice_val').text(result.item_net_value_sum);
+if(result.sale_type == 1)
+$('.sale_type').text('Cash Sale');
+else
+$('.sale_type').text('Credit Sale');
+$('.sale_date').text(result.date_saleorder);
+$('.estimation_date').text(result.date_estimation);
+$('.estimation_no').text(result.estimation_no);
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+ $('#so_date').val(result.date_saleorder);
  
 
 var total_net_price=calculate_total_net_price();
