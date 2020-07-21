@@ -19,6 +19,8 @@ class CreateReceiptNoteItemsTable extends Migration
             $table->date('rn_date')->nullable();
             $table->string('po_no')->nullable();
             $table->date('po_date')->nullable();
+            $table->string('estimation_no')->nullable();
+            $table->date('estimation_date')->nullable();
             $table->string('item_sno')->nullable();
             $table->bigInteger('item_id')->unsigned();
             $table->float('mrp')->nullable();

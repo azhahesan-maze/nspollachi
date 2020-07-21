@@ -19,6 +19,8 @@ class CreateReceiptNoteExpensesTable extends Migration
             $table->date('rn_date');
             $table->string('po_no')->nullable();
             $table->date('po_date')->nullable();
+            $table->string('estimation_no')->nullable();
+            $table->date('estimation_date')->nullable();
             $table->bigInteger('expense_type')->unsigned()->nullable();
             $table->decimal('expense_amount')->nullable();
             $table->timestamps();

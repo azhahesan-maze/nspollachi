@@ -25,6 +25,8 @@
             <th>Voucher Date </th>
             <th>Purchase Order No </th>
             <th>Purchase Order Date </th>
+            <th>Estimation No </th>
+            <th>Estimation Date </th>
             <th>Supplier Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -40,6 +42,8 @@
               <td>{{ $value->rn_date }}</td>
               <td>{{ $value->po_no }}</td>
               <td>{{ $value->po_date }}</td>
+              <td>{{ $value->estimation_no }}</td>
+              <td>{{ $value->estimation_date }}</td>
               @if(isset($value->supplier->name) && !empty($value->supplier->name))
               <td>{{ $value->supplier->name }}</td>
               @else

@@ -617,7 +617,8 @@ Route::get('purchase_entry/expense_details/{id}', 'PurchaseEntryController@expen
 Route::post('purchase_entry/last_purchase_rate/', 'PurchaseEntryController@last_purchase_rate');
 Route::get('purchase_entry/delete/{id}', 'PurchaseEntryController@destroy');
 Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
-
+Route::post('purchase_entry/estimation_details/', 'PurchaseEntryController@estimation_details');
+Route::post('purchase_entry/receipt_details/', 'PurchaseEntryController@receipt_details');
 
 /* Purchase entry End Here  */
 
@@ -694,6 +695,7 @@ Route::get('receipt_note/expense_details/{id}', 'ReceiptNoteController@expense_d
 Route::post('receipt_note/last_purchase_rate/', 'ReceiptNoteController@last_purchase_rate');
 Route::get('receipt_note/delete/{id}', 'ReceiptNoteController@destroy');
 Route::post('receipt_note/po_details/', 'ReceiptNoteController@po_details');
+Route::post('receipt_note/estimation_details/', 'ReceiptNoteController@estimation_details');
 
 
 /* Receipt Note End Here  */

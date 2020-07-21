@@ -77,7 +77,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
                                 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <font size="2">{{$voucher_no}}</font>
@@ -86,25 +86,27 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher Date</label><br>
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
-                               <!--  <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control gatepass_no" 
-                                data-placeholder="Choose Gate Pass Entry No"  id="gatepass_no" name="gatepass_no" >
-                                <option value=""></option>
-                                  
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Estimation No</label><br>
+                                <select class="js-example-basic-multiple form-control p_estimation_no" 
+                                data-placeholder="Choose Estimation No" onchange="estimation_details()" id="p_estimation_no" name="p_estimation_no" >
+                                <option></option>
+                                @foreach($estimation as $key => $value)
+                                <option value="{{ $value->estimation_no }}">{{ $value->estimation_no }}</option>
+                                  @endforeach
                                  </select>
                                  
                                 </div>
                                 <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry Date</label><br>
-                                <input type="date" class="form-control gatepass_date  required_for_proof_valid" id="gatepass_date" placeholder="Gate Pass Entry Date" name="gatepass_date" value="{{ $date }}">
+                                  <label style="font-family: Times new roman;">Estimation Date</label><br>
+                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" id="p_estimation_date" placeholder="Estimation Date" name="p_estimation_date" value="{{ $date }}">
                                  
-                                </div> -->
+                                </div>
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
@@ -128,7 +130,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                  
                                 </div>
-                                <div class="col-md-2">
+
+                                <div class="col-md-2 purchase_order">
                                   <label style="font-family: Times new roman;">Purchase Type</label><br>
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
@@ -138,7 +141,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-2 purchase_order">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
@@ -2237,17 +2240,104 @@ function supplier_details()
         });
 }
 
+
+function estimation_details()
+{
+
+  var p_estimation_no=$('.p_estimation_no').val();
+  
+  $('.po_no').val('');
+  $('select').select2();
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('receipt_note/estimation_details/') }}",
+            data: { p_estimation_no : p_estimation_no },
+           success: function(data) {
+            $('.tables').remove();
+            $('.purchase_type').hide();
+            $('.purchase_date').hide();
+            // $('.purchase_order').hide();
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1)
+{
+$('.append_expense').append(result.expense_typess);
+}
+else if(result.expense_cnt == 0)
+{
+  
+}
+else
+{
+  $('.append_expense').html(result.expense_typess);
+}
+$('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
+$('.no_items').text(result.status);
+$('.invoice_val').text(result.item_net_value_sum);
+$('.estimation_date').text(result.date_estimation);
+$('.estimation_no').text(result.estimation_no);
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+ $('#po_date').val(result.date_purchaseorder);
+ 
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
+           }
+        });
+}
+
+
+
 function po_details()
 {
 
   var po_no=$('.po_no').val();
-
+  $('.purchase_type').show();
+  $('.purchase_date').show();
+  $('.p_estimation_no').val('');
+  $('select').select2();
 
   $.ajax({
            type: "POST",
             url: "{{ url('receipt_note/po_details/') }}",
             data: { po_no : po_no },
            success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
