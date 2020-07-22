@@ -56,6 +56,36 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 <form  method="post" class="form-horizontal" action="{{ route('delivery_note.store') }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
 
+                      <div class="row col-md-12">
+
+                                <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Customer Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
+                           <option value="">Choose Customer Name</option>
+                           @foreach($customer as $customers)
+                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/customer/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                                <div class="col-md-4">
+                                  <label style="font-family: Times new roman;">Customer Address</label><br>
+                                  <input type="hidden" name="address_line_1" id="address_line_1">
+                                  
+                                  <div class="address">
+                                    
+                                  </div>
+                                </div>
+                                
+
+                              </div>
+                              <br>
       
                        <div class="row col-md-12">
 
@@ -132,30 +162,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                                <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Customer Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
-                           <option value="">Choose Customer Name</option>
-                           @foreach($customer as $customers)
-                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/customer/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Customer Address</label><br>
-                                  <input type="hidden" name="address_line_1" id="address_line_1">
-                                  
-                                  <div class="address">
-                                    
-                                  </div>
-                                </div>
+                                
                                 <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Type</label><br>
                                   <input type="hidden" name="sale_type" id="sale_type">
@@ -2259,13 +2266,13 @@ function customer_details()
             url: "{{ url('delivery_note/address_details/') }}",
             data: { customer_id : customer_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.sale_estimation_no').children('option:not(:first)').remove()
+           .end().append(result.estimation_options);
+           $('.so_no').children('option:not(:first)').remove()
+           .end().append(result.so_options);
            }
         });
 }

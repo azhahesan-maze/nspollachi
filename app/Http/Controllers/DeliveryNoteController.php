@@ -555,6 +555,14 @@ class DeliveryNoteController extends Controller
        ->where('address_details.address_ref_id','=',$customer_id)
        ->first();
 
+
+       $estimation_filter = SaleEstimation::where('customer_id',$customer_id)
+                            ->select('sale_estimation_date','sale_estimation_no')
+                            ->get();
+
+        $so_filter = SaleOrder::where('customer_id',$customer_id)
+                            ->select('so_date','so_no')
+                            ->get();                    
       
 $count=0;
 
@@ -604,6 +612,20 @@ $count=0;
          }
          $address.="GST Number :".$getdata->customer->gst_no;
 
+         $estimation_options = "";
+         $so_options = "";
+         foreach ($estimation_filter as $key => $value) 
+         {
+            $estimation_options .= '<option value="'.$value->sale_estimation_no.'">Sale Estimation No:'.$value->sale_estimation_no.' - Date:'.$value->sale_estimation_date.'</option>';
+         }
+
+         foreach ($so_filter as $key => $value) 
+         {
+            $so_options .= '<option value="'.$value->so_no.'">Sale Estimation No:'.$value->so_no.' - Date:'.$value->so_date.'</option>';
+         }
+
+         $result = array('estimation_options' => $estimation_options, 'so_options' => $so_options ,'address' => $address);
+         echo json_encode($result);exit(); 
 
 
    return $address;   
