@@ -566,7 +566,20 @@ class PurchaseEntryController extends Controller
        ->where('address_details.address_ref_id','=',$supplier_id)
        ->first();
 
-      
+
+        $po_filter = Purchase_Order::where('supplier_id',$supplier_id)
+                            ->select('po_date','po_no')
+                            ->get();
+
+        $estimation_filter = Estimation::where('supplier_id',$supplier_id)
+                            ->select('estimation_date','estimation_no')
+                            ->get();
+
+        $receipt_filter = ReceiptNote::where('supplier_id',$supplier_id)
+                            ->select('rn_date','rn_no')
+                            ->get();
+
+
 $count=0;
 
        $address="";
@@ -615,6 +628,26 @@ $count=0;
          }
          $address.="GST Number :".$getdata->gst_no;
 
+
+         $po_options="";
+         $receipt_options="";
+         $estimation_options="";
+         foreach ($estimation_filter as $key => $value) 
+         {
+            $estimation_options .= '<option value="'.$value->estimation_no.'">Estimation No:'.$value->estimation_no.' - Date:'.$value->estimation_date.'</option>';
+         }
+         foreach ($po_filter as $key => $value) 
+         {
+            $po_options .= '<option value="'.$value->po_no.'">PO No:'.$value->po_no.' - Date:'.$value->po_date.'</option>';
+         }
+         foreach ($receipt_filter as $key => $value) 
+         {
+            $receipt_options .= '<option value="'.$value->rn_no.'">PO No:'.$value->rn_no.' - Date:'.$value->rn_date.'</option>';
+         }
+         
+         
+         $result = array('address' => $address, 'po_options' => $po_options,'estimation_options' => $estimation_options,'receipt_options' => $receipt_options);
+         echo json_encode($result);exit;
 
 
    return $address;   
