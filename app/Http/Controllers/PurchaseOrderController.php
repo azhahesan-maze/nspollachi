@@ -534,6 +534,10 @@ class PurchaseOrderController extends Controller
        ->where('address_details.address_ref_id','=',$supplier_id)
        ->first();
 
+       $filter = Estimation::where('supplier_id',$supplier_id)
+                            ->select('estimation_date','estimation_no')
+                            ->get();
+                            // return $filter;exit();
       
 $count=0;
 
@@ -582,10 +586,15 @@ $count=0;
              $address.="\n";
          }
          $address.="GST Number :".$getdata->gst_no;
-
-
-
-   return $address;   
+         $options="";
+         foreach ($filter as $key => $value) 
+         {
+            $options .= '<option value="'.$value->estimation_no.'">Estimation No:'.$value->estimation_no.' - Date:'.$value->estimation_date.'</option>';
+         }
+         
+         $result = array('address' => $address, 'options' => $options);
+         echo json_encode($result);exit;
+   // return $address;   
         
     }
 
