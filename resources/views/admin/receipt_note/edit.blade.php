@@ -56,6 +56,40 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 <form  method="post" class="form-horizontal" action="{{ route('receipt_note.update',$receipt_note->rn_no) }}" id="dataInput" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
+
+
+                      <div class="row col-md-12">
+                                <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
+                           @if(isset($receipt_note->supplier->name) && !empty($receipt_note->supplier->name))
+                           <option value="{{ $receipt_note->supplier->id }}">{{ $receipt_note->supplier->name }}</option>
+                           @else
+                           <option value="">Choose Supplier Name</option>
+                           @endif
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Party Address</label><br>
+                                  <input type="hidden" name="address_line_1" id="address_line_1">
+                                  
+                                  <div class="address">
+                                    
+                                  </div>
+                                </div>
+
+                              </div>
+                              <br>  
       
                        <div class="row col-md-12">
 
@@ -174,38 +208,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                               </div>
                               <br>
-                              <div class="row col-md-12">
-                                <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Party Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
-                           @if(isset($receipt_note->supplier->name) && !empty($receipt_note->supplier->name))
-                           <option value="{{ $receipt_note->supplier->id }}">{{ $receipt_note->supplier->name }}</option>
-                           @else
-                           <option value="">Choose Supplier Name</option>
-                           @endif
-                           @foreach($supplier as $suppliers)
-                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/supplier/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Party Address</label><br>
-                                  <input type="hidden" name="address_line_1" id="address_line_1">
-                                  
-                                  <div class="address">
-                                    
-                                  </div>
-                                </div>
-
-                              </div>
-                              <br>
+                              
     
       <div class="col-md-8">
                        <div class="form-group row">
@@ -2334,13 +2337,14 @@ function supplier_details()
             url: "{{ url('receipt_note/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            console.log(result.po_options);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.p_estimation_no').children('option:not(:first)').remove()
+            .end().append(result.estimation_options);
+            $('.po_no').children('option:not(:first)').remove()
+            .end().append(result.po_options);
            }
         });
 }
