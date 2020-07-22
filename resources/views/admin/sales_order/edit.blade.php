@@ -74,24 +74,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $saleorder->so_date }}">
                                  
                                 </div>
-                     <div class="col-md-2">
-                    <label style="font-family: Times new roman;">Estimation No</label><br>
-                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
-                           <option value="{{ $saleorder->estimation_no }}">{{ $saleorder->estimation_no }}</option>
-                           @foreach($estimation as $estimations)
-                           <option value="{{ $estimations->estimation_no }}">{{ $estimations->estimation_no }}</option>
-                           @endforeach
-                        </select>
-                   
-                  </div>
 
-                  <div class="col-md-2">
-                    <label style="font-family: Times new roman;">Estimation Date</label><br>
-                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $date }}">
-                   
-                  </div>
-
-                <div class="col-md-4">
+                                <div class="col-md-4">
                   <label style="font-family: Times new roman;">Customer Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
@@ -111,6 +95,24 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
+                     <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation No</label><br>
+                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
+                           <option value="{{ $saleorder->estimation_no }}">{{ $saleorder->estimation_no }}</option>
+                           @foreach($estimation as $estimations)
+                           <option value="{{ $estimations->sale_estimation_no }}">{{ $estimations->sale_estimation_no }}</option>
+                           @endforeach
+                        </select>
+                   
+                  </div>
+
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Estimation Date</label><br>
+                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $date }}">
+                   
+                  </div>
+
+                
                                 
                     </div>
 
@@ -2280,19 +2282,16 @@ function customer_details()
 
   var customer_id=$('.customer_id').val();
 
-
   $.ajax({
            type: "POST",
             url: "{{ url('sale_order/address_details/') }}",
             data: { customer_id : customer_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.estimation_no').children('option:not(:first)').remove()
+           .end().append(result.estimation_options);
            }
         });
 }

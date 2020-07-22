@@ -16,6 +16,9 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\SaleEstimation;
+use App\Models\SaleEstimationItem;
+use App\Models\SaleEstimationExpense;
 use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -51,7 +54,7 @@ class SalesOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
+        $estimation = SaleEstimation::all();
         $customer = Customer::all();
         
 
@@ -299,7 +302,7 @@ class SalesOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
+        $estimation = SaleEstimation::all();
         $customer = Customer::all();
 
         $saleorder = SaleOrder::where('so_no',$id)->first();
@@ -534,6 +537,11 @@ class SalesOrderController extends Controller
                                 ->where('address_details.address_ref_id','=',$customer_id)
                                 ->first();
 
+
+        $estimation_filter = SaleEstimation::where('customer_id',$customer_id)
+                            ->select('sale_estimation_date','sale_estimation_no')
+                            ->get();                        
+
         $count=0;
 
        $address="";
@@ -582,7 +590,13 @@ class SalesOrderController extends Controller
          }
          $address.="GST Number :".$getdata->customer->gst_no;
 
-
+         $estimation_options = "";
+         foreach ($estimation_filter as $key => $value) 
+         {
+            $estimation_options .= '<option value="'.$value->sale_estimation_no.'">Sale Estimation No:'.$value->sale_estimation_no.' - Date:'.$value->sale_estimation_date.'</option>';
+         }
+         $result = array('estimation_options' => $estimation_options ,'address' => $address);
+         echo json_encode($result);exit(); 
 
    return $address;   
         
