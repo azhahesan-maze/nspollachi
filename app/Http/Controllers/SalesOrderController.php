@@ -1199,9 +1199,9 @@ $result=[];
     }
 
 
-    public function estimation_details(Request $request)
+    public function se_details(Request $request)
     {
-        $estimation_no = $request->estimation_no;
+        $se_no = $request->estimation_no;
         $date = date('Y-m-d');
         $categories = Category::all();
         $supplier = Supplier::all();
@@ -1211,34 +1211,34 @@ $result=[];
         $expense_type = ExpenseType::all();
         $estimation =Estimation::all();
 
-        $voucher_num=SaleOrder::orderBy('so_no','DESC')
-                           ->select('so_no')
-                           ->first();
+        // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
+        //                    ->select('p_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
-         {
-             $voucher_no=1;
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$voucher_num->so_no;
-             $voucher_no=$current_voucher_num+1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->o_no;
+        //      $voucher_no=$current_voucher_num+1;
         
          
-         }
+        //  }
 
-        $estimations = Estimation::where('estimation_no',$estimation_no)->first();
-        $estimation_item = Estimation_Item::where('estimation_no',$estimation_no)->get();
-        $estimation_expense = Estimation_Expense::where('estimation_no',$estimation_no)->get();
+        $sale_estimation = SaleEstimation::where('sale_estimation_no',$se_no)->first();
+        $sale_estimation_item = SaleEstimationItem::where('sale_estimation_no',$se_no)->get();
+        $sale_estimation_expense = SaleEstimationExpense::where('sale_estimation_no',$se_no)->get();
 
-        $round_off = $estimations->round_off;
-         $total_net_value = $estimations->total_net_value;
-         $date_estimation = $estimations->estimation_date;
+        $round_off = $sale_estimation->round_off;
+         $total_net_value = $sale_estimation->total_net_value;
+         $date=$sale_estimation->sale_estimation_date;
 
-        $item_row_count = count($estimation_item);
-        $expense_row_count = count($estimation_expense);
+        $item_row_count = count($sale_estimation_item);
+        $expense_row_count = count($sale_estimation_expense);
 
 
         
@@ -1250,7 +1250,7 @@ $result=[];
         $table_tbody="";
         $i=0;
         $status=0;
-        foreach($estimation_item as $key => $value)  
+        foreach($sale_estimation_item as $key => $value)  
         {
             $status++;
             $i++;
@@ -1260,8 +1260,8 @@ $result=[];
             $item_net_value = $item_amount + $item_gst_rs - $value->discount;
 
 
-            $item_data = Estimation_Item::where('item_id',$value->item_id)
-                                    ->orderBy('estimation_date','DESC')
+            $item_data = SaleEstimationItem::where('item_id',$value->item_id)
+                                    ->orderBy('sale_estimation_date','DESC')
                                     ->first();
 
             $amount = $item_data->qty * $item_data->rate_exclusive_tax;
@@ -1286,7 +1286,7 @@ $result=[];
         }  
         $expense_typess="";
         $expense_cnt=0;
-        foreach($estimation_expense as $key => $value)  
+        foreach($sale_estimation_expense as $key => $value)  
         {
             $expense_cnt++;
         $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]">@if(isset($value->expense_types->type) && !empty($value->expense_types->type))<option value="'.$value->expense_types->id.'">'.$value->expense_types->type.'</option>';
@@ -1296,7 +1296,7 @@ $result=[];
                     $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>' ;
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$date_estimation,'expense_cnt'=>$expense_cnt);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date'=>$date);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

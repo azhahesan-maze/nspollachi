@@ -652,7 +652,7 @@ Route::get('sale_order/item_details/{id}', 'SalesOrderController@item_details');
 Route::get('sale_order/expense_details/{id}', 'SalesOrderController@expense_details');
 Route::post('sale_order/last_purchase_rate/', 'SalesOrderController@last_purchase_rate');
 Route::get('sale_order/delete/{id}', 'SalesOrderController@destroy');
-Route::post('sales_order/estimation_details/', 'SalesOrderController@estimation_details');
+Route::post('sales_order/estimation_details/', 'SalesOrderController@se_details');
 
 /* Sales Order End Here  */
 
