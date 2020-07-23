@@ -19,6 +19,8 @@ class CreateDebitNotesTable extends Migration
             $table->date('dn_date')->nullable();
             $table->string('p_no')->nullable();
             $table->date('p_date')->nullable();
+            $table->string('r_out_no')->nullable();
+            $table->date('r_out_date')->nullable();
             $table->bigInteger('supplier_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();

@@ -60,6 +60,38 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        <div class="row col-md-12">
 
                         <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Voucher No</label><br>
+                                  <div class="">
+                                    <font size="2">{{ $voucher_no }}</font>
+                                  </div>
+                                
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                                 
+                                </div>
+
+                        <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
+                           <option value="">Choose Supplier Name</option>
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control p_no" 
                                 data-placeholder="Choose Purchase Entry No" onchange="p_details()" id="p_no" name="p_no" >
@@ -77,30 +109,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
                                 
-                                <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Voucher No</label><br>
-                                  <div class="">
-                                    <font size="2">{{ $voucher_no }}</font>
-                                  </div>
                                 
-                                 
-                                </div>
 
-                                <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
-                                 
-                                </div>
-                               <!--  <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control gatepass_no" 
-                                data-placeholder="Choose Gate Pass Entry No"  id="gatepass_no" name="gatepass_no" >
-                                <option value=""></option>
-                                  
-                                 </select>
-                                 
-                                </div>
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Gate Pass Entry Date</label><br>
                                 <input type="date" class="form-control gatepass_date  required_for_proof_valid" id="gatepass_date" placeholder="Gate Pass Entry Date" name="gatepass_date" value="{{ $date }}">
                                  
@@ -108,6 +119,18 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
+
+                                  <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Rejection Out No</label><br>
+                                <select class="js-example-basic-multiple form-control r_out_no" 
+                                data-placeholder="Choose Gate Pass Entry No" onchange="r_out_details()" id="r_out_no" name="r_out_no" >
+                                <option value=""></option>
+                                  @foreach($rejection_out as $key => $value)
+                                  <option value="{{ $value->r_out_no}}">{{ $value->r_out_no }}</option>
+                                  @endforeach
+                                 </select>
+                                 
+                                </div>
 
                                   <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Number Of Items</label><br>
@@ -138,31 +161,16 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                 </div> -->
 
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
                                   <div class="purchase_date">
                                     
                                   </div>
-                                </div>
+                                </div> -->
 
-                                <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Party Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
-                           <option value="">Choose Supplier Name</option>
-                           @foreach($supplier as $suppliers)
-                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/supplier/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
@@ -2251,13 +2259,12 @@ function supplier_details()
             url: "{{ url('debit_note/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.p_no').children('option:not(:first)').remove().end().append(result.options);
+           $('.r_out_no').children('option:not(:first)').remove()
+           .end().append(result.r_out_options);
            }
         });
 }
@@ -2266,6 +2273,8 @@ function p_details()
 {
 
   var p_no=$('.p_no').val();
+  $('.r_out_no').val('');
+  $('select').select2();
 
 
   $.ajax({
@@ -2273,6 +2282,7 @@ function p_details()
             url: "{{ url('debit_note/p_details/') }}",
             data: { p_no : p_no },
            success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2294,6 +2304,82 @@ $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.purchase_date').text(result.date_purchaseorder);
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+ $('#po_date').val(result.date_purchaseorder);
+ 
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
+           }
+        });
+}
+
+function r_out_details()
+{
+
+  var r_out_no=$('.r_out_no').val();
+  $('.p_no').val('');
+  $('select').select2();
+
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('debit_note/r_out_details/') }}",
+            data: { r_out_no : r_out_no },
+           success: function(data) {
+            $('.tables').remove();
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1)
+{
+$('.append_expense').append(result.expense_typess);
+}
+else if(result.expense_cnt == 0)
+{
+  
+}
+else
+{
+  $('.append_expense').html(result.expense_typess);
+}
+$('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
+$('.no_items').text(result.status);
+$('.invoice_val').text(result.item_net_value_sum);
+// $('.purchase_date').text(result.date_purchaseorder);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);

@@ -714,6 +714,7 @@ Route::get('debit_note/expense_details/{id}', 'DebitNoteController@expense_detai
 Route::post('debit_note/last_purchase_rate/', 'DebitNoteController@last_purchase_rate');
 Route::get('debit_note/delete/{id}', 'DebitNoteController@destroy');
 Route::post('debit_note/p_details/', 'DebitNoteController@p_details');
+Route::post('debit_note/r_out_details/', 'DebitNoteController@r_out_details');
 
 
 /* Debit Note End Here  */

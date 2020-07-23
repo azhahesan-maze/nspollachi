@@ -25,6 +25,7 @@
             <th>Voucher Date </th>
             <th>Purchase Entry No </th>
             <th>Purchase Entry Date </th>
+            <th>Rejection Out No </th>
             <th>Supplier Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -40,6 +41,7 @@
               <td>{{ $value->dn_date }}</td>
               <td>{{ $value->p_no }}</td>
               <td>{{ $value->p_date }}</td>
+              <td>{{ $value->r_out_no }}</td>
               @if(isset($value->supplier->name) && !empty($value->supplier->name))
               <td>{{ $value->supplier->name }}</td>
               @else

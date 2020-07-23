@@ -19,6 +19,8 @@ class CreateDebitNoteExpensesTable extends Migration
             $table->date('dn_date');
             $table->string('p_no')->nullable();
             $table->date('p_date')->nullable();
+            $table->string('r_out_no')->nullable();
+            $table->date('r_out_date')->nullable();
             $table->bigInteger('expense_type')->unsigned()->nullable();
             $table->decimal('expense_amount')->nullable();
             $table->timestamps();
