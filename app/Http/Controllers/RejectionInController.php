@@ -540,6 +540,10 @@ class RejectionInController extends Controller
        ->where('address_details.address_ref_id','=',$customer_id)
        ->first();
 
+       $filter = SaleEntry::where('customer_id',$customer_id)
+                            ->select('s_no','s_date')
+                            ->get();
+
       
 $count=0;
 
@@ -589,6 +593,14 @@ $count=0;
          }
          $address.="GST Number :".$getdata->customer->gst_no;
 
+         $options = "";
+
+         foreach ($filter as $key => $value) {
+             $options .= '<option value="'.$value->s_no.'">Sale Entry No:'.$value->s_no.' - Date:'.$value->s_date.'</option>';
+         }
+
+         $result = array('address' => $address, 'options' => $options);
+         echo json_encode($result);exit();
 
 
    return $address;   

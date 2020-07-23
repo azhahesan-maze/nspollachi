@@ -59,25 +59,24 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sales Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control s_no" 
-                                data-placeholder="Choose Sale Entry No" onchange="s_details()" id="s_no" name="s_no" >
-                                <option value="">Choose Sale Entry No</option>
-                                @foreach($sale_entry as $sale_entries)
-                                <option value="{{ $sale_entries->s_no }}">{{ $sale_entries->s_no }}</option>
-                                  @endforeach 
-                                 </select>
-                                 
-                                </div>
+                        <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Customer Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
+                           <option value="">Choose Customer Name</option>
+                           @foreach($customer as $customers)
+                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/customer/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
 
-                        <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
-                                <input type="date" class="form-control s_date  required_for_proof_valid" id="s_date" placeholder="Voucher Date" name="s_date" value="{{ $date }}">
-                                 
-                                </div>
-                                
-                                <div class="col-md-2">
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <font size="2">{{ $voucher_no }}</font>
@@ -91,6 +90,26 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sales Entry No</label><br>
+                                <select class="js-example-basic-multiple form-control s_no" 
+                                data-placeholder="Choose Sale Entry No" onchange="s_details()" id="s_no" name="s_no" >
+                                <option value="">Choose Sale Entry No</option>
+                                @foreach($sale_entry as $sale_entries)
+                                <option value="{{ $sale_entries->s_no }}">{{ $sale_entries->s_no }}</option>
+                                  @endforeach 
+                                 </select>
+                                 
+                                </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
+                                <input type="date" class="form-control s_date  required_for_proof_valid" id="s_date" placeholder="Voucher Date" name="s_date" value="{{ $date }}">
+                                 
+                                </div>
+                                
+                                
                                 <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control gatepass_no" 
@@ -147,23 +166,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
+                                
                                 <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Customer Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
-                           <option value="">Choose Customer Name</option>
-                           @foreach($customer as $customers)
-                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/customer/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
-                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Customer Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
                                   
@@ -2256,13 +2260,10 @@ function customer_details()
             url: "{{ url('rejection_in/address_details/') }}",
             data: { customer_id : customer_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.s_no').children('option:not(:first)').remove().end().append(result.options);
            }
         });
 }
