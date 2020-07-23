@@ -19,6 +19,8 @@ class CreateCreditNoteExpensesTable extends Migration
             $table->date('cn_date');
             $table->string('s_no')->nullable();
             $table->date('s_date')->nullable();
+            $table->string('r_in_no')->nullable();
+            $table->date('r_in_date')->nullable();
             $table->bigInteger('expense_type')->unsigned()->nullable();
             $table->decimal('expense_amount')->nullable();
             $table->timestamps();

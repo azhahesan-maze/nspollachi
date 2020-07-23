@@ -59,25 +59,24 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sales Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control s_no" 
-                                data-placeholder="Choose Sale Entry No" onchange="s_details()" id="s_no" name="s_no" >
-                                <option value="">Choose Sale Entry No</option>
-                                @foreach($sale_entry as $sale_entries)
-                                <option value="{{ $sale_entries->s_no }}">{{ $sale_entries->s_no }}</option>
-                                  @endforeach 
-                                 </select>
-                                 
-                                </div>
+                        <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Customer Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
+                           <option value="">Choose Customer Name</option>
+                           @foreach($customer as $customers)
+                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/customer/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
 
-                        <div class="col-md-3">
-                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
-                                <input type="date" class="form-control s_date  required_for_proof_valid" id="s_date" placeholder="Voucher Date" name="s_date" value="{{ $date }}">
-                                 
-                                </div>
-                                
-                                <div class="col-md-2">
+               <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <font size="2">{{ $voucher_no }}</font>
@@ -91,16 +90,28 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
-                                <!-- <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control gatepass_no" 
-                                data-placeholder="Choose Gate Pass Entry No"  id="gatepass_no" name="gatepass_no" >
-                                <option value=""></option>
-                                  
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sales Entry No</label><br>
+                                <select class="js-example-basic-multiple form-control s_no" 
+                                data-placeholder="Choose Sale Entry No" onchange="s_details()" id="s_no" name="s_no" >
+                                <option value="">Choose Sale Entry No</option>
+                                @foreach($sale_entry as $sale_entries)
+                                <option value="{{ $sale_entries->s_no }}">{{ $sale_entries->s_no }}</option>
+                                  @endforeach 
                                  </select>
                                  
                                 </div>
-                                <div class="col-md-2">
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
+                                <input type="date" class="form-control s_date  required_for_proof_valid" id="s_date" placeholder="Voucher Date" name="s_date" value="{{ $date }}">
+                                 
+                                </div>
+                                
+                                
+                                
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Gate Pass Entry Date</label><br>
                                 <input type="date" class="form-control gatepass_date  required_for_proof_valid" id="gatepass_date" placeholder="Gate Pass Entry Date" name="gatepass_date" value="{{ $date }}">
                                  
@@ -108,6 +119,18 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
+
+                                  <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Rejection In No</label><br>
+                                <select class="js-example-basic-multiple form-control r_in_no" 
+                                data-placeholder="Choose Rejection In No" onchange="rejection_in_details()" id="r_in_no" name="r_in_no" >
+                                <option value=""></option>
+                                  @foreach($rejection_in as $value)
+                                  <option value="{{ $value->r_in_no }}">{{ $value->r_in_no }}</option>
+                                  @endforeach
+                                 </select>
+                                 
+                                </div>
 
                                   <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Number Of Items</label><br>
@@ -147,22 +170,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
-                                <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Customer Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select customer_id" onchange="customer_details()" name="customer_id" id="customer_id">
-                           <option value="">Choose Customer Name</option>
-                           @foreach($customer as $customers)
-                           <option value="{{ $customers->id }}">{{ $customers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/customer/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_customer_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Customer Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
@@ -2256,13 +2264,11 @@ function customer_details()
             url: "{{ url('credit_note/address_details/') }}",
             data: { customer_id : customer_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.s_no').children('option:not(:first)').remove().end().append(result.options);
+           $('.r_in_no').children('option:not(:first)').remove().end().append(result.r_in_options);
            }
         });
 }
@@ -2271,13 +2277,91 @@ function s_details()
 {
 
   var s_no=$('.s_no').val();
-
+  $('.r_in_no').val('')
+  $('select').select2();
 
   $.ajax({
            type: "POST",
             url: "{{ url('credit_note/s_details/') }}",
             data: { s_no : s_no },
            success: function(data) {
+            $('.tables').remove();
+            var result=JSON.parse(data);
+            if(result.status>0){
+$('.append_proof_details').append(result.data);
+var expense_length=$(".expense_type").length;
+if(expense_length >1)
+{
+$('.append_expense').append(result.expense_typess);
+}
+else if(result.expense_cnt == 0)
+{
+  
+}
+else
+{
+  $('.append_expense').html(result.expense_typess);
+}
+$('#counts').val(result.status);
+$('#expense_count').val(result.expense_cnt);
+$('.no_items').text(result.status);
+$('.invoice_val').text(result.item_net_value_sum);
+
+$('.sale_date').text(result.date_sale_entry);
+
+// $('.total_net_price').append(result.item_net_value_sum);
+// $('#igst').val(result.item_gst_rs_sum);
+// $('#cgst').val($('#igst').val()/2);
+// $('#sgst').val($('#igst').val()/2);
+$('#total_discount').val(result.item_discount_sum);
+$('#round_off').val(result.round_off);
+$('.total_net_value').text(result.total_net_value);
+ $('#total_price').val(result.total_net_value);
+ $('#so_date').val(result.date_saleorder);
+ 
+
+var total_net_price=calculate_total_net_price();
+var total_amount=calculate_total_amount();
+var total_gst=calculate_total_gst();
+$("#total_gst").val(total_gst.toFixed(2));
+    $("#igst").val(total_gst.toFixed(2));
+    var half_gst = parseFloat(total_gst)/2;
+    $("#cgst").val(half_gst.toFixed(2));
+    $("#sgst").val(half_gst.toFixed(2));
+var q=calculate_total_discount();
+$('#total_discount').val(q.toFixed(2));
+$('#disc_total').val(q.toFixed(2));
+total_expense_cal();
+overall_discounts();
+roundoff_cal();
+
+
+var to_html_total_net = total_net_price.toFixed(2);
+var to_html_total_amount = total_amount.toFixed(2);
+$(".total_net_price").html(parseFloat(to_html_total_net));
+$(".total_amount").html(parseFloat(to_html_total_amount));
+
+
+
+
+            }
+           }
+        });
+}
+
+function rejection_in_details()
+{
+
+  var r_in_no=$('.r_in_no').val();
+  $('.s_no').val('')
+  $('select').select2();
+
+  $.ajax({
+           type: "POST",
+            url: "{{ url('credit_note/rejection_in_details/') }}",
+            data: { r_in_no : r_in_no },
+           success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);

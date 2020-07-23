@@ -19,6 +19,8 @@ class CreateCreditNoteItemsTable extends Migration
             $table->date('cn_date')->nullable();
             $table->string('s_no')->nullable();
             $table->date('s_date')->nullable();
+            $table->string('r_in_no')->nullable();
+            $table->date('r_in_date')->nullable();
             $table->string('item_sno');
             $table->bigInteger('item_id')->unsigned();
             $table->float('mrp')->nullable();

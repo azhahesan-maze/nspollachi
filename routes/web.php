@@ -755,6 +755,7 @@ Route::get('credit_note/expense_details/{id}', 'CreditNoteController@expense_det
 Route::post('credit_note/last_purchase_rate/', 'CreditNoteController@last_purchase_rate');
 Route::get('credit_note/delete/{id}', 'CreditNoteController@destroy');
 Route::post('credit_note/s_details/', 'CreditNoteController@s_details');
+Route::post('credit_note/rejection_in_details/', 'CreditNoteController@rejection_in_details');
 
 /* Credit Note End Here  */
 

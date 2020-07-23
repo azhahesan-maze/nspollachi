@@ -19,6 +19,8 @@ class CreateCreditNotesTable extends Migration
             $table->date('cn_date')->nullable();
             $table->string('s_no')->nullable();
             $table->date('s_date')->nullable();
+            $table->string('r_in_no')->nullable();
+            $table->date('r_in_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();

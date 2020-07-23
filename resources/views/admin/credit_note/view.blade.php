@@ -25,6 +25,7 @@
             <th>Voucher Date </th>
             <th>Sale Entry No </th>
             <th>Sale Entry Date </th>
+            <th>Rejection In No </th>
             <th>Customer Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -40,6 +41,7 @@
               <td>{{ $value->cn_date }}</td>
               <td>{{ $value->s_no }}</td>
               <td>{{ $value->s_date }}</td>
+              <td>{{ $value->r_in_no }}</td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
               @else
