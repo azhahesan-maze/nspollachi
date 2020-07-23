@@ -59,7 +59,28 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                  <label style="font-family: Times new roman;">Party Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
+                           @if(isset($rejection_out->supplier->name) && !empty($rejection_out->supplier->name))
+                           <option value="{{ $rejection_out->supplier->id }}">{{ $rejection_out->supplier->name }}</option>
+                           @else
+                           <option value="">Choose Supplier Name</option>
+                           @endif
+                           @foreach($supplier as $suppliers)
+                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ url('master/supplier/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control p_no" 
                                 data-placeholder="Choose Purchase Order No" onchange="p_details()" id="p_no" name="p_no" >
@@ -71,9 +92,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Entry Date</label><br>
-                                <input type="date" class="form-control p_date  required_for_proof_valid" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $date }}">
+                                <input type="date" class="form-control p_date  required_for_proof_valid" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $rejection_out->p_date }}">
                                  
                                 </div>
                                 
@@ -148,26 +169,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
-                                <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Party Name</label><br>
-                  <div class="form-group row">
-                     <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" onchange="supplier_details()" name="supplier_id" id="supplier_id">
-                           @if(isset($rejection_out->supplier->name) && !empty($rejection_out->supplier->name))
-                           <option value="{{ $rejection_out->supplier->id }}">{{ $rejection_out->supplier->name }}</option>
-                           @else
-                           <option value="">Choose Supplier Name</option>
-                           @endif
-                           @foreach($supplier as $suppliers)
-                           <option value="{{ $suppliers->id }}">{{ $suppliers->name }}</option>
-                           @endforeach
-                        </select>
-                     </div>
-                     <a href="{{ url('master/supplier/create')}}" target="_blank">
-                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Supplier"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
-                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                  </div>
-               </div>
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
@@ -2361,13 +2363,10 @@ function supplier_details()
             url: "{{ url('rejection_out/address_details/') }}",
             data: { supplier_id : supplier_id },
            success: function(data) {
-            $('#address_line_1').val(data);
-            // $('#address_line_2').val(data[1]);
-            // $('#city_id').val(data[2]);
-            // $('#district_id').val(data[3]);
-            // $('#state_id').val(data[4]);
-            // $('#postal_code').val(data[5]);
-           $('.address').text(data);
+            var result = JSON.parse(data);
+            $('#address_line_1').val(result.address);
+           $('.address').text(result.address);
+           $('.p_no').children('option:not(:first)').remove().end().append(result.options);
            }
         });
 }
@@ -2383,6 +2382,7 @@ function p_details()
             url: "{{ url('rejection_out/p_details/') }}",
             data: { p_no : p_no },
            success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);

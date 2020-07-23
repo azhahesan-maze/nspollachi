@@ -541,6 +541,10 @@ class RejectionOutController extends Controller
        ->where('address_details.address_ref_id','=',$supplier_id)
        ->first();
 
+
+       $filter = PurchaseEntry::where('supplier_id',$supplier_id)
+                            ->select('p_no','p_date')
+                            ->get();
       
 $count=0;
 
@@ -590,7 +594,14 @@ $count=0;
          }
          $address.="GST Number :".$getdata->gst_no;
 
+         $options = "";
 
+         foreach ($filter as $key => $value) {
+             $options .= '<option value="'.$value->p_no.'">Purchase Entry No:'.$value->p_no.' - Date:'.$value->p_date.'</option>';
+         }
+
+         $result = array('options' => $options, 'address' => $address);
+         echo json_encode($result);exit();
 
    return $address;   
         
