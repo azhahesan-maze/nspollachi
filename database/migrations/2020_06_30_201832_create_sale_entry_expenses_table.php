@@ -19,6 +19,10 @@ class CreateSaleEntryExpensesTable extends Migration
             $table->date('s_date');
             $table->string('so_no')->nullable();
             $table->date('so_date')->nullable();
+            $table->string('sale_estimation_no')->nullable();
+            $table->date('sale_estimation_date')->nullable();
+            $table->string('d_no')->nullable();
+            $table->date('d_date')->nullable();
             $table->bigInteger('expense_type')->unsigned()->nullable();
             $table->decimal('expense_amount')->nullable();
             $table->timestamps();

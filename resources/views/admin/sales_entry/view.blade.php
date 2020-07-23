@@ -23,8 +23,10 @@
             <th>S.No</th>
             <th>Voucher No </th>
             <th>Voucher Date </th>
+            <th>Sale Estimation No </th>
             <th>Sale Order No </th>
             <th>Sale Order Date </th>
+            <th>Delivery Note No </th>
             <th>Customer Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -38,8 +40,10 @@
               <td>{{ $key+1 }}</td>
               <td>{{ $value->s_no }}</td>
               <td>{{ $value->s_date }}</td>
+              <td>{{ $value->sale_estimation_no }}</td>
               <td>{{ $value->so_no }}</td>
               <td>{{ $value->so_date }}</td>
+              <td>{{ $value->d_no }}</td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
               @else

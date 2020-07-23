@@ -17,8 +17,12 @@ class CreateSaleEntriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('s_no')->nullable();
             $table->date('s_date')->nullable();
+            $table->string('sale_estimation_no')->nullable();
+            $table->date('sale_estimation_date')->nullable();
             $table->string('so_no')->nullable();
             $table->date('so_date')->nullable();
+            $table->string('d_no')->nullable();
+            $table->date('d_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();
