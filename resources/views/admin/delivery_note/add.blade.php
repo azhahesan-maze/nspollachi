@@ -90,24 +90,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        <div class="row col-md-12">
 
                         <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Sales Estimation No</label><br>
-                                <select class="js-example-basic-multiple form-control sale_estimation_no" 
-                                data-placeholder="Choose Sale Estimation No" onchange="se_details()" id="sale_estimation_no" name="sale_estimation_no" >
-                                <option value="">Choose Sale Estimation No</option>
-                                @foreach($sale_estimation as $sale_estimations)
-                                <option value="{{ $sale_estimations->sale_estimation_no }}">{{ $sale_estimations->sale_estimation_no }}</option>
-                                  @endforeach 
-                                 </select>
-                                 
-                                </div>
-
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Sale Estimation Date</label><br>
-                                <input type="date" class="form-control sale_estimation_date  required_for_proof_valid" id="sale_estimation_date" placeholder="Voucher Date" name="sale_estimation_date" value="{{ $date }}">
-                                 
-                                </div>
-                                
-                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <font size="2">{{ $voucher_no }}</font>
@@ -121,6 +103,26 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sales Estimation No</label><br>
+                                <select class="js-example-basic-multiple form-control sale_estimation_no" 
+                                data-placeholder="Choose Sale Estimation No" onchange="se_details()" id="sale_estimation_no" name="sale_estimation_no" >
+                                <option value="">Choose Sale Estimation No</option>
+                                @foreach($sale_estimation as $sale_estimations)
+                                <option value="{{ $sale_estimations->sale_estimation_no }}">{{ $sale_estimations->sale_estimation_no }}</option>
+                                  @endforeach 
+                                 </select>
+                                 
+                                </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sale Estimation Date</label><br>
+                                <input type="date" class="form-control sale_estimation_date  required_for_proof_valid" id="sale_estimation_date" readonly="" placeholder="Voucher Date" name="sale_estimation_date" value="">
+                                 
+                                </div>
+                                
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Order No</label><br>
                                 <select class="js-example-basic-multiple form-control so_no" 
@@ -135,7 +137,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sale Order Date</label><br>
-                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Sale Order Date" name="so_date" value="{{ $date }}">
+                                <input type="date" class="form-control so_date  required_for_proof_valid" readonly="" id="so_date" placeholder="Sale Order Date" name="so_date" value="">
                                  
                                 </div>
                                 </div>
@@ -2282,6 +2284,7 @@ function se_details()
 
   var se_no=$('.sale_estimation_no').val();
   $('.so_no').val('');
+  $('.so_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2290,6 +2293,7 @@ function se_details()
             data: { se_no : se_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2300,7 +2304,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2356,6 +2360,7 @@ function so_details()
 
   var so_no=$('.so_no').val();
   $('.sale_estimation_no').val('');
+  $('.sale_estimation_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2364,6 +2369,7 @@ function so_details()
             data: { so_no : so_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2374,7 +2380,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
