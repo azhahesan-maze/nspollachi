@@ -2389,6 +2389,8 @@ function s_details()
             url: "{{ url('rejection_in/s_details/') }}",
             data: { s_no : s_no },
            success: function(data) {
+            $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2399,7 +2401,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2409,7 +2411,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-
+$('.s_date').val(result.date_sale_entry);
 $('.sale_date').text(result.date_sale_entry);
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2420,7 +2422,7 @@ $('#total_discount').val(result.item_discount_sum);
 $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
- $('#s_date').val(result.date_saleorder);
+ $('#so_date').val(result.date_saleorder);
  
 
 var total_net_price=calculate_total_net_price();
