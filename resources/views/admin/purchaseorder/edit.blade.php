@@ -109,7 +109,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                   <div class="col-md-2">
                     <label style="font-family: Times new roman;">Estimation Date</label><br>
-                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $purchaseorder->estimation_date }}">
+                  <input type="date" class="form-control estimation_date  required_for_proof_valid" readonly="" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $purchaseorder->estimation_date }}">
                    
                   </div>
 
@@ -2301,6 +2301,7 @@ function estimation_details()
             url: "{{ url('purchase_order/estimation_details/') }}",
             data: { estimation_no : estimation_no },
            success: function(data) {
+            $('.tables').remove();
             var result=JSON.parse(data);
             if(result.status>0){
               console.log(result.expense_cnt);
