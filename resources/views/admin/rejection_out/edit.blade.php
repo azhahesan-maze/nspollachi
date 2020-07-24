@@ -80,25 +80,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                   </div>
                </div>
 
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Purchase Entry No</label><br>
-                                <select class="js-example-basic-multiple form-control p_no" 
-                                data-placeholder="Choose Purchase Order No" onchange="p_details()" id="p_no" name="p_no" >
-                                <option value="{{ $rejection_out->p_no }}">{{ $rejection_out->p_no }}</option>
-                                @foreach($purchase_entry as $purchaseorders)
-                                <option value="{{ $purchaseorders->p_no }}">{{ $purchaseorders->p_no }}</option>
-                                  @endforeach 
-                                 </select>
-                                 
-                                </div>
-
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Purchase Entry Date</label><br>
-                                <input type="date" class="form-control p_date  required_for_proof_valid" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $rejection_out->p_date }}">
-                                 
-                                </div>
-                                
-                                <div class="col-md-2">
+               <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $rejection_out->r_out_no }}">
@@ -113,6 +95,26 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $rejection_out->r_out_date }}">
                                  
                                 </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Purchase Entry No</label><br>
+                                <select class="js-example-basic-multiple form-control p_no" 
+                                data-placeholder="Choose Purchase Order No" onchange="p_details()" id="p_no" name="p_no" >
+                                <option value="{{ $rejection_out->p_no }}">{{ $rejection_out->p_no }}</option>
+                                @foreach($purchase_entry as $purchaseorders)
+                                <option value="{{ $purchaseorders->p_no }}">{{ $purchaseorders->p_no }}</option>
+                                  @endforeach 
+                                 </select>
+                                 
+                                </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Purchase Entry Date</label><br>
+                                <input type="date" class="form-control p_date  required_for_proof_valid" readonly="" id="p_date" placeholder="Voucher Date" name="p_date" value="{{ $rejection_out->p_date }}">
+                                 
+                                </div>
+                                
+                                
                                 <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Gate Pass Entry No</label><br>
                                 <select class="js-example-basic-multiple form-control gatepass_no" 
@@ -2383,6 +2385,7 @@ function p_details()
             data: { p_no : p_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2393,7 +2396,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2404,7 +2407,7 @@ $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.purchase_date').text(result.date_purchaseorder);
-
+$('.p_date').val(result.purchase_entry_date);
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
 // $('#cgst').val($('#igst').val()/2);
