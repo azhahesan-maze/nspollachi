@@ -105,7 +105,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sale Entry Date</label><br>
-                                <input type="date" class="form-control s_date  required_for_proof_valid" id="s_date" placeholder="Voucher Date" name="s_date" value="{{ $date }}">
+                                <input type="date" class="form-control s_date  required_for_proof_valid" readonly="" id="s_date" placeholder="Voucher Date" name="s_date" value="">
                                  
                                 </div>
                                 
@@ -129,6 +129,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <option value="{{ $value->r_in_no }}">{{ $value->r_in_no }}</option>
                                   @endforeach
                                  </select>
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Rejection In Date</label><br>
+                                <input type="date" class="form-control r_in_date  required_for_proof_valid" readonly="" id="r_in_date" placeholder="Voucher Date" name="r_in_date" value="">
                                  
                                 </div>
 
@@ -2277,7 +2283,8 @@ function s_details()
 {
 
   var s_no=$('.s_no').val();
-  $('.r_in_no').val('')
+  $('.r_in_no').val('');
+  $('.r_in_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2286,6 +2293,7 @@ function s_details()
             data: { s_no : s_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2296,7 +2304,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2306,7 +2314,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-
+$('.s_date').val(result.date_sale_entry);
 $('.sale_date').text(result.date_sale_entry);
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2353,7 +2361,8 @@ function rejection_in_details()
 {
 
   var r_in_no=$('.r_in_no').val();
-  $('.s_no').val('')
+  $('.s_no').val('');
+  $('.s_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2362,6 +2371,7 @@ function rejection_in_details()
             data: { r_in_no : r_in_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2372,7 +2382,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2382,7 +2392,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-
+$('.r_in_date').val(result.date_rejection_in);
 $('.sale_date').text(result.date_sale_entry);
 
 // $('.total_net_price').append(result.item_net_value_sum);
