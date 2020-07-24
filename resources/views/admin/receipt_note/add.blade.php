@@ -115,7 +115,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
-                                <input type="date" class="form-control po_date  required_for_proof_valid" id="po_date" placeholder="Voucher Date" name="po_date" value="{{ $date }}">
+                                <input type="date" class="form-control po_date  required_for_proof_valid" readonly="" id="po_date" placeholder="Voucher Date" name="po_date" value="">
                                  
                                 </div>
                                 
@@ -133,7 +133,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimation Date</label><br>
-                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" id="p_estimation_date" placeholder="Estimation Date" name="p_estimation_date" value="{{ $date }}">
+                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" readonly="" id="p_estimation_date" placeholder="Estimation Date" name="p_estimation_date" value="">
                                  
                                 </div>
                                 </div>
@@ -2250,6 +2250,7 @@ function estimation_details()
   var p_estimation_no=$('.p_estimation_no').val();
   
   $('.po_no').val('');
+  $('.po_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2282,6 +2283,7 @@ $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.estimation_date').text(result.date_estimation);
+$('.p_estimation_date').val(result.date_estimation);
 $('.estimation_no').text(result.estimation_no);
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2333,6 +2335,7 @@ function po_details()
   $('.purchase_type').show();
   $('.purchase_date').show();
   $('.p_estimation_no').val('');
+  $('.p_estimation_date').val('');
   $('select').select2();
 
   $.ajax({

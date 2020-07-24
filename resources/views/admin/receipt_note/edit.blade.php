@@ -94,24 +94,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        <div class="row col-md-12">
 
                         <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Purchase Order No</label><br>
-                                <select class="js-example-basic-multiple form-control po_no" 
-                                data-placeholder="Choose Purchase Order No" onchange="po_details()" id="po_no" name="po_no" >
-                                <option value="{{ $receipt_note->po_no }}">{{ $receipt_note->po_no }}</option>
-                                @foreach($purchaseorder as $purchaseorders)
-                                <option value="{{ $purchaseorders->po_no }}">{{ $purchaseorders->po_no }}</option>
-                                  @endforeach 
-                                 </select>
-                                 
-                                </div>
-
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Purchase Order Date</label><br>
-                                <input type="date" class="form-control po_date  required_for_proof_valid" id="po_date" placeholder="Voucher Date" name="po_date" value="{{ $date }}">
-                                 
-                                </div>
-                                
-                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <input type="hidden" readonly="" id="voucher_no" name="voucher_no" value="{{ $receipt_note->rn_no }}">
@@ -126,6 +108,26 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $receipt_note->rn_date }}">
                                  
                                 </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Purchase Order No</label><br>
+                                <select class="js-example-basic-multiple form-control po_no" 
+                                data-placeholder="Choose Purchase Order No" onchange="po_details()" id="po_no" name="po_no" >
+                                <option value="{{ $receipt_note->po_no }}">{{ $receipt_note->po_no }}</option>
+                                @foreach($purchaseorder as $purchaseorders)
+                                <option value="{{ $purchaseorders->po_no }}">{{ $purchaseorders->po_no }}</option>
+                                  @endforeach 
+                                 </select>
+                                 
+                                </div>
+
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Purchase Order Date</label><br>
+                                <input type="date" class="form-control po_date  required_for_proof_valid" readonly="" id="po_date" placeholder="Voucher Date" name="po_date" value="{{ $receipt_note->po_date }}">
+                                 
+                                </div>
+                                
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimation No</label><br>
                                 <select class="js-example-basic-multiple form-control p_estimation_no" 
@@ -139,7 +141,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimation Date</label><br>
-                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" id="p_estimation_date" placeholder="Gate Pass Entry Date" name="p_estimation_date" value="{{ $receipt_note->estimation_date }}">
+                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" readonly="" id="p_estimation_date" placeholder="Gate Pass Entry Date" name="p_estimation_date" value="{{ $receipt_note->estimation_date }}">
                                  
                                 </div>
                                 </div>
@@ -2356,6 +2358,7 @@ function estimation_details()
   var p_estimation_no=$('.p_estimation_no').val();
   
   $('.po_no').val('');
+  $('.po_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2366,6 +2369,7 @@ function estimation_details()
             $('.tables').remove();
             $('.purchase_type').hide();
             $('.purchase_date').hide();
+            // $('.purchase_order').hide();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2387,6 +2391,7 @@ $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.estimation_date').text(result.date_estimation);
+$('.p_estimation_date').val(result.date_estimation);
 $('.estimation_no').text(result.estimation_no);
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2430,12 +2435,15 @@ $(".total_amount").html(parseFloat(to_html_total_amount));
 }
 
 
+
 function po_details()
 {
 
   var po_no=$('.po_no').val();
-  $('.purchase_order').show();
+  $('.purchase_type').show();
+  $('.purchase_date').show();
   $('.p_estimation_no').val('');
+  $('.p_estimation_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2444,8 +2452,6 @@ function po_details()
             data: { po_no : po_no },
            success: function(data) {
             $('.tables').remove();
-            $('.purchase_type').show();
-            $('.purchase_date').show();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
