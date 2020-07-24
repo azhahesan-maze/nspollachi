@@ -82,12 +82,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
-                              </div>
-                              <br>
-
-                       <div class="row col-md-12">
-
-
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
@@ -102,6 +96,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
                                  
                                 </div>
+
+                              </div>
+                              <br>
+
+                       <div class="row col-md-12">
+
+
+                                
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Estimation No</label><br>
                                 <select class="js-example-basic-multiple form-control p_estimation_no" 
@@ -113,6 +115,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  </select>
                                  
                                 </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Estimation Date</label><br>
+                                <input type="date" class="form-control p_estimation_date  required_for_proof_valid" readonly="" id="p_estimation_date" placeholder="Estimation Date" name="p_estimation_date" value="">
+                                 
+                                </div>
+
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order No</label><br>
                                 <select class="js-example-basic-multiple form-control po_no" 
@@ -126,7 +135,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
-                                <input type="date" class="form-control po_date  required_for_proof_valid" id="po_date" placeholder="Voucher Date" name="po_date" value="{{ $date }}">
+                                <input type="date" class="form-control po_date  required_for_proof_valid" readonly="" id="po_date" placeholder="Voucher Date" name="po_date" value="">
                                  
                                 </div>
                                 <div class="col-md-2">
@@ -140,6 +149,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  </select>
                                  
                                 </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Receipt Note Date</label><br>
+                                <input type="date" class="form-control receipt_date  required_for_proof_valid" readonly="" id="receipt_date" placeholder="Receipt Note Date" name="receipt_date" value="">
+                                 
+                                </div>
+
                                 </div>
                                 <br>
                                 <div class="row col-md-12">
@@ -164,7 +180,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
                                 <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Purchase Order No</label><br>
+                                  <label style="font-family: Times new roman;">Purchase Type</label><br>
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
                                   <div class="purchase_type">
@@ -2255,6 +2271,8 @@ function estimation_details()
   
   $('.po_no').val('');
   $('.receipt_no').val('');
+  $('.receipt_date').val('');
+  $('.po_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2263,8 +2281,9 @@ function estimation_details()
             data: { p_estimation_no : p_estimation_no },
            success: function(data) {
             $('.tables').remove();
-            $('.purchase_type').hide();
-            $('.purchase_date').hide();
+            $('.expense').remove();
+            $('.purchase_type').text('');
+            $('.purchase_date').text('');
             // $('.purchase_order').hide();
             var result=JSON.parse(data);
             if(result.status>0){
@@ -2276,7 +2295,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2287,6 +2306,7 @@ $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.estimation_date').text(result.date_estimation);
+$('.p_estimation_date').val(result.date_estimation);
 $('.estimation_no').text(result.estimation_no);
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2335,6 +2355,8 @@ function po_details()
   var po_no=$('.po_no').val();
   $('.p_estimation_no').val('');
   $('.receipt_no').val('');
+  $('.p_estimation_date').val('');
+  $('.receipt_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2342,7 +2364,10 @@ function po_details()
             url: "{{ url('purchase_entry/po_details/') }}",
             data: { po_no : po_no },
            success: function(data) {
+            // $('.purchase_type').show();
+            // $('.purchase_date').show();
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2353,7 +2378,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2425,9 +2450,11 @@ function receipt_details()
             url: "{{ url('purchase_entry/receipt_details/') }}",
             data: { receipt_no : receipt_no },
            success: function(data) {
+            
             $('.tables').remove();
-            $('.purchase_type').show();
-            $('.purchase_date').show();
+            $('.expense').remove();
+            $('.purchase_type').text('');
+            $('.purchase_date').text('');
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2438,7 +2465,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2448,10 +2475,22 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-$('.purchase_type').text(result.po_no);
+if(result.purchase_type == '')
+{
+
+}
+else
+{
+ if(result.purchase_type == 1)
+$('.purchase_type').text('Cash Purchase');
+else if(result.purchase_type == 0)
+$('.purchase_type').text('Credit Purchase'); 
+}
+
 $('.purchase_date').text(result.po_date);
 $('.estimation_date').text(result.date_estimation);
 $('.estimation_no').text(result.estimation_no);
+$('.receipt_date').val(result.receipt_note_date);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
