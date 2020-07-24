@@ -82,13 +82,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   </div>
                                 </div>
 
-                              </div>
-                              <br>
-
-      
-                       <div class="row col-md-12">
-
-                        <div class="col-md-2">
+                                <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Voucher No</label><br>
                                   <div class="">
                                     <font size="2">{{ $voucher_no }}</font>
@@ -103,6 +97,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
+                              </div>
+                              <br>
+
+      
+                       <div class="row col-md-12">
+
+                        
+
                                 <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Estimation No</label><br>
                                 <select class="js-example-basic-multiple form-control sale_estimation_no" 
@@ -112,6 +114,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <option value="{{ $value->sale_estimation_no }}">{{ $value->sale_estimation_no }}</option>
                                   @endforeach
                                  </select>
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sale Estimation Date</label><br>
+                                <input type="date" class="form-control sale_estimation_date  required_for_proof_valid" id="sale_estimation_date" readonly="" placeholder="Voucher Date" name="sale_estimation_date" value="">
                                  
                                 </div>
 
@@ -129,7 +137,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sale Order Date</label><br>
-                                <input type="date" class="form-control so_date  required_for_proof_valid" id="so_date" placeholder="Voucher Date" name="so_date" value="{{ $date }}">
+                                <input type="date" class="form-control so_date  required_for_proof_valid" readonly="" id="so_date" placeholder="Voucher Date" name="so_date" value="">
                                  
                                 </div>
 
@@ -142,6 +150,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <option value="{{ $value->d_no }}">{{ $value->d_no }}</option>
                                   @endforeach
                                  </select>
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Delivery Note Date</label><br>
+                                <input type="date" class="form-control d_date  required_for_proof_valid" id="d_date" readonly="" placeholder="Voucher Date" name="d_date" value="">
                                  
                                 </div>
                                 
@@ -2266,6 +2280,8 @@ function se_details()
   var se_no=$('.sale_estimation_no').val();
   $('.so_no').val('');
   $('.d_no').val('');
+  $('.so_date').val('');
+  $('.d_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2274,6 +2290,7 @@ function se_details()
             data: { se_no : se_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2284,7 +2301,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2341,6 +2358,8 @@ function so_details()
   var so_no=$('.so_no').val();
   $('.d_no').val('');
   $('.sale_estimation_no').val('');
+  $('.d_date').val('');
+  $('.sale_estimation_date').val('');
   $('select').select2();
 
 
@@ -2350,6 +2369,7 @@ function so_details()
             data: { so_no : so_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2360,7 +2380,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2424,6 +2444,8 @@ function delivery_details()
   var d_no=$('.d_no').val();
   $('.so_no').val('');
   $('.sale_estimation_no').val('');
+  $('.so_date').val('');
+  $('.sale_estimation_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2432,6 +2454,7 @@ function delivery_details()
             data: { d_no : d_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2442,7 +2465,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2452,7 +2475,7 @@ $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
-$('.sale_estimation_date').val(result.date);
+$('.d_date').val(result.date);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
