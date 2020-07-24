@@ -104,7 +104,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                   <div class="col-md-2">
                     <label style="font-family: Times new roman;">Estimation Date</label><br>
-                  <input type="date" class="form-control estimation_date  required_for_proof_valid" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="{{ $date }}">
+                  <input type="date" class="form-control estimation_date  required_for_proof_valid" readonly="" id="estimation_date" placeholder="Estimation Date" name="estimation_date" value="">
                    
                   </div>
 
@@ -2185,6 +2185,8 @@ function estimation_details()
             url: "{{ url('sales_order/estimation_details/') }}",
             data: { estimation_no : estimation_no },
            success: function(data) {
+            $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2195,7 +2197,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2210,7 +2212,7 @@ $('#total_discount').val(result.item_discount_sum);
 $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
- $('.estimation_date').val(result.date_estimation);
+ $('.estimation_date').val(result.date);
  $('#counts').val(result.status);
 $('#expense_count').val(result.expense_cnt);
 
