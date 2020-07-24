@@ -2302,6 +2302,7 @@ function estimation_details()
             data: { estimation_no : estimation_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
               console.log(result.expense_cnt);
@@ -2313,7 +2314,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {

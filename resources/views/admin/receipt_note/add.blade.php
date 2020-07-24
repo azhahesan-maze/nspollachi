@@ -2259,6 +2259,7 @@ function estimation_details()
             data: { p_estimation_no : p_estimation_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             $('.purchase_type').hide();
             $('.purchase_date').hide();
             // $('.purchase_order').hide();
@@ -2272,7 +2273,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
@@ -2344,6 +2345,7 @@ function po_details()
             data: { po_no : po_no },
            success: function(data) {
             $('.tables').remove();
+            $('.expense').remove();
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
@@ -2354,7 +2356,7 @@ $('.append_expense').append(result.expense_typess);
 }
 else if(result.expense_cnt == 0)
 {
-  
+  $('.append_expense').html(result.expense_typess);
 }
 else
 {
