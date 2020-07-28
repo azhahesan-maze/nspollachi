@@ -361,6 +361,24 @@
           </li>
 
 
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              POS
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">POS</li>
+                           
+                            <li><a href="{{ route('pos.index') }}">POS</a></li>
+                        </ul>
+                    </li>
+            </ul>        
+            
+          </li>
+
+
 
 
           

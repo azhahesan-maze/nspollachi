@@ -796,6 +796,13 @@ Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
 /* Rejection Out End Here  */
 
 
+/*POS Start Here*/
+
+Route::resource('pos','PosController',['middleware' => ['auth']]);
+
+/*POS End Here*/
+
+
 
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
