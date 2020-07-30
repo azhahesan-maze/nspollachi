@@ -14,6 +14,11 @@
           <input type="text" class="form-control item_code  required_for_proof_valid" placeholder="Item Code" id="item_code" name="item_code" value="" oninput="get_details()">
 
           <input type="hidden" class="form-control items_codes  required_for_proof_valid" placeholder="Item Code" id="items_codes" name="items_codes" value="">
+
+          <input type="hidden" class="form-control item_name  required_for_proof_valid" id="item_name" placeholder="Item Name" name="item_name" readonly="" id="item_name" value="">
+          <input type="hidden" class="form-control mrp required_for_proof_valid" placeholder="MRP" id="mrp" name="mrp" value="">
+
+          <input type="hidden" class="form-control" placeholder="" id="counts" name="counts" value="">
                
               </div>
               
@@ -131,9 +136,11 @@
                       <div class="col-md-2" id="rate_exclusive">
                         <label style="font-family: Times new roman;">Unit Price</label>
                       <input type="text" class="form-control exclusive_rate" id="exclusive" placeholder="Unit Price" style="margin-right: 80px;" oninput="calc_exclusive()" name="exclusive" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" value="">
+
+                      <input type="hidden" class="form-control amount  required_for_proof_valid" placeholder="Amount" id="amount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="amount" value="" >
                       </div>
                       <div class="col-md-4">
-                      <button type="button" style="width: 100%; height: 100%;" class="btn btn-success btn-lg">ADD</button>
+                      <button type="button" style="width: 100%; height: 100%;" class="btn btn-success btn-lg add_items">ADD</button>
                       </div>
                </div>      
 
@@ -154,21 +161,18 @@
             <th>Net Price</th>
           </tr>
         </thead>
-        <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              
-            </tr>
-            
-         
+        <tbody class="append_proof_details" id="myTable">
         </tbody>
+        <tfoot>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tfoot>
       </table>
 
       <div class="row col-md-12">
@@ -223,19 +227,19 @@
 <hr>
 <div class="form-group row">
    <div class="col-md-12">
-   <label for="validationCustom01" class=" col-form-label">Total Item: </label>
+   <label for="validationCustom01" class=" col-form-label">Total Item: <font class="total_itme"></font> </label>
    </div>
   </div>
 
   <div class="form-group row">
    <div class="col-md-12">
-   <label for="validationCustom01" class=" col-form-label">Total Quantity: </label>
+   <label for="validationCustom01" class=" col-form-label">Total Quantity: <font class="total_quantity"></font> </label>
    </div>
   </div>
 
   <div class="form-group row">
    <div class="col-md-12">
-   <label for="validationCustom01" class=" col-form-label">Sub Total: </label>
+   <label for="validationCustom01" class=" col-form-label">Sub Total: <font class="sub_total"></font></label>
    </div>
   </div>
 
@@ -251,11 +255,11 @@
    </div>
   </div>
 
-  <div class="p-5 mb-2 bg-success text-white"><center><font color="yellow" size="6">Total&nbsp;&nbsp;&nbsp;960</font></center></div>
+  <div class="p-5 mb-2 bg-success text-white"><center><font color="yellow" size="6">Total&nbsp;&nbsp;&nbsp;</font><font class="total" color="yellow" size="6"></font></center></div>
 
-  <div class="p-5 mb-2 bg-success text-white"><center><font size="5">Received Amount&nbsp;&nbsp;&nbsp;960</font></center></div>
+  <div class="p-5 mb-2 bg-success text-white"><center><font size="5">Received Amount&nbsp;&nbsp;&nbsp;</font><font class="received" size="5"></font></center></div>
 
-  <div class="p-5 mb-2 bg-success text-white"><center><font size="5">Remaining Amount&nbsp;&nbsp;&nbsp;960</font></center></div>
+  <div class="p-5 mb-2 bg-success text-white"><center><font size="5">Remaining Amount&nbsp;&nbsp;&nbsp;</font><font class="remaining" size="5"></font></center></div>
 
   <button style="float: left; width: 30%;" type="button" class="btn btn-success">Receipt</button>&nbsp;&nbsp;&nbsp;&nbsp;
   <button type="button" style="width: 30%;" class="btn btn-warning">Save</button>
@@ -276,161 +280,340 @@
 </style> 
 
   <script type="text/javascript">
-function find_cat()
-{
-  
-  $('#categories').val("");
-  $('#brand').val("");
-  $("select").select2();
-  $('#cat').show();
-  $('.row_brand').remove(); 
-  $('.row_category').remove();
-  $('#cat').dialog({width:900},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
-    
+          var i=0;
+          var discount_total = 0;
+
+function calculate_total_net_price(){
+  var total_net_price=0;
+  $(".table_net_price").each(function(){
+    total_net_price=parseFloat(total_net_price)+parseFloat($(this).val());
+  });
+  return total_net_price;
+}
+function calculate_total_amount(){
+  var total_amount=0;
+  $(".table_amount").each(function(){
+    total_amount=parseFloat(total_amount)+parseFloat($(this).val());
+  });
+  return total_amount;
 }
 
-function brand_check()
+function calculate_total_quantity(){
+  var total_quantity=0;
+  $(".table_quantity").each(function(){
+    total_quantity=parseFloat(total_quantity)+parseFloat($(this).val());
+  });
+  return total_quantity;
+}
+
+
+
+function calculate_total_discount()
 {
+  var q=0;
+  if($(".overall_discount").val() == '' || $(".overall_discount").val() == 0)
+  {
+    $(".input_discounts").each(function(){
+    q = parseFloat(q)+parseFloat($(this).val());
+    });
+    return q;
+  }
+  else
+  {
+    $(".font_discount").each(function(){
+    q = parseFloat(q)+parseFloat($(this).text());
+  });
+    return q;
+  }
   
-  var brand = $('.brand').val();
-  
+}
 
-  $.ajax({
 
-        type: "POST",
-        url: "{{ url('estimation/brand_filter/') }}",
-        data: {brand: brand },             
-             
-        success: function(data)
-        {
-          $('.row_category').remove();
-          $('.row_brand').remove();
-          $(".append_item").html(data);
-          return false;
 
-          var bar_code = [];
-          var item_id =[];
-          var item_code =[];
-          var item_name =[];
-          var item_brand_id =[];
-          var item_brand_name =[];
-          var item_category_name =[];
-          var item_category_id =[];
-          var item_ptc =[];
-          var item_mrp =[];
-          var barcode_last = data.length-1;
-          var item_last = data[barcode_last].length;
-          for(var i=0;i<barcode_last;i++)
-          {
-            //console.log(data[i][0].barcode);
-             bar_code.push(data[i][0].barcode);
-            
-          }
-          for(var j=0;j<item_last;j++)
-            {
-              item_code.push(data[item_last][j].item_code);
-              item_id.push(data[item_last][j].item_id);
-              item_name.push(data[item_last][j].item_name);
-              item_brand_id.push(data[item_last][j].brand_id);
-              item_brand_name.push(data[item_last][j].brand_name);
-              item_category_name.push(data[item_last][j].category_name);
-              item_category_id.push(data[item_last][j].categories_id);
-              item_ptc.push(data[item_last][j].ptc);
-              item_mrp.push(data[item_last][j].mrp);
-            }
+function add_items()
+{
+  var j=$('#mytable tr:last').attr('class');
+ var l=parseInt(i)+1;
+ var voucher_date=$('.voucher_date').val();
+ var invoice_no=$('.item_sno').val();
+ var uom_name = $('.uom_name').val();
+ var uom_id = $('.uom').val();
+ // var item_code=$("#items_codes option:selected");
+ // var item_code=item_code.text();
+ var item_code=$("#item_code").val();
+ var items_codes=$('#items_codes').val();
+ var item_name=$('.item_name').val();
+ var mrp=$('.mrp').val();
+ var hsn=$('.hsn').val();
+ var gst=$('.gst').val();
+ var quantity=$('.quantity').val();
+ var tax_rate=$('.tax_rate').val();
+ var exclusive=$('#exclusive').val();
+ var inclusive=$('#inclusive').val();
+ var amount=$('.amount').val();
+ var discounts=$('#discounts').val();
+ var discount=$('#discount').val();
+ var discount_percentage=$('.discount_percentage').val();
+ var discount_rs=$('.discount_rs').val();
+ var net_price=$('.net_price').val();
 
-            for (var k=0; k < barcode_last; k++)
-            {
+ if(discount_rs == '')
+ {
+  var discount = 0;
+ }
+ else if(discount_percentage == '' && discount == '')
+   {
+    var discount=0;
+   }
+ else
+ {
+  var discount = discount_rs;
+ }
 
-              var table_data='<tr class="row_brand"><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_mrp[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_mrp[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td></tr>';
-                
-                $(table_data).appendTo('.append_item');
+ if(discounts == '')
+ {
+  discounts =0;
+ }
+  // if(discount == '' && discount_percentage != '')
+  //  {
+  //   var discount=discount_percentage+'%';
+  //  }
 
-            }
-        }
+   // else if(discount_percentage == '' && discount != '')
+   // {
+   //  var discount=discount;
+   // }
+   
+ if(amount == '')
+ {
+  var amount=0;
+ }
+ if(net_price == '')
+ {
+  var net_price=0;
+ }
+
+ if(item_code == '' || invoice_no == '' || quantity == '' || exclusive == '' && inclusive == '')
+ {
+  alert('Please Fill All The Input Fields');
+ }
+ else if(item_name == '')
+ {
+  alert('Sorry There Is No  Such Item Code!!');
+  $("#item_code").val('');
+  $("#item_code").focus();
+ }
+
+ else
+ {
+ 
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+' table_quantity" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+0+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+0+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+0+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+amount+'" name="net_price[]"><font class="font_net_price'+i+'">'+amount+'</font></div></div></td></tr>'
+
+  $('.append_proof_details').append(items);
+
+
+
+var total_net_price=calculate_total_net_price();
+var total_quantity=calculate_total_quantity();
+
+var len = $('#myTable tr').length;
+$('#counts').val(len);
+$('.total_itme').text(len);
+$('.total_quantity').text(total_quantity);
+$('.sub_total').text(total_net_price);
+$('.total').text(total_net_price);
+i++;
+
+$('#cat').hide();
+$('.item_sno').val('');
+$('.items_codes').val('');
+$('.item_name').val('');
+$('.mrp').val('');
+$('.hsn').val('');
+$('.quantity').val('');
+$('.tax_rate').val('');
+$('#exclusive').val('');
+$('#inclusive').val('');
+$('.amount').val('');
+$('#discount').val('');
+$('#discounts').val('');
+$('.discount_percentage').val('');
+$('.net_price').val('');
+$('.gst').val('');
+$('.item_code').val('');
+$('#last_purchase_rate').val(0);
+$('.uom_inclusive').children('option').remove();
+$('.uom_exclusive').children('option').remove();
+$("select").select2();
+}
+} 
+$(document).on("click",".add_items",function(){
+    add_items();
+    item_details_sno();
 
   });
-}
 
-function categories_check()
-{
-  var  categories=$('#categories').val();
-  var  brand=$('#brand').val();
-  if(brand == '')
-  {
-    brand ='no_val';
-  }
-  $.ajax({  
+$(document).on("click",".remove_items",function(){
+  
+
+     var button_id = $(this).attr("id");
+     var invoice_no=$('.invoice_no'+button_id).val();
+
+     $('#row'+button_id).remove();
+     $('#total_discount').val(q.toFixed(2));
+     $('#disc_total').val(q.toFixed(2));
+     var counts = $('#counts').val();
+     $('#counts').val(counts-1); 
+     item_details_sno();
+
+       
         
-        type: "GET",
-        url: "{{ url('estimation/change_items/{id}') }}",
-        data: { categories: categories, brand: brand },             
+        
+
+    var total_net_price=calculate_total_net_price();
+    
+    $('#cat').hide();
+    $('.item_sno').val('');
+    $('.items_codes').val('');
+    $('.item_name').val('');
+    $('.mrp').val('');
+    $('.hsn').val('');
+    $('.quantity').val('');
+    $('.tax_rate').val('');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('.amount').val('');
+    $('#discount').val('');
+    $('#discounts').val('');
+    $('.discount_percentage').val('');
+    $('.net_price').val('');
+    $('.gst').val('');
+    $('.item_code').val('');
+    $('#last_purchase_rate').val(0);
+    $('.uom_inclusive').children('option').remove();
+    $('.uom_exclusive').children('option').remove();
+    $("select").select2();
+    $('.add_items').show();
+    $('.update_items').hide();
+    
+
+    // $.ajax({
+    //        type: "POST",
+    //         url: "{{ url('purchase/remove_data/') }}",
+    //         data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
+    //        success: function(data) {
+    //          // console.log(data);
              
-        success: function(data){ 
-          
-
-          
-
-          
-        $('.row_brand').remove(); 
-        $('.row_category').remove(); 
-        $(".append_item").html(data);
-        return false;
-          var bar_code = [];
-          var item_id =[];
-          var item_code =[];
-          var item_name =[];
-          var item_brand_id =[];
-          var item_brand_name =[];
-          var item_category_name =[];
-          var item_category_id =[];
-          var item_ptc =[];
-          var barcode_last = data.length-1;
-          var item_last = data[barcode_last].length;
-          for(var i=0;i<barcode_last;i++)
-          {
-            
-             bar_code.push(data[i][0].barcode);
-             item_brand_name.push(data[i][0].brand_name)
-            
-          }
-          for(var j=0;j<item_last;j++)
-            {
-              item_code.push(data[item_last][j].item_code);
-              item_id.push(data[item_last][j].item_id);
-              item_name.push(data[item_last][j].item_name);
-              if(data[item_last][j].brand_id == 0)
-              {
-                item_brand_name.push('Not Applicable');
-              }
-              else
-              {
-                item_brand_id.push(data[item_last][j].brand_id);
-              }
-              item_category_name.push(data[item_last][j].category_name);
-              item_category_id.push(data[item_last][j].categories_id);
-              item_ptc.push(data[item_last][j].ptc);
-            }
-
-            for (var k=0; k < barcode_last; k++)
-            {
-
-              var table_data='<tr class="row_category"><td><input type="hidden" value="'+item_id[k]+'" class="append_item_id'+k+'"><input type="hidden" value="'+item_code[k]+'" class="append_item_code'+k+'"><font style="font-family: Times new roman;">'+item_code[k]+'</font></td><td><input type="hidden" value="'+item_name[k]+'" class="append_item_name'+k+'"><font style="font-family: Times new roman;">'+item_name[k]+'</font></td><td><input type="hidden" value="'+item_brand_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_brand_name[k]+'</font></td><td><input type="hidden" value="'+item_category_id[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_category_name[k]+'</font></td><td><input type="hidden" value="'+item_ptc[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+item_ptc[k]+'</font></td><td><input type="hidden" value="'+bar_code[k]+'" class="append_item_brand_name'+k+'"><font style="font-family: Times new roman;">'+bar_code[k]+'</font></td><td><center><input type="radio" name="select" onclick="add_data('+k+')"></center></td></tr>';
-                
-                $(table_data).appendTo('.append_item');
-
-            }
-        }
+    //        }
+    //     });
 
 
+  
+});
+
+function item_details_sno(){
+  $(".item_s_no").each(function(key,index){
+      $(this).html((key+1));
     });
 }
 
-function add_data(val)
+
+  $("form").submit(function(e){
+  if($('#total_price').val() == 0 || $('#total_price').val() == '')
+  {
+    alert('There Is No Row To Submit');
+    e.preventDefault();
+  }
+  else
+  {
+
+  }    
+    });
+
+  
+function qty()
 {
-  // $('.item_display').dialog('close');
-  item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
+  var rate_exclusive = $('#exclusive').val();
+
+  if(rate_exclusive == '')
+  {
+
+  }
+  else
+  {
+    calc_exclusive();
+  }
 }
+
+
+
+function calc_exclusive()
+{
+  
+  var quantity = $('#quantity').val();
+  var rate_exclusive = $('#exclusive').val();
+  var rate_inclusive = $('#inclusive').val();
+  var tax_rate = $('.tax_rate').val();
+  var mrp = $('.mrp').val();
+
+  if (quantity == '') 
+  {
+    alert('Please Enter Quantity First');
+    $('#exclusive').val('');
+    $('#inclusive').val('');
+    $('#quantity').focus();
+  }
+   
+  else
+  {
+  
+      var total = parseInt(quantity)*parseFloat(rate_exclusive);
+    
+    $('#amount').val(total.toFixed(2));
+
+    if(tax_rate == '')
+    {
+      $('#net_price').val(total.toFixed(2));
+    }
+    else
+    {
+
+      var rate = parseFloat(tax_rate)/100;
+      var gst_rate = parseFloat(rate_exclusive)*parseFloat(rate);
+      var gst_rate_inclusive = parseFloat(rate_exclusive)+parseFloat(gst_rate);
+      $('#inclusive').val(gst_rate_inclusive.toFixed(2));
+      if($('#exclusive').val()>parseFloat(mrp))
+      {
+        if(mrp == 0 || mrp == '')
+        {
+
+        }
+        else
+        {
+          alert('Rate Exceeds The MRP!!');
+        $('#exclusive').val('');
+        $('#inclusive').val('');
+        }
+        
+      }
+      else
+      {
+        //alert(rate);
+      var net_val = parseFloat(total)*parseFloat(rate);
+      //alert(net_val);
+      $('.gst').val(net_val.toFixed(2));
+
+      var total_net_val = parseFloat(total)+parseFloat(net_val);
+      $('#net_price').val(total_net_val.toFixed(2));
+      }
+      
+
+    }
+
+   } 
+  
+}
+
 
 function item_codes(item_code,append_value)
 {
@@ -529,15 +712,15 @@ if(append_value == 1)
 
     });
 
-      $.ajax({
-           type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
-            data: { id: item_code },
-           success: function(data) {
-             $('#last_purchase_rate').val(data);
+      // $.ajax({
+      //      type: "POST",
+      //       url: "{{ url('estimation/last_purchase_rate/') }}",
+      //       data: { id: item_code },
+      //      success: function(data) {
+      //        $('#last_purchase_rate').val(data);
              
-           }
-        });
+      //      }
+      //   });
 }
 else
 {
@@ -632,21 +815,188 @@ else
 
     });
 
-      $.ajax({
-           type: "POST",
-            url: "{{ url('estimation/last_purchase_rate/') }}",
-            data: { id: item_code },
-           success: function(data) {
-             // console.log(data);
-             $('#last_purchase_rate').val(data);
+      // $.ajax({
+      //      type: "POST",
+      //       url: "{{ url('estimation/last_purchase_rate/') }}",
+      //       data: { id: item_code },
+      //      success: function(data) {
+      //        // console.log(data);
+      //        $('#last_purchase_rate').val(data);
              
-           }
-        });
+      //      }
+      //   });
 }
 
 
 }
-  </script>
+
+function get_details()
+{
+
+  var item_code=$('#item_code').val();
+  //$('#item_code').val('');
+  $('#items_codes').val('');
+  $('#item_name').val('');
+  $('#mrp').val('');
+  $('#hsn').val('');
+  $('#uom').val('');
+  $('#uom_name').val('');
+  $('#tax_rate').val('');
+//
+$("select").select2();
+var row_id=$('#last').val();
+
+      $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('estimation/getdata_item/{id}') }}",
+        data: { id: item_code },             
+                        
+        success: function(data){
+         console.log(data);
+             if(data[3]==1)
+             {
+              
+             id = data[0].item_id;
+
+             item_codes(id);
+            
+
+             }
+                    
+             else
+             {
+              item_with_same_data(item_code);
+             }
+              
+        }
+
+    });
+      // var item_id=$('#items_codes').val();
+      // $.ajax({
+
+      //      type: "POST",
+      //       url: "{{ url('estimation/last_purchase_rate/') }}",
+      //       data: { id: item_id },
+      //      success: function(data) {
+      //        $('#last_purchase_rate').val(data);
+             
+      //      }
+      //   });
+
+
+}
+
+function item_with_same_data(item_code)
+{
+  $.ajax({
+
+        type: "GET",
+        url: "{{ url('estimation/same_items/{id}') }}",
+        data: { id: item_code },
+
+        success:function(data){
+          console.log(data);
+          $('.item_display').show();
+          $('.item_display').dialog({width:1000},{height:250});
+          $('.append_item_display').html(data);
+        }
+
+  })
+}
+
+
+function find_cat()
+{
+  
+  $('#categories').val("");
+  $('#brand').val("");
+  $("select").select2();
+  $('#cat').show();
+  $('.row_brand').remove(); 
+  $('.row_category').remove();
+  $('#cat').dialog({width:900},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
+    
+}
+
+function categories_check()
+{
+  var  categories=$('#categories').val();
+  var  brand=$('#brand').val();
+  if(brand == '')
+  {
+    brand ='no_val';
+  }
+  $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('estimation/change_items/{id}') }}",
+        data: { categories: categories, brand: brand },             
+             
+        success: function(data){ 
+          
+
+          
+
+          
+        $('.row_brand').remove(); 
+        $('.row_category').remove(); 
+        $(".append_item").html(data);
+        return false;
+        }
+
+
+    });
+}
+
+function brand_check()
+{
+  
+  var brand = $('.brand').val();
+  
+
+  $.ajax({
+
+        type: "POST",
+        url: "{{ url('estimation/brand_filter/') }}",
+        data: {brand: brand },             
+             
+        success: function(data)
+        {
+          $('.row_category').remove();
+          $('.row_brand').remove();
+          $(".append_item").html(data);
+          return false;
+        }
+
+  });
+}
+
+function add_data(val)
+{
+  // $('.item_display').dialog('close');
+  item_codes($('.append_item_id'+val).val(),$('.append_value'+val).val());
+}
+function add_append_data(val)
+{
+  item_codes($('.item_id'+val).val(),$('.append_value'+val).val());
+}
+
+function code_check()
+{
+  
+  item_codes();
+  
+}
+
+
+
+
+
+ 
+
+
+</script>
 
    
 @endsection

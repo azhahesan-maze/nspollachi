@@ -361,7 +361,7 @@
           </li>
 
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               POS
             </a>
@@ -376,7 +376,7 @@
                     </li>
             </ul>        
             
-          </li>
+          </li> -->
 
 
 
