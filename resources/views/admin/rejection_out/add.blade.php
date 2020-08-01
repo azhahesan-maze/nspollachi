@@ -157,14 +157,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                 </div> -->
 
-                                <div class="col-md-2">
+                               <!--  <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
                                   <div class="purchase_date">
                                     
                                   </div>
-                                </div>
+                                </div> -->
 
                                 
                                 <div class="col-md-4">

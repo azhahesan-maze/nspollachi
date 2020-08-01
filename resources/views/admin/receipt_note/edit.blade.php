@@ -79,12 +79,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Add Brand"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
                                   
                                   <div class="address">
-                                    
+                                    {{ $address }}
                                   </div>
                                 </div>
 
@@ -153,6 +153,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="no_items" id="no_items">
                                   
                                   <div class="no_items">
+                                    {{$no_items}}
                                   </div>
                                 
                                  
@@ -162,7 +163,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="invoice_val" id="invoice_val">
                                   
                                   <div class="invoice_val">
-                                    
+                                    {{$item_net_value_sum}}
                                   </div>
                                 
                                  
@@ -172,7 +173,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
                                   <div class="purchase_type">
-                                    
+                                    {{$type}}
                                   </div>
                                 
                                 </div>
@@ -182,7 +183,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
                                   <div class="purchase_date">
-                                    
+                                    {{$purchaseorder_date}}
                                   </div>
                                 </div>
 
@@ -191,7 +192,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="estimation_no" id="estimation_no">
                                   
                                   <div class="estimation_no">
-                                    
+                                    {{$estimation_no}}
                                   </div>
                                 
                                  
@@ -202,7 +203,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="estimation_date" id="estimation_date">
                                   
                                   <div class="estimation_date">
-                                    
+                                    {{$estimation_date}}
                                   </div>
                                 
                                  

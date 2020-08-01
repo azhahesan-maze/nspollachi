@@ -138,6 +138,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="no_items" id="no_items">
                                   
                                   <div class="no_items">
+                                    {{$item_row_count}}
                                   </div>
                                 
                                  
@@ -147,7 +148,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="invoice_val" id="invoice_val">
                                   
                                   <div class="invoice_val">
-                                    
+                                    {{ $item_net_value_sum }}
                                   </div>
                                 
                                  
@@ -162,14 +163,14 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 
                                 </div> -->
 
-                                <div class="col-md-2">
+                                <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Purchase Order Date</label><br>
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
                                   <div class="purchase_date">
                                     
                                   </div>
-                                </div>
+                                </div> -->
 
                                 
                                 <div class="col-md-2">

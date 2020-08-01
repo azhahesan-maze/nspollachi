@@ -317,6 +317,37 @@ class ReceiptNoteController extends Controller
         $receipt_note_items = ReceiptNoteItem::where('rn_no',$id)->get();
         $receipt_note_expense = ReceiptNoteExpense::where('rn_no',$id)->get();
 
+        $estimation_no = $receipt_note->estimation_no;
+        $estimation_date = $receipt_note->estimation_date;
+        $no_items = count($receipt_note_items);
+        
+
+        $po_no = $receipt_note->po_no;
+        if($po_no == '')
+        {
+            $purchase_type = '';
+            $type = '';
+            $purchaseorder_date = '';
+        }
+        else
+        {
+            $purchaseorder = Purchase_Order::where('po_no',$po_no)->first();
+
+            $purchase_type = $purchaseorder->purchase_type;
+            $purchaseorder_date = $receipt_note->po_date;
+            if ($purchase_type == 1) {
+                $type = 'Cash Purchase';
+            }
+            else if ($purchase_type == 0) {
+                $type = 'Credit Purchase';
+            }
+            else
+            {
+               $type = ''; 
+            }
+        }
+        
+
         $item_row_count = count($receipt_note_items);
         $expense_row_count = count($receipt_note_expense);
 
@@ -413,7 +444,7 @@ class ReceiptNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
     }
 
     /**
