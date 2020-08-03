@@ -328,6 +328,60 @@ class PurchaseEntryController extends Controller
         $item_row_count = count($purchase_entry_items);
         $expense_row_count = count($purchase_entry_expense);
 
+        $po_no = $purchase_entry->po_no;
+
+        $rn_no = $purchase_entry->rn_no;
+        $purchase_type = '';
+
+        if ($po_no != '') 
+        {
+            $purchaseorder_details = Purchase_Order::where('po_no',$po_no)->first();
+            
+            $purchaseorder_type = $purchaseorder_details->purchase_type;
+
+            if($purchaseorder_type == 1)
+            {
+               $purchase_type = 'Cash Purchase';
+            }
+            else
+            {
+
+                $purchase_type = 'Credit Purchase';
+            }
+
+        }
+
+        else
+        {
+
+        }
+        // echo $purchase_type;exit();
+        if ($rn_no != '') 
+        {
+            $receipt_note = ReceiptNote::where('rn_no',$rn_no)->first();
+            $po_no = $receipt_note->po_no;
+            if ($po_no != '') 
+            {
+                $purchaseorder_details = Purchase_Order::where('po_no',$po_no)->first();
+                $purchaseorder_type = $purchaseorder_details->purchase_type;
+
+                if($purchaseorder_type == 1)
+                {
+                   $purchase_type = 'Cash Purchase';
+                }
+                else
+                {
+                    $purchase_type = 'Credit Purchase';
+                }
+
+            }
+            
+        }
+        else
+        {
+
+        }
+
 
         if(isset($purchase_entry->supplier->name) && !empty($purchase_entry->supplier->name))
         {
@@ -421,7 +475,7 @@ class PurchaseEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.edit',compact('date','receipt_note','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.purchase_entry.edit',compact('date','receipt_note','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type'));
     }
 
     /**
@@ -1558,13 +1612,21 @@ echo "<pre>"; print_r($data); exit;
          $estimation_date = $receipt_note->estimation_date;
          $receipt_note_date = $receipt_note->rn_date;
 
-         $purchase_type = Purchase_Order::where('po_no',$po_no)
-                                        ->select('purchase_type')
-                                        ->first();
+         // $purchase_type = Purchase_Order::where('po_no',$po_no)
+         //                                ->select('purchase_type')
+         //                                ->first();
                                         // return $purchase_type;exit();
 
         $item_row_count = count($receipt_note_item);
         $expense_row_count = count($receipt_note_expense);
+        $purchase_type = '';
+
+        if ($po_no != '') 
+        {
+            $purchaseorder_details = Purchase_Order::where('po_no',$po_no)->first();
+            $purchase_type = $purchaseorder_details->purchase_type;
+
+        }
 
 
         

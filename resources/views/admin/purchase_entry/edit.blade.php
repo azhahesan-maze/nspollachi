@@ -188,6 +188,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="no_items" id="no_items">
                                   
                                   <div class="no_items">
+                                    {{$item_row_count}}
                                   </div>
                                 
                                  
@@ -197,7 +198,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="invoice_val" id="invoice_val">
                                   
                                   <div class="invoice_val">
-                                    
+                                    {{$item_net_value_sum}}
                                   </div>
                                 
                                  
@@ -207,7 +208,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="purchase_type" id="purchase_type">
                                   
                                   <div class="purchase_type">
-                                    
+                                    {{$purchase_type}}
                                   </div>
                                 
                                 </div>
@@ -217,7 +218,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="purchase_date" id="purchase_date">
                                   
                                   <div class="purchase_date">
-                                    
+                                    {{$purchase_entry->po_date}}
                                   </div>
                                 </div>
 
@@ -226,7 +227,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="estimation_no" id="estimation_no">
                                   
                                   <div class="estimation_no">
-                                    
+                                    {{$purchase_entry->estimation_no}}
                                   </div>
                                 
                                  
@@ -237,7 +238,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                   <input type="hidden" name="estimation_date" id="estimation_date">
                                   
                                   <div class="estimation_date">
-                                    
+                                    {{$purchase_entry->estimation_no}}
                                   </div>
                                 
                                  
