@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Receipt No:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control receipt_no" placeholder="receipt No" name="receipt_no" value="">
+                <input type="text" class="form-control receipt_no" placeholder="Receipt No" name="receipt_no" value="">
                 
               </div>
             </div>
