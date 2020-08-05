@@ -802,6 +802,29 @@ Route::resource('pos','PosController',['middleware' => ['auth']]);
 
 /*POS End Here*/
 
+/*Payment Request Start Here*/
+
+Route::resource('payment_request','PaymentRequestController',['middleware' => ['auth']]);
+
+/*Payment Request End Here*/
+
+/*Payment Process Start Here*/
+
+Route::resource('payment_process','PaymentProcessController',['middleware' => ['auth']]);
+
+/*Payment Process End Here*/
+
+/*Receipt Request Start Here*/
+
+Route::resource('receipt_request','ReceiptRequestController',['middleware' => ['auth']]);
+
+/*Receipt Request End Here*/
+
+/*Receipt Process Start Here*/
+
+Route::resource('receipt_process','ReceiptProcessController',['middleware' => ['auth']]);
+
+/*Receipt Process End Here*/
 
 
 /* Head Office Details Master Group Start Here  */

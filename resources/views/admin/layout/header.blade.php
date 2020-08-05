@@ -360,6 +360,48 @@
             
           </li>
 
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Payment
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Payment</li>
+                           
+                           <li><a href="{{ route('payment_request.create') }}">Payment Request</a></li>
+                            <li><a href="{{ route('payment_process.create') }}">Payment Process</a></li>
+                            
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li>
+
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Receipt
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Receipt</li>
+                           
+                           <li><a href="{{ route('receipt_request.create') }}">Receipt Request</a></li>
+                            <li><a href="{{ route('receipt_process.create') }}">Receipt Process</a></li>
+                            
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li>
+
 
           <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
