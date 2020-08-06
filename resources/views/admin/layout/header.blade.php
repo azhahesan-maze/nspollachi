@@ -372,6 +372,7 @@
                            
                            <li><a href="{{ route('payment_request.create') }}">Payment Request</a></li>
                             <li><a href="{{ route('payment_process.create') }}">Payment Process</a></li>
+                            <li><a href="{{ route('payment_expense.create') }}">Payment Of Expenses</a></li>
                             
                         </ul>
                     </li>
@@ -393,6 +394,28 @@
                            
                            <li><a href="{{ route('receipt_request.create') }}">Receipt Request</a></li>
                             <li><a href="{{ route('receipt_process.create') }}">Receipt Process</a></li>
+                            <li><a href="{{ route('receipt_income.create') }}">Receipt Of Income</a></li>
+                            
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li>
+
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Advance Settlement
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Advance Settlement</li>
+                           
+                           <li><a href="{{ route('advance_settlement_supplier.create') }}">Advance Settlement For Supplier</a></li>
+                            <li><a href="{{ route('advance_settlement_customer.create') }}">Advance Settlement For Customer</a></li>
                             
                         </ul>
                     </li>

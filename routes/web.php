@@ -826,6 +826,30 @@ Route::resource('receipt_process','ReceiptProcessController',['middleware' => ['
 
 /*Receipt Process End Here*/
 
+/*Advance Settlement For Supplier Start Here*/
+
+Route::resource('advance_settlement_supplier','AdvanceSettlementSupplierController',['middleware' => ['auth']]);
+
+/*Advance Settlement For Supplier End Here*/
+
+/*Advance Settlement For Supplier Start Here*/
+
+Route::resource('advance_settlement_customer','AdvanceSettlementCustomerController',['middleware' => ['auth']]);
+
+/*Advance Settlement For Supplier End Here*/
+
+/*Payment Of Expense Start Here*/
+
+Route::resource('payment_expense','PaymentExpenseController',['middleware' => ['auth']]);
+
+/*Payment Of Expense End Here*/
+
+/*Receipt Of Income Start Here*/
+
+Route::resource('receipt_income','ReceiptIncomeController',['middleware' => ['auth']]);
+
+/*Receipt Of Income End Here*/
+
 
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
