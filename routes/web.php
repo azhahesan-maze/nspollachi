@@ -850,6 +850,18 @@ Route::resource('receipt_income','ReceiptIncomeController',['middleware' => ['au
 
 /*Receipt Of Income End Here*/
 
+/*Account Group Start Here*/
+
+Route::resource('account_group','AccountGroupController',['middleware' => ['auth']]);
+
+/*Account Group End Here*/
+
+/*Account Head Start Here*/
+
+Route::resource('account_head','AccountHeadController',['middleware' => ['auth']]);
+
+/*Account Head End Here*/
+
 
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {
