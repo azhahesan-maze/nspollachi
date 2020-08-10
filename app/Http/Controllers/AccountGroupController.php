@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AccountGroup;
+use Illuminate\Support\Facades\Redirect;
 
 class AccountGroupController extends Controller
 {
@@ -13,7 +15,8 @@ class AccountGroupController extends Controller
      */
     public function index()
     {
-        //
+        $account_group = AccountGroup::all();
+        return view('admin.master.account_group.view',compact('account_group'));
     }
 
     /**
@@ -23,7 +26,8 @@ class AccountGroupController extends Controller
      */
     public function create()
     {
-        return view('admin.master.account_group.add');
+        $account_group = AccountGroup::all();
+        return view('admin.master.account_group.add',compact('account_group'));
     }
 
     /**
@@ -34,7 +38,17 @@ class AccountGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $account_group = new AccountGroup();
+
+        $account_group->name = $request->name;
+        $account_group->under = $request->under;
+        $account_group->tax = $request->tax;
+        $account_group->name_of_tax = $request->tax_name;
+        $account_group->rate_of_tax = $request->tax_rate;
+        $account_group->type = $request->type;
+        $account_group->save();
+
+        return Redirect::back()->with('success','Saved Successfully');
     }
 
     /**
@@ -45,7 +59,9 @@ class AccountGroupController extends Controller
      */
     public function show($id)
     {
-        //
+        $account_group = AccountGroup::find($id);
+
+        return view('admin.master.account_group.show',compact('account_group'));
     }
 
     /**
@@ -56,7 +72,10 @@ class AccountGroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        $account_group = AccountGroup::find($id);
+        $group = AccountGroup::all();
+
+        return view('admin.master.account_group.edit',compact('account_group','group'));
     }
 
     /**
@@ -68,7 +87,18 @@ class AccountGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $account_group = AccountGroup::find($id);
+
+        $account_group->name = $request->name;
+        $account_group->under = $request->under;
+        $account_group->tax = $request->tax;
+        $account_group->name_of_tax = $request->tax_name;
+        $account_group->rate_of_tax = $request->tax_rate;
+        $account_group->type = $request->type;
+        $account_group->save();
+
+        return Redirect::back()->with('success','Updated Successfully');
+
     }
 
     /**
@@ -79,6 +109,10 @@ class AccountGroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $account_group = AccountGroup::find($id);
+
+        $account_group->delete();
+        return Redirect::back()->with('success','Deleted Successfully');
+
     }
 }

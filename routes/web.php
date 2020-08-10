@@ -853,6 +853,7 @@ Route::resource('receipt_income','ReceiptIncomeController',['middleware' => ['au
 /*Account Group Start Here*/
 
 Route::resource('account_group','AccountGroupController',['middleware' => ['auth']]);
+Route::get('account_group/delete/{id}', 'AccountGroupController@destroy');
 
 /*Account Group End Here*/
 
