@@ -90,8 +90,10 @@
 
 
         <div class="col-md-7 text-right">
-          <button class="btn btn-success" name="add" type="submit">Submit</button>
-          <button class="btn btn-warning" name="add">Cancel</button>
+          <button class="btn btn-success add" name="add" type="submit">Submit</button>
+          <button class="btn btn-warning cancel" name="cancel" type="button">Cancel</button>
+          <!-- <input type="submit" class="btn btn-success add" name="add" value="Submit">
+          <input type="button" class="btn btn-warning cancel" name="cancel" value="Cancel"> -->
         </div>
         <div class="col-md-7 text-right">
           
@@ -112,6 +114,11 @@
   {
     $('.tax_details').hide();
   } 
+  $(document).on('click','.cancel', function(){
+    $('input').val('');
+    $('select').val('');
+    $('select').select2();
+  });
 </script>
 
 @endsection
