@@ -74,7 +74,7 @@
           </div>
         </div>
         <br>
-
+        @if($account_group->tax == 1)
         <div class="form-row col-md-12 tax_details">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
@@ -98,6 +98,31 @@
           
         </div>
       </div>
+      @else
+      <div class="form-row col-md-12 tax_details" style="display: none;">
+          <div class="col-md-4">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
+            <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value="{{ $account_group->name_of_tax }}">
+          </div>
+          <div class="col-md-4">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
+            <input type="text" class="form-control tax_rate" placeholder="Rate Of Tax" name="tax_rate" value="{{ $account_group->rate_of_tax }}">
+          </div>
+          <div class="col-md-4">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Type</label><br>
+          <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="type" id="type">
+                  @if($account_group->type == 1)
+                  <option value="1">Goods</option>
+                  @else
+                  <option value="0">Service</option>
+                  @endif
+                  <option value="1">Goods</option>
+                  <option value="0">Service</option>
+                        </select>
+          
+        </div>
+      </div>
+      @endif
       <br>
 
 

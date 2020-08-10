@@ -44,8 +44,10 @@
               <td>{{ $value->rate_of_tax }}</td>
               @if($value->type == 1)
               <td>Goods</td>
-              @else
+              @elseif($value->type == '0')
               <td>Service</td>
+              @else
+              <td></td>
               @endif
               <td> 
                 <a href="{{ route('account_group.show',$value->id) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>

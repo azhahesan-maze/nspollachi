@@ -87,15 +87,31 @@ class AccountGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $account_group = AccountGroup::find($id);
+        
 
-        $account_group->name = $request->name;
-        $account_group->under = $request->under;
-        $account_group->tax = $request->tax;
-        $account_group->name_of_tax = $request->tax_name;
-        $account_group->rate_of_tax = $request->tax_rate;
-        $account_group->type = $request->type;
-        $account_group->save();
+        if($request->tax == 1)
+        {
+            $account_group = AccountGroup::find($id);
+            $account_group->name = $request->name;
+            $account_group->under = $request->under;
+            $account_group->tax = $request->tax;
+            $account_group->name_of_tax = $request->tax_name;
+            $account_group->rate_of_tax = $request->tax_rate;
+            $account_group->type = $request->type;
+            $account_group->save();
+        }
+        else
+        {
+            $account_group = AccountGroup::find($id);
+            $account_group->name = $request->name;
+            $account_group->under = $request->under;
+            $account_group->tax = $request->tax;
+            $account_group->name_of_tax = NULL;
+            $account_group->rate_of_tax = NULL;
+            $account_group->type = NULL;
+            $account_group->save();
+        }
+        
 
         return Redirect::back()->with('success','Updated Successfully');
 
