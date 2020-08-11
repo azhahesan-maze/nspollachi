@@ -10,7 +10,7 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ route('account_head.index') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -18,7 +18,7 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('account_group.store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('account_head.store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
         <div class="form-row">
@@ -38,6 +38,9 @@
               <div class="col-sm-8">
                 <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under">
                   <option value="">Choose Any</option>
+                  @foreach($account_group as $value)
+                  <option value="{{$value->id}}">{{$value->name}}</option>
+                  @endforeach
                         </select>
               </div>
             </div>
@@ -97,7 +100,7 @@
         <div class="col-md-6">
             <div class="form-group row">
               <div class="col-sm-3">
-                <select class=" col-12 form-control custom-select under"  name="under" id="under">
+                <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
                   <option value="">Choose Any</option>
                   <option value="">DR</option>
                   <option value="">CR</option>
@@ -109,8 +112,8 @@
 
 
         <div class="col-md-7 text-right">
-          <button class="btn btn-success" name="add" disabled="" type="submit">Submit</button>
-          <button class="btn btn-warning" name="add" disabled="" type="submit">Cancel</button>
+          <button class="btn btn-success add" name="add" type="submit">Submit</button>
+          <button class="btn btn-warning cancel" name="cancel" type="button">Cancel</button>
         </div>
         <div class="col-md-7 text-right">
           
@@ -131,6 +134,11 @@
   {
     $('.tax_details').hide();
   } 
+  $(document).on('click','.cancel', function(){
+    $('input').val('');
+    $('select').val('');
+    $('select').select2();
+  });
 </script>
 
 @endsection

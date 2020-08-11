@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AccountHead;
+use App\Models\AccountGroup;
+use Illuminate\Support\Facades\Redirect;
 
 class AccountHeadController extends Controller
 {
@@ -13,7 +16,8 @@ class AccountHeadController extends Controller
      */
     public function index()
     {
-        //
+        $account_head = AccountHead::all();
+        return view('admin.master.account_head.view',compact('account_head'));
     }
 
     /**
@@ -23,7 +27,8 @@ class AccountHeadController extends Controller
      */
     public function create()
     {
-        return view('admin.master.account_head.add');
+        $account_group = AccountGroup::all();
+        return view('admin.master.account_head.add',compact('account_group'));
     }
 
     /**
@@ -34,7 +39,35 @@ class AccountHeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->tax == 1)
+        {
+            $account_head = new AccountHead;
+            $account_head->name = $request->name;
+            $account_head->under = $request->under;
+            $account_head->tax = $request->tax;
+            $account_head->name_of_tax = $request->tax_name;
+            $account_head->rate_of_tax = $request->tax_rate;
+            $account_head->type = $request->type;
+            $account_head->opening_balance = $request->balance;
+            $account_head->dr_or_cr = $request->dr_or_cr;
+            $account_head->save();
+        }
+        else
+        {
+            $account_head = new AccountHead;
+            $account_head->name = $request->name;
+            $account_head->under = $request->under;
+            $account_head->tax = $request->tax;
+            $account_head->name_of_tax = NULL;
+            $account_head->rate_of_tax = NULL;
+            $account_head->type = NULL;
+            $account_head->opening_balance = $request->balance;
+            $account_head->dr_or_cr = $request->dr_or_cr;
+            $account_head->save();
+        }
+        
+
+        return Redirect::back()->with('success','Saved Successfully');
     }
 
     /**
@@ -45,7 +78,8 @@ class AccountHeadController extends Controller
      */
     public function show($id)
     {
-        //
+        $account_head = AccountHead::find($id);
+        return view('admin.master.account_head.show',compact('account_head'));
     }
 
     /**
@@ -56,7 +90,10 @@ class AccountHeadController extends Controller
      */
     public function edit($id)
     {
-        //
+        $account_head = AccountHead::find($id);
+        $group = AccountGroup::all();
+
+        return view('admin.master.account_head.edit',compact('account_head','group'));
     }
 
     /**
@@ -68,7 +105,35 @@ class AccountHeadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->tax == 1)
+        {
+            $account_head = AccountHead::find($id);
+            $account_head->name = $request->name;
+            $account_head->under = $request->under;
+            $account_head->tax = $request->tax;
+            $account_head->name_of_tax = $request->tax_name;
+            $account_head->rate_of_tax = $request->tax_rate;
+            $account_head->type = $request->type;
+            $account_head->opening_balance = $request->balance;
+            $account_head->dr_or_cr = $request->dr_or_cr;
+            $account_head->save();
+        }
+        else
+        {
+            $account_head = AccountHead::find($id);
+            $account_head->name = $request->name;
+            $account_head->under = $request->under;
+            $account_head->tax = $request->tax;
+            $account_head->name_of_tax = NULL;
+            $account_head->rate_of_tax = NULL;
+            $account_head->type = NULL;
+            $account_head->opening_balance = $request->balance;
+            $account_head->dr_or_cr = $request->dr_or_cr;
+            $account_head->save();
+        }
+        
+
+        return Redirect::back()->with('success','Updated Successfully');
     }
 
     /**
@@ -79,6 +144,9 @@ class AccountHeadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $account_head = AccountHead::find($id);
+
+        $account_head->delete();
+        return Redirect::back()->with('success','Deleted Successfully');
     }
 }

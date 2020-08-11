@@ -267,7 +267,7 @@
                       <ul>
                           <li class="dropdown-header">Account Group</li>
                           <li><a href="{{route('account_group.index')}}">Account Group</a></li>
-                          <li><a href="{{route('account_head.create')}}">Account Head</a></li>
+                          <li><a href="{{route('account_head.index')}}">Account Head</a></li>
                            </ul>
                   </li>
 

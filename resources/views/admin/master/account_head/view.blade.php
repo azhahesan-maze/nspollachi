@@ -7,11 +7,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>List Account Group</h3>
+          <h3>List Account Head</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('account_group.create')}}">Add Account Group</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{route('account_head.create')}}">Add Account Head</a></button></li>
           </ul>
         </div>
       </div>
@@ -27,12 +27,13 @@
             <th>Name Of Tax</th>
             <th>Rate Of Tax</th>
             <th>Type</th>
+            <th>Opening Balance</th>
            <th>Action </th>
           </tr>
         </thead>
         <tbody>
           
-          @foreach($account_group as $key => $value)
+          @foreach($account_head as $key => $value)
             <tr>
               <td>{{ $key+1 }}</td>
               <td>{{ $value->name }}</td>
@@ -52,10 +53,11 @@
               @else
               <td></td>
               @endif
+              <td>{{ $value->opening_balance }}</td>
               <td> 
-                <a href="{{ route('account_group.show',$value->id) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                <a href="{{ route('account_group.edit',$value->id) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                <a onclick="return confirm('Are you sure ?')" href="{{ url('account_group/delete/'.$value->id ) }}" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="{{ route('account_head.show',$value->id) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                <a href="{{ route('account_head.edit',$value->id) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a onclick="return confirm('Are you sure ?')" href="{{ url('account_head/delete/'.$value->id ) }}" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
               </td>
             </tr>
          @endforeach

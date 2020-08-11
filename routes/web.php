@@ -860,6 +860,7 @@ Route::get('account_group/delete/{id}', 'AccountGroupController@destroy');
 /*Account Head Start Here*/
 
 Route::resource('account_head','AccountHeadController',['middleware' => ['auth']]);
+Route::get('account_head/delete/{id}', 'AccountHeadController@destroy');
 
 /*Account Head End Here*/
 

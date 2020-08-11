@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AccountGroup extends Model
+class AccountHead extends Model
 {
     public function under_data()
     {
