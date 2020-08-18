@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tax;
+use App\Models\ItemTaxDetails;
 use Illuminate\Support\Facades\Redirect;
 
 class TaxController extends Controller
@@ -122,6 +123,9 @@ class TaxController extends Controller
     {
        $tax = Tax::find($id);
        $tax->delete();
+
+       $delete_from_tax_details = ItemTaxDetails::where('tax_master_id',$id);
+       $delete_from_tax_details->delete();
 
        return Redirect::back()->with('success','Deleted Successfuly');
     }

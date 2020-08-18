@@ -344,6 +344,24 @@ class SupplierController extends Controller
         }
     }
 
+    public function checkname(Request $request)
+    {
+        $name = strtolower($request->name);
+        $string = preg_replace('/\s+/', '', $name);
+
+        $supplier = Supplier::all();
+
+        foreach ($supplier as $key => $value) {
+            $supplier_name = preg_replace('/\s+/', '', $value->name);
+            $name_data = strtolower($supplier_name);
+            if($string == $name_data)
+            {
+                return '1';
+            }
+        }
+
+    }
+
     public function delete_supplier_address_details(Request $request)
     {
         $address_details_id = $request->address_details_id;

@@ -101,7 +101,7 @@
                     </select>
                     <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
                   </div>
-                  <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Customer Name Field is required" aria-label="Text input with dropdown button" value={{old('name',$supplier->name)}}>
+                  <input type="text" class="form-control only_allow_alp_num_dot_com_amp name" name="name" error-data="Customer Name Field is required" onchange="checkname()" aria-label="Text input with dropdown button" value={{old('name',$supplier->name)}}>
 
                   <div class="invalid-feedback">
                     Enter valid Supplier Name
@@ -852,6 +852,23 @@
 
     }
 
+  }
+
+  function checkname()
+  {
+    var name = $('.name').val();
+    $.ajax({
+        type: "POST",
+        url: "{{ url('master/supplier/checkname/')}}",
+        data: {name: name,},
+        success: function(data) {
+          if(data == 1)
+          {
+            alert('Name Already Taken');
+            $('.name').val('');
+          }
+        }
+      });
   }
 
   $(document).ready(function() {

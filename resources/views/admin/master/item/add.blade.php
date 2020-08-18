@@ -491,7 +491,7 @@
                               <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">
                               <span class="mandatory">  </span>
                               <div class="invalid-feedback">
-                                 Enter valid IGST
+                                 Enter valid {{$value->name}}
                               </div>
                            </div>
                         </td>
@@ -517,7 +517,10 @@
                         <td>
                            <div class="col-sm-12">
                               <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ old('valid_from.0') }}" required>
-                              
+                              <span class="mandatory">  </span>
+                              <div class="invalid-feedback">
+                                 Enter valid Effective From Date
+                              </div>
                            </div>
                         </td>
                         <td>
@@ -546,11 +549,12 @@
                      </tr>
                   </thead>
                   <tbody class="append_barcode_dets">
-                     <tr>
+                     <tr class="tables">
                         <td class="barcode_s_no">1</td>
                         <td>
                            <div class="col-sm-12">
-                              <input type="text" class="form-control barcode" name="barcode[]"  placeholder="Barcode" value="{{ old('barcode.0') }}" required>
+                              <input type="text" class="form-control barcode" name="barcode[]"  placeholder="Barcode" id="barcode0" value="{{ old('barcode.0') }}" onchange="testing(0)" required>
+                              <input type="hidden" id="num0" value="0">
                               <span class="mandatory"> {{ $errors->first('barcode.0')  }} </span>
                               <div class="invalid-feedback">
                                  Enter valid Barcode
@@ -559,7 +563,7 @@
                         </td>
                         <td>
                            <div class="col-sm-12">
-                              <input type="text" class="form-control confirm_barcode" name="barcode_confirmation[]"  placeholder="Confirm Barcode" value="{{ old('barcode_confirmation.0') }}" required>
+                              <input type="text" class="form-control confirm_barcode" name="barcode_confirmation[]"  placeholder="Confirm Barcode" oninput="confirm_barcode()" value="{{ old('barcode_confirmation.0') }}" required>
                               <span class="mandatory"> {{ $errors->first('barcode_confirmation.0')  }} </span>
                               <div class="invalid-feedback">
                                  Enter valid Confirm Barcode
@@ -580,11 +584,12 @@
                      @if (old('barcode'))
                      @foreach (old('barcode') as $old_barcode_key=>$old_barcode_value)
                      @if ($old_barcode_key >0)
-                     <tr>
+                     <tr class="tables">
                         <td class="barcode_s_no">1</td>
                         <td>
                            <div class="col-sm-12">
-                              <input type="text" class="form-control barcode" name="barcode[]"  placeholder="Barcode" value="{{ old('barcode.'.$old_barcode_key) }}" required>
+                              <input type="text" class="form-control barcode" name="barcode[]"  placeholder="Barcode" id="barcode0" onchange="testing(0)" value="{{ old('barcode.'.$old_barcode_key) }}" required>
+                              <input type="hidden" id="num0" value="0">
                               <span class="mandatory"> {{ $errors->first('barcode.'.$old_barcode_key)  }} </span>
                               <div class="invalid-feedback">
                                  Enter valid Barcode
@@ -651,7 +656,7 @@ function add_item_tax_details() {
                               <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">\
                               <span class="mandatory">  </span>\
                               <div class="invalid-feedback">\
-                                 Enter valid IGST\
+                                 Enter valid {{$value->name}}\
                               </div>\
                            </div>\
                         </td>\
@@ -691,6 +696,16 @@ function add_item_tax_details() {
     });
     s_no();
     //common_igst_calculation();
+}
+function confirm_barcode()
+{
+   barcode_validation();
+}
+
+function testing(val)
+{
+    var value = $('#num'+val).val();
+     test($('.barcode').val(),value);
 }
 
    

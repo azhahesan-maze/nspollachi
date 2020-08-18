@@ -313,6 +313,7 @@ Route::group(['prefix' => 'master/agent', 'middleware' => ['auth']], function ()
     Route::any('delete-agent-address-details', 'AgentController@delete_agent_address_details')->middleware('permission:agent_delete');
     Route::any('delete-agent-proof-details', 'AgentController@delete_agent_proof_details')->middleware('permission:agent_delete');
 });
+Route::post('master/agent/checkname/', 'AgentController@checkname');
 /* Agent Master End Here  */
 /* Customer Master  Start Here  */
 Route::group(['prefix' => 'master/customer', 'middleware' => ['auth']], function () {
@@ -325,7 +326,9 @@ Route::group(['prefix' => 'master/customer', 'middleware' => ['auth']], function
     Route::any('delete/{id}', 'CustomerController@destroy')->middleware('permission:customer_edit');
     Route::any('delete-customer-address-details', 'CustomerController@delete_customer_address_details')->middleware('permission:customer_edit');
     Route::any('delete-customer-bank-details', 'CustomerController@delete_customer_bank_details')->middleware('permission:customer_edit');
+
 });
+Route::post('master/customer/checkname/', 'CustomerController@checkname');
 /* Customer Master End Here  */
 
 /* Supplier Master  Start Here  */
@@ -340,6 +343,7 @@ Route::group(['prefix' => 'master/supplier', 'middleware' => ['auth']], function
     Route::any('delete-supplier-address-details', 'SupplierController@delete_supplier_address_details')->middleware('permission:supplier_delete');
     Route::any('delete-supplier-bank-details', 'SupplierController@delete_supplier_bank_details')->middleware('permission:supplier_delete');
 });
+Route::post('master/supplier/checkname/', 'SupplierController@checkname');
 /* Supplier Master End Here  */
 
 /* Category Name Master  Start Here  */

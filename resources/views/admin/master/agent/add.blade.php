@@ -43,7 +43,7 @@
               </select>
               <span class="mandatory"> {{ $errors->first('salutation')  }} </span>
             </div>
-            <input type="text" class="form-control required_for_valid name" name="name" error-data="Agent Name Field is required" aria-label="Text input with dropdown button" value={{old('name')}}>
+            <input type="text" class="form-control required_for_valid name" name="name" error-data="Agent Name Field is required" onchange="checkname()" aria-label="Text input with dropdown button" value={{old('name')}}>
             
             <div class="invalid-feedback">
               Enter valid Agent Name
@@ -895,6 +895,23 @@ $(this).html("Address Details - " + (key+1));
           $("select").select2();
     }
  }
+
+ function checkname()
+  {
+    var name = $('.name').val();
+    $.ajax({
+        type: "POST",
+        url: "{{ url('master/agent/checkname/')}}",
+        data: {name: name,},
+        success: function(data) {
+          if(data == 1)
+          {
+            alert('Name Already Taken');
+            $('.name').val('');
+          }
+        }
+      });
+  }
 
 
 function state_based_district(){

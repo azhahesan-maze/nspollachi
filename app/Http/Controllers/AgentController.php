@@ -352,6 +352,24 @@ class AgentController extends Controller
 
     }
 
+    public function checkname(Request $request)
+    {
+        $name = strtolower($request->name);
+        $string = preg_replace('/\s+/', '', $name);
+
+        $agent = Agent::all();
+
+        foreach ($agent as $key => $value) {
+            $agent_name = preg_replace('/\s+/', '', $value->name);
+            $name_data = strtolower($agent_name);
+            if($string == $name_data)
+            {
+                return '1';
+            }
+        }
+
+    }
+
     public function delete_agent_proof_details(Request $request){
         $proof_details_id=$request->proof_details_id;
         $proof_details=ProofDetails::find($proof_details_id);
