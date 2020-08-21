@@ -1670,7 +1670,11 @@ function calc_inclusive()
       {
         if(mrp == 0 || mrp == '')
             {
+                var net_val = parseFloat(total)*parseFloat(rate);
+                $('.gst').val(net_val.toFixed(2));
 
+                var total_net_val = parseFloat(total)+parseFloat(net_val);
+                $('#net_price').val(total_net_val.toFixed(2));
             }
             else
             {

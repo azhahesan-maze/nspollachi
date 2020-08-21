@@ -755,7 +755,7 @@ table, th, td {
       </form>
                        
         <script type="text/javascript">
-          var i=$('#counts').val();
+          var i=0;
           var discount_total = 0;
 
 function calculate_total_net_price(){
@@ -1268,9 +1268,14 @@ $(document).on("click",".edit_items",function(){
 
 });
 
+$(document).on("click",".refresh_supplier_id",function(){
+      var supplier_dets=refresh_supplier_master_details();
+      $(".supplier_id").html(supplier_dets);
+   });
+
 $(document).on("click",".refresh_customer_id",function(){
-      var supplier_dets=refresh_customer_master_details();
-      $(".customer_id").html(supplier_dets);
+      var customer_dets=refresh_customer_master_details();
+      $(".customer_id").html(customer_dets);
    });
 
 $(document).on("click",".refresh_agent_id",function(){
@@ -2360,12 +2365,6 @@ function code_check()
 }
 
 function customer_details()
-{
-
-  var customer_id=$('.customer_id').val();
-
-
-  function customer_details()
 {
 
   var customer_id=$('.customer_id').val();
