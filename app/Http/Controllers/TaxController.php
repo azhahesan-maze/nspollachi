@@ -124,8 +124,8 @@ class TaxController extends Controller
        $tax = Tax::find($id);
        $tax->delete();
 
-       // $delete_from_tax_details = ItemTaxDetails::where('tax_master_id',$id);
-       // $delete_from_tax_details->delete();
+       $delete_from_tax_details = ItemTaxDetails::where('tax_master_id',$id);
+       $delete_from_tax_details->delete();
 
        return Redirect::back()->with('success','Deleted Successfuly');
     }
