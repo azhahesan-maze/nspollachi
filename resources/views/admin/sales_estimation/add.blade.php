@@ -1171,12 +1171,12 @@ $(document).on("click",".update_items",function(){
   $("#item_code").val('');
   $("#item_code").focus();
  }
- else if(parseFloat(inclusive)>parseFloat(mrp))
- {
-  alert('Rate Exceeds The MRP!!');
-  $('#exclusive').val('');
-  $('#inclusive').val('');
- }
+ // else if(parseFloat(inclusive)>parseFloat(mrp))
+ // {
+ //  alert('Rate Exceeds The MRP!!');
+ //  $('#exclusive').val('');
+ //  $('#inclusive').val('');
+ // }
 
  else
  {
@@ -1393,12 +1393,13 @@ function gst_calc()
 
 function calc_exclusive()
 {
-  
   var quantity = $('#quantity').val();
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
   var tax_rate = $('.tax_rate').val();
   var mrp = $('.mrp').val();
+
+
 
   if (quantity == '') 
   {
@@ -1442,7 +1443,12 @@ function calc_exclusive()
       {
         if(mrp == 0 || mrp == '')
         {
+          var net_val = parseFloat(total)*parseFloat(rate);
+      //alert(net_val);
+          $('.gst').val(net_val.toFixed(2));
 
+          var total_net_val = parseFloat(total)+parseFloat(net_val);
+          $('#net_price').val(total_net_val.toFixed(2));
         }
         else
         {
