@@ -2276,17 +2276,19 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.estimation_date').text(result.date_estimation);
@@ -2359,17 +2361,19 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 if(result.purchase_type == 1)

@@ -2307,17 +2307,19 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.s_date').val(result.date_sale_entry);
@@ -2385,17 +2387,19 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
 $('.r_in_date').val(result.date_rejection_in);

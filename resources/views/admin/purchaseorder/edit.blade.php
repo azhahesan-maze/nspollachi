@@ -2317,14 +2317,17 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
@@ -2336,7 +2339,6 @@ $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
  $('#estimation_date').val(result.date_estimation);
  $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
  
 
 var total_net_price=calculate_total_net_price();

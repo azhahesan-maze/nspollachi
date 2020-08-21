@@ -96,9 +96,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                   </div>
                </div>
                      <div class="col-md-2">
-                    <label style="font-family: Times new roman;">Estimation No</label><br>
-                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
+                    <label style="font-family: Times new roman;">Sale Estimation No</label><br>
+                  <select class="js-example-basic-multiple col-12 form-control custom-select estimation_no" data-placeholder="Sale Estimation No" onchange="estimation_details()" name="estimation_no" id="estimation_no" required="">
+                           @if($saleorder->estimation_no == '')
+                           <option>Choose Sale Estimation No</option>
+                           @else
                            <option value="{{ $saleorder->estimation_no }}">{{ $saleorder->estimation_no }}</option>
+                           @endif
                            @foreach($estimation as $estimations)
                            <option value="{{ $estimations->sale_estimation_no }}">{{ $estimations->sale_estimation_no }}</option>
                            @endforeach
@@ -2306,7 +2310,7 @@ function estimation_details()
 {
 
   var estimation_no=$('.estimation_no').val();
-
+  
 
   $.ajax({
            type: "POST",
@@ -2322,14 +2326,17 @@ var expense_length=$(".expense_type").length;
 if(expense_length >1)
 {
 $('.append_expense').append(result.expense_typess);
+$('#expense_count').val(result.expense_cnt);
 }
 else if(result.expense_cnt == 0)
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 else
 {
   $('.append_expense').html(result.expense_typess);
+  $('#expense_count').val(result.expense_cnt+1);
 }
 
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2342,7 +2349,7 @@ $('.total_net_value').text(result.total_net_value);
  $('#total_price').val(result.total_net_value);
  $('.estimation_date').val(result.date);
  $('#counts').val(result.status);
-$('#expense_count').val(result.expense_cnt);
+
 
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();
