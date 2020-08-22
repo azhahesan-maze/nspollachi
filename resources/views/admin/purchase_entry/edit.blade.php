@@ -167,7 +167,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <select class="js-example-basic-multiple form-control receipt_no" 
                                 data-placeholder="Choose Receipt Note No" onchange="receipt_details()" id="receipt_no" name="receipt_no" >
                                 <option value="{{ $purchase_entry->rn_no }}">{{ $purchase_entry->rn_no }}</option>
-                                  @foreach($receipt_note as $key => $value)
+                                  @foreach($receipt_notes as $key => $value)
                                   <option value="{{ $value->rn_no }}">{{ $value->rn_no }}</option>
                                   @endforeach
                                  </select>
@@ -2470,7 +2470,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
@@ -2555,7 +2555,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
@@ -2644,7 +2644,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);

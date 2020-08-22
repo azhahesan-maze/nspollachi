@@ -58,6 +58,7 @@ class PurchaseEntryController extends Controller
         $estimation = Estimation::all();
         $receipt_note = ReceiptNote::all();
         $purchaseorder = Purchase_Order::all();
+        $purchase_entry = PurchaseEntry::all();
         
 
         $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
@@ -157,7 +158,7 @@ class PurchaseEntryController extends Controller
          
 
 
-         for($j=0;$j<$expense_count;$j++)
+         for($j=0;$j < $expense_count;$j++)
 
         {
             if($expense_count >= 1 && $request->expense_type[$j] == '' && $request->expense_amount[$j] == '')
@@ -318,7 +319,7 @@ class PurchaseEntryController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $receipt_note = ReceiptNote::all();
+        $receipt_notes = ReceiptNote::all();
         $purchaseorder = Purchase_Order::all();
 
         $purchase_entry = PurchaseEntry::where('p_no',$id)->first();
@@ -475,7 +476,7 @@ class PurchaseEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.edit',compact('date','receipt_note','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type'));
+        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type'));
     }
 
     /**

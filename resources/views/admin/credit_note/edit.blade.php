@@ -2468,7 +2468,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
@@ -2548,7 +2548,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);

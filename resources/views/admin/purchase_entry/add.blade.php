@@ -494,6 +494,7 @@ table, th, td {
                   <input type="hidden" name="total_gst" value="0" id="total_gst">
                   <input type="hidden" name="total_price" value="0" id="total_price">
                   <input type="hidden" name="last_purchase_rate" value="0" id="last_purchase_rate">
+                  <input type="hidden" name="total_quantity" value="0" id="total_quantity">
 
                   <div class="item_show" id="item_show" style="display: none;" title="Item Details">
                     <div class="row col-md-12">
@@ -660,6 +661,13 @@ function calculate_total_net_price(){
     total_net_price=parseFloat(total_net_price)+parseFloat($(this).val());
   });
   return total_net_price;
+}
+function calculate_total_qty(){
+  var total_qty=0;
+  $(".table_qty").each(function(){
+    total_qty=parseFloat(total_qty)+parseFloat($(this).val());
+  });
+  return total_qty;
 }
 function calculate_total_amount(){
   var total_amount=0;
@@ -879,7 +887,7 @@ function add_items()
 
   var last_purchase_rate = $('#last_purchase_rate').val();
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'+i+'">'+last_purchase_rate+'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><input type="hidden" class="table_qty" id="table_qty'+i+'" value="'+quantity+'"><font class="font_quantity'+i+'">'+quantity+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'+i+'">'+last_purchase_rate+'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
 
   $('.append_proof_details').append(items);
 var length=$('#mytable tr:last').attr('class').split(' ')[0];
@@ -945,8 +953,10 @@ for(var m=0;m<length+1;m++)
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();
 var total_gst=calculate_total_gst();
+var total_qty=calculate_total_qty();
 
 $("#total_price").val(total_net_price.toFixed(2));
+$("#total_quantity").val(total_qty);
 $(".total_net_value").text(total_net_price.toFixed(2));
 $("#total_amount").val(total_amount.toFixed(2));
 $("#total_gst").val(total_gst.toFixed(2));
@@ -1049,7 +1059,8 @@ $(document).on("click",".remove_items",function(){
        
         
         
-
+    var total_qty=calculate_total_qty();
+    $("#total_quantity").val(total_qty);
     var total_net_price=calculate_total_net_price();
     var to_html_total_net = total_net_price.toFixed(2);
 
@@ -1227,6 +1238,7 @@ $(document).on("click",".update_items",function(){
   $('.font_exclusive'+td_id).text($('.exclusive_rate').val());
   $('.inclusive'+td_id).val($('.inclusive_rate').val());
   $('.quantity'+td_id).val($('.quantity').val());
+  $('#table_qty'+td_id).val($('.quantity').val());
   $('.font_quantity'+td_id).text($('.quantity').val());
   $('.uom'+td_id).val($('.uom').val());
   $('.font_uom'+td_id).text($('.uom_name').val());
@@ -1265,6 +1277,8 @@ $(document).on("click",".update_items",function(){
   var total_net_price=calculate_total_net_price();
   var total_amount=calculate_total_amount();
   var total_gst=calculate_total_gst();
+  var total_qty=calculate_total_qty();
+  $("#total_quantity").val(total_qty);
   $("#total_price").val(total_net_price.toFixed(2));
   $(".total_net_value").text(total_net_price.toFixed(2));
   $("#total_amount").val(total_amount.toFixed(2));
@@ -2346,7 +2360,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
@@ -2431,7 +2445,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
@@ -2520,7 +2534,7 @@ else if(result.expense_cnt == 0)
 else
 {
   $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
+  $('#expense_count').val(result.expense_cnt);
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
