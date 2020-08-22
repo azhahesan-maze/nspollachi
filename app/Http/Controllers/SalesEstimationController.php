@@ -737,6 +737,41 @@ $count=0;
     return $result;
    }
 
+   public function browse_item(Request $request,$id)
+   {
+    $browse_item = $request->browse_item;
+
+    $data = Item::where('name',$browse_item)->get();
+    $result ="";
+    foreach ($data as $key => $value) 
+    {
+        if($value->brand_id != 0)
+            {
+                $barnd_name=isset($value->brand->name) ? $value->brand->name : "";
+            }
+            else
+            {
+                $barnd_name='Not Applicable';
+            }
+            
+            $category_name=isset($value->category->name) ? $value->category->name : "";
+            $uom_id=isset($value->uom->id) ? $value->uom->id : "";
+            $uom_name=isset($value->uom->name) ? $value->uom->name : "";
+
+            $barcode="";
+            if(count($value->item_barcode_details)>0){
+                $barcode_array=[];
+                foreach($value->item_barcode_details as $row){
+                    $barcode_array[]=$row->barcode;
+                }
+                $barcode=implode(",",$barcode_array);
+            }
+        $result .='<tr class="row_category"><td><center><input type="radio" name="select" onclick="add_data('.$key.')"></center></td><td><input type="hidden" value="'.$value->id.'" class="append_item_id'.$key.'"><input type="hidden" value="'.$value->code.'" class="append_item_code'.$key.'"><font style="font-family: Times new roman;">'.$value->code.'</font></td><td><input type="hidden" value="'.$value->name.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->name.'</font></td><td><input type="hidden" value="'.$value->mrp.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$value->mrp.'</font></td><td><input type="hidden" value="'.$uom_id.'" class="append_item_name'.$key.'"><font style="font-family: Times new roman;">'.$uom_name.'</font></td><td><input type="hidden" value="'.$value->brand_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barnd_name .'</font></td><td><input type="hidden" value="'.$value->category_id.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$category_name .'</font></td><td><input type="hidden" value="'.$barcode.'" class="append_item_brand_name'.$key.'"><font style="font-family: Times new roman;">'.$barcode.'</font></td></tr>';
+        
+    }
+    return $result;
+   }
+
     public function change_items(Request $request,$id)
     {
         $categories=$request->categories;

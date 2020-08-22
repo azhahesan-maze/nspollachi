@@ -573,6 +573,7 @@ Route::post('estimation/address_details/', 'EstimationController@address_details
 Route::get('estimation/getdata/{id}', 'EstimationController@getdata');
 Route::get('estimation/change_items/{id}', 'EstimationController@change_items');
 Route::post('estimation/brand_filter/', 'EstimationController@brand_filter');
+Route::get('estimation/browse_item/{id}', 'EstimationController@browse_item');
 Route::get('estimation/getdata_item/{id}', 'EstimationController@getdata_item');
 Route::get('estimation/same_items/{id}', 'EstimationController@same_items');
 Route::get('estimation/item_details/{id}', 'EstimationController@item_details');
@@ -589,6 +590,7 @@ Route::post('purchase_order/address_details/', 'PurchaseOrderController@address_
 Route::get('purchase_order/getdata/{id}', 'PurchaseOrderController@getdata');
 Route::get('purchase_order/change_items/{id}', 'PurchaseOrderController@change_items');
 Route::post('purchase_order/brand_filter/', 'PurchaseOrderController@brand_filter');
+Route::get('purchase_order/browse_item/{id}', 'PurchaseOrderController@browse_item');
 Route::get('purchase_order/getdata_item/{id}', 'PurchaseOrderController@getdata_item');
 Route::get('purchase_order/same_items/{id}', 'PurchaseOrderController@same_items');
 Route::get('purchase_order/item_details/{id}', 'PurchaseOrderController@item_details');
@@ -614,6 +616,7 @@ Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_
 Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
 Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
 Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
+Route::get('purchase_entry/browse_item/{id}', 'PurchaseEntryController@browse_item');
 Route::get('purchase_entry/getdata_item/{id}', 'PurchaseEntryController@getdata_item');
 Route::get('purchase_entry/same_items/{id}', 'PurchaseEntryController@same_items');
 Route::get('purchase_entry/item_details/{id}', 'PurchaseEntryController@item_details');
@@ -634,6 +637,7 @@ Route::post('sales_estimation/address_details/', 'SalesEstimationController@addr
 Route::get('sales_estimation/getdata/{id}', 'SalesEstimationController@getdata');
 Route::get('sales_estimation/change_items/{id}', 'SalesEstimationController@change_items');
 Route::post('sales_estimation/brand_filter/', 'SalesEstimationController@brand_filter');
+Route::get('sales_estimation/browse_item/{id}', 'SalesEstimationController@browse_item');
 Route::get('sales_estimation/getdata_item/{id}', 'SalesEstimationController@getdata_item');
 Route::get('sales_estimation/same_items/{id}', 'SalesEstimationController@same_items');
 Route::get('sales_estimation/item_details/{id}', 'SalesEstimationController@item_details');
@@ -650,6 +654,7 @@ Route::post('sale_order/address_details/', 'SalesOrderController@address_details
 Route::get('sale_order/getdata/{id}', 'SalesOrderController@getdata');
 Route::get('sale_order/change_items/{id}', 'SalesOrderController@change_items');
 Route::post('sale_order/brand_filter/', 'SalesOrderController@brand_filter');
+Route::get('sale_order/browse_item/{id}', 'SalesOrderController@browse_item');
 Route::get('sale_order/getdata_item/{id}', 'SalesOrderController@getdata_item');
 Route::get('sale_order/same_items/{id}', 'SalesOrderController@same_items');
 Route::get('sale_order/item_details/{id}', 'SalesOrderController@item_details');
@@ -667,6 +672,7 @@ Route::post('sales_entry/address_details/', 'SalesEntryController@address_detail
 Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
 Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
 Route::post('sales_entry/brand_filter/', 'SalesEntryController@brand_filter');
+Route::get('sales_entry/browse_item/{id}', 'SalesEntryController@browse_item');
 Route::get('sales_entry/getdata_item/{id}', 'SalesEntryController@getdata_item');
 Route::get('sales_entry/same_items/{id}', 'SalesEntryController@same_items');
 Route::get('sales_entry/item_details/{id}', 'SalesEntryController@item_details');
@@ -696,6 +702,7 @@ Route::post('receipt_note/address_details/', 'ReceiptNoteController@address_deta
 Route::get('receipt_note/getdata/{id}', 'ReceiptNoteController@getdata');
 Route::get('receipt_note/change_items/{id}', 'ReceiptNoteController@change_items');
 Route::post('receipt_note/brand_filter/', 'ReceiptNoteController@brand_filter');
+Route::get('receipt_note/browse_item/{id}', 'ReceiptNoteController@browse_item');
 Route::get('receipt_note/getdata_item/{id}', 'ReceiptNoteController@getdata_item');
 Route::get('receipt_note/same_items/{id}', 'ReceiptNoteController@same_items');
 Route::get('receipt_note/item_details/{id}', 'ReceiptNoteController@item_details');
@@ -715,6 +722,7 @@ Route::post('debit_note/address_details/', 'DebitNoteController@address_details'
 Route::get('debit_note/getdata/{id}', 'DebitNoteController@getdata');
 Route::get('debit_note/change_items/{id}', 'DebitNoteController@change_items');
 Route::post('debit_note/brand_filter/', 'DebitNoteController@brand_filter');
+Route::get('debit_note/browse_item/{id}', 'DebitNoteController@browse_item');
 Route::get('debit_note/getdata_item/{id}', 'DebitNoteController@getdata_item');
 Route::get('debit_note/same_items/{id}', 'DebitNoteController@same_items');
 Route::get('debit_note/item_details/{id}', 'DebitNoteController@item_details');
@@ -734,6 +742,7 @@ Route::post('delivery_note/address_details/', 'DeliveryNoteController@address_de
 Route::get('delivery_note/getdata/{id}', 'DeliveryNoteController@getdata');
 Route::get('delivery_note/change_items/{id}', 'DeliveryNoteController@change_items');
 Route::post('delivery_note/brand_filter/', 'DeliveryNoteController@brand_filter');
+Route::get('delivery_note/browse_item/{id}', 'DeliveryNoteController@browse_item');
 Route::get('delivery_note/getdata_item/{id}', 'DeliveryNoteController@getdata_item');
 Route::get('delivery_note/same_items/{id}', 'DeliveryNoteController@same_items');
 Route::get('delivery_note/item_details/{id}', 'DeliveryNoteController@item_details');
@@ -752,6 +761,7 @@ Route::post('credit_note/address_details/', 'CreditNoteController@address_detail
 Route::get('credit_note/getdata/{id}', 'CreditNoteController@getdata');
 Route::get('credit_note/change_items/{id}', 'CreditNoteController@change_items');
 Route::post('credit_note/brand_filter/', 'CreditNoteController@brand_filter');
+Route::get('credit_note/browse_item/{id}', 'CreditNoteController@browse_item');
 Route::get('credit_note/getdata_item/{id}', 'CreditNoteController@getdata_item');
 Route::get('credit_note/same_items/{id}', 'CreditNoteController@same_items');
 Route::get('credit_note/item_details/{id}', 'CreditNoteController@item_details');
@@ -771,6 +781,7 @@ Route::post('rejection_in/address_details/', 'RejectionInController@address_deta
 Route::get('rejection_in/getdata/{id}', 'RejectionInController@getdata');
 Route::get('rejection_in/change_items/{id}', 'RejectionInController@change_items');
 Route::post('rejection_in/brand_filter/', 'RejectionInController@brand_filter');
+Route::get('rejection_in/browse_item/{id}', 'RejectionInController@browse_item');
 Route::get('rejection_in/getdata_item/{id}', 'RejectionInController@getdata_item');
 Route::get('rejection_in/same_items/{id}', 'RejectionInController@same_items');
 Route::get('rejection_in/item_details/{id}', 'RejectionInController@item_details');
@@ -789,6 +800,7 @@ Route::post('rejection_out/address_details/', 'RejectionOutController@address_de
 Route::get('rejection_out/getdata/{id}', 'RejectionOutController@getdata');
 Route::get('rejection_out/change_items/{id}', 'RejectionOutController@change_items');
 Route::post('rejection_out/brand_filter/', 'RejectionOutController@brand_filter');
+Route::get('rejection_out/browse_item/{id}', 'RejectionOutController@browse_item');
 Route::get('rejection_out/getdata_item/{id}', 'RejectionOutController@getdata_item');
 Route::get('rejection_out/same_items/{id}', 'RejectionOutController@same_items');
 Route::get('rejection_out/item_details/{id}', 'RejectionOutController@item_details');

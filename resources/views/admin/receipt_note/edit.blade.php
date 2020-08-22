@@ -240,6 +240,16 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
               
                       <div class="cat" id="cat" style="display: none;" title="Search Here">
                         <div class="row col-md-8">
+
+                          <div class="col-md-4">
+                            <input list="browsers" class="form-control" placeholder="Item Name" name="browse_item" id="browse_item" onchange="browse_item()">
+                            <datalist id="browsers">
+                              @foreach($item as $key => $value)
+                              <option value="{{$value->name}}">
+                              @endforeach
+                            </datalist>
+                          </div>
+
                           <div class="col-md-4">
                             <select class="js-example-basic-multiple form-control brand" id="brand" name="brand" style="width: 100%;" style="margin-left: 50%;" data-placeholder="Choose Brand Name" onchange="brand_check()">
                           <option></option>
@@ -367,7 +377,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
 
                     <div class="col-md-2">
                         <label style="font-family: Times new roman;">Quantity</label>
-                      <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" oninput="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+                      <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" onchange="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       </div>
                       
@@ -1520,6 +1530,7 @@ function calc_exclusive()
     $('#inclusive').val('');
     $('#quantity').focus();
   }
+
   // else if(mrp == '')
   // {
   //   alert('Please Select Any Item');
@@ -1535,6 +1546,11 @@ function calc_exclusive()
   
   else
   {
+    if(quantity == 0)
+    {
+      quantity =1;
+      $('#quantity').val(1);
+    }
   
       var total = parseInt(quantity)*parseFloat(rate_exclusive);
     
@@ -1633,6 +1649,11 @@ function calc_inclusive()
     }
     else
     {
+      if(quantity == 0)
+      {
+        quantity =1;
+        $('#quantity').val(1);
+      }
 
       var rate=parseFloat(tax_rate)/100+1;
       var actual_tax = parseFloat(tax_rate)/100;
@@ -2179,6 +2200,23 @@ function find_cat()
   $('.row_category').remove();
   $('#cat').dialog({width:900},{height:250}).prev(".ui-dialog-titlebar").css("background","#28a745").prev(".ui-dialog.ui-widget-content");
     
+}
+
+function browse_item()
+{
+  var browse_item = $('#browse_item').val();
+  $.ajax({  
+        
+        type: "GET",
+        url: "{{ url('receipt_note/browse_item/{id}') }}",
+        data: { browse_item: browse_item},             
+             
+        success: function(data){
+          $('.row_brand').remove(); 
+        $('.row_category').remove(); 
+        $(".append_item").html(data);
+        }
+      });
 }
 
 function categories_check()
