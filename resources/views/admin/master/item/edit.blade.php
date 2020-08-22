@@ -501,7 +501,7 @@
         <td>
             <div class="col-sm-12">
             <input type="hidden" name="{{$value->name}}[]" class="" id="{{$value->name}}[]" value="{{$value->id }}">
-            <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{ $value->name }}" value="{{ $tax_value[$i][$key]['value'] }}" required >
+            <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{ $value->name }}" value="{{ @$tax_value[$i][$key]['value'] }}" required >
            
             </div>
           </td>
@@ -509,7 +509,9 @@
           @endforeach
           <td>
              <div class="col-sm-12">
-                <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ $tax_value[$i][$key]['valid_from'] }}" required>
+                <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="{{ @$tax_value[$i][$key]['valid_from'] }}" required>
+
+               
                 <span class="mandatory"> {{ $errors->first('valid_from.0')  }} 
              </div>
           </td>

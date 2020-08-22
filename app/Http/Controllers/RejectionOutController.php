@@ -1368,6 +1368,31 @@ echo "<pre>"; print_r($data); exit;
         return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
     }
 
+    public function check_qty(Request $request)
+    {
+        $qty = $request->qty;
+        $item_id = $request->item_id;
+        $p_no = $request->p_no;
 
+
+        $purchase_entry_item = PurchaseEntryItem::where('p_no',$p_no)
+                                                ->where('item_id',$item_id)
+                                                ->first();
+        $quantity = $purchase_entry_item->qty;                                        
+        if($qty > $purchase_entry_item->remaining_qty)
+        {
+            return 1;
+        }  
+        else
+        {
+
+            $remaining_qty = $quantity-$qty;
+            PurchaseEntryItem::where('p_no',$p_no)
+            ->where('item_id',$item_id)
+            ->update(['remaining_qty' => $remaining_qty]);
+            
+            return 0;
+        }                                                                     
+    }
 
 }

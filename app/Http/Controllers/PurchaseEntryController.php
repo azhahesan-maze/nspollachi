@@ -150,6 +150,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
+            $purchase_entry_items->remaining_qty = $request->quantity[$i];
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 
@@ -1750,6 +1751,8 @@ echo "<pre>"; print_r($data); exit;
 
         return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
     }
+
+    
 
 
 }

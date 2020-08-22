@@ -1397,6 +1397,37 @@ function item_details_sno(){
   
 function qty()
 {
+
+
+if($('.p_no').val() != '')
+{
+  var qty = $('#quantity').val();
+  var item_id = $('.items_codes').val();
+  var p_no = $('.p_no').val();
+  $.ajax({
+           type: "POST",
+            url: "{{ url('rejection_out/check_qty/') }}",
+            data: { qty: qty, item_id:item_id, p_no:p_no },
+           success: function(data) {
+
+            if(data == 1)
+            {
+              alert('Quantity Exceeds!');
+              $('#quantity').val('');
+            }
+            else
+            {
+               console.log(data);
+            }
+           }
+        });
+}
+else
+{
+
+}
+
+
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
 

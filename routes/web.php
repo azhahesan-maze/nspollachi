@@ -806,6 +806,7 @@ Route::get('rejection_out/same_items/{id}', 'RejectionOutController@same_items')
 Route::get('rejection_out/item_details/{id}', 'RejectionOutController@item_details');
 Route::get('rejection_out/expense_details/{id}', 'RejectionOutController@expense_details');
 Route::post('rejection_out/last_purchase_rate/', 'RejectionOutController@last_purchase_rate');
+Route::post('rejection_out/check_qty/', 'RejectionOutController@check_qty');
 Route::get('rejection_out/delete/{id}', 'RejectionOutController@destroy');
 Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
 
