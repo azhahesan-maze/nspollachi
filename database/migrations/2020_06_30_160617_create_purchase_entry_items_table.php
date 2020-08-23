@@ -30,6 +30,7 @@ class CreatePurchaseEntryItemsTable extends Migration
             $table->decimal('rate_exclusive_tax');
             $table->decimal('rate_inclusive_tax');
             $table->integer('qty');
+            $table->integer('rejected_qty')->nullable();
             $table->integer('remaining_qty')->nullable();
             $table->bigInteger('uom_id')->unsigned();
             $table->decimal('discount')->nullable();

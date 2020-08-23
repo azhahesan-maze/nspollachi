@@ -2553,6 +2553,8 @@ function p_details()
            success: function(data) {
             $('.tables').remove();
             $('.expense').remove();
+            $('.total_amount').text(0);
+            $('.total_net_price').text(0);
             var result=JSON.parse(data);
             if(result.status>0){
 $('.append_proof_details').append(result.data);
