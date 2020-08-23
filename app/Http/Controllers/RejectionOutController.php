@@ -107,6 +107,13 @@ class RejectionOutController extends Controller
          $voucher_date = $request->voucher_date;
          $estimation_date = $request->estimation_date;
 
+         // $purchase_entry_item = PurchaseEntryItem::where('p_no',$request->p_no)->get();
+         // foreach ($purchase_entry_item as $key => $value) {
+         //     $remaining_qty = $value->qty-$request->quantity[$key];
+         //     $value->remaining_qty = $remaining_qty;
+         //     $value->save();
+         // }
+
 
          $rejection_out = new RejectionOut();
 
@@ -1251,26 +1258,10 @@ $result=[];
         $expense_type = ExpenseType::all();
         $estimation =Estimation::all();
 
-        // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
-        //                    ->select('p_no')
-        //                    ->first();
-
-        //  if ($voucher_num == null) 
-        //  {
-        //      $voucher_no=1;
-
-                             
-        //  }                  
-        //  else
-        //  {
-        //      $current_voucher_num=$voucher_num->o_no;
-        //      $voucher_no=$current_voucher_num+1;
         
-         
-        //  }
 
         $purchase_entry = PurchaseEntry::where('p_no',$p_no)->first();
-        $purchase_entry_item = PurchaseEntryItem::where('p_no',$p_no)->get();
+        $purchase_entry_item = PurchaseEntryItem::where('p_no',$p_no)->where('remaining_qty','!=',0)->get();
         $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$p_no)->get();
 
         $round_off = $purchase_entry->round_off;
@@ -1379,20 +1370,23 @@ echo "<pre>"; print_r($data); exit;
                                                 ->where('item_id',$item_id)
                                                 ->first();
         $quantity = $purchase_entry_item->qty;                                        
-        if($qty > $purchase_entry_item->remaining_qty)
+        if($qty == $purchase_entry_item->qty || $qty < $purchase_entry_item->qty)
         {
-            return 1;
+            // $remaining_qty = $quantity-$qty;
+            // PurchaseEntryItem::where('p_no',$p_no)
+            // ->where('item_id',$item_id)
+            // ->update(['remaining_qty' => $remaining_qty]);
+            
+            return 0;
+
         }  
         else
         {
 
-            $remaining_qty = $quantity-$qty;
-            PurchaseEntryItem::where('p_no',$p_no)
-            ->where('item_id',$item_id)
-            ->update(['remaining_qty' => $remaining_qty]);
-            
-            return 0;
+            return 1;
         }                                                                     
     }
+
+    
 
 }
