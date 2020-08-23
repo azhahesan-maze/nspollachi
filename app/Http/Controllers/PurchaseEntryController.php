@@ -545,6 +545,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
+            $purchase_entry_items->remaining_qty = $request->quantity[$i]
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 

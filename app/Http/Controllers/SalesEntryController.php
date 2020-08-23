@@ -156,6 +156,7 @@ class SalesEntryController extends Controller
             $sale_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $sale_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $sale_entry_items->qty = $request->quantity[$i];
+            $sale_entry_items->remaining_qty = $request->quantity[$i];
             $sale_entry_items->uom_id = $request->uom[$i];
             $sale_entry_items->discount = $request->discount[$i];
 
@@ -497,6 +498,7 @@ class SalesEntryController extends Controller
             $sale_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $sale_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $sale_entry_items->qty = $request->quantity[$i];
+            $sale_entry_items->remaining_qty = $request->quantity[$i];
             $sale_entry_items->uom_id = $request->uom[$i];
             $sale_entry_items->discount = $request->discount[$i];
 
