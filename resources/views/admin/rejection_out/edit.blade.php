@@ -1030,34 +1030,34 @@ for(var m=0;m<length+1;m++)
   }
 }
 
-// for(var m=0;m<length+1;m++)
-// {
+for(var m=0;m<length+1;m++)
+{
 
-//   var item_code_id_first = $('.item_code'+m).val();
+  var item_code_id_first = $('.item_code'+m).val();
   
-//   for(var n=m+1;n<=length+1;n++)
-//   {
+  for(var n=m+1;n<=length+1;n++)
+  {
     
-//     if(typeof $('.item_code'+n).val() == 'undefined')
-//     {
+    if(typeof $('.item_code'+n).val() == 'undefined')
+    {
 
-//     }
-//     else
-//     {
-//       var item_code_id_second = $('.item_code'+n).val();
+    }
+    else
+    {
+      var item_code_id_second = $('.item_code'+n).val();
 
-//       if(item_code_id_first == item_code_id_second)
-//       {
-//         alert('Item Code is Alredy Taken!');
-//         $('#row'+i).remove();
-//       }
-//       else
-//       {
+      if(item_code_id_first == item_code_id_second)
+      {
+        alert('Item is Alredy Taken!');
+        $('#row'+i).remove();
+      }
+      else
+      {
         
-//       }
-//     }
-//   }
-// }
+      }
+    }
+  }
+}
 
 var total_net_price=calculate_total_net_price();
 var total_amount=calculate_total_amount();
