@@ -121,8 +121,19 @@ class TaxController extends Controller
      */
     public function destroy($id)
     {
-       $tax = Tax::find($id);
-       $tax->delete();
+       $tax_master = ItemTaxDetails::where('tax_master_id',$id)->get();
+       $count = count($tax_master);
+       if($count == 0)
+       {
+        $tax = Tax::find($id);
+        $tax->delete();
+        return Redirect::back()->with('success','Deleted Successfuly');
+       }
+       else 
+       {
+        return Redirect::back()->with('success',"You Are Not Allowed To Delete This Tax");
+       } 
+       
 
        $delete_from_tax_details = ItemTaxDetails::where('tax_master_id',$id);
        $delete_from_tax_details->delete();
