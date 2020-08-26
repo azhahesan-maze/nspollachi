@@ -1500,21 +1500,26 @@ echo "<pre>"; print_r($data); exit;
 
     public function receipt_details(Request $request)
     {
-        $purchase_entry = PurchaseEntry::all();
+        
         $receipt_no = $request->receipt_no;
+        $purchase_entry = PurchaseEntry::where('rn_no',$receipt_no)->count();
 
-        foreach ($purchase_entry as $key => $value) {
-            if($value->rn_no == $receipt_no)
-            {
-                $val = 1;
-            }
-            else
-            {
-                $val = 0;
-            }
-        }
+        // foreach ($purchase_entry as $key => $value) {
+        //     if($value->rn_no == $receipt_no)
+        //     {
+        //         $val = 1;
+        //     }
+        //     else
+        //     {
+        //         $val = 0;
+        //     }
+        // }
 
-        if($val == 1)
+        // if($val == 1)
+        // {
+        //     return 1;
+        // }
+        if($purchase_entry > 0)
         {
             return 1;
         }
