@@ -84,23 +84,24 @@ class RejectionOutController extends Controller
         $receipt_note = ReceiptNote::all();
         
 
-        $voucher_num=RejectionOut::orderBy('r_out_no','DESC')
-                           ->select('r_out_no')
-                           ->first();
+        // $voucher_num=RejectionOut::orderBy('r_out_no','DESC')
+        //                    ->select('r_out_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
-         {
-             $voucher_no=1;
+         // if ($voucher_num == null) 
+         // {
+         //     $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$voucher_num->r_out_no;
-             $voucher_no=$current_voucher_num+1;
+         // }                  
+         // else
+         // {
+             // $current_voucher_num=$voucher_num->r_out_no;
+             // $voucher_no=$current_voucher_num;
         
          
-         }
+         // }
+        $voucher_no = str_random(6);
 
         return view('admin.rejection_out.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','receipt_note','estimation','purchase_entry'));
     }
@@ -113,22 +114,19 @@ class RejectionOutController extends Controller
      */
     public function store(Request $request)
     {
-        $r_out_no=RejectionOut::orderBy('r_out_no','DESC')
-                           ->select('r_out_no')
-                           ->first();
+        // $r_out_no=RejectionOut::orderBy('r_out_no','DESC')
+        //                    ->select('r_out_no')
+        //                    ->first();
 
-         if ($r_out_no == null) 
-         {
-             $voucher_no=1;
-
-                             
-         }                  
-         else
-         {
-             $current_voucher_num=$r_out_no->r_out_no;
-             $voucher_no=$current_voucher_num+1;
-        
-         }
+        //  if ($r_out_no == null) 
+        //  {
+        //      $voucher_no=1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$r_out_no->r_out_no;
+        //      $voucher_no=$current_voucher_num+1;
+        //  }
          $voucher_date = $request->voucher_date;
          $estimation_date = $request->estimation_date;
          // echo $request->rn_no;exit;
@@ -165,11 +163,11 @@ class RejectionOutController extends Controller
             }
          }
         
-
+         $voucher_val = str_random(6);
 
          $rejection_out = new RejectionOut();
 
-         $rejection_out->r_out_no = $voucher_no;
+         $rejection_out->r_out_no = $voucher_val;
          $rejection_out->r_out_date = $voucher_date;
          $rejection_out->p_no = $request->p_no;
          $rejection_out->p_date = $request->p_date;
@@ -190,7 +188,7 @@ class RejectionOutController extends Controller
         {
             $rejection_out_items = new RejectionOutItem();
 
-            $rejection_out_items->r_out_no = $voucher_no;
+            $rejection_out_items->r_out_no = $voucher_val;;
             $rejection_out_items->r_out_date = $voucher_date;
             $rejection_out_items->p_no = $request->p_no;
             $rejection_out_items->p_date = $request->p_date;
@@ -225,7 +223,7 @@ class RejectionOutController extends Controller
             {
                 $rejection_out_expense = new RejectionOutExpense();
 
-                $rejection_out_expense->r_out_no = $voucher_no;
+                $rejection_out_expense->r_out_no = $voucher_val;;
                 $rejection_out_expense->r_out_date = $voucher_date;
                 $rejection_out_expense->p_no = $request->p_no;
                 $rejection_out_expense->p_date = $request->p_date;
@@ -617,9 +615,6 @@ class RejectionOutController extends Controller
         $rejection_out_item_data = RejectionOutItem::where('p_no',$id)->orWhere('rn_no',$id);
         $rejection_out_expense_data = RejectionOutExpense::where('p_no',$id)->orWhere('rn_no',$id);
 
-        // $rejection_out_data = RejectionOut::where('rn_no',$id);
-        // $rejection_out_item_data = RejectionOutItem::where('rn_no',$id);
-        // $rejection_out_expense_data = RejectionOutExpense::where('rn_no',$id);
 
         $purchase_entry_item = PurchaseEntryItem::where('p_no',$id)->get();
         foreach ($purchase_entry_item as $key => $value) {

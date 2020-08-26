@@ -65,23 +65,25 @@ class DeliveryNoteController extends Controller
         $customer = Customer::all();
         
 
-        $voucher_num=DeliveryNote::orderBy('d_no','DESC')
-                           ->select('d_no')
-                           ->first();
+        // $voucher_num=DeliveryNote::orderBy('d_no','DESC')
+        //                    ->select('d_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
-         {
-             $voucher_no=1;
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$voucher_num->d_no;
-             $voucher_no=$current_voucher_num+1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->d_no;
+        //      $voucher_no=$current_voucher_num+1;
         
          
-         }
+        //  }
+         $voucher_no = str_random(6);
+
 
         return view('admin.delivery_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','saleorder','sale_estimation','customer'));
     }
@@ -94,22 +96,23 @@ class DeliveryNoteController extends Controller
      */
     public function store(Request $request)
     {
-        $d_no=DeliveryNote::orderBy('d_no','DESC')
-                           ->select('d_no')
-                           ->first();
+        // $d_no=DeliveryNote::orderBy('d_no','DESC')
+        //                    ->select('d_no')
+        //                    ->first();
 
-         if ($d_no == null) 
-         {
-             $voucher_no=1;
+        //  if ($d_no == null) 
+        //  {
+        //      $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$d_no->d_no;
-             $voucher_no=$current_voucher_num+1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$d_no->d_no;
+        //      $voucher_no=$current_voucher_num+1;
         
-         }
+        //  }
+         $voucher_no = str_random(6);
          $voucher_date = $request->voucher_date;
 
 

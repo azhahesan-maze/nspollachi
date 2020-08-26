@@ -83,23 +83,25 @@ class RejectionInController extends Controller
         $delivery_note = DeliveryNote::all();
         
 
-        $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
-                           ->select('r_in_no')
-                           ->first();
+        // $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
+        //                    ->select('r_in_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
-         {
-             $voucher_no=1;
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$voucher_num->r_in_no;
-             $voucher_no=$current_voucher_num+1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->r_in_no;
+        //      $voucher_no=$current_voucher_num+1;
         
          
-         }
+        //  }
+        $voucher_no = str_random(6);
+
 
         return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer'));
     }
@@ -112,22 +114,24 @@ class RejectionInController extends Controller
      */
     public function store(Request $request)
     {
-        $r_in_no=RejectionIn::orderBy('r_in_no','DESC')
-                           ->select('r_in_no')
-                           ->first();
+        // $r_in_no=RejectionIn::orderBy('r_in_no','DESC')
+        //                    ->select('r_in_no')
+        //                    ->first();
 
-         if ($r_in_no == null) 
-         {
-             $voucher_no=1;
+        //  if ($r_in_no == null) 
+        //  {
+        //      $voucher_no=1;
 
                              
-         }                  
-         else
-         {
-             $current_voucher_num=$r_in_no->r_in_no;
-             $voucher_no=$current_voucher_num+1;
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$r_in_no->r_in_no;
+        //      $voucher_no=$current_voucher_num+1;
         
-         }
+        //  }
+        $voucher_no = str_random(6);
+
          $voucher_date = $request->voucher_date;
 
          if($request->d_no == '')
