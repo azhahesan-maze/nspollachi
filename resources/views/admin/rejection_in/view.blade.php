@@ -25,6 +25,8 @@
             <th>Voucher Date </th>
             <th>Sale Entry No </th>
             <th>Sale Entry Date </th>
+            <th>Delivery Note No</th>
+            <th>Delivery Note Date</th>
             <th>Customer Name</th>
             <th>overall Discount</th>
             <th>Round Off</th>
@@ -33,26 +35,31 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($s_no as $key => $value)
+          @foreach($rejection_in as $key => $value)
             <tr>
               <td>{{ $key+1 }}</td>
-              <td>{{ $rejection_in[$key]->r_in_no }}</td>
-              <td>{{ $rejection_in[$key]->r_in_date }}</td>
-              <td>{{ $rejection_in[$key]->s_no }}</td>
-              <td>{{ $rejection_in[$key]->s_date }}</td>
-              @if(isset($rejection_in[$key]->customer->name) && !empty($rejection_in[$key]->customer->name))
-              <td>{{ $rejection_in[$key]->customer->name }}</td>
+              <td>{{ $value->r_in_no }}</td>
+              <td>{{ $value->r_in_date }}</td>
+              <td>{{ $value->s_no }}</td>
+              <td>{{ $value->s_date }}</td>
+              <td>{{ $value->d_no }}</td>
+              <td>{{ $value->d_date }}</td>
+              @if(isset($value->customer->name) && !empty($value->customer->name))
+              <td>{{ $value->customer->name }}</td>
               @else
               <td></td>
               @endif
-              <td>{{ $rejection_in[$key]->overall_discount }}</td>
-              <td>{{ $rejection_in[$key]->round_off }}</td>
-              <td>{{ $rejection_in[$key]->total_net_value }}</td>
+              <td>{{ $value->overall_discount }}</td>
+              <td>{{ $value->round_off }}</td>
+              <td>{{ $value->total_net_value }}</td>
               <td> 
-                <a href="{{ route('rejection_in.show',$rejection_in[$key]->r_in_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                <a href="{{ route('rejection_in.edit',$rejection_in[$key]->r_in_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                <a href="{{url('rejection_in/delete/'.$rejection_in[$key]->s_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
+                <!-- <a href="{{ route('rejection_in.show',$value->r_in_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a> -->
+                
+                @if($value->d_no == '')
+                <a href="{{url('rejection_in/delete/'.$value->s_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                @else
+                <a href="{{url('rejection_in/delete/'.$value->d_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                @endif
                 <br><br>
                 <!-- <a href="{{url('rejection_in/item_details/'.$value->r_in_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
                 <a href="{{url('rejection_in/expense_details/'.$value->r_in_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a> -->

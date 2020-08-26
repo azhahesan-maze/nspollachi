@@ -26,6 +26,9 @@ use App\Models\PurchaseEntryExpense;
 use App\Models\ReceiptNote;
 use App\Models\ReceiptNoteItem;
 use App\Models\ReceiptNoteExpense;
+use App\Models\RejectionOut;
+use App\Models\RejectionOutItem;
+use App\Models\RejectionOutExpense;
 use Illuminate\Support\Facades\Redirect;
 
 class PurchaseEntryController extends Controller
@@ -151,6 +154,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
             $purchase_entry_items->remaining_qty = $request->quantity[$i];
+            $purchase_entry_items->rejected_qty = 0;
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 
@@ -489,6 +493,17 @@ class PurchaseEntryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $purchase_entries = PurchaseEntryItem::where('p_no',$id)->get();
+
+        // foreach ($request->item_code as $key => $value) {
+           
+        //    $purchase_entry_item = PurchaseEntryItem::where('p_no',$request->p_no)->where('item_id',$value)->first();
+
+        //    $remaining_qty[] = $purchase_entry_item->remaining_qty;
+        //    $remaining_qty[] = $purchase_entry_item->rejected_qty;
+
+        // }
+
         $purchase_entry_data = PurchaseEntry::where('p_no',$id);
         $purchase_entry_data->delete();
 
@@ -500,6 +515,8 @@ class PurchaseEntryController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+
 
          $purchase_entry = new PurchaseEntry();
 
@@ -545,7 +562,8 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
-            $purchase_entry_items->remaining_qty = $request->quantity[$i];
+            $purchase_entry_items->remaining_qty = @$request->remaining_qty[$i];
+            $purchase_entry_items->rejected_qty = @$request->rejected_item_qty[$i];
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 
@@ -595,19 +613,26 @@ class PurchaseEntryController extends Controller
         $purchase_entry_data = PurchaseEntry::where('p_no',$id);
         $purchase_entry_item_data = PurchaseEntryItem::where('p_no',$id);
         $purchase_entry_expense_data = PurchaseEntryExpense::where('p_no',$id);
+
+        $rejection_out = RejectionOut::where('p_no',$id);
+        $rejection_out_item = RejectionOutItem::where('p_no',$id);
+        $rejection_out_expense = RejectionOutExpense::where('p_no',$id);
         
         if($purchase_entry_data)
         {
             $purchase_entry_data->delete();
+            $rejection_out->delete();
         }
          if($purchase_entry_item_data)
          {
             $purchase_entry_item_data->delete();
+            $rejection_out_item->delete();
          }
 
          if($purchase_entry_expense_data)
          {
             $purchase_entry_expense_data->delete();
+            $rejection_out_expense->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

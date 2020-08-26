@@ -789,6 +789,7 @@ Route::get('rejection_in/expense_details/{id}', 'RejectionInController@expense_d
 Route::post('rejection_in/last_purchase_rate/', 'RejectionInController@last_purchase_rate');
 Route::get('rejection_in/delete/{id}', 'RejectionInController@destroy');
 Route::post('rejection_in/s_details/', 'RejectionInController@s_details');
+Route::post('rejection_in/delivery_details/', 'RejectionInController@delivery_details');
 Route::post('rejection_in/check_qty/', 'RejectionInController@check_qty');
 
 /* Rejection In End Here  */
@@ -811,6 +812,7 @@ Route::post('rejection_out/check_qty/', 'RejectionOutController@check_qty');
 Route::post('rejection_out/change_qty/', 'RejectionOutController@change_qty');
 Route::get('rejection_out/delete/{id}', 'RejectionOutController@destroy');
 Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
+Route::post('rejection_out/receipt_details/', 'RejectionOutController@receipt_details');
 
 /* Rejection Out End Here  */
 

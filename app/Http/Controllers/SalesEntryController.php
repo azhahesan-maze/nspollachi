@@ -30,6 +30,9 @@ use App\Models\SaleEstimationItem;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteItem;
 use App\Models\DeliveryNoteExpense;
+use App\Models\RejectionIn;
+use App\Models\RejectionInItem;
+use App\Models\RejectionInExpense;
 use Illuminate\Support\Facades\Redirect;
 
 class SalesEntryController extends Controller
@@ -157,6 +160,7 @@ class SalesEntryController extends Controller
             $sale_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $sale_entry_items->qty = $request->quantity[$i];
             $sale_entry_items->remaining_qty = $request->quantity[$i];
+            $sale_entry_items->rejected_qty = 0;
             $sale_entry_items->uom_id = $request->uom[$i];
             $sale_entry_items->discount = $request->discount[$i];
 
@@ -498,7 +502,8 @@ class SalesEntryController extends Controller
             $sale_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $sale_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $sale_entry_items->qty = $request->quantity[$i];
-            $sale_entry_items->remaining_qty = $request->quantity[$i];
+            $sale_entry_items->remaining_qty = @$request->remaining_qty[$i];
+            $sale_entry_items->rejected_qty = @$request->rejected_item_qty[$i];
             $sale_entry_items->uom_id = $request->uom[$i];
             $sale_entry_items->discount = $request->discount[$i];
 
@@ -548,6 +553,10 @@ class SalesEntryController extends Controller
         $sale_entry_data = SaleEntry::where('s_no',$id);
         $sale_entry_item_data = SaleEntryItem::where('s_no',$id);
         $sale_entry_expense_data = SaleEntryExpense::where('s_no',$id);
+
+        $rejection_in = RejectionIn::where('s_no',$id);
+        $rejection_in_item = RejectionInItem::where('s_no',$id);
+        $rejection_in_expense = RejectionInExpense::where('s_no',$id);
         
         if($sale_entry_data)
         {
