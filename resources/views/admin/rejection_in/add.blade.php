@@ -493,7 +493,8 @@ table, th, td {
                     <th> HSN</th>
                     <th> MRP</th>
                     <th> Unit Price</th>
-                    <th> Quantity</th>
+                    <th> Sale Quantity</th>
+                    <th> Remaining Quantity</th>
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
@@ -533,7 +534,10 @@ table, th, td {
                         <label style="font-family: Times New Roman;">Unit Price: <font class="show_unit_price" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
-                        <label style="font-family: Times New Roman;">Quantity: <font class="show_quantity" style="font-weight: bold;"></font></label>
+                        <label style="font-family: Times New Roman;">Sale Qty: <font class="show_purchased_qty" style="font-weight: bold;"></font></label>
+                      </div>
+                      <div class="col-md-3">
+                        <label style="font-family: Times New Roman;">Remaining Quantity: <font class="show_quantity" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
                         <label style="font-family: Times New Roman;">UOM: <font class="show_uom" style="font-weight: bold;"></font></label>
@@ -553,10 +557,10 @@ table, th, td {
                         <label style="font-family: Times New Roman;">Net Value: <font class="show_net_value" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
-                        <label style="font-family: Times New Roman;">Rejected Qty: <font class="show_net_value" style="font-weight: bold;"></font></label>
+                        <label style="font-family: Times New Roman;">Rejected Qty: <font class="show_rejected_qty" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
-                        <label style="font-family: Times New Roman;">Remarks: <font class="show_net_value" style="font-weight: bold;"></font></label>
+                        <label style="font-family: Times New Roman;">Remarks: <font class="show_remarks" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
                         <label style="font-family: Times New Roman;">Last Purchase Rate: <font class="show_last_purchase" style="font-weight: bold;"></font></label>
@@ -569,6 +573,7 @@ table, th, td {
                   <tfoot>
                     <tr>
                       
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th></th>
@@ -700,6 +705,14 @@ function calculate_total_gst(){
     total_gst=parseFloat(total_gst)+parseFloat($(this).val());
   });
   return total_gst;
+}
+
+function calculate_total_rejected(){
+  var total_rejected=0;
+  $(".rejected_quantity").each(function(){
+    total_rejected=parseFloat(total_rejected)+parseFloat($(this).val());
+  });
+  return total_rejected;
 }
 
 function calculate_total_discount()
@@ -911,7 +924,7 @@ function add_items()
 
   var last_purchase_rate = $('#last_purchase_rate').val();
  
-  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font><input type="hidden" class="actual_quantity" id="actual_quantity'+i+'" value="'+quantity+'" name="actual_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty'+i+'" value="'+quantity+'" name="remaining_qty[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td><font class="font_rejected_qty'+i+'">'+rejected_qty+'</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity'+i+'" value="'+rejected_qty+'"></td><td><font class="font_remarks'+i+'">'+remarks+'</font><input type="hidden" class="remarks_val" name="remarks_val[]" id="remarks_val'+i+'" value="'+remarks+'"></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'+i+'">'+last_purchase_rate+'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
+  var items='<tr id="row'+i+'" class="'+i+' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'+i+'" type="hidden" id="invoice'+i+'" value="'+invoice_no+'" name="invoice_sno[]"><font class="item_no'+i+'">'+invoice_no+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'+i+'" value="'+items_codes+'" name="item_code[]"><font class="items'+i+'">'+item_code+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'+i+'" type="hidden" value="'+item_name+'" name="item_name[]"><font class="font_item_name'+i+'">'+item_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'+i+'" type="hidden" value="'+hsn+'" name="hsn[]"><font class="font_hsn'+i+'">'+hsn+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'+i+'" value="'+mrp+'" name="mrp[]"><font class="font_mrp'+i+'">'+mrp+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'+i+'" value="'+exclusive+'" name="exclusive[]"><font class="font_exclusive'+i+'">'+exclusive+'</font><input type="hidden" class="inclusive'+i+'" value="'+inclusive+'" name="inclusive[]"></div></div></td><td><font class="font_purchase_quantity'+i+'">'+quantity+'</font></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'+i+'" value="'+quantity+'" name="quantity[]"><font class="font_quantity'+i+'">'+quantity+'</font><input type="hidden" class="actual_quantity" id="actual_quantity'+i+'" value="'+quantity+'" name="actual_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty'+i+'" value="'+quantity+'" name="remaining_qty[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'+i+'" value="'+uom_id+'" name="uom[]"><font class="font_uom'+i+'">'+uom_name+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'+i+'" value="'+amount+'" name="amount[]"><font class="font_amount'+i+'">'+amount+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'+discounts+'" id="input_discount'+i+'" ><input class="discount_val'+i+'" type="hidden" value="'+discounts+'" name="discount[]"><font class="font_discount" id="font_discount'+i+'">'+discounts+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'+i+'" value="'+gst+'" name="gst[]"><input type="hidden" class="tax_gst'+i+'"  value="'+tax_rate+'" name="tax_rate[]"><font class="font_gst'+i+'">'+gst+'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'+i+'" value="'+net_price+'" name="net_price[]"><font class="font_net_price'+i+'">'+net_price+'</font></div></div></td><td><font class="font_rejected_qty'+i+'">'+rejected_qty+'</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity'+i+'" value="'+rejected_qty+'"></td><td><font class="font_remarks'+i+'">'+remarks+'</font><input type="hidden" class="remarks_val" name="remarks_val[]" id="remarks_val'+i+'" value="'+remarks+'"></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'+i+'">'+last_purchase_rate+'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'+i+'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'+i+'" aria-hidden="true"></i></td></tr>'
 
   $('.append_proof_details').append(items);
 var length=$('#mytable tr:last').attr('class').split(' ')[0];
@@ -1167,7 +1180,7 @@ $(document).on("click",".edit_items",function(){
   var inclusive = $('.inclusive'+id).val(); 
   var quantity = $('.quantity'+id).val();
   var rejected_qty = $('#rejected_quantity'+id).val();
-  var actual_qty = $('#remaining_qty'+id).val();
+  var actual_qty = $('#actual_quantity'+id).val();
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1506,6 +1519,9 @@ $(document).on("click",".show_items",function(){
   $('.show_gst_rs').text($('#tax'+id).val());
   $('.show_net_value').text($('#net_price'+id).val());
   $('.show_last_purchase').text($('.last_purchase'+id).text());
+  $('.show_purchased_qty').text($('.font_purchase_quantity'+id).text());
+  $('.show_rejected_qty').text($('#rejected_quantity'+id).val());
+  $('.show_remarks').text($('#remarks_val'+id).val());
 
 });
 
@@ -1581,15 +1597,21 @@ function item_details_sno(){
 
   $("form").submit(function(e){
     var count = $('.tables').length;
+    var total_rejected = calculate_total_rejected();
   if(count == 0)
   {
     alert('There Is No Row To Submit');
     e.preventDefault();
   }
+  else if(total_rejected == 0)
+  {
+    alert('You Are Not Allowed To Submit!');
+    e.preventDefault();
+  } 
   else
   {
 
-  }    
+  }   
     });
 
   
