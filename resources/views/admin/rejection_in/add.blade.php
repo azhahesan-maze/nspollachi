@@ -526,7 +526,7 @@ table, th, td {
                   <tbody class="append_proof_details" id="mytable">
                     
                   <input type="hidden" name="counts" value="" id="counts">
-                  <input type="hidden" name="expense_count" value="1" id="expense_count">
+                  <input type="hidden" name="expense_count" value="0" id="expense_count">
                   <input type="hidden" name="total_amount" value="0" id="total_amount">
                   <input type="hidden" name="total_gst" value="0" id="total_gst">
                   <input type="hidden" name="total_price" value="0" id="total_price">
@@ -2718,16 +2718,16 @@ function s_details()
             if(result.status>0){
 $('.append_proof_details').append(result.data);
 var expense_length=$(".expense_type").length;
-if(expense_length >1)
+if(expense_length >0)
 {
 $('.append_expense').append(result.expense_typess);
 $('#expense_count').val(result.expense_cnt);
 }
-else if(result.expense_cnt == 0)
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
-}
+// else if(result.expense_cnt == 0)
+// {
+//   $('.append_expense').html(result.expense_typess);
+//   $('#expense_count').val(result.expense_cnt+1);
+// }
 else
 {
   $('.append_expense').html(result.expense_typess);
@@ -2806,16 +2806,16 @@ function delivery_details()
             if(result.status>0){
 $('.append_proof_details').append(result.data);
 var expense_length=$(".expense_type").length;
-if(expense_length >1)
+if(expense_length >0)
 {
 $('.append_expense').append(result.expense_typess);
 $('#expense_count').val(result.expense_cnt);
 }
-else if(result.expense_cnt == 0)
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
-}
+// else if(result.expense_cnt == 0)
+// {
+//   $('.append_expense').html(result.expense_typess);
+//   $('#expense_count').val(result.expense_cnt+1);
+// }
 else
 {
   $('.append_expense').html(result.expense_typess);

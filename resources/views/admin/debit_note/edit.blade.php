@@ -652,7 +652,7 @@ table, th, td {
                     <label style="font-family: Times new roman;">Expense Type</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
-                      <select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]" id="expense_type" >
+                      <select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]"  id="expense_type" >
                          @if(isset($value->expense_types->type) && !empty($value->expense_types->type))
                            <option value="{{ $value->expense_types->id }}">{{ $value->expense_types->type }}</option>
                            @else
@@ -682,19 +682,18 @@ table, th, td {
                         </div> -->
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
-                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="{{ $value->expense_amount }}">
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="{{ $value->expense_amount }}" readonly="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
                       </div>
-                      <div class="col-md-2">
+                      <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
                       <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
-                    </div>
+                    </div> -->
                   </div>
                     @endforeach
-                    @else
-                    <div class="row col-md-12 expense">
+                    <!-- <div class="row col-md-12 expense">
                             <div class="col-md-3">
                     <label style="font-family: Times new roman;">Expense Type</label><br>
                   <div class="form-group row">
@@ -710,7 +709,7 @@ table, th, td {
                      <button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
-               </div>
+               </div> -->
                         <!-- <div class="col-md-2">
                           <label style="font-family: Times new roman;">Expense Type</label>
                         <select class="js-example-basic-multiple form-control expense_type" 
@@ -723,18 +722,18 @@ table, th, td {
                          </select>
                          
                         </div> -->
-                      <div class="col-md-2">
+                      <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
                       <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="">
 
                       <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
 
-                      </div>
-                      <div class="col-md-2">
+                      </div> -->
+                      <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
                       <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
                     </div>
-                  </div>
+                  </div> -->
                     @endif
                        </div>
 
