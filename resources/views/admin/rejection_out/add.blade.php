@@ -515,13 +515,14 @@ table, th, td {
                     <th> MRP</th>
                     <th> Unit Price</th>
                     <th> Purchase Quantity</th>
+                    <th> Rejected Qty</th>
                     <th> Remaining Quantity</th>
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
                     <th> Tax Rs</th>
                     <th> Net Value</th>
-                    <th> Rejected Qty</th>
+                    
                     <th> Remarks</th>
                     <th style="background-color: #FAF860;"> Last Purchase Rate(LPR)</th>
                     <th>Action </th>
