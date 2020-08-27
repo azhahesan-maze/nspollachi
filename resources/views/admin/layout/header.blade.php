@@ -280,7 +280,7 @@
 
 
 
-<li class="nav-item dropdown menu-large">
+<!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Estimation
             </a>
@@ -290,13 +290,13 @@
                         <ul>
                             <li class="dropdown-header">Estimation</li>
                            
-                            <li><a href="{{ route('estimation.index') }}">Estimation</a></li>
+                            <li><a href="{{ route('estimation.index') }}">Estimation</a></li> -->
                             <!-- <li><a href="{{ route('taxdummy.index') }}">TaxDummy</a></li> -->
                             <!-- <li><a href="{{ route('cart.index') }}">Cart</a></li> -->
                             
                             
-                        </ul>
-                    </li>
+                        <!-- </ul>
+                    </li> -->
                     <!-- <li class="col-md-3 dropdown-item">
                         <ul>
                             <li class="dropdown-header">Gate Pass Entry</li>
@@ -310,11 +310,11 @@
                     </li> -->
                     
                     
-            </ul>        
+            <!-- </ul>        
             
             
           </li>
-
+ -->
           <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Purchase
@@ -324,8 +324,9 @@
                    
                     <li class="col-md-3 dropdown-item">
                         <ul>
+
                             <li class="dropdown-header">Purchase</li>
-                           
+                           <li><a href="{{ route('estimation.index') }}">Estimation</a></li>
                             <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
                             <li><a href="{{ route('receipt_note.index') }}">Receipt Note</a></li>
                             <li><a href="{{ route('purchase_entry.index') }}">Purchase Entry</a></li>
