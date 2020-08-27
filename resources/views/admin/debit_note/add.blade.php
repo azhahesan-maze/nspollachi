@@ -393,6 +393,8 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     <div class="col-md-2">
                         <label style="font-family: Times new roman;">Quantity</label>
                       <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" onchange="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
+
+                      <input type="hidden" class="form-control actual_qty" id="actual_qty" name="actual_qty" value="">
                       </div>
                       </div>
                       
@@ -1141,6 +1143,7 @@ $(document).on("click",".edit_items",function(){
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
   var quantity = $('.quantity'+id).val();
+  var actual_qty = $('#actual_quantity'+id).val();
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1158,6 +1161,7 @@ $(document).on("click",".edit_items",function(){
   $('.mrp').val(mrp);
   $('.hsn').val(hsn);
   $('.quantity').val(quantity);
+  $('.actual_qty').val(actual_qty);
   $('.tax_rate').val(tax_gst);
   $('.amount').val(amnt);
   $('.net_price').val(net_price);
@@ -1241,6 +1245,7 @@ $(document).on("click",".update_items",function(){
   $('.font_exclusive'+td_id).text($('.exclusive_rate').val());
   $('.inclusive'+td_id).val($('.inclusive_rate').val());
   $('.quantity'+td_id).val($('.quantity').val());
+  $('#actual_quantity'+td_id).val($('.actual_qty').val());
   $('.font_quantity'+td_id).text($('.quantity').val());
   $('.uom'+td_id).val($('.uom').val());
   $('.font_uom'+td_id).text($('.uom_name').val());
@@ -1406,6 +1411,11 @@ function item_details_sno(){
   
 function qty()
 {
+  if($('.quantity').val() > $('#actual_qty').val())
+  {
+    alert('Quantity Exceeds!');
+    $('.quantity').val('')
+  }
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
 
