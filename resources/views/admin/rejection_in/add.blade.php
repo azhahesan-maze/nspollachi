@@ -2704,6 +2704,9 @@ function s_details()
 {
 
   var s_no=$('.s_no').val();
+  $('.d_no').val('');
+  $('.d_date').val('');
+  $('select').select2();
   $('.add_items').hide();
 
   $.ajax({
@@ -2736,7 +2739,7 @@ else
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
+$('.invoice_val').text(result.item_net_value_sum.toFixed(2));
 $('.s_date').val(result.date_sale_entry);
 $('.sale_date').text(result.date_sale_entry);
 
@@ -2824,7 +2827,7 @@ else
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
+$('.invoice_val').text(result.item_net_value_sum.toFixed(2));
 $('.d_date').val(result.date);
 
 // $('.total_net_price').append(result.item_net_value_sum);

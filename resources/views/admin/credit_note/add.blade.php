@@ -1417,7 +1417,9 @@ function item_details_sno(){
   
 function qty()
 {
-  if($('.quantity').val() > $('.actual_qty').val())
+  var actual_qty= $('#actual_qty').val();
+  var qty = $('.quantity').val();
+  if(parseInt(qty) > parseInt(actual_qty))
   {
     alert('Quantity Exceeds!');
     $('.quantity').val('')

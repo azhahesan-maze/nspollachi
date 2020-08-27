@@ -2743,7 +2743,7 @@ else
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
+$('.invoice_val').text(result.item_net_value_sum.toFixed(2));
 $('.purchase_date').text(result.date_purchaseorder);
 $('.p_date').val(result.purchase_entry_date);
 // $('.total_net_price').append(result.item_net_value_sum);
@@ -2833,7 +2833,7 @@ else
 }
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
+$('.invoice_val').text(result.item_net_value_sum.toFixed(2));
 if(result.purchase_type == '')
 {
 

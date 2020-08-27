@@ -1520,7 +1520,9 @@ function item_details_sno(){
   
 function qty()
 {
-  if($('.quantity').val() > $('.actual_qty').val())
+  var actual_qty= $('#actual_qty').val();
+  var qty = $('.quantity').val();
+  if(parseInt(qty) > parseInt(actual_qty))
   {
     alert('Quantity Exceeds!');
     $('.quantity').val('')
@@ -2444,6 +2446,7 @@ function p_details()
   var p_no=$('.p_no').val();
   $('.r_out_no').val('');
   $('.r_out_date').val('');
+  $('#actual_qty').val('');
   $('select').select2();
 
 
@@ -2525,6 +2528,7 @@ function r_out_details()
   var r_out_no=$('.r_out_no').val();
   $('.p_no').val('');
   $('.p_date').val('');
+  $('#actual_qty').val('');
   $('select').select2();
 
 
