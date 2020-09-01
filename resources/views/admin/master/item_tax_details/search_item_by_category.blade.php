@@ -21,7 +21,7 @@
               @endforeach
               <td>
                       <div class="col-sm-12">
-                       <input type="text" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="" required>
+                       <input type="date" class="form-control valid_from" name="valid_from[]" placeholder="dd-mm-yyyy" value="" required>
                         <div class="invalid-feedback">
                           Enter valid Effective From Date
                         </div>
