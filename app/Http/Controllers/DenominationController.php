@@ -97,7 +97,7 @@ class DenominationController extends Controller
         $denomination->created_by = 0;
         $denomination->updated_by = 0;
       if ($denomination->save()) {
-            return Redirect::back()->with('success', 'Successfully created');
+            return Redirect::back()->with('success', 'Updated Successfully');
         } else {
             return Redirect::back()->with('failure', 'Something Went Wrong..!');
         }
