@@ -39,7 +39,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">GST Number <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control gst_number only_allow_alp_num_dot_com_amp" placeholder="Gst Number" name="gst_number" value="{{old('gst_number')}}" required>
+                <input type="Number" class="form-control gst_number" placeholder="Gst Number" name="gst_number" value="{{old('gst_number')}}" required>
                 <span class="mandatory"> {{ $errors->first('gst_number')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid GST Number

@@ -131,7 +131,7 @@ class Ho_detailsController extends Controller
             $location->updated_by = 0;
 
             if ($location->save()) {
-                return Redirect::back()->with('success', 'Successfully created');
+                return Redirect::back()->with('success', 'Successfully Updated');
             } else {
                 return Redirect::back()->with('failure', 'Something Went Wrong..!');
             }
