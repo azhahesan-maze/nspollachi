@@ -517,7 +517,7 @@
                    <td>
                             <div class="form-group row">
                               <div class="col-sm-12">
-                              <input type="text" class="form-control old_proof_number only_allow_digit required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="old_proof_number[]" value="{{ old('old_proof_number.'.$key,$proof_value->number) }}" >
+                              <input type="text" class="form-control old_proof_number only_allow_alp_num_dot_com_amp required_for_proof_valid" error-data="Enter valid Postal Code" placeholder="Proof Number" name="old_proof_number[]" value="{{ old('old_proof_number.'.$key,$proof_value->number) }}" >
                                 <span class="mandatory"> {{ $errors->first('old_proof_number.'.$key)  }} </span>
                                 <div class="invalid-feedback">
                                   Enter valid Proof Number
