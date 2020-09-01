@@ -69,7 +69,7 @@
         </div>
       </form>
     </div>
-    <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/master/capitalize.js')}}"></script> -->
     <!-- card body end@ -->
   </div>
 </div>

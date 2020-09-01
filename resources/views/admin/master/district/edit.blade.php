@@ -58,7 +58,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Remark </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control remark" name="remark" value="{{old('remark')}}" placeholder="Remark">
+                <input type="text" class="form-control remark" name="remark" value="{{ $district->remark }}{{old('remark')}}" placeholder="Remark">
               </div>
             </div>
           </div>
