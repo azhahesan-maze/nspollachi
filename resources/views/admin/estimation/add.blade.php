@@ -2076,6 +2076,7 @@ function find_cat()
   
   $('#categories').val("");
   $('#brand').val("");
+  $('#browse_item').val("");
   $("select").select2();
   $('#cat').show();
   $('.row_brand').remove(); 

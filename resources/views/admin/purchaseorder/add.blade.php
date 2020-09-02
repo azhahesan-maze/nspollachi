@@ -2016,6 +2016,7 @@ function find_cat()
   $('#categories').val("");
   $('#brand').val("");
   $("select").select2();
+  $('#browse_item').val("");
   $('#cat').show();
   $('.row_brand').remove(); 
   $('.row_category').remove();
