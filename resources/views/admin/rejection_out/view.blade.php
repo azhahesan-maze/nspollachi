@@ -64,8 +64,8 @@
                 
                 
                 <br><br>
-                <!-- <a href="{{url('rejection_out/item_details/'.$value->r_out_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
-                <a href="{{url('rejection_out/expense_details/'.$value->r_out_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a> -->
+                <a href="{{url('rejection_out/item_details/'.$value->r_out_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Rejected Item Details</a>
+                <a href="{{url('rejection_out/expense_details/'.$value->r_out_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a>
               </td>
             </tr>
          @endforeach

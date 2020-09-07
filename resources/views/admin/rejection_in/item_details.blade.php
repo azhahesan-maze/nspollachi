@@ -28,7 +28,7 @@
            <th>Tax %</th>
            <th>Rate Exclusive Tax</th>
            <th>Rate Inclusive Tax</th>
-           <th>Quantity</th>
+           <th>Rejected Quantity</th>
            <th>UOM</th>
            <th>Amount</th>
            <th>Tax Rs</th>
@@ -57,7 +57,7 @@
               <td>{{ $value->gst }}</td>
               <td>{{ $value->rate_exclusive_tax }}</td>
               <td>{{ $value->rate_inclusive_tax }}</td>
-              <td>{{ $value->qty }}</td>
+              <td>{{ $value->rejected_qty }}</td>
               @if(isset($value->uom->name) && !empty($value->uom->name))
               <td>{{ $value->uom->name }}</td>
               @else

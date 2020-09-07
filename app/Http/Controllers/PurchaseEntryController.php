@@ -81,7 +81,25 @@ class PurchaseEntryController extends Controller
         
          
         //  }
-        $voucher_no = str_random(6);
+
+        $voucher_num=PurchaseEntry::orderBy('created_at','DESC')->select('id')->first();
+        $append = "PE";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+        // $voucher_no = str_random(6);
 
         return view('admin.purchase_entry.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','receipt_note','purchaseorder'));
     }
@@ -110,7 +128,25 @@ class PurchaseEntryController extends Controller
         //      $voucher_no=$current_voucher_num+1;
         
         //  }
-         $voucher_no = str_random(6);
+
+      $voucher_num=PurchaseEntry::orderBy('created_at','DESC')->select('id')->first();
+        $append = "PE";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+         // $voucher_no = str_random(6);
          $voucher_date = $request->voucher_date;
          $estimation_date = $request->estimation_date;
 

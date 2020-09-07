@@ -63,20 +63,38 @@ class DebitNoteController extends Controller
         $purchase_entry = PurchaseEntry::all();
         
 
-        $voucher_num=DebitNote::orderBy('dn_no','DESC')
-                           ->select('dn_no')
-                           ->first();
+        // $voucher_num=DebitNote::orderBy('dn_no','DESC')
+        //                    ->select('dn_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->dn_no;
+        //      $voucher_no=$current_voucher_num+1;
+        
+         
+        //  }
+
+        $voucher_num=DebitNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "DBN";
+        if ($voucher_num == null) 
          {
-             $voucher_no=1;
+             $voucher_no=$append.'1';
 
                              
          }                  
          else
          {
-             $current_voucher_num=$voucher_num->dn_no;
-             $voucher_no=$current_voucher_num+1;
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
         
          
          }
@@ -92,21 +110,39 @@ class DebitNoteController extends Controller
      */
     public function store(Request $request)
     {
-        $dn_no=DebitNote::orderBy('dn_no','DESC')
-                           ->select('dn_no')
-                           ->first();
+        // $dn_no=DebitNote::orderBy('dn_no','DESC')
+        //                    ->select('dn_no')
+        //                    ->first();
 
-         if ($dn_no == null) 
+        //  if ($dn_no == null) 
+        //  {
+        //      $voucher_no=1;
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$dn_no->dn_no;
+        //      $voucher_no=$current_voucher_num+1;
+        
+        //  }
+
+        $voucher_num=DebitNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "DBN";
+        if ($voucher_num == null) 
          {
-             $voucher_no=1;
+             $voucher_no=$append.'1';
 
                              
          }                  
          else
          {
-             $current_voucher_num=$dn_no->dn_no;
-             $voucher_no=$current_voucher_num+1;
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
         
+         
          }
          $voucher_date = $request->voucher_date;
          $estimation_date = $request->estimation_date;

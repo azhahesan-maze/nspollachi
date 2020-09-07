@@ -26,6 +26,9 @@ use App\Models\PurchaseOrderExpense;
 use App\Models\PurchaseEntry;
 use App\Models\PurchaseEntryItem;
 use App\Models\PurchaseEntryExpense;
+use App\Models\RejectionOut;
+use App\Models\RejectionOutItem;
+use App\Models\RejectionOutExpense;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -58,6 +61,7 @@ class ReceiptNoteController extends Controller
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
         $purchaseorder = Purchase_Order::all();
+        $rejection_out = RejectionOut::where('status',0)->get();
         
 
         // $voucher_num=ReceiptNote::orderBy('rn_no','DESC')
@@ -77,9 +81,27 @@ class ReceiptNoteController extends Controller
         
          
         //  }
-        $voucher_no = str_random(6);
 
-        return view('admin.receipt_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','purchaseorder'));
+        $voucher_num=ReceiptNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "RN";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+        // $voucher_no = str_random(6);
+
+        return view('admin.receipt_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','purchaseorder','rejection_out'));
     }
 
     /**
@@ -106,9 +128,52 @@ class ReceiptNoteController extends Controller
         //      $voucher_no=$current_voucher_num+1;
         
         //  }
-         $voucher_no = str_random(6);
+
+        $voucher_num=ReceiptNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "RN";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+
+
+        
+
+         // $voucher_no = str_random(6);
          $voucher_date = $request->voucher_date;
          $estimation_date = $request->estimation_date;
+
+         if($request->r_out_no != '')
+        {
+            foreach ($request->item_code as $key => $value) 
+            {
+                $rejection_out_item = RejectionOutItem::where('r_out_no',$request->r_out_no)->where('item_id',$value)->first();
+
+                $rejected = $rejection_out_item->rejected_qty - $request->quantity[$key];
+
+                $remaining = $rejection_out_item->qty - $rejected;
+
+                $rejection_out_item->rejected_qty = $rejected;
+                $rejection_out_item->remaining_qty = $remaining;
+                $rejection_out_item->save();
+        
+            }   
+        }
+        else
+        {
+            
+        }
 
 
          $receipt_note = new ReceiptNote();
@@ -117,6 +182,8 @@ class ReceiptNoteController extends Controller
          $receipt_note->rn_date = $voucher_date;
          $receipt_note->po_no = $request->po_no;
          $receipt_note->po_date = $request->po_date;
+         $receipt_note->r_out_no = $request->r_out_no;
+         $receipt_note->r_out_date = $request->r_out_date;
          $receipt_note->estimation_no = $request->p_estimation_no;
          $receipt_note->estimation_date = $request->p_estimation_date;
          $receipt_note->supplier_id = $request->supplier_id;
@@ -138,6 +205,8 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->rn_date = $voucher_date;
             $receipt_note_items->po_no = $request->po_no;
             $receipt_note_items->po_date = $request->po_date;
+            $receipt_note_items->r_out_no = $request->r_out_no;
+            $receipt_note_items->r_out_date = $request->r_out_date;
             $receipt_note_items->estimation_no = $request->p_estimation_no;
             $receipt_note_items->estimation_date = $request->p_estimation_date;
             $receipt_note_items->item_sno = $request->invoice_sno[$i];
@@ -147,6 +216,7 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->rate_exclusive_tax = $request->exclusive[$i];
             $receipt_note_items->rate_inclusive_tax = $request->inclusive[$i];
             $receipt_note_items->qty = $request->quantity[$i];
+            $receipt_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
             $receipt_note_items->uom_id = $request->uom[$i];
             $receipt_note_items->discount = $request->discount[$i];
 
@@ -170,6 +240,8 @@ class ReceiptNoteController extends Controller
                 $receipt_note_expense->rn_date = $voucher_date;
                 $receipt_note_expense->po_no = $request->po_no;
                 $receipt_note_expense->po_date = $request->po_date;
+                $receipt_note_expense->r_out_no = $request->r_out_no;
+                $receipt_note_expense->r_out_date = $request->r_out_date;
                 $receipt_note_expense->estimation_no = $request->p_estimation_no;
                 $receipt_note_expense->estimation_date = $request->p_estimation_date;
                 $receipt_note_expense->expense_type = $request->expense_type[$j];
@@ -314,6 +386,7 @@ class ReceiptNoteController extends Controller
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
         $purchaseorder = Purchase_Order::all();
+        $rejection_out = RejectionOut::where('status',0)->get();
 
         $receipt_note = ReceiptNote::where('rn_no',$id)->first();
         $receipt_note_items = ReceiptNoteItem::where('rn_no',$id)->get();
@@ -446,7 +519,7 @@ class ReceiptNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','rejection_out','purchaseorder','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
     }
 
     /**
@@ -470,12 +543,35 @@ class ReceiptNoteController extends Controller
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
 
+        if($request->r_out_no != '')
+        {
+            foreach ($request->item_code as $key => $value) 
+            {
+                $rejection_out_item = RejectionOutItem::where('r_out_no',$request->r_out_no)->where('item_id',$value)->first();
+
+                $rejected = $rejection_out_item->actual_rejected_qty - $request->quantity[$key];
+                $remaining = $rejection_out_item->qty - $rejected;
+
+                $rejection_out_item->rejected_qty = $rejected;
+                $rejection_out_item->remaining_qty = $remaining;
+                $rejection_out_item->save();
+        
+            }
+        }
+        else
+        {
+
+        }
+        
+
          $receipt_note = new ReceiptNote();
 
          $receipt_note->rn_no = $voucher_no;
          $receipt_note->rn_date = $voucher_date;
          $receipt_note->po_no = $request->po_no;
          $receipt_note->po_date = $request->po_date;
+         $receipt_note->r_out_no = $request->r_out_no;
+         $receipt_note->r_out_date = $request->r_out_date;
          $receipt_note->estimation_no = $request->p_estimation_no;
          $receipt_note->estimation_date = $request->p_estimation_date;
          $receipt_note->supplier_id = $request->supplier_id;
@@ -501,6 +597,8 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->rn_date = $voucher_date;
             $receipt_note_items->po_no = $request->po_no;
             $receipt_note_items->po_date = $request->po_date;
+            $receipt_note_items->r_out_no = $request->r_out_no;
+            $receipt_note_items->r_out_date = $request->r_out_date;
             $receipt_note_items->estimation_no = $request->p_estimation_no;
             $receipt_note_items->estimation_date = $request->p_estimation_date;
             $receipt_note_items->item_sno = $request->invoice_sno[$i];
@@ -532,9 +630,11 @@ class ReceiptNoteController extends Controller
                 $receipt_note_expense->rn_no = $voucher_no;
                 $receipt_note_expense->rn_date = $voucher_date;
                 $receipt_note_expense->po_no = $request->po_no;
+                $receipt_note_expense->po_date = $request->po_date;
+                $receipt_note_expense->r_out_no = $request->r_out_no;
+                $receipt_note_expense->r_out_date = $request->r_out_date;
                 $receipt_note_expense->estimation_no = $request->p_estimation_no;
                 $receipt_note_expense->estimation_date = $request->p_estimation_date;
-                $receipt_note_expense->po_date = $request->po_date;
                 $receipt_note_expense->expense_type = $request->expense_type[$j];
                 $receipt_note_expense->expense_amount = $request->expense_amount[$j];
 
@@ -1367,7 +1467,7 @@ $result=[];
             $net_value = $amount + $gst_rs - $item_data->discount;
 
 
-            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['qty'].'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$value['qty'].'" name="actual_quantity[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
+            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['qty'].'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$value['qty'].'" name="actual_quantity[]"><input type="hidden" class="actual_rejected_qty" id="actual_rejected_qty'.$i.'" value="'.$value['qty'].'" name="actual_rejected_qty[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
 
             $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
             $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
@@ -1501,7 +1601,7 @@ echo "<pre>"; print_r($data); exit;
             $net_value = $amount + $gst_rs - $item_data->discount;
 
 
-            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['qty'].'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$value['qty'].'" name="actual_quantity[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
+            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['qty'].'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$value['qty'].'" name="actual_quantity[]"><input type="hidden" class="actual_rejected_qty" id="actual_rejected_qty'.$i.'" value="'.$value['qty'].'" name="actual_rejected_qty[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
 
             $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
             $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
@@ -1538,6 +1638,134 @@ echo "<pre>"; print_r($data); exit;
     }
 
         $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$date_estimation,'estimation_no'=>$estimation_no,'expense_cnt'=>$expense_cnt);
+        echo json_encode($result_array);exit;
+    echo $table_tbody;exit;  
+
+        $item_sgst = $item_gst_rs_sum/2;
+        $item_cgst = $item_gst_rs_sum/2;    
+
+
+
+        
+
+
+
+echo "<pre>"; print_r($data); exit;
+                       return $data;
+
+
+
+
+        return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
+    }
+
+    public function r_out_details(Request $request)
+    {
+        $r_out_no = $request->r_out_no;
+        $date = date('Y-m-d');
+        $categories = Category::all();
+        $supplier = Supplier::all();
+        $item = Item::all();
+        $agent = Agent::all();
+        $brand = Brand::all();
+        $expense_type = ExpenseType::all();
+        $estimation =Estimation::all();
+
+        // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
+        //                    ->select('p_no')
+        //                    ->first();
+
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->o_no;
+        //      $voucher_no=$current_voucher_num+1;
+        
+         
+        //  }
+
+        $rejection_out = RejectionOut::where('r_out_no',$r_out_no)->first();
+        $rejection_out_item = RejectionOutItem::where('r_out_no',$r_out_no)->get();
+        $rejection_out_expense = RejectionOutExpense::where('r_out_no',$r_out_no)->get();
+
+        $round_off = $rejection_out->round_off;
+         $total_net_value = $rejection_out->total_net_value;
+         $date_rejection_out = $rejection_out->r_out_date;
+
+        $item_row_count = count($rejection_out_item);
+        $expense_row_count = count($rejection_out_expense);
+
+
+        
+        $item_amount_sum = 0;
+        $item_net_value_sum = 0;
+        $item_gst_rs_sum = 0;
+        $item_discount_sum = 0;
+
+        $table_tbody="";
+        $i=0;
+        $status=0;
+        foreach($rejection_out_item as $key => $value)  
+        {
+            $status++;
+            $i++;
+            
+            $item_amount = $value->rejected_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+
+            $item_data = RejectionOutItem::where('item_id',$value->item_id)
+                                    ->orderBy('r_out_date','DESC')
+                                    ->first();
+
+            $amount = $item_data->rejected_qty * $item_data->rate_exclusive_tax;
+            $gst_rs = $amount * $item_data->gst / 100;
+            $net_value = $amount + $gst_rs - $item_data->discount;
+
+
+            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> '.$i.' </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['rejected_qty'].'" name="quantity[]"><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$value['rejected_qty'].'" name="actual_quantity[]"><input type="hidden" class="actual_rejected_qty" id="actual_rejected_qty'.$i.'" value="'.$value['actual_rejected_qty'].'" name="actual_rejected_qty[]"><font class="font_quantity'.$i.'">'.$value['rejected_qty'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
+
+            $item_amounts[] = $value->rejected_qty * $value->rate_exclusive_tax;
+            $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
+            $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
+
+
+            $item_amount_sum = $item_amount_sum + $item_amounts[$key];         
+            $item_net_value_sum = $item_net_value_sum + $item_net_values[$key];
+            $item_gst_rs_sum = $item_gst_rs_sum + $item_gst_rss[$key];
+            $item_discount_sum = $item_discount_sum + $value->discount;
+
+        
+
+        }  
+        $expense_typess="";
+        $expense_cnt=0;
+        foreach($rejection_out_expense as $key => $value)  
+        {
+            $expense_cnt++;
+        $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]">@if(isset($value->expense_types->type) && !empty($value->expense_types->type))<option value="'.$value->expense_types->id.'">'.$value->expense_types->type.'</option>';
+                foreach($expense_type as $expense_types){
+                    $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->type.'</option>';
+                }
+                    $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" readonly pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br></div></div>' ;
+    }
+
+    // if($expense_cnt == 0)
+    // {
+    //     $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]"><option value="">Choose Expense Type</option>';
+    //     foreach($expense_type as $expense_types){
+    //                 $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->type.'</option>';
+    //             }
+    //     $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>' ;
+    // }
+
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date_rejection_out'=>$date_rejection_out);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

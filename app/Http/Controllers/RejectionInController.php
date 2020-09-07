@@ -100,7 +100,25 @@ class RejectionInController extends Controller
         
          
         //  }
-        $voucher_no = str_random(6);
+
+        $voucher_num=RejectionIn::orderBy('created_at','DESC')->select('id')->first();
+        $append = "RI";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+        // $voucher_no = str_random(6);
 
 
         return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer'));
@@ -130,7 +148,25 @@ class RejectionInController extends Controller
         //      $voucher_no=$current_voucher_num+1;
         
         //  }
-        $voucher_no = str_random(6);
+
+        $voucher_num=RejectionIn::orderBy('created_at','DESC')->select('id')->first();
+        $append = "RI";
+        if ($voucher_num == null) 
+         {
+             $voucher_no=$append.'1';
+
+                             
+         }                  
+         else
+         {
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
+        
+         
+         }
+        // $voucher_no = str_random(6);
 
          $voucher_date = $request->voucher_date;
 
@@ -216,6 +252,7 @@ class RejectionInController extends Controller
             $rejection_in_items->qty = $request->actual_quantity[$i];
             $rejection_in_items->remaining_qty = $request->quantity[$i];
             $rejection_in_items->rejected_qty = $request->rejected_item_qty[$i];
+            $rejection_in_items->actual_rejected_qty = $request->rejected_item_qty[$i];
             $rejection_in_items->remarks = $request->remarks_val[$i];
             $rejection_in_items->uom_id = $request->uom[$i];
             $rejection_in_items->discount = $request->discount[$i];
@@ -1323,7 +1360,7 @@ $result=[];
         $item_details = RejectionInItem::where('r_in_no',$id)->get();
         foreach ($item_details as $key => $value) 
         {
-            $amount[] = $value->qty * $value->rate_exclusive_tax;
+            $amount[] = $value->rejected_qty * $value->rate_exclusive_tax;
             $gst_rs[] = $amount[$key] * $value->gst / 100;
             $net_value[] = $amount[$key] + $gst_rs[$key] - $value->discount;
         }

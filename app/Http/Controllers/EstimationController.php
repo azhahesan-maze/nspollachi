@@ -71,6 +71,28 @@ class EstimationController extends Controller
          
          }
 
+        // $voucher_num=Estimation::orderBy('created_at','DESC')->select('id')->first();
+        // $append = "E";
+        // if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=$append.'1';
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->id;
+        //      $next_no=$current_voucher_num+1;
+
+        //      $voucher_no = $append.$next_no;
+        
+         
+        //  }
+
+        //                    echo "<pre>";print_r($voucher_no) ;
+
+        //                    exit;
+
         return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type'));
     }
 

@@ -711,6 +711,7 @@ Route::post('receipt_note/last_purchase_rate/', 'ReceiptNoteController@last_purc
 Route::get('receipt_note/delete/{id}', 'ReceiptNoteController@destroy');
 Route::post('receipt_note/po_details/', 'ReceiptNoteController@po_details');
 Route::post('receipt_note/estimation_details/', 'ReceiptNoteController@estimation_details');
+Route::post('receipt_note/r_out_details/', 'ReceiptNoteController@r_out_details');
 
 
 /* Receipt Note End Here  */
@@ -751,6 +752,7 @@ Route::post('delivery_note/last_purchase_rate/', 'DeliveryNoteController@last_pu
 Route::get('delivery_note/delete/{id}', 'DeliveryNoteController@destroy');
 Route::post('delivery_note/se_details/', 'DeliveryNoteController@se_details');
 Route::post('delivery_note/so_details/', 'DeliveryNoteController@so_details');
+Route::post('delivery_note/rejection_in_details/', 'DeliveryNoteController@rejection_in_details');
 
 /* Delivery Note End Here  */
 

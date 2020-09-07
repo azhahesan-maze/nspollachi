@@ -65,20 +65,38 @@ class CreditNoteController extends Controller
         $customer = Customer::all();
         
 
-        $voucher_num=CreditNote::orderBy('cn_no','DESC')
-                           ->select('cn_no')
-                           ->first();
+        // $voucher_num=CreditNote::orderBy('cn_no','DESC')
+        //                    ->select('cn_no')
+        //                    ->first();
 
-         if ($voucher_num == null) 
+        //  if ($voucher_num == null) 
+        //  {
+        //      $voucher_no=1;
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$voucher_num->cn_no;
+        //      $voucher_no=$current_voucher_num+1;
+        
+         
+        //  }
+
+        $voucher_num=CreditNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "CN";
+        if ($voucher_num == null) 
          {
-             $voucher_no=1;
+             $voucher_no=$append.'1';
 
                              
          }                  
          else
          {
-             $current_voucher_num=$voucher_num->cn_no;
-             $voucher_no=$current_voucher_num+1;
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
         
          
          }
@@ -94,22 +112,41 @@ class CreditNoteController extends Controller
      */
     public function store(Request $request)
     {
-        $cn_no=CreditNote::orderBy('cn_no','DESC')
-                           ->select('cn_no')
-                           ->first();
+        // $cn_no=CreditNote::orderBy('cn_no','DESC')
+        //                    ->select('cn_no')
+        //                    ->first();
 
-         if ($cn_no == null) 
+        //  if ($cn_no == null) 
+        //  {
+        //      $voucher_no=1;
+
+                             
+        //  }                  
+        //  else
+        //  {
+        //      $current_voucher_num=$cn_no->cn_no;
+        //      $voucher_no=$current_voucher_num+1;
+        
+        //  }
+
+        $voucher_num=CreditNote::orderBy('created_at','DESC')->select('id')->first();
+        $append = "CN";
+        if ($voucher_num == null) 
          {
-             $voucher_no=1;
+             $voucher_no=$append.'1';
 
                              
          }                  
          else
          {
-             $current_voucher_num=$cn_no->cn_no;
-             $voucher_no=$current_voucher_num+1;
+             $current_voucher_num=$voucher_num->id;
+             $next_no=$current_voucher_num+1;
+
+             $voucher_no = $append.$next_no;
         
+         
          }
+         
          $voucher_date = $request->voucher_date;
 
 
