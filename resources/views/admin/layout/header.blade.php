@@ -381,7 +381,7 @@
                            
                            <li><a href="{{ route('payment_request.index') }}">Payment Request</a></li>
                             <li><a href="{{ route('payment_process.index') }}">Payment Process</a></li>
-                            <li><a href="{{ route('payment_expense.index') }}">Payment Of Expenses</a></li>
+                            <li><a href="{{ route('payment_expense.create') }}">Payment Of Expenses</a></li>
                             
                         </ul>
                     </li>
@@ -403,7 +403,7 @@
                            
                            <li><a href="{{ route('receipt_request.index') }}">Receipt Request</a></li>
                             <li><a href="{{ route('receipt_process.index') }}">Receipt Process</a></li>
-                            <li><a href="{{ route('receipt_income.index') }}">Receipt Of Income</a></li>
+                            <li><a href="{{ route('receipt_income.create') }}">Receipt Of Income</a></li>
                             
                         </ul>
                     </li>
