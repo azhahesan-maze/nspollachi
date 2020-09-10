@@ -22,13 +22,13 @@
           <tr>
             <th>S.No</th>
             <th>Party Name </th>
-            <th>Request No </th>
-            <th>Request Date</th>
-            <th>Bill No</th>
-            <th>Bill Date</th>
-            <th>Requested Amount</th>
-            <th>Processed Amount</th>
-            <th>Pending Amount</th>
+            <th>Voucher Number </th>
+            <th>Voucher Date </th>
+            <th>Expense Type</th>
+            <th>Payment Mode </th>
+            <th>Taxable Value</th>
+            <th>Tax Value</th>
+            <th>Net Value</th>
            <th>Action </th>
           </tr>
         </thead>

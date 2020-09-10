@@ -163,7 +163,11 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Nature Of Expense: </label>
               <div class="col-sm-8">
-               <input type="text" name="nature" class="form-control" placeholder="Nature Of Expense" id="nature">
+                <select class="js-example-basic-multiple col-12 form-control custom-select expense" name="expense" id="expense">
+                  @foreach($expense as $value)
+                  <option value="{{ $value->id }}">{{ $value->type }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>

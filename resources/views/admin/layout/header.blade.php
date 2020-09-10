@@ -381,7 +381,7 @@
                            
                            <li><a href="{{ route('payment_request.index') }}">Payment Request</a></li>
                             <li><a href="{{ route('payment_process.index') }}">Payment Process</a></li>
-                            <li><a href="{{ route('payment_expense.create') }}">Payment Of Expenses</a></li>
+                            <li><a href="{{ route('payment_expense.index') }}">Payment Of Expenses</a></li>
                             
                         </ul>
                     </li>

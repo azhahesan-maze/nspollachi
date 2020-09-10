@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\ExpenseType;
 class PaymentExpenseController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class PaymentExpenseController extends Controller
      */
     public function index()
     {
-        //
+        
+        return view('admin.payment_expense.view');
     }
 
     /**
@@ -24,8 +26,9 @@ class PaymentExpenseController extends Controller
     public function create()
     {
         $date = date('Y-m-d');
+        $expense = ExpenseType::all();
         $supplier = Supplier::all();
-        return view('admin.payment_expense.add',compact('date','supplier'));
+        return view('admin.payment_expense.add',compact('date','supplier','expense'));
     }
 
     /**
