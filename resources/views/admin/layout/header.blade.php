@@ -326,13 +326,13 @@
                         <ul>
 
                             <li class="dropdown-header">Purchase</li>
-                           <li><a href="{{ route('estimation.index') }}">Estimation</a></li>
-                            <li><a href="{{ route('purchase_order.index') }}">Purchase order</a></li>
-                            <li><a href="{{ route('receipt_note.index') }}">Receipt Note</a></li>
-                            <li><a href="{{ route('purchase_entry.index') }}">Purchase Entry</a></li>
-                            <li><a href="{{ route('rejection_out.index') }}">Rejection Out</a></li>
-                            <li><a href="{{ route('purchase_gatepass_entry.index') }}">Purchase Gate Pass Entry</a></li>
-                            <li><a href="{{ route('debit_note.index') }}">Debit Note</a></li>
+                           <li><a href="{{ url('estimation/index/0') }}">Estimation</a></li>
+                            <li><a href="{{ url('purchase_order/index/0') }}">Purchase order</a></li>
+                            <li><a href="{{ url('receipt_note/index/0') }}">Receipt Note</a></li>
+                            <li><a href="{{ url('purchase_entry/index/0') }}">Purchase Entry</a></li>
+                            <li><a href="{{ url('rejection_out/index/0') }}">Rejection Out</a></li>
+                            <li><a href="{{ url('purchase_gatepass_entry/index/0') }}">Purchase Gate Pass Entry</a></li>
+                            <li><a href="{{ url('debit_note/index/0') }}">Debit Note</a></li>
                             
                         </ul>
                     </li>
@@ -353,13 +353,13 @@
                     <li class="col-md-3 dropdown-item">
                         <ul>
                         <li class="dropdown-header">Sales</li>
-                        <li><a href="{{ route('sales_estimation.index') }}">Sales Estimation</a></li>
-                        <li><a href="{{ route('sale_order.index') }}">Sales Order</a></li>
-                        <li><a href="{{ route('delivery_note.index') }}">Delivery Note</a></li>
-                        <li><a href="{{ route('sales_entry.index') }}">Sales Entry</a></li>
-                        <li><a href="{{ route('rejection_in.index') }}">Rejection In</a></li>
-                        <li><a href="{{ route('sales_gatepass_entry.index') }}">Sales Gate Pass Entry</a></li>
-                        <li><a href="{{ route('credit_note.index') }}">Credit Note</a></li>
+                        <li><a href="{{ url('sales_estimation/index/0') }}">Sales Estimation</a></li>
+                        <li><a href="{{ url('sale_order/index/0') }}">Sales Order</a></li>
+                        <li><a href="{{ url('delivery_note/index/0') }}">Delivery Note</a></li>
+                        <li><a href="{{ url('sales_entry/index/0') }}">Sales Entry</a></li>
+                        <li><a href="{{ url('rejection_in/index/0') }}">Rejection In</a></li>
+                        <li><a href="{{ url('sales_gatepass_entry/index/0') }}">Sales Gate Pass Entry</a></li>
+                        <li><a href="{{ url('credit_note/index/0') }}">Credit Note</a></li>
                         </ul>
                     </li>
                     
@@ -379,9 +379,9 @@
                         <ul>
                             <li class="dropdown-header">Payment</li>
                            
-                           <li><a href="{{ route('payment_request.create') }}">Payment Request</a></li>
-                            <li><a href="{{ route('payment_process.create') }}">Payment Process</a></li>
-                            <li><a href="{{ route('payment_expense.create') }}">Payment Of Expenses</a></li>
+                           <li><a href="{{ route('payment_request.index') }}">Payment Request</a></li>
+                            <li><a href="{{ route('payment_process.index') }}">Payment Process</a></li>
+                            <li><a href="{{ route('payment_expense.index') }}">Payment Of Expenses</a></li>
                             
                         </ul>
                     </li>
@@ -401,9 +401,9 @@
                         <ul>
                             <li class="dropdown-header">Receipt</li>
                            
-                           <li><a href="{{ route('receipt_request.create') }}">Receipt Request</a></li>
-                            <li><a href="{{ route('receipt_process.create') }}">Receipt Process</a></li>
-                            <li><a href="{{ route('receipt_income.create') }}">Receipt Of Income</a></li>
+                           <li><a href="{{ route('receipt_request.index') }}">Receipt Request</a></li>
+                            <li><a href="{{ route('receipt_process.index') }}">Receipt Process</a></li>
+                            <li><a href="{{ route('receipt_income.index') }}">Receipt Of Income</a></li>
                             
                         </ul>
                     </li>
@@ -426,6 +426,45 @@
                            <li><a href="{{ route('advance_settlement_supplier.create') }}">Advance Settlement For Supplier</a></li>
                             <li><a href="{{ route('advance_settlement_customer.create') }}">Advance Settlement For Customer</a></li>
                             
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li>
+
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Registers
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">Purchase</li>
+                           <li><a href="{{ url('estimation/index/1') }}">Purchase Estimation</a></li>
+                            <li><a href="{{ url('purchase_order/index/1') }}">Purchase order</a></li>
+                            <li><a href="{{ url('receipt_note/index/1') }}">Receipt Note</a></li>
+                            <li><a href="{{ url('purchase_entry/index/1') }}">Purchase Entry</a></li>
+                            <li><a href="{{ url('rejection_out/index/1') }}">Rejection Out</a></li>
+                            <li><a href="{{ url('purchase_gatepass_entry/index/1') }}">Purchase Gate Pass Entry</a></li>
+                            <li><a href="{{ url('debit_note/index/1') }}">Debit Note</a></li>
+                            
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                        <li class="dropdown-header">Sales</li>
+                        <li><a href="{{ url('sales_estimation/index/1') }}">Sales Estimation</a></li>
+                        <li><a href="{{ url('sale_order/index/1') }}">Sales Order</a></li>
+                        <li><a href="{{ url('delivery_note/index/1') }}">Delivery Note</a></li>
+                        <li><a href="{{ url('sales_entry/index/1') }}">Sales Entry</a></li>
+                        <li><a href="{{ url('rejection_in/index/1') }}">Rejection In</a></li>
+                        <li><a href="{{ url('sales_gatepass_entry/index/1') }}">Sales Gate Pass Entry</a></li>
+                        <li><a href="{{ url('credit_note/index/1') }}">Credit Note</a></li>
                         </ul>
                     </li>
                     

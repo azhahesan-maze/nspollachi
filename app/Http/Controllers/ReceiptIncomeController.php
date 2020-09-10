@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\ExpenseType;
 
 class ReceiptIncomeController extends Controller
 {
@@ -26,7 +27,8 @@ class ReceiptIncomeController extends Controller
     {
         $date = date('Y-m-d');
         $supplier = Supplier::all();
-        return view('admin.receipt_income.add',compact('date','supplier'));
+        $income = ExpenseType::all();
+        return view('admin.receipt_income.add',compact('date','supplier','income'));
     }
 
     /**

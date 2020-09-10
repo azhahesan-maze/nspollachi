@@ -569,6 +569,9 @@ Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
 /* Estimation Start Here  */
 
 Route::resource('estimation', 'EstimationController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'],function(){
+Route::get('estimation/index/{id}', 'EstimationController@index');
+});
 Route::post('estimation/address_details/', 'EstimationController@address_details');
 Route::get('estimation/getdata/{id}', 'EstimationController@getdata');
 Route::get('estimation/change_items/{id}', 'EstimationController@change_items');
@@ -586,6 +589,10 @@ Route::get('estimation/delete/{id}', 'EstimationController@destroy');
 /* Purchase Order Start Here  */
 
 Route::resource('purchase_order', 'PurchaseOrderController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('purchase_order/index/{id}', 'PurchaseOrderController@index');
+});
+
 Route::post('purchase_order/address_details/', 'PurchaseOrderController@address_details');
 Route::get('purchase_order/getdata/{id}', 'PurchaseOrderController@getdata');
 Route::get('purchase_order/change_items/{id}', 'PurchaseOrderController@change_items');
@@ -603,6 +610,9 @@ Route::post('purchase_order/estimation_details/', 'PurchaseOrderController@estim
 /* Purchase Gate Pass entry Start Here  */
 
 Route::resource('purchase_gatepass_entry', 'PurchaseGatepassEntryController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('purchase_gatepass_entry/index/{id}', 'PurchaseGatepassEntryController@index');
+});
 Route::post('purchase_gatepass_entry/address_details/', 'PurchaseGatepassEntryController@address_details');
 Route::get('purchase_gatepass_entry/delete/{id}', 'PurchaseGatepassEntryController@destroy');
 Route::post('purchase_gatepass_entry/po_details/', 'PurchaseGatepassEntryController@po_details');
@@ -612,6 +622,9 @@ Route::post('purchase_gatepass_entry/po_details/', 'PurchaseGatepassEntryControl
 /* Purchase entry Start Here  */
 
 Route::resource('purchase_entry', 'PurchaseEntryController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('purchase_entry/index/{id}', 'PurchaseEntryController@index');
+});
 Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
 Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
 Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
@@ -633,6 +646,9 @@ Route::post('purchase_entry/receipt_details/', 'PurchaseEntryController@receipt_
 /* Sales Estimation Start Here  */
 
 Route::resource('sales_estimation', 'SalesEstimationController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('sales_estimation/index/{id}', 'SalesEstimationController@index');
+});
 Route::post('sales_estimation/address_details/', 'SalesEstimationController@address_details');
 Route::get('sales_estimation/getdata/{id}', 'SalesEstimationController@getdata');
 Route::get('sales_estimation/change_items/{id}', 'SalesEstimationController@change_items');
@@ -650,6 +666,9 @@ Route::get('sales_estimation/delete/{id}', 'SalesEstimationController@destroy');
 /* Sales Order Start Here  */
 
 Route::resource('sale_order', 'SalesOrderController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('sale_order/index/{id}', 'SalesOrderController@index');
+});
 Route::post('sale_order/address_details/', 'SalesOrderController@address_details');
 Route::get('sale_order/getdata/{id}', 'SalesOrderController@getdata');
 Route::get('sale_order/change_items/{id}', 'SalesOrderController@change_items');
@@ -668,6 +687,9 @@ Route::post('sales_order/estimation_details/', 'SalesOrderController@se_details'
 /* Sales entry Start Here  */
 
 Route::resource('sales_entry', 'SalesEntryController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('sales_entry/index/{id}', 'SalesEntryController@index');
+});
 Route::post('sales_entry/address_details/', 'SalesEntryController@address_details');
 Route::get('sales_entry/getdata/{id}', 'SalesEntryController@getdata');
 Route::get('sales_entry/change_items/{id}', 'SalesEntryController@change_items');
@@ -689,6 +711,9 @@ Route::post('sales_entry/delivery_details/', 'SalesEntryController@delivery_deta
 /* Sales Gate Pass entry Start Here  */
 
 Route::resource('sales_gatepass_entry', 'SalesGatepassEntryController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('sales_gatepass_entry/index/{id}', 'SalesGatepassEntryController@index');
+});
 Route::post('sales_gatepass_entry/address_details/', 'SalesGatepassEntryController@address_details');
 Route::get('sales_gatepass_entry/delete/{id}', 'SalesGatepassEntryController@destroy');
 Route::post('sales_gatepass_entry/so_details/', 'SalesGatepassEntryController@so_details');
@@ -698,6 +723,9 @@ Route::post('sales_gatepass_entry/so_details/', 'SalesGatepassEntryController@so
 /* Receipt Note Start Here  */
 
 Route::resource('receipt_note', 'ReceiptNoteController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('receipt_note/index/{id}', 'ReceiptNoteController@index');
+});
 Route::post('receipt_note/address_details/', 'ReceiptNoteController@address_details');
 Route::get('receipt_note/getdata/{id}', 'ReceiptNoteController@getdata');
 Route::get('receipt_note/change_items/{id}', 'ReceiptNoteController@change_items');
@@ -719,6 +747,9 @@ Route::post('receipt_note/r_out_details/', 'ReceiptNoteController@r_out_details'
 /* Debit Note Start Here  */
 
 Route::resource('debit_note', 'DebitNoteController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('debit_note/index/{id}', 'DebitNoteController@index');
+});
 Route::post('debit_note/address_details/', 'DebitNoteController@address_details');
 Route::get('debit_note/getdata/{id}', 'DebitNoteController@getdata');
 Route::get('debit_note/change_items/{id}', 'DebitNoteController@change_items');
@@ -739,6 +770,9 @@ Route::post('debit_note/r_out_details/', 'DebitNoteController@r_out_details');
 /* Delivery Note Start Here  */
 
 Route::resource('delivery_note', 'DeliveryNoteController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('delivery_note/index/{id}', 'DeliveryNoteController@index');
+});
 Route::post('delivery_note/address_details/', 'DeliveryNoteController@address_details');
 Route::get('delivery_note/getdata/{id}', 'DeliveryNoteController@getdata');
 Route::get('delivery_note/change_items/{id}', 'DeliveryNoteController@change_items');
@@ -759,6 +793,9 @@ Route::post('delivery_note/rejection_in_details/', 'DeliveryNoteController@rejec
 /* Credit Note Start Here  */
 
 Route::resource('credit_note', 'CreditNoteController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('credit_note/index/{id}', 'CreditNoteController@index');
+});
 Route::post('credit_note/address_details/', 'CreditNoteController@address_details');
 Route::get('credit_note/getdata/{id}', 'CreditNoteController@getdata');
 Route::get('credit_note/change_items/{id}', 'CreditNoteController@change_items');
@@ -779,6 +816,9 @@ Route::post('credit_note/rejection_in_details/', 'CreditNoteController@rejection
 /* Rejection In Start Here  */
 
 Route::resource('rejection_in', 'RejectionInController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('rejection_in/index/{id}', 'RejectionInController@index');
+});
 Route::post('rejection_in/address_details/', 'RejectionInController@address_details');
 Route::get('rejection_in/getdata/{id}', 'RejectionInController@getdata');
 Route::get('rejection_in/change_items/{id}', 'RejectionInController@change_items');
@@ -800,6 +840,9 @@ Route::post('rejection_in/check_qty/', 'RejectionInController@check_qty');
 /* Rejection Out Start Here  */
 
 Route::resource('rejection_out', 'RejectionOutController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::get('rejection_out/index/{id}', 'RejectionOutController@index');
+});
 Route::post('rejection_out/address_details/', 'RejectionOutController@address_details');
 Route::get('rejection_out/getdata/{id}', 'RejectionOutController@getdata');
 Route::get('rejection_out/change_items/{id}', 'RejectionOutController@change_items');

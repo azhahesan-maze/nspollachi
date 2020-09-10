@@ -159,14 +159,31 @@
           
       <div id="direct_head">
         <div class="form-row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Nature Of Expense: </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Nature Of Income: </label>
               <div class="col-sm-8">
-               <input type="text" name="nature" class="form-control" placeholder="Nature Of Expense" id="nature">
+               <input type="text" name="nature" class="form-control" placeholder="Nature Of Income" id="nature">
+              </div>
+            </div>
+          </div> -->
+
+          <div class="form-row">
+        <div class="col-md-12">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Nature Of Income: </label>
+              <div class="col-sm-8">
+                <select class="js-example-basic-multiple col-12 form-control custom-select direct_head_mode"  name="direct_head_mode" id="direct_head_mode">
+                           <option value="">Choose Nature Of Income</option>
+                           @foreach($income as $value)
+                           <option value="{{ $value->id }}">{{ $value->name }}</option>
+                           @endforeach
+                        </select>
               </div>
             </div>
           </div>
+        </div>
+
         </div>
         <br>
 

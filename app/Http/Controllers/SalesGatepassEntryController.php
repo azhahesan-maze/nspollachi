@@ -29,11 +29,12 @@ class SalesGatepassEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $sales_gatepass = SaleGatepassEntry::all();
         // echo "<pre>"; print_r($sales_gatepass);exit;
-        return view('admin.sales_gatepass.view',compact('sales_gatepass'));
+        return view('admin.sales_gatepass.view',compact('sales_gatepass','check_id'));
     }
 
     /**

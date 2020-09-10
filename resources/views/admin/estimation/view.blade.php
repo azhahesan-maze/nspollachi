@@ -10,7 +10,10 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
+            @if($check_id != 1)
             <li><button type="button" class="btn btn-success"><a href="{{ route('estimation.create') }}">Estimation</a></button></li>
+            @else
+            @endif
           </ul>
         </div>
       </div>
@@ -26,7 +29,9 @@
             <th>Supplier Name</th>
             <th>Agent Name</th>
             <th>overall Discount</th>
-            <th>Round Off</th>
+            <!-- <th>Round Off</th> -->
+            <th>Taxable Value</th>
+            <th>Tax Value</th>
             <th>Net Value</th>
            <th>Action </th>
           </tr>
@@ -48,7 +53,9 @@
               <td></td>
               @endif
               <td>{{ $value->overall_discount }}</td>
-              <td>{{ $value->round_off }}</td>
+              <!-- <td>{{ $value->round_off }}</td> -->
+              <td></td>
+              <td></td>
               <td>{{ $value->total_net_value }}</td>
               <td> 
                 <a href="{{ route('estimation.show',$value->estimation_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>

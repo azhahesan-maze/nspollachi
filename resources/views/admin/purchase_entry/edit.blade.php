@@ -25,7 +25,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{ route('purchase_entry.index') }}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ url('purchase_entry/index/0') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -758,7 +758,7 @@ table, th, td {
                       </div>
                       <div class="col-md-4" style="float: right;">
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$purchase_entry->total_net_value}}</font> 
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$total_netvalue}}</font> 
                        </div>
                        
                        <div class="row col-md-12">

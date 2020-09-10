@@ -39,10 +39,11 @@ class ReceiptNoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $receipt_note = ReceiptNote::all();
-        return view('admin.receipt_note.view',compact('receipt_note'));
+        return view('admin.receipt_note.view',compact('receipt_note','check_id'));
     }
 
     /**
@@ -216,6 +217,8 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->rate_exclusive_tax = $request->exclusive[$i];
             $receipt_note_items->rate_inclusive_tax = $request->inclusive[$i];
             $receipt_note_items->qty = $request->quantity[$i];
+            $receipt_note_items->remaining_qty = $request->quantity[$i];
+            $receipt_note_items->rejected_qty = 0;
             $receipt_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
             $receipt_note_items->uom_id = $request->uom[$i];
             $receipt_note_items->discount = $request->discount[$i];
@@ -608,6 +611,8 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->rate_exclusive_tax = $request->exclusive[$i];
             $receipt_note_items->rate_inclusive_tax = $request->inclusive[$i];
             $receipt_note_items->qty = $request->quantity[$i];
+            $receipt_note_items->remaining_qty = $request->quantity[$i];
+            $receipt_note_items->rejected_qty = 0;
             $receipt_note_items->uom_id = $request->uom[$i];
             $receipt_note_items->discount = $request->discount[$i];
 

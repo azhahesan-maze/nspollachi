@@ -42,10 +42,11 @@ class SalesEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $sale_entry = SaleEntry::orderBy('s_no','ASC')->get();
-        return view('admin.sales_entry.view',compact('sale_entry'));
+        return view('admin.sales_entry.view',compact('sale_entry','check_id'));
     }
 
     /**

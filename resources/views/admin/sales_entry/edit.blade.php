@@ -25,7 +25,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{ route('sales_entry.index') }}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ url('sales_entry/index/0') }}">Back</a></button></li>
           </ul>
         </div>
       </div>

@@ -29,10 +29,11 @@ class PurchaseOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $purchaseorder = Purchase_Order::orderBy('po_no','ASC')->get();
-        return view('admin.purchaseorder.view',compact('purchaseorder'));
+        return view('admin.purchaseorder.view',compact('purchaseorder','check_id'));
     }
 
     /**

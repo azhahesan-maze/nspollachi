@@ -33,10 +33,11 @@ class SalesOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $saleorder = SaleOrder::orderBy('so_no','ASC')->get();
-        return view('admin.sales_order.view',compact('saleorder'));
+        return view('admin.sales_order.view',compact('saleorder','check_id'));
     }
 
     /**

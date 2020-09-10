@@ -10,7 +10,7 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('rejection_in.index')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{url('rejection_in/index/0')}}">Back</a></button></li>
           </ul>
         </div>
       </div>

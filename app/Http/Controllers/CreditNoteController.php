@@ -39,10 +39,11 @@ class CreditNoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $credit_note = CreditNote::all();
-        return view('admin.credit_note.view',compact('credit_note'));
+        return view('admin.credit_note.view',compact('credit_note','check_id'));
     }
 
     /**

@@ -25,7 +25,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{ route('purchase_entry.index') }}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{ url('purchase_entry/index/0') }}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -1392,7 +1392,8 @@ function item_details_sno(){
 
 
   $("form").submit(function(e){
-  if($('#total_price').val() == 0 || $('#total_price').val() == '')
+    var count = $('.tables').length;
+  if(count == 0)
   {
     alert('There Is No Row To Submit');
     e.preventDefault();
@@ -2343,6 +2344,17 @@ function estimation_details()
             $('.expense').remove();
             $('.purchase_type').text('');
             $('.purchase_date').text('');
+
+            $(".total_net_price").text(0);
+            $(".total_amount").text(0);
+            $('.total_discount').val(0);
+            $('.overall_discount').val(0);
+            $('#round_off').val(0);
+            $('.total_net_value').text('00.00');
+            $("#total_gst").val(0);
+            $("#igst").val(0);
+            $("#cgst").val(0);
+            $("#sgst").val(0);
             // $('.purchase_order').hide();
             var result=JSON.parse(data);
             if(result.status>0){
@@ -2429,67 +2441,79 @@ function po_details()
             // $('.purchase_date').show();
             $('.tables').remove();
             $('.expense').remove();
+
+            $(".total_net_price").text(0);
+            $(".total_amount").text(0);
+            $('.total_discount').val(0);
+            $('.overall_discount').val(0);
+            $('#round_off').val(0);
+            $('.total_net_value').text('00.00');
+            $("#total_gst").val(0);
+            $("#igst").val(0);
+            $("#cgst").val(0);
+            $("#sgst").val(0);
+
             var result=JSON.parse(data);
             if(result.status>0){
-$('.append_proof_details').append(result.data);
-var expense_length=$(".expense_type").length;
-if(expense_length >1)
-{
-$('.append_expense').append(result.expense_typess);
-$('#expense_count').val(result.expense_cnt);
-}
-else if(result.expense_cnt == 0)
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
-}
-else
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt);
-}
-$('#counts').val(result.status);
-$('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
-if(result.purchase_type == 1)
-$('.purchase_type').text('Cash Purchase');
-else
-$('.purchase_type').text('Credit Purchase');
-$('.purchase_date').text(result.date_purchaseorder);
-$('.estimation_date').text(result.date_estimation);
-$('.estimation_no').text(result.estimation_no);
+            $('.append_proof_details').append(result.data);
+            var expense_length=$(".expense_type").length;
+            if(expense_length >1)
+            {
+            $('.append_expense').append(result.expense_typess);
+            $('#expense_count').val(result.expense_cnt);
+            }
+            else if(result.expense_cnt == 0)
+            {
+              $('.append_expense').html(result.expense_typess);
+              $('#expense_count').val(result.expense_cnt+1);
+            }
+            else
+            {
+              $('.append_expense').html(result.expense_typess);
+              $('#expense_count').val(result.expense_cnt);
+            }
+            $('#counts').val(result.status);
+            $('.no_items').text(result.status);
+            $('.invoice_val').text(result.item_net_value_sum);
+            if(result.purchase_type == 1)
+            $('.purchase_type').text('Cash Purchase');
+            else
+            $('.purchase_type').text('Credit Purchase');
+            $('.purchase_date').text(result.date_purchaseorder);
+            $('.estimation_date').text(result.date_estimation);
+            $('.estimation_no').text(result.estimation_no);
 
-// $('.total_net_price').append(result.item_net_value_sum);
-// $('#igst').val(result.item_gst_rs_sum);
-// $('#cgst').val($('#igst').val()/2);
-// $('#sgst').val($('#igst').val()/2);
-$('#total_discount').val(result.item_discount_sum);
-$('#round_off').val(result.round_off);
-$('.total_net_value').text(result.total_net_value);
- $('#total_price').val(result.total_net_value);
- $('#po_date').val(result.date_purchaseorder);
- 
+            // $('.total_net_price').append(result.item_net_value_sum);
+            // $('#igst').val(result.item_gst_rs_sum);
+            // $('#cgst').val($('#igst').val()/2);
+            // $('#sgst').val($('#igst').val()/2);
+            $('#total_discount').val(result.item_discount_sum);
+            $('#round_off').val(result.round_off);
+            $('.total_net_value').text(result.total_net_value);
+             $('#total_price').val(result.total_net_value);
+             $('#po_date').val(result.date_purchaseorder);
+             
 
-var total_net_price=calculate_total_net_price();
-var total_amount=calculate_total_amount();
-var total_gst=calculate_total_gst();
-$("#total_gst").val(total_gst.toFixed(2));
-    $("#igst").val(total_gst.toFixed(2));
-    var half_gst = parseFloat(total_gst)/2;
-    $("#cgst").val(half_gst.toFixed(2));
-    $("#sgst").val(half_gst.toFixed(2));
-var q=calculate_total_discount();
-$('#total_discount').val(q.toFixed(2));
-$('#disc_total').val(q.toFixed(2));
-total_expense_cal();
-overall_discounts();
-roundoff_cal();
+            var total_net_price=calculate_total_net_price();
+            var total_amount=calculate_total_amount();
+            var total_gst=calculate_total_gst();
+            $("#total_gst").val(total_gst.toFixed(2));
+                $("#igst").val(total_gst.toFixed(2));
+                var half_gst = parseFloat(total_gst)/2;
+                $("#cgst").val(half_gst.toFixed(2));
+                $("#sgst").val(half_gst.toFixed(2));
+            var q=calculate_total_discount();
+            $('#total_discount').val(q.toFixed(2));
+            $('#disc_total').val(q.toFixed(2));
+            total_expense_cal();
+            overall_discounts();
+            roundoff_cal();
 
 
-var to_html_total_net = total_net_price.toFixed(2);
-var to_html_total_amount = total_amount.toFixed(2);
-$(".total_net_price").html(parseFloat(to_html_total_net));
-$(".total_amount").html(parseFloat(to_html_total_amount));
+            var to_html_total_net = total_net_price.toFixed(2);
+            var to_html_total_amount = total_amount.toFixed(2);
+            $(".total_net_price").html(parseFloat(to_html_total_net));
+            $(".total_amount").html(parseFloat(to_html_total_amount));
 
 
 
@@ -2518,76 +2542,89 @@ function receipt_details()
             $('.expense').remove();
             $('.purchase_type').text('');
             $('.purchase_date').text('');
+
+
+            $(".total_net_price").text(0);
+            $(".total_amount").text(0);
+            $('.total_discount').val(0);
+            $('.overall_discount').val(0);
+            $('#round_off').val(0);
+            $('.total_net_value').text('00.00');
+            $("#total_gst").val(0);
+            $("#igst").val(0);
+            $("#cgst").val(0);
+            $("#sgst").val(0);
+
             var result=JSON.parse(data);
-            if(result.status>0){
-$('.append_proof_details').append(result.data);
-var expense_length=$(".expense_type").length;
-if(expense_length >1)
-{
-$('.append_expense').append(result.expense_typess);
-$('#expense_count').val(result.expense_cnt);
-}
-else if(result.expense_cnt == 0)
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt+1);
-}
-else
-{
-  $('.append_expense').html(result.expense_typess);
-  $('#expense_count').val(result.expense_cnt);
-}
-$('#counts').val(result.status);
-$('.no_items').text(result.status);
-$('.invoice_val').text(result.item_net_value_sum);
-if(result.purchase_type == '')
-{
+            if(result.status>0 && result.item_net_value_sum >0){
+            $('.append_proof_details').append(result.data);
+            var expense_length=$(".expense_type").length;
+            if(expense_length >1)
+            {
+            $('.append_expense').append(result.expense_typess);
+            $('#expense_count').val(result.expense_cnt);
+            }
+            else if(result.expense_cnt == 0)
+            {
+              $('.append_expense').html(result.expense_typess);
+              $('#expense_count').val(result.expense_cnt+1);
+            }
+            else
+            {
+              $('.append_expense').html(result.expense_typess);
+              $('#expense_count').val(result.expense_cnt);
+            }
+            $('#counts').val(result.status);
+            $('.no_items').text(result.status);
+            $('.invoice_val').text(result.item_net_value_sum);
+            if(result.purchase_type == '')
+            {
 
-}
-else
-{
- if(result.purchase_type == 1)
-$('.purchase_type').text('Cash Purchase');
-else if(result.purchase_type == 0)
-$('.purchase_type').text('Credit Purchase'); 
-}
+            }
+            else
+            {
+             if(result.purchase_type == 1)
+            $('.purchase_type').text('Cash Purchase');
+            else if(result.purchase_type == 0)
+            $('.purchase_type').text('Credit Purchase'); 
+            }
 
-$('.purchase_date').text(result.po_date);
-$('.estimation_date').text(result.date_estimation);
-$('.estimation_no').text(result.estimation_no);
-$('.receipt_date').val(result.receipt_note_date);
+            $('.purchase_date').text(result.po_date);
+            $('.estimation_date').text(result.date_estimation);
+            $('.estimation_no').text(result.estimation_no);
+            $('.receipt_date').val(result.receipt_note_date);
 
-// $('.total_net_price').append(result.item_net_value_sum);
-// $('#igst').val(result.item_gst_rs_sum);
-// $('#cgst').val($('#igst').val()/2);
-// $('#sgst').val($('#igst').val()/2);
-$('#total_discount').val(result.item_discount_sum);
-$('#round_off').val(result.round_off);
-$('.total_net_value').text(result.total_net_value);
- $('#total_price').val(result.total_net_value);
- $('#po_date').val(result.date_purchaseorder);
- 
+            // $('.total_net_price').append(result.item_net_value_sum);
+            // $('#igst').val(result.item_gst_rs_sum);
+            // $('#cgst').val($('#igst').val()/2);
+            // $('#sgst').val($('#igst').val()/2);
+            $('#total_discount').val(result.item_discount_sum);
+            $('#round_off').val(result.round_off);
+            $('.total_net_value').text(result.item_net_value_sum);
+             $('#total_price').val(result.item_net_value_sum);
+             $('#po_date').val(result.date_purchaseorder);
+             
 
-var total_net_price=calculate_total_net_price();
-var total_amount=calculate_total_amount();
-var total_gst=calculate_total_gst();
-$("#total_gst").val(total_gst.toFixed(2));
-    $("#igst").val(total_gst.toFixed(2));
-    var half_gst = parseFloat(total_gst)/2;
-    $("#cgst").val(half_gst.toFixed(2));
-    $("#sgst").val(half_gst.toFixed(2));
-var q=calculate_total_discount();
-$('#total_discount').val(q.toFixed(2));
-$('#disc_total').val(q.toFixed(2));
-total_expense_cal();
-overall_discounts();
-roundoff_cal();
+            var total_net_price=calculate_total_net_price();
+            var total_amount=calculate_total_amount();
+            var total_gst=calculate_total_gst();
+            $("#total_gst").val(total_gst.toFixed(2));
+            $("#igst").val(total_gst.toFixed(2));
+            var half_gst = parseFloat(total_gst)/2;
+            $("#cgst").val(half_gst.toFixed(2));
+            $("#sgst").val(half_gst.toFixed(2));
+            var q=calculate_total_discount();
+            $('#total_discount').val(q.toFixed(2));
+            $('#disc_total').val(q.toFixed(2));
+            total_expense_cal();
+            overall_discounts();
+            roundoff_cal();
 
 
-var to_html_total_net = total_net_price.toFixed(2);
-var to_html_total_amount = total_amount.toFixed(2);
-$(".total_net_price").html(parseFloat(to_html_total_net));
-$(".total_amount").html(parseFloat(to_html_total_amount));
+            var to_html_total_net = total_net_price.toFixed(2);
+            var to_html_total_amount = total_amount.toFixed(2);
+            $(".total_net_price").html(parseFloat(to_html_total_net));
+            $(".total_amount").html(parseFloat(to_html_total_amount));
 
 
 

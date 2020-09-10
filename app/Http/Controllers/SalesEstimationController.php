@@ -30,10 +30,11 @@ class SalesEstimationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id =$id;
         $sale_estimation = SaleEstimation::orderBy('sale_estimation_no','ASC')->get();
-        return view('admin.sales_estimation.view',compact('sale_estimation'));
+        return view('admin.sales_estimation.view',compact('sale_estimation','check_id'));
     }
 
     /**

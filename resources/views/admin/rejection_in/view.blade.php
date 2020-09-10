@@ -10,7 +10,10 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
+            @if($check_id != 1)
             <li><button type="button" class="btn btn-success"><a href="{{ route('rejection_in.create') }}">Rejection In</a></button></li>
+            @else
+            @endif
           </ul>
         </div>
       </div>
@@ -27,9 +30,13 @@
             <th>Sale Entry Date </th>
             <th>Delivery Note No</th>
             <th>Delivery Note Date</th>
+            <th>Sale Order No</th>
+            <th>Sale Order Date</th>
             <th>Customer Name</th>
             <th>overall Discount</th>
-            <th>Round Off</th>
+            <!-- <th>Round Off</th> -->
+            <th>Taxable Value</th>
+            <th>Tax Value</th>
             <th>Net Value</th>
            <th>Action </th>
           </tr>
@@ -44,13 +51,17 @@
               <td>{{ $value->s_date }}</td>
               <td>{{ $value->d_no }}</td>
               <td>{{ $value->d_date }}</td>
+              <td></td>
+              <td></td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
               @else
               <td></td>
               @endif
               <td>{{ $value->overall_discount }}</td>
-              <td>{{ $value->round_off }}</td>
+              <!-- <td>{{ $value->round_off }}</td> -->
+              <td></td>
+              <td></td>
               <td>{{ $value->total_net_value }}</td>
               <td> 
                 <!-- <a href="{{ route('rejection_in.show',$value->r_in_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a> -->

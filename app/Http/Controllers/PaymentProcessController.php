@@ -14,7 +14,7 @@ class PaymentProcessController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.payment_process.view');
     }
 
     /**

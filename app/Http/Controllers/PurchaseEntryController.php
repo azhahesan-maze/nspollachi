@@ -29,6 +29,9 @@ use App\Models\ReceiptNoteExpense;
 use App\Models\RejectionOut;
 use App\Models\RejectionOutItem;
 use App\Models\RejectionOutExpense;
+use App\Models\DebitNote;
+use App\Models\DebitNoteItem;
+use App\Models\DebitNoteExpense;
 use Illuminate\Support\Facades\Redirect;
 
 class PurchaseEntryController extends Controller
@@ -38,10 +41,11 @@ class PurchaseEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $purchase_entry = PurchaseEntry::orderBy('p_no','ASC')->get();
-        return view('admin.purchase_entry.view',compact('purchase_entry'));
+        return view('admin.purchase_entry.view',compact('purchase_entry','check_id'));
     }
 
     /**
@@ -191,6 +195,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
+            $purchase_entry_items->actual_qty = $request->quantity[$i];
             $purchase_entry_items->remaining_qty = $request->quantity[$i];
             $purchase_entry_items->rejected_qty = 0;
             $purchase_entry_items->uom_id = $request->uom[$i];
@@ -372,6 +377,8 @@ class PurchaseEntryController extends Controller
         $item_row_count = count($purchase_entry_items);
         $expense_row_count = count($purchase_entry_expense);
 
+        $total_expense = $purchase_entry_expense->sum('expense_amount');
+
         $po_no = $purchase_entry->po_no;
 
         $rn_no = $purchase_entry->rn_no;
@@ -514,12 +521,14 @@ class PurchaseEntryController extends Controller
             $gst_rs = $amount * $item_data->gst / 100;
             $net_value[] = $amount + $gst_rs - $item_data->discount;
 
-        }     
+        }  
+
+        $total_netvalue = $item_net_value_sum + $total_expense;
 
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type'));
+        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type','total_netvalue'));
     }
 
     /**
@@ -545,6 +554,12 @@ class PurchaseEntryController extends Controller
         $purchase_entry_data = PurchaseEntry::where('p_no',$id);
         $purchase_entry_data->delete();
 
+        // $purchase_entry_item_details = PurchaseEntryItem::where('p_no',$id)->get();
+        // $purchase_entry_item_count = count($purchase_entry_item_details);
+        // foreach ($purchase_entry_item_details as $key => $value) {
+        //     $remaining_qty[] = $value->remaining_qty;
+        // }
+
         $purchase_entry_item_data = PurchaseEntryItem::where('p_no',$id);
         $purchase_entry_item_data->delete();
 
@@ -553,6 +568,22 @@ class PurchaseEntryController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+
+        $debit_item = DebitNoteItem::where('p_no',$request->p_no)->get();
+        $debit_count = count($debit_item);
+        if($debit_count != 0 || $debit_count != '')
+        {
+            foreach ($request->item_code as $key => $value) 
+            {
+                $debit_note_item = DebitNoteItem::where('p_no',$id)->where('item_id',$value)->latest()->first();
+
+                $debit_note_item->actual_purchase_qty = $request->quantity[$key];
+                $debit_note_item->save();
+        
+            }
+        }
+        
 
 
 
@@ -583,6 +614,11 @@ class PurchaseEntryController extends Controller
          for($i=0;$i<$items_count;$i++)
 
         {
+            // if($request->remaining_qty[$i] == $remaining_qty)
+            // {
+                
+            // }
+
             $purchase_entry_items = new PurchaseEntryItem();
 
             $purchase_entry_items->p_no = $voucher_no;
@@ -600,6 +636,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
+            $purchase_entry_items->actual_qty = $request->quantity[$i];
             $purchase_entry_items->remaining_qty = @$request->remaining_qty[$i];
             $purchase_entry_items->rejected_qty = @$request->rejected_item_qty[$i];
             $purchase_entry_items->uom_id = $request->uom[$i];
@@ -1705,6 +1742,10 @@ echo "<pre>"; print_r($data); exit;
         $receipt_note_item = ReceiptNoteItem::where('rn_no',$receipt_no)->get();
         $receipt_note_expense = ReceiptNoteExpense::where('rn_no',$receipt_no)->get();
 
+        $total_expense = $receipt_note_expense->sum('expense_amount');
+
+        // return $total_expense; exit;
+
         $round_off = $receipt_note->round_off;
          $total_net_value = $receipt_note->total_net_value;
          $po_date = $receipt_note->po_date;
@@ -1744,7 +1785,7 @@ echo "<pre>"; print_r($data); exit;
             $status++;
             $i++;
             
-            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_amount = $value->remaining_qty * $value->rate_exclusive_tax;
             $item_gst_rs = $item_amount * $value->gst / 100;
             $item_net_value = $item_amount + $item_gst_rs - $value->discount;
 
@@ -1753,14 +1794,14 @@ echo "<pre>"; print_r($data); exit;
                                     ->orderBy('rn_date','DESC')
                                     ->first();
 
-            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $amount = $item_data->remaining_qty * $item_data->rate_exclusive_tax;
             $gst_rs = $amount * $item_data->gst / 100;
             $net_value = $amount + $gst_rs - $item_data->discount;
 
 
-            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['qty'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
+            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> 1 </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['remaining_qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['remaining_qty'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
 
-            $item_amounts[] = $value->qty * $value->rate_exclusive_tax;
+            $item_amounts[] = $value->remaining_qty * $value->rate_exclusive_tax;
             $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
             $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
 
@@ -1794,7 +1835,9 @@ echo "<pre>"; print_r($data); exit;
         $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>' ;
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$estimation_date,'estimation_no'=>$estimation_no,'po_no'=>$po_no,'po_date'=>$po_date,'expense_cnt'=>$expense_cnt,'purchase_type'=>$purchase_type,'receipt_note_date'=>$receipt_note_date);
+    $total_sum = $item_net_value_sum + $total_expense;
+
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$estimation_date,'estimation_no'=>$estimation_no,'po_no'=>$po_no,'po_date'=>$po_date,'expense_cnt'=>$expense_cnt,'purchase_type'=>$purchase_type,'receipt_note_date'=>$receipt_note_date,'total_sum',$total_sum);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

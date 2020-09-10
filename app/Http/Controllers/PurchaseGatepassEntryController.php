@@ -29,11 +29,12 @@ class PurchaseGatepassEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $purchase_gatepass = PurchaseGatepassEntry::all();
         // echo "<pre>"; print_r($sales_gatepass);exit;
-        return view('admin.purchase_gatepass.view',compact('purchase_gatepass'));
+        return view('admin.purchase_gatepass.view',compact('purchase_gatepass','check_id'));
     }
 
     /**

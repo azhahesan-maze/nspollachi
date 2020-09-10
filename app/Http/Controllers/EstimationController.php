@@ -29,10 +29,11 @@ class EstimationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $check_id = $id;
         $estimation = Estimation::orderBy('estimation_no','ASC')->get();
-        return view('admin.estimation.view',compact('estimation'));
+        return view('admin.estimation.view',compact('estimation','check_id'));
     }
 
     /**

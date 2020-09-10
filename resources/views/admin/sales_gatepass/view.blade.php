@@ -10,7 +10,10 @@
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
+            @if($check_id != 1)
             <li><button type="button" class="btn btn-success"><a href="{{ route('sales_gatepass_entry.create') }}">Sales Gatepass Entry</a></button></li>
+            @else
+            @endif
           </ul>
         </div>
       </div>

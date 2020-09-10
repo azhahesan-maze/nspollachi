@@ -39,7 +39,7 @@ class RejectionInController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         // $rejection_in = RejectionIn::all();
 
@@ -49,6 +49,7 @@ class RejectionInController extends Controller
         // if($count == 0)
         // {
             $rejection_in = RejectionIn::where('status',0)->get();
+            $check_id = $id;
         // }
         // else
         // {
@@ -60,7 +61,7 @@ class RejectionInController extends Controller
         // }
         // // exit();
         // }
-        return view('admin.rejection_in.view',compact('rejection_in'));
+        return view('admin.rejection_in.view',compact('rejection_in','check_id'));
     }
 
     /**
