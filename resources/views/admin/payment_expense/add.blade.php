@@ -164,6 +164,7 @@
               <label for="validationCustom01" class="col-sm-4 col-form-label">Nature Of Expense: </label>
               <div class="col-sm-8">
                 <select class="js-example-basic-multiple col-12 form-control custom-select expense" name="expense" id="expense">
+                  <option>Choose Nature Of Expense</option>
                   @foreach($expense as $value)
                   <option value="{{ $value->id }}">{{ $value->type }}</option>
                   @endforeach
@@ -171,6 +172,17 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Amount :</label>
+              <div class="col-sm-8">
+                <input type="Number" class="form-control amount" placeholder="Amount" value="" name="amount" >
+                
+              </div>
+            </div>
+          </div>
+
         </div>
         <br>
 
@@ -254,6 +266,81 @@
     </div>
 
     </div>
+    <br>
+
+    <div class="row col-md-12 append_tax">
+
+                          <div class="row col-md-12 tax">
+                            <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Tax</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select tax" name="tax[]" id="tax" >
+                         <option value="">Choose Tax</option>
+                         @foreach($tax as $value)
+                        <option value="{{ $value->id}}">{{ $value->name}}</option>
+                        @endforeach
+                        </select>
+                     </div>
+                     <!-- <a href="{{ url('master/expense-type/create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button> -->
+                  </div>
+               </div>
+
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Tax%</label>
+                      <input type="number" class="form-control percent" id="percent"  placeholder="Tax %" name="percent[]" step="any" title="Numbers Only" value="">
+
+
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman; color: white;">Add Tax</label><br>
+                      <input type="button" class="btn btn-success" value="+" onclick="tax_add()" name="" id="add_tax">&nbsp;<input type="button" class="btn btn-danger remove_tax" value="-" name="" id="remove_tax">
+                    </div>
+                  </div>
+                    
+                       </div>
+                       <br>
+
+    <div class="row col-md-12 append_expense">
+
+                          <div class="row col-md-12 expense">
+                            <div class="col-md-3">
+                    <label style="font-family: Times new roman;">Expense Type</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]" id="expense_type" >
+                         <option value="">Choose Expense Type</option>
+                         @foreach($expense as $value)
+                        <option value="{{ $value->id}}">{{ $value->type}}</option>
+                        @endforeach
+                        </select>
+                     </div>
+                     <!-- <a href="{{ route('tax.create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button> -->
+                  </div>
+               </div>
+
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Expense Amount</label>
+                      <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="">
+
+                      <input type="hidden" name="expense_total" id="expense_total" value="0" class="expense_total">
+
+                      </div>
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
+                      <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
+                    </div>
+                  </div>
+                    
+                       </div>
+                       <br>
+
+    
+
     <div class="form-row">
         <div class="col-md-6">
             <div class="form-group row">
@@ -296,6 +383,59 @@
     $('#direct_head').hide();
     $('#against_bill').show();
   }
+
+  function expense_add()
+{
+  
+  
+
+  var expense_details='<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" name="expense_type[]"><option value="">Choose Expense Type</option>@foreach($expense as $expense_types)<option value="{{ $expense_types->id}}">{{ $expense_types->type}}</option>@endforeach</select></div></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>'
+
+  $('.append_expense').append(expense_details);
+  $("select").select2();
+
+
+}
+
+$(document).on("click",".remove_expense",function(){
+
+  if($(".remove_expense").length > 1){
+
+    $(this).closest('.expense').remove();
+    var length = $('#expense_count').val();
+
+    $('#expense_count').val(length-1);
+  }
+  else{
+    alert("Atleast One row present");
+
+  }
+
+  });
+
+$(document).on("click",".remove_tax",function(){
+
+  if($(".remove_tax").length > 1){
+
+    $(this).closest('.tax').remove();
+  }
+  else{
+    alert("Atleast One row present");
+
+  }
+
+  });
+
+function tax_add()
+{
+
+  var tax_details='<div class="row col-md-12 tax"><div class="col-md-3"><label style="font-family: Times new roman;">Tax</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select tax" name="tax[]"><option value="">Choose Tax</option>@foreach($tax as $value)<option value="{{ $value->id}}">{{ $value->name}}</option>@endforeach</select></div></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Tax %</label><input type="number" class="form-control percent"  placeholder="Tax %" name="percent[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Tax</font></label><br><input type="button" class="btn btn-success" value="+" onclick="tax_add()" name="" id="add_tax">&nbsp;<input type="button" class="btn btn-danger remove_tax" value="-" name="" id="remove_tax"></div></div>'
+
+  $('.append_tax').append(tax_details);
+  $("select").select2();
+
+
+}
 </script>
 
 @endsection

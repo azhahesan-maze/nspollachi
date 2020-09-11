@@ -15,7 +15,7 @@ class ReceiptIncomeController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.receipt_income.view');
     }
 
     /**

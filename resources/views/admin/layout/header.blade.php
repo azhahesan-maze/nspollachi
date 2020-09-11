@@ -403,7 +403,7 @@
                            
                            <li><a href="{{ route('receipt_request.index') }}">Receipt Request</a></li>
                             <li><a href="{{ route('receipt_process.index') }}">Receipt Process</a></li>
-                            <li><a href="{{ route('receipt_income.create') }}">Receipt Of Income</a></li>
+                            <li><a href="{{ route('receipt_income.index') }}">Receipt Of Income</a></li>
                             
                         </ul>
                     </li>
