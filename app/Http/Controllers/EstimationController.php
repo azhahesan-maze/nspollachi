@@ -33,7 +33,52 @@ class EstimationController extends Controller
     {
         $check_id = $id;
         $estimation = Estimation::orderBy('estimation_no','ASC')->get();
-        return view('admin.estimation.view',compact('estimation','check_id'));
+        
+
+        foreach ($estimation as $key => $datas) 
+        {
+            $estimation_items = Estimation_Item::where('estimation_no',$datas->estimation_no)->get();
+
+            $estimation_expense = Estimation_Expense::where('estimation_no',$datas->estimation_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($estimation_items as $j => $value) 
+            {
+
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($estimation_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+        
+        return view('admin.estimation.view',compact('estimation','check_id','taxable_value','tax_value','total','total_discount','expense_total'));
     }
 
     /**
@@ -52,6 +97,7 @@ class EstimationController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
+        $tax = Tax::all();
         
 
         $voucher_num=Estimation::orderBy('estimation_no','DESC')
@@ -94,7 +140,7 @@ class EstimationController extends Controller
 
         //                    exit;
 
-        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type'));
+        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','tax'));
     }
 
     /**
@@ -618,7 +664,6 @@ $count=0;
                                         ->where('tax_master_id','!=',$tax_master_cgst->id)
                                         ->where('tax_master_id','!=',$tax_master_sgst->id)
                                         ->first('valid_from');
-                                        // return $tax_date; exit;
 
             $tax_value =ItemTaxDetails::where('item_id','=',$id)
                                 ->where('valid_from',$tax_date->valid_from)

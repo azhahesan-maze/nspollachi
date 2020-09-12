@@ -34,7 +34,51 @@ class SalesEstimationController extends Controller
     {
         $check_id =$id;
         $sale_estimation = SaleEstimation::orderBy('sale_estimation_no','ASC')->get();
-        return view('admin.sales_estimation.view',compact('sale_estimation','check_id'));
+
+        foreach ($sale_estimation as $key => $datas) 
+        {
+            $sale_estimation_items = SaleEstimationItem::where('sale_estimation_no',$datas->sale_estimation_no)->get();
+
+            $sale_estimation_expense = SaleEstimationExpense::where('sale_estimation_no',$datas->sale_estimation_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($sale_estimation_items as $j => $value) 
+            {
+
+            $item_amount = $value->qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($sale_estimation_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+
+        return view('admin.sales_estimation.view',compact('sale_estimation','check_id','tax_value','taxable_value','total','expense_total','total_discount'));
     }
 
     /**

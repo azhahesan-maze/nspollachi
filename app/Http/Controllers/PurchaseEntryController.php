@@ -45,7 +45,51 @@ class PurchaseEntryController extends Controller
     {
         $check_id = $id;
         $purchase_entry = PurchaseEntry::orderBy('p_no','ASC')->get();
-        return view('admin.purchase_entry.view',compact('purchase_entry','check_id'));
+
+        foreach ($purchase_entry as $key => $datas) 
+        {
+            $purchase_entry_items = PurchaseEntryItem::where('p_no',$datas->p_no)->get();
+
+            $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$datas->p_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($purchase_entry_items as $j => $value) 
+            {
+
+            $item_amount = $value->remaining_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($purchase_entry_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+
+        return view('admin.purchase_entry.view',compact('purchase_entry','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
 
     /**

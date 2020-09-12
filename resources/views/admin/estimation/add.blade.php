@@ -561,18 +561,7 @@ table, th, td {
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
-                        <!-- <div class="col-md-2">
-                          <label style="font-family: Times new roman;">Expense Type</label>
-                        <select class="js-example-basic-multiple form-control expense_type" 
-                        data-placeholder="Choose Expense Type" id="expense_type" name="expense_type[]" >
-                        <option value=""></option>
-                        @foreach($expense_type as $expense_types)
-                        <option value="{{ $expense_types->id}}">{{ $expense_types->name}}</option>
-                        @endforeach
-                           
-                         </select>
-                         
-                        </div> -->
+                      
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">Expense Amount</label>
                       <input type="number" class="form-control expense_amount" id="expense_amount"  placeholder="Expense Amount" name="expense_amount[]" step="any" title="Numbers Only" value="">
@@ -584,9 +573,15 @@ table, th, td {
                         <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
                       <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
                     </div>
-                  </div>
-                    
+
+                    <div class="col-md-4" style="float: right;">
+
+                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
                        </div>
+                       </div>
+                  </div>
+                    <!-- net value -->
+
 
 
                        <div class="row col-md-12">
@@ -596,7 +591,7 @@ table, th, td {
                       <input type="text" class="form-control round_off" readonly="" value="0" id="round_off" name="round_off" >
                       </div>
                         
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman;">CGST</label>
                       <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="0">
                       </div>
@@ -604,24 +599,27 @@ table, th, td {
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">SGST</label>
                       <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="0">
-                      </div>
-                      <div class="col-md-4" style="float: right;">
+                      </div> -->
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
-                       </div>
                        
                        <div class="row col-md-12">
+                        @foreach($tax as $value)
                          <div class="col-md-2">
-                           <label style="font-family: Times new roman;">IGST</label>
-                      <input type="text" class="form-control igst" readonly="" id="igst" name="igst" value="0">
+                           <label style="font-family: Times new roman;">{{ $value->name }}</label>
+                      <input type="text" class="form-control {{ $value->name }}" readonly="" id="{{ $value->name }}" name="{{ $value->name }}" value="0">
                          </div>
+                         @endforeach
+                          
+
                        </div>
+
+                       <div class="col-md-12 text-center mt-5 mb-5">
+                          <input type="submit" class="btn btn-success save" name="save" value="Save">
+                          </div>
 
                        
 
-                       <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Save">
-        </div>
+                     
       </form>
                        
         <script type="text/javascript">
@@ -1720,7 +1718,7 @@ if(append_value == 1)
         data: { id: item_code },             
                         
         success: function(data){ 
-          //alert(data);
+          console.log(data);
              // $('.uom_exclusive').children('option:(:first)').remove();
              // $('.uom_inclusive').children('option:(:first)').remove();
              $('.uom_exclusive').children('option').remove();
@@ -1824,7 +1822,8 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          // console.log(data);
+
+          console.log(data);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();

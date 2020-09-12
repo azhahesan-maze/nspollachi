@@ -46,7 +46,51 @@ class DeliveryNoteController extends Controller
     {
         $check_id = $id;
         $delivery_note = DeliveryNote::all();
-        return view('admin.delivery_note.view',compact('delivery_note','check_id'));
+
+        foreach ($delivery_note as $key => $datas) 
+        {
+            $delivery_note_items = DeliveryNoteItem::where('d_no',$datas->d_no)->get();
+
+            $delivery_note_expense = DeliveryNoteExpense::where('d_no',$datas->d_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($delivery_note_items as $j => $value) 
+            {
+
+            $item_amount = $value->remaining_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($delivery_note_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+
+        return view('admin.delivery_note.view',compact('delivery_note','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
 
     /**
@@ -219,6 +263,8 @@ class DeliveryNoteController extends Controller
             $delivery_note_items->rate_exclusive_tax = $request->exclusive[$i];
             $delivery_note_items->rate_inclusive_tax = $request->inclusive[$i];
             $delivery_note_items->qty = $request->quantity[$i];
+            $delivery_note_items->remaining_qty = $request->quantity[$i];
+            $delivery_note_items->rejected_qty = 0;
             $delivery_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
             $delivery_note_items->uom_id = $request->uom[$i];
             $delivery_note_items->discount = $request->discount[$i];
@@ -579,6 +625,8 @@ class DeliveryNoteController extends Controller
             $delivery_note_items->rate_exclusive_tax = $request->exclusive[$i];
             $delivery_note_items->rate_inclusive_tax = $request->inclusive[$i];
             $delivery_note_items->qty = $request->quantity[$i];
+            $delivery_note_items->remaining_qty = $request->quantity[$i];
+            $delivery_note_items->rejected_qty = 0;
             $delivery_note_items->uom_id = $request->uom[$i];
             $delivery_note_items->discount = $request->discount[$i];
 

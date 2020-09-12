@@ -43,7 +43,51 @@ class ReceiptNoteController extends Controller
     {
         $check_id = $id;
         $receipt_note = ReceiptNote::all();
-        return view('admin.receipt_note.view',compact('receipt_note','check_id'));
+
+        foreach ($receipt_note as $key => $datas) 
+        {
+            $receipt_note_items = ReceiptNoteItem::where('rn_no',$datas->rn_no)->get();
+
+            $receipt_note_expense = ReceiptNoteExpense::where('rn_no',$datas->rn_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($receipt_note_items as $j => $value) 
+            {
+
+            $item_amount = $value->remaining_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($receipt_note_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+
+        return view('admin.receipt_note.view',compact('receipt_note','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
 
     /**

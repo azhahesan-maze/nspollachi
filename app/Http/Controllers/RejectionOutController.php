@@ -57,9 +57,52 @@ class RejectionOutController extends Controller
 
         $check_id = $id;
         $rejection_out = RejectionOut::where('status',0)->get();
+
+        foreach ($rejection_out as $key => $datas) 
+        {
+            $rejection_out_items = RejectionOutItem::where('r_out_no',$datas->r_out_no)->get();
+
+            $rejection_out_expense = RejectionOutExpense::where('r_out_no',$datas->r_out_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($rejection_out_items as $j => $value) 
+            {
+
+            $item_amount = $value->rejected_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($rejection_out_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
         
         
-        return view('admin.rejection_out.view',compact('rejection_out','check_id'));
+        return view('admin.rejection_out.view',compact('rejection_out','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
 
     /**

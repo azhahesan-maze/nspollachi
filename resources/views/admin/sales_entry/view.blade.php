@@ -33,6 +33,7 @@
             <th>Customer Name</th>
             <th>overall Discount</th>
             <!-- <th>Round Off</th> -->
+            <th>Total Expense</th>
             <th>Taxable Value</th>
             <th>Tax Value</th>
             <th>Net Value</th>
@@ -54,11 +55,12 @@
               @else
               <td></td>
               @endif
-              <td>{{ $value->overall_discount }}</td>
+              <td>{{ $total_discount[$key] }}</td>
               <!-- <td>{{ $value->round_off }}</td> -->
-              <td></td>
-              <td></td>
-              <td>{{ $value->total_net_value }}</td>
+              <td>{{ $expense_total[$key] }}</td>
+              <td>{{ $taxable_value[$key] }}</td>
+              <td>{{ $tax_value[$key] }}</td>
+              <td>{{ $total[$key] }}</td>
               <td> 
                 <a href="{{ route('sales_entry.show',$value->s_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('sales_entry.edit',$value->s_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>

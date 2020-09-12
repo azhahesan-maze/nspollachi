@@ -50,6 +50,50 @@ class RejectionInController extends Controller
         // {
             $rejection_in = RejectionIn::where('status',0)->get();
             $check_id = $id;
+
+            foreach ($rejection_in as $key => $datas) 
+            {
+            $rejection_in_items = RejectionInItem::where('r_in_no',$datas->r_in_no)->get();
+
+            $rejection_in_expense = RejectionInExpense::where('r_in_no',$datas->r_in_no)->get();
+
+            $item_net_value_total = 0;
+            $item_gst_rs_total = 0;
+            $item_amount_total = 0;
+            $discount = 0;
+
+            $total_expense = 0;
+            $total_net_price = 0;
+
+            foreach ($rejection_in_items as $j => $value) 
+            {
+
+            $item_amount = $value->rejected_qty * $value->rate_exclusive_tax;
+            $item_gst_rs = $item_amount * $value->gst / 100;
+            $item_net_value = $item_amount + $item_gst_rs - $value->discount;
+
+            $item_net_value_total += $item_net_value;
+            $item_gst_rs_total += $item_gst_rs;
+            $item_amount_total += $item_amount;
+            $discount += $value->discount;
+
+
+            }
+
+            foreach ($rejection_in_expense as $k => $values) 
+            {
+                $total_expense += $values->expense_amount;
+
+            }
+
+            $taxable_value[] =  $item_amount_total;
+            $tax_value[] = $item_gst_rs_total;
+            $total[] = $item_net_value_total + $total_expense;
+            $expense_total[] = $total_expense;
+            $total_discount[] = $discount;
+
+        }
+
         // }
         // else
         // {
@@ -61,7 +105,7 @@ class RejectionInController extends Controller
         // }
         // // exit();
         // }
-        return view('admin.rejection_in.view',compact('rejection_in','check_id'));
+        return view('admin.rejection_in.view',compact('rejection_in','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
 
     /**
