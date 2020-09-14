@@ -28,6 +28,47 @@ table, th, td {
       {{csrf_field()}}
 
         <div class="form-row">
+
+          <div class="col-md-12 row">
+
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
+            </div>
+
+            
+            <div class="col-md-2 analysis1" style="display: none;">
+              <div style="background-color: #E5E8E8;">
+              <label>0-30 Days</label>
+              <input type="checkbox" name="from1" value="0" onclick="from0()" id="from1"><br>
+              <label>31-60 Days</label>
+              <input type="checkbox" name="from1" value="0" onclick="from30()" id="from2"><br>
+              <label>61-90 Days</label>
+              <input type="checkbox" name="from1" value="0" onclick="from60()" id="from3"><br>
+              <label>91-120 Days</label>
+              <input type="checkbox" name="from1" value="0" onclick="from90()" id="from4"><br>
+              <label> >120 Days</label>
+              <input type="checkbox" name="from1" value="0" onclick="from120()" id="from5"><br>
+              </div>
+              <br>
+              <!-- <input type="Number" readonly="" class="form-control" name="from2" value="31" id="from2"><br>
+              <input type="Number" readonly="" class="form-control" name="from3" value="61" id="from3"><br>
+              <input type="Number" readonly="" class="form-control" name="from4" value="91" id="from4"><br>
+              <input type="Number" readonly="" class="form-control" name="from5" value="121" id="from5"><br> -->
+              
+            </div>
+
+            <!-- <div class="col-md-1 analysis2" style="display: none;">
+              <label>To</label>
+              <input type="Number" class="form-control" name="to" id="to"><br>
+              <input type="Number" class="form-control" name="to" id="to"><br>
+              <input type="Number" class="form-control" name="to" id="to"><br>
+              <input type="Number" class="form-control" name="to" id="to"><br>
+              <input type="Number" class="form-control" name="to" id="to"><br>
+            </div> -->
+
+            
+          </div>
+          <br><br>
           
           <table class="table" id="team-list">
                   <thead>
@@ -38,6 +79,11 @@ table, th, td {
                     <th> Bill Amount</th>
                     <th> Cleared Amount</th>
                     <th> Pending Amount</th>
+                    <th id="0-30" style="display: none;">0-30 Days</th>
+                    <th id="31-60" style="display: none;">31-60 Days</th>
+                    <th id="61-90" style="display: none;">61-90 Days</th>
+                    <th id="91-120" style="display: none;">91-120 Days</th>
+                    <th id="120" style="display: none;">(>120 Days)</th>
                     <th> No Of Days From Bill Date</th>
                     <th> No Of Days From Due Date</th>
                     <th> Sales Man Name</th>
@@ -58,6 +104,46 @@ table, th, td {
       </form>
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
+
+    <script>
+      function ageing_analysis() 
+      {
+        $('.analysis1').show();
+        $('.analysis2').show();
+        $('#0-30').show();
+        $('#31-60').show();
+        $('#61-90').show();
+        $('#90-120').show();
+        $('#120').show();
+      }
+
+      function from0()
+      {
+        
+      }
+      function from30()
+      {
+        $('#from1').attr('checked','checked');
+      }
+      function from60()
+      {
+        $('#from1').attr('checked','checked');
+        $('#from2').attr('checked','checked');
+      }
+      function from90()
+      {
+        $('#from1').attr('checked','checked');
+        $('#from2').attr('checked','checked');
+        $('#from3').attr('checked','checked');
+      }
+      function from120()
+      {
+        $('#from1').attr('checked','checked');
+        $('#from2').attr('checked','checked');
+        $('#from3').attr('checked','checked');
+        $('#from4').attr('checked','checked');
+      }
+    </script>
     <!-- card body end@ -->
   </div>
 </div>
