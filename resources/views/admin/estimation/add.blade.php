@@ -573,13 +573,13 @@ table, th, td {
                         <label style="font-family: Times new roman; color: white;">Add Expense</label><br>
                       <input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense">
                     </div>
-
-                    <div class="col-md-4" style="float: right;">
-
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
-                       </div>
                        </div>
                   </div>
+
+                  <div class="col-md-12" style="float: right;">
+
+                        <font color="black" style="font-size: 150%; margin-left: 700px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">00.00</font> 
+                       </div>
                     <!-- net value -->
 
 
@@ -606,7 +606,8 @@ table, th, td {
                         @foreach($tax as $value)
                          <div class="col-md-2">
                            <label style="font-family: Times new roman;">{{ $value->name }}</label>
-                      <input type="text" class="form-control {{ $value->name }}" readonly="" id="{{ $value->name }}" name="{{ $value->name }}" value="0">
+                      <input type="text" class="form-control {{ $value->id }}" readonly="" id="{{ $value->id }}" name="{{ $value->name }}" value="0">
+                      
                          </div>
                          @endforeach
                           
@@ -1007,6 +1008,7 @@ $(document).on("click",".remove_items",function(){
   
 
      var button_id = $(this).attr("id");
+     var data_val = $('.item_code'+button_id).val();
      var invoice_no=$('.invoice_no'+button_id).val();
 
      $('#row'+button_id).remove();
@@ -1042,6 +1044,39 @@ $(document).on("click",".remove_items",function(){
     total_expense_cal();
     overall_discounts();
     roundoff_cal();
+
+    
+
+    $.ajax({
+           type: "GET",
+            url: "{{ url('estimation/remove_data/{id}') }}",
+            data: { data_val: data_val },
+           success: function(data) {
+             console.log(data);
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sub = parseFloat($('#'+tax_master_id).val()) - parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sub);
+              }
+              else
+              {
+
+              }
+
+             }
+
+
+             
+           }
+        });
     
     $('#cat').hide();
     $('.item_sno').val('');
@@ -1068,15 +1103,15 @@ $(document).on("click",".remove_items",function(){
     $('.update_items').hide();
     
 
-    $.ajax({
-           type: "POST",
-            url: "{{ url('purchase/remove_data/') }}",
-            data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
-           success: function(data) {
-             // console.log(data);
+    // $.ajax({
+    //        type: "POST",
+    //         url: "{{ url('purchase/remove_data/') }}",
+    //         data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
+    //        success: function(data) {
+    //          // console.log(data);
              
-           }
-        });
+    //        }
+    //     });
 
 
   
@@ -1823,7 +1858,7 @@ else
                         
         success: function(data){ 
 
-          console.log(data);
+          // console.log(data[1].tax_master);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
@@ -1837,6 +1872,25 @@ else
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
               
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               //console.log(first_data);

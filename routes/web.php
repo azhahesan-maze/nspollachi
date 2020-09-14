@@ -574,6 +574,7 @@ Route::get('estimation/index/{id}', 'EstimationController@index');
 });
 Route::post('estimation/address_details/', 'EstimationController@address_details');
 Route::get('estimation/getdata/{id}', 'EstimationController@getdata');
+Route::get('estimation/remove_data/{id}', 'EstimationController@remove_data');
 Route::get('estimation/change_items/{id}', 'EstimationController@change_items');
 Route::post('estimation/brand_filter/', 'EstimationController@brand_filter');
 Route::get('estimation/browse_item/{id}', 'EstimationController@browse_item');
