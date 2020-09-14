@@ -861,6 +861,15 @@ Route::post('rejection_out/receipt_details/', 'RejectionOutController@receipt_de
 
 /* Rejection Out End Here  */
 
+/*Outstanding Report Start Here*/
+
+Route::resource('receivable_billwise','ReceivableBillwiseController',['middleware' => ['auth']]);
+Route::resource('receivable_partywise','ReceivablePartywiseController',['middleware' => ['auth']]);
+Route::resource('payable_billwise','PayableBillwiseController',['middleware' => ['auth']]);
+Route::resource('payable_partywise','PayablePartywiseController',['middleware' => ['auth']]);
+
+/*Outstanding Report End Here*/
+
 
 /*POS Start Here*/
 

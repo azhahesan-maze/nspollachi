@@ -473,6 +473,35 @@
             
           </li>
 
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Outstanding
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">Receivables</li>
+                           <li><a href="{{ route('receivable_billwise.index') }}">Bill Wise</a></li>
+                            <li><a href="{{ route('receivable_partywise.index') }}">Party Wise</a></li>
+                            
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                        <li class="dropdown-header">Payables</li>
+                        <li><a href="{{ route('payable_billwise.index') }}">Bill Wise</a></li>
+                        <li><a href="{{ route('payable_partywise.index') }}">Party Wise</a></li>
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li>
+
 
           <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
