@@ -652,6 +652,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('sales_estimation/address_details/', 'SalesEstimationController@address_details');
 Route::get('sales_estimation/getdata/{id}', 'SalesEstimationController@getdata');
+Route::get('sales_estimation/remove_data/{id}', 'SalesEstimationController@remove_data');
 Route::get('sales_estimation/change_items/{id}', 'SalesEstimationController@change_items');
 Route::post('sales_estimation/brand_filter/', 'SalesEstimationController@brand_filter');
 Route::get('sales_estimation/browse_item/{id}', 'SalesEstimationController@browse_item');

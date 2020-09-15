@@ -168,6 +168,8 @@ class ItemController extends Controller
 
 
             /* Store Barcode Details End Here  */
+
+            /*Tax Details Start Here*/
             $count = $request->count;
             $tax = Tax::all();
 
@@ -192,6 +194,8 @@ class ItemController extends Controller
                     }
                     //break;
                 }
+
+                /*Tax Details End Here*/
             
             // if ($request->has('igst')) {
 

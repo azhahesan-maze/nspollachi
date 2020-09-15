@@ -1769,6 +1769,26 @@ if(append_value == 1)
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
+             
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
