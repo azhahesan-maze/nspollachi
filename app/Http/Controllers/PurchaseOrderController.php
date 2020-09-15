@@ -34,6 +34,17 @@ class PurchaseOrderController extends Controller
         $check_id = $id;
         $purchaseorder = Purchase_Order::orderBy('po_no','ASC')->get();
 
+        if(count($purchaseorder) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($purchaseorder as $key => $datas) 
         {
             $po_items = PurchaseOrderItem::where('po_no',$datas->po_no)->get();
@@ -76,6 +87,7 @@ class PurchaseOrderController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
 
 

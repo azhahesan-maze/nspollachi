@@ -607,6 +607,8 @@ table, th, td {
                          <div class="col-md-2">
                            <label style="font-family: Times new roman;">{{ $value->name }}</label>
                       <input type="text" class="form-control {{ $value->id }}" readonly="" id="{{ $value->id }}" name="{{ $value->name }}" value="0">
+
+                      <input type="hidden" name="{{ $value->name }}_id" value="{{ $value->id }}">
                       
                          </div>
                          @endforeach
@@ -1788,7 +1790,7 @@ if(append_value == 1)
               }
 
              }
-             
+
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);

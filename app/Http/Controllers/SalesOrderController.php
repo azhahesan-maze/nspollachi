@@ -38,6 +38,17 @@ class SalesOrderController extends Controller
         $check_id = $id;
         $saleorder = SaleOrder::orderBy('so_no','ASC')->get();
 
+        if(count($saleorder) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($saleorder as $key => $datas) 
         {
             $saleorder_items = SaleOrderItem::where('so_no',$datas->so_no)->get();
@@ -80,6 +91,7 @@ class SalesOrderController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.sales_order.view',compact('saleorder','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }

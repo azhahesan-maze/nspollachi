@@ -44,6 +44,18 @@ class ReceiptNoteController extends Controller
         $check_id = $id;
         $receipt_note = ReceiptNote::all();
 
+        if(count($receipt_note) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+
+        else
+        {
+
         foreach ($receipt_note as $key => $datas) 
         {
             $receipt_note_items = ReceiptNoteItem::where('rn_no',$datas->rn_no)->get();
@@ -86,6 +98,7 @@ class ReceiptNoteController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.receipt_note.view',compact('receipt_note','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }

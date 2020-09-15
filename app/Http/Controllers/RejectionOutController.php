@@ -58,6 +58,17 @@ class RejectionOutController extends Controller
         $check_id = $id;
         $rejection_out = RejectionOut::where('status',0)->get();
 
+        if(count($rejection_out) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($rejection_out as $key => $datas) 
         {
             $rejection_out_items = RejectionOutItem::where('r_out_no',$datas->r_out_no)->get();
@@ -100,6 +111,7 @@ class RejectionOutController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
         
         
         return view('admin.rejection_out.view',compact('rejection_out','check_id','taxable_value','tax_value','total','expense_total','total_discount'));

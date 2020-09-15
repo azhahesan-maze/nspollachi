@@ -652,7 +652,48 @@ table, th, td {
                        </div>
 
 
+                       <div class="col-md-12" style="float: right;">
+
+                        <font color="black" style="font-size: 150%; margin-left: 700px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$estimation->total_net_value}}</font> 
+                       </div>
+                    <!-- net value -->
+
+
+
                        <div class="row col-md-12">
+
+                        <div class="col-md-2">
+                        <label style="font-family: Times new roman;">Round Off(+/-)</label>
+                      <input type="text" class="form-control round_off" readonly="" value="{{ $estimation->round_off }}" id="round_off" name="round_off" >
+                      </div>
+                        
+                        <!-- <div class="col-md-2">
+                        <label style="font-family: Times new roman;">CGST</label>
+                      <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="0">
+                      </div>
+
+                      <div class="col-md-2">
+                        <label style="font-family: Times new roman;">SGST</label>
+                      <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="0">
+                      </div> -->
+
+                       
+                       <div class="row col-md-12">
+                        @foreach($tax as $value)
+                         <div class="col-md-2">
+                           <label style="font-family: Times new roman;">{{ $value->taxes->name }}</label>
+                      <input type="text" class="form-control {{ $value->taxes->id }}" readonly="" id="{{ $value->taxes->id }}" name="{{ $value->taxes->name }}" value="{{ $value->value }}">
+
+                      <input type="hidden" name="{{ $value->taxes->name }}_id" value="{{ $value->taxes->id }}">
+                      
+                         </div>
+                         @endforeach
+                          
+
+                       </div>
+
+
+                       <!-- <div class="row col-md-12">
 
                         <div class="col-md-2">
                         <label style="font-family: Times new roman;">Round Off(+/-)</label>
@@ -678,17 +719,19 @@ table, th, td {
                            <label style="font-family: Times new roman;">IGST</label>
                       <input type="text" class="form-control igst" readonly="" id="igst" name="igst" value="{{$item_gst_rs_sum}}">
                          </div>
-                       </div>
-
+                       </div> -->
+                       <div class="col-md-12 text-center mt-5 mb-5">
+                          <input type="submit" class="btn btn-success save" name="save" value="Update">
+                          </div>
                        
 
-                       <div class="col-md-7 text-right">
+                       <!-- <div class="col-md-7 text-right">
           <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Update">
-        </div>
+        </div> -->
       </form>
                        
         <script type="text/javascript">
-          var i=$('#counts').val();
+          var i=0;
           var discount_total = 0;
 
 function calculate_total_net_price(){
@@ -1072,6 +1115,7 @@ $(document).on("click",".remove_items",function(){
   
 
      var button_id = $(this).attr("id");
+     var data_val = $('.item_code'+button_id).val();
      var invoice_no=$('.invoice_no'+button_id).val();
 
      $('#row'+button_id).remove();
@@ -1107,6 +1151,39 @@ $(document).on("click",".remove_items",function(){
     total_expense_cal();
     overall_discounts();
     roundoff_cal();
+
+    
+
+    $.ajax({
+           type: "GET",
+            url: "{{ url('estimation/remove_data/{id}') }}",
+            data: { data_val: data_val },
+           success: function(data) {
+             console.log(data);
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sub = parseFloat($('#'+tax_master_id).val()) - parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sub);
+              }
+              else
+              {
+
+              }
+
+             }
+
+
+             
+           }
+        });
     
     $('#cat').hide();
     $('.item_sno').val('');
@@ -1133,15 +1210,15 @@ $(document).on("click",".remove_items",function(){
     $('.update_items').hide();
     
 
-    $.ajax({
-           type: "POST",
-            url: "{{ url('purchase/remove_data/') }}",
-            data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
-           success: function(data) {
-             // console.log(data);
+    // $.ajax({
+    //        type: "POST",
+    //         url: "{{ url('purchase/remove_data/') }}",
+    //         data: { invoice_no: invoice_no, gatepass_no: gatepass_no },
+    //        success: function(data) {
+    //          // console.log(data);
              
-           }
-        });
+    //        }
+    //     });
 
 
   
@@ -1430,7 +1507,6 @@ function qty()
 {
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
-
   if(rate_exclusive == '' && rate_inclusive == '')
   {
 
@@ -1784,7 +1860,7 @@ if(append_value == 1)
         data: { id: item_code },             
                         
         success: function(data){ 
-          //alert(data);
+          console.log(data);
              // $('.uom_exclusive').children('option:(:first)').remove();
              // $('.uom_inclusive').children('option:(:first)').remove();
              $('.uom_exclusive').children('option').remove();
@@ -1800,6 +1876,26 @@ if(append_value == 1)
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
+
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
@@ -1888,7 +1984,8 @@ else
         data: { id: item_code },             
                         
         success: function(data){ 
-          //console.log(data);
+
+          // console.log(data[1].tax_master);
               $('.uom_exclusive').children('option').remove();
               $('.uom_inclusive').children('option').remove();
              // $('.uom_inclusive').children('option:not(:first)').remove();
@@ -1902,6 +1999,25 @@ else
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
               
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               //console.log(first_data);

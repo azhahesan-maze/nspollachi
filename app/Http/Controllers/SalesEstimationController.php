@@ -20,6 +20,7 @@ use App\Models\Customer;
 use App\Models\SaleEstimation;
 use App\Models\SaleEstimationItem;
 use App\Models\SaleEstimationExpense;
+use App\Models\SaleEstimationTax;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
@@ -34,6 +35,17 @@ class SalesEstimationController extends Controller
     {
         $check_id =$id;
         $sale_estimation = SaleEstimation::orderBy('sale_estimation_no','ASC')->get();
+
+        if(count($sale_estimation) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
 
         foreach ($sale_estimation as $key => $datas) 
         {
@@ -77,6 +89,7 @@ class SalesEstimationController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.sales_estimation.view',compact('sale_estimation','check_id','tax_value','taxable_value','total','expense_total','total_discount'));
     }
@@ -131,6 +144,8 @@ class SalesEstimationController extends Controller
         $sale_estimation_no=SaleEstimation::orderBy('sale_estimation_no','DESC')
                            ->select('sale_estimation_no')
                            ->first();
+
+        $tax = Tax::all();                   
 
          if ($sale_estimation_no == null) 
          {
@@ -204,6 +219,24 @@ class SalesEstimationController extends Controller
            
             
         }
+
+
+        foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+
+                       $tax_details = new SaleEstimationTax;
+
+                       $tax_details->sale_estimation_no = $voucher_no;
+                       $tax_details->sale_estimation_date = $request->voucher_date;
+                       $tax_details->taxmaster_id = $request->$value_name;
+                       $tax_details->value = $request->$tax_name;
+
+                       $tax_details->save();
+
+                    }
 
         return Redirect::back()->with('success', 'Saved Successfully');
     }

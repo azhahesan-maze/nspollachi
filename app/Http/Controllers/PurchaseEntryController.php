@@ -46,6 +46,17 @@ class PurchaseEntryController extends Controller
         $check_id = $id;
         $purchase_entry = PurchaseEntry::orderBy('p_no','ASC')->get();
 
+        if(count($purchase_entry) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($purchase_entry as $key => $datas) 
         {
             $purchase_entry_items = PurchaseEntryItem::where('p_no',$datas->p_no)->get();
@@ -88,6 +99,7 @@ class PurchaseEntryController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.purchase_entry.view',compact('purchase_entry','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }

@@ -47,6 +47,17 @@ class SalesEntryController extends Controller
         $check_id = $id;
         $sale_entry = SaleEntry::orderBy('s_no','ASC')->get();
 
+        if(count($sale_entry) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($sale_entry as $key => $datas) 
         {
             $sale_entry_items = SaleEntryItem::where('s_no',$datas->s_no)->get();
@@ -89,6 +100,7 @@ class SalesEntryController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.sales_entry.view',compact('sale_entry','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }

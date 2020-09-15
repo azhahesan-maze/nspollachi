@@ -15,6 +15,7 @@ use App\Models\AddressDetails;
 use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
+use App\Models\EstimationTax;
 use App\Models\Tax;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -33,13 +34,27 @@ class EstimationController extends Controller
     {
         $check_id = $id;
         $estimation = Estimation::orderBy('estimation_no','ASC')->get();
+
+        if(count($estimation) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
         
 
         foreach ($estimation as $key => $datas) 
         {
             $estimation_items = Estimation_Item::where('estimation_no',$datas->estimation_no)->get();
 
+
             $estimation_expense = Estimation_Expense::where('estimation_no',$datas->estimation_no)->get();
+
+
 
             $item_net_value_total = 0;
             $item_gst_rs_total = 0;
@@ -77,6 +92,9 @@ class EstimationController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
+
+        
         
         return view('admin.estimation.view',compact('estimation','check_id','taxable_value','tax_value','total','total_discount','expense_total'));
     }
@@ -155,6 +173,10 @@ class EstimationController extends Controller
                            ->select('estimation_no')
                            ->first();
 
+        $tax = Tax::all();  
+
+
+
          if ($estimation_no == null) 
          {
              $voucher_no=1;
@@ -227,6 +249,26 @@ class EstimationController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+
+                       $tax_details = new EstimationTax;
+
+                       $tax_details->estimation_no = $voucher_no;
+                       $tax_details->estimation_date = $request->voucher_date;
+                       $tax_details->taxmaster_id = $request->$value_name;
+                       $tax_details->value = $request->$tax_name;
+
+                       $tax_details->save();
+
+                    }
+
+
+
 
         return Redirect::back()->with('success', 'Saved Successfully');
     }
@@ -362,6 +404,7 @@ class EstimationController extends Controller
         $estimation = Estimation::where('estimation_no',$id)->first();
         $estimation_item = Estimation_Item::where('estimation_no',$id)->get();
         $estimation_expense = Estimation_Expense::where('estimation_no',$id)->get();
+        $tax = EstimationTax::where('estimation_no',$id)->get();
 
         $item_row_count = count($estimation_item);
         $expense_row_count = count($estimation_expense);
@@ -459,7 +502,7 @@ class EstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.estimation.edit',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.estimation.edit',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -480,6 +523,11 @@ class EstimationController extends Controller
 
         $estimation_expense_data = Estimation_Expense::where('estimation_no',$id);
         $estimation_expense_data->delete();
+
+        $estimation_tax_data = EstimationTax::where('estimation_no',$id);
+        $estimation_tax_data->delete();
+
+        $tax = Tax::all(); 
 
         $voucher_date = $request->voucher_date;
 
@@ -545,6 +593,23 @@ class EstimationController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+
+                       $tax_details = new EstimationTax;
+
+                       $tax_details->estimation_no = $request->voucher_no;
+                       $tax_details->estimation_date = $request->voucher_date;
+                       $tax_details->taxmaster_id = $request->$value_name;
+                       $tax_details->value = $request->$tax_name;
+
+                       $tax_details->save();
+
+                    }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 

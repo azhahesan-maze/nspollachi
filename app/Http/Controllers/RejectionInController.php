@@ -51,6 +51,17 @@ class RejectionInController extends Controller
             $rejection_in = RejectionIn::where('status',0)->get();
             $check_id = $id;
 
+            if(count($rejection_in) == 0)
+            {
+                $taxable_value[] = 0;
+                $tax_value[] = 0;
+                $total[] = 0;
+                $expense_total[] = 0;
+                $total_discount[] = 0;
+            }
+            else
+            {
+
             foreach ($rejection_in as $key => $datas) 
             {
             $rejection_in_items = RejectionInItem::where('r_in_no',$datas->r_in_no)->get();
@@ -93,6 +104,7 @@ class RejectionInController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         // }
         // else

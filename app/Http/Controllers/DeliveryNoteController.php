@@ -47,6 +47,17 @@ class DeliveryNoteController extends Controller
         $check_id = $id;
         $delivery_note = DeliveryNote::all();
 
+        if(count($delivery_note) == 0)
+        {
+            $taxable_value[] = 0;
+            $tax_value[] = 0;
+            $total[] = 0;
+            $expense_total[] = 0;
+            $total_discount[] = 0;
+        }
+        else
+        {
+
         foreach ($delivery_note as $key => $datas) 
         {
             $delivery_note_items = DeliveryNoteItem::where('d_no',$datas->d_no)->get();
@@ -89,6 +100,7 @@ class DeliveryNoteController extends Controller
             $total_discount[] = $discount;
 
         }
+    }
 
         return view('admin.delivery_note.view',compact('delivery_note','check_id','taxable_value','tax_value','total','expense_total','total_discount'));
     }
