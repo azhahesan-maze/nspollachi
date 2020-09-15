@@ -596,6 +596,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::post('purchase_order/address_details/', 'PurchaseOrderController@address_details');
 Route::get('purchase_order/getdata/{id}', 'PurchaseOrderController@getdata');
+Route::get('purchase_order/remove_data/{id}', 'PurchaseOrderController@remove_data');
 Route::get('purchase_order/change_items/{id}', 'PurchaseOrderController@change_items');
 Route::post('purchase_order/brand_filter/', 'PurchaseOrderController@brand_filter');
 Route::get('purchase_order/browse_item/{id}', 'PurchaseOrderController@browse_item');

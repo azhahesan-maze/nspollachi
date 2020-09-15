@@ -678,7 +678,7 @@ table, th, td {
                       </div> -->
 
                        
-                       <div class="row col-md-12">
+                       <div class="row col-md-12 taxes">
                         @foreach($tax as $value)
                          <div class="col-md-2">
                            <label style="font-family: Times new roman;">{{ $value->taxes->name }}</label>
