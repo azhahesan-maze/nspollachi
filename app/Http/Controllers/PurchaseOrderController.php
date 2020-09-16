@@ -383,6 +383,7 @@ class PurchaseOrderController extends Controller
         $purchaseorder = Purchase_Order::where('po_no',$id)->first();
         $purchaseorder_items = PurchaseOrderItem::where('po_no',$id)->get();
         $purchaseorder_expense = PurchaseOrderExpense::where('po_no',$id)->get();
+        $tax = PurchaseOrderTax::where('po_no',$id)->get();
 
         $item_row_count = count($purchaseorder_items);
         $expense_row_count = count($purchaseorder_expense);
@@ -480,7 +481,7 @@ class PurchaseOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchaseorder.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.purchaseorder.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -495,6 +496,9 @@ class PurchaseOrderController extends Controller
         $purchaseorder_data = Purchase_Order::where('po_no',$id);
         $purchaseorder_data->delete();
 
+        $purchaseorder_tax_data = PurchaseOrderTax::where('po_no',$id);
+        $purchaseorder_tax_data->delete();
+
         $purchaseorder_item_data = PurchaseOrderItem::where('po_no',$id);
         $purchaseorder_item_data->delete();
 
@@ -503,6 +507,8 @@ class PurchaseOrderController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+        $tax = Tax::all();
 
          $purchaseorder = new Purchase_Order();
 
@@ -572,6 +578,23 @@ class PurchaseOrderController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+
+                       $tax_details = new purchaseOrderTax;
+
+                       $tax_details->po_no = $voucher_no;
+                       $tax_details->po_date = $voucher_date;
+                       $tax_details->taxmaster_id = $request->$value_name;
+                       $tax_details->value = $request->$tax_name;
+
+                       $tax_details->save();
+
+                    }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 

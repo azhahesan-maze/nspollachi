@@ -467,12 +467,13 @@ class ReceiptNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $purchaseorder = Purchase_Order::all();
+        $purchaseorders = Purchase_Order::all();
         $rejection_out = RejectionOut::where('status',0)->get();
 
         $receipt_note = ReceiptNote::where('rn_no',$id)->first();
         $receipt_note_items = ReceiptNoteItem::where('rn_no',$id)->get();
         $receipt_note_expense = ReceiptNoteExpense::where('rn_no',$id)->get();
+        $tax = ReceiptNoteTax::where('rn_no',$id)->get();
 
         $estimation_no = $receipt_note->estimation_no;
         $estimation_date = $receipt_note->estimation_date;
@@ -601,7 +602,7 @@ class ReceiptNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','rejection_out','purchaseorder','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','rejection_out','purchaseorder','purchaseorders','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -616,6 +617,9 @@ class ReceiptNoteController extends Controller
         $receipt_note_data = ReceiptNote::where('rn_no',$id);
         $receipt_note_data->delete();
 
+        $receipt_note_tax_data = ReceiptNoteTax::where('rn_no',$id);
+        $receipt_note_tax_data->delete();
+
         $receipt_note_item_data = ReceiptNoteItem::where('rn_no',$id);
         $receipt_note_item_data->delete();
 
@@ -624,6 +628,9 @@ class ReceiptNoteController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+        $tax = Tax::all();
+
 
         if($request->r_out_no != '')
         {
@@ -727,6 +734,23 @@ class ReceiptNoteController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new ReceiptNoteTax;
+
+               $tax_details->rn_no = $voucher_no;
+               $tax_details->rn_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 
