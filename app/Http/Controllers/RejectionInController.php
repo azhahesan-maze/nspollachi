@@ -21,14 +21,17 @@ use Carbon\Carbon;
 use App\Models\SaleOrder;
 use App\Models\SaleOrderItem;
 use App\Models\SaleOrderExpense;
+use App\Models\SaleEntryTax;
 use App\Models\SaleEntry;
 use App\Models\SaleEntryItem;
 use App\Models\SaleEntryExpense;
 use App\Models\DeliveryNote;
+use App\Models\DeliveryNoteTax;
 use App\Models\DeliveryNoteItem;
 use App\Models\DeliveryNoteExpense;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\RejectionIn;
+use App\Models\RejectionInTax;
 use App\Models\RejectionInItem;
 use App\Models\RejectionInExpense;
 
@@ -138,6 +141,7 @@ class RejectionInController extends Controller
         $sale_entry = SaleEntry::all();
         $customer = Customer::all();
         $delivery_note = DeliveryNote::all();
+        $tax = Tax::all();
         
 
         // $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
@@ -178,7 +182,7 @@ class RejectionInController extends Controller
         // $voucher_no = str_random(6);
 
 
-        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer'));
+        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer','tax'));
     }
 
     /**
@@ -207,6 +211,7 @@ class RejectionInController extends Controller
         //  }
 
         $voucher_num=RejectionIn::orderBy('created_at','DESC')->select('id')->first();
+        $tax = Tax::all();
         $append = "RI";
         if ($voucher_num == null) 
          {
@@ -344,6 +349,23 @@ class RejectionInController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new RejectionInTax;
+
+               $tax_details->r_in_no = $voucher_no;
+               $tax_details->r_in_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
 
         return Redirect::back()->with('success', 'Saved Successfully');
     }
@@ -844,8 +866,23 @@ $count=0;
                                 ->where('tax_master_id','!=',$tax_master_sgst->id)
                                 ->sum('value');
 
+            /* start dynamic tax value */                    
+            $tax_view =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->get();
+
+            foreach ($tax_view as $key => $value) 
+            {
+              $tax_val[] = $value->value;
+              $tax_master[] = $value->tax_master_id;
+            }      
+
+            $cnt = count($tax_master);               
+
+            /* end dynamic tax value */                    
+
             $sum = $tax_value + $items->category->gst_no;                            
-            $data[] = array('igst' => $sum);
+            $data[] = array('igst' => $sum,'tax_val' => $tax_val,'tax_master' =>$tax_master,'cnt' => $cnt);
             
             
         }  
@@ -867,7 +904,22 @@ $count=0;
                                 ->where('tax_master_id','!=',$tax_master_sgst->id)
                                 ->sum('value');
 
-            $data[] = array('igst' => $tax_value);    
+            /* start dynamic tax value */                    
+            $tax_view =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->get();
+
+            foreach ($tax_view as $key => $value) 
+            {
+              $tax_val[] = $value->value;
+              $tax_master[] = $value->tax_master_id;
+            }      
+
+            $cnt = count($tax_master);               
+
+            /* end dynamic tax value */                    
+
+            $data[] = array('igst' => $tax_value,'tax_val' => $tax_val,'tax_master' =>$tax_master, 'cnt' => $cnt);    
 
         }          
          
@@ -931,6 +983,96 @@ $count=0;
         $data[]=$result;                              
         return $data;
     }
+    }
+
+    public function remove_data(Request $request,$id)
+    {
+
+        $id = $request->data_val;
+
+        $data[]=Item::join('uoms','uoms.id','=','items.uom_id')
+                    ->where('items.id','=',$id)
+                    ->select('items.id as item_id','items.name as item_name','mrp','hsn','code','uoms.id as uom_id','uoms.name as uom_name','items.ptc')
+                    ->first();
+
+        if(isset($items->category->gst_no) && $items->category->gst_no != '' && $items->category->gst_no != 0)
+        {
+            $tax_master_cgst = Tax::where('name','cgst')->first();
+            $tax_master_sgst = Tax::where('name','sgst')->first();
+
+            $tax_date = ItemTaxDetails::where('item_id',$id)
+                                        ->orderBy('valid_from','DESC')
+                                        ->whereDate('valid_from', '<=', Carbon::now())
+                                        ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                        ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                        ->first('valid_from');
+
+            $tax_value =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                ->sum('value');
+
+            /* start dynamic tax value */                    
+            $tax_view =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->get();
+
+            foreach ($tax_view as $key => $value) 
+            {
+              $tax_val[] = $value->value;
+              $tax_master[] = $value->tax_master_id;
+            }      
+
+            $cnt = count($tax_master);               
+
+            /* end dynamic tax value */                  
+
+            $sum = $tax_value + $items->category->gst_no;                            
+            $data[] = array('igst' => $sum,'tax_val' => $tax_val,'tax_master' =>$tax_master,'cnt' => $cnt);
+            
+            
+        }  
+        else
+        {
+            $tax_master_cgst = Tax::where('name','cgst')->first();
+            $tax_master_sgst = Tax::where('name','sgst')->first();
+
+            $tax_date = ItemTaxDetails::where('item_id',$id)
+                                        ->orderBy('valid_from','DESC')
+                                        ->whereDate('valid_from', '<=', Carbon::now())
+                                        ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                        ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                        ->first('valid_from');
+
+            $tax_value =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->where('tax_master_id','!=',$tax_master_cgst->id)
+                                ->where('tax_master_id','!=',$tax_master_sgst->id)
+                                ->sum('value');
+
+            /* start dynamic tax value */      
+                          
+            $tax_view =ItemTaxDetails::where('item_id','=',$id)
+                                ->where('valid_from',$tax_date->valid_from)
+                                ->get();
+
+            foreach ($tax_view as $key => $value) 
+            {
+              $tax_val[] = $value->value;
+              $tax_master[] = $value->tax_master_id;
+            }   
+
+            $cnt = count($tax_master);                  
+
+            /* end dynamic tax value */                    
+
+            $data[] = array('igst' => $tax_value,'tax_val' => $tax_val,'tax_master' =>$tax_master, 'cnt' => $cnt);    
+
+        }
+
+        return $data;
+        
     }
 
 
@@ -1478,6 +1620,7 @@ $result=[];
         $sale_entry = SaleEntry::where('s_no',$s_no)->first();
         $sale_entry_item = SaleEntryItem::where('s_no',$s_no)->get();
         $sale_entry_expense = SaleEntryExpense::where('s_no',$s_no)->get();
+        $sale_entry_tax = SaleEntryTax::where('s_no',$s_no)->get();
 
         $round_off = $sale_entry->round_off;
          $total_net_value = $sale_entry->total_net_value;
@@ -1572,7 +1715,17 @@ $result=[];
     //     $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>' ;
     // }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_sale_entry'=>$date_sale_entry,'expense_cnt'=>$expense_cnt);
+    $tax_append = "";
+    foreach ($sale_entry_tax as $key => $value) 
+    {
+    $tax_append.= '<div class="col-md-2">
+              <label style="font-family: Times new roman;">'.$value->taxes->name.'</label>
+         <input type="text" class="form-control '.$value->taxes->id.'" readonly="" id="'.$value->taxes->id.'" name="'.$value->taxes->name.'" value="'.$value->value.'">
+         <input type="hidden" name="'.$value->taxes->name.'_id" value="'.$value->taxes->id.'">
+            </div>';
+    }
+
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_sale_entry'=>$date_sale_entry,'expense_cnt'=>$expense_cnt,'tax_append' =>$tax_append);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 
@@ -1635,6 +1788,7 @@ echo "<pre>"; print_r($data); exit;
         $delivery_note = DeliveryNote::where('d_no',$d_no)->first();
         $delivery_note_item = DeliveryNoteItem::where('d_no',$d_no)->get();
         $delivery_note_expense = DeliveryNoteExpense::where('d_no',$d_no)->get();
+        $delivery_note_tax = DeliveryNoteTax::where('d_no',$d_no)->get();
 
         $round_off = $delivery_note->round_off;
          $total_net_value = $delivery_note->total_net_value;
@@ -1726,7 +1880,17 @@ echo "<pre>"; print_r($data); exit;
     //     $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" pattern="[0-9]{0,100}" title="Numbers Only" value=""></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br><input type="button" class="btn btn-success" value="+" onclick="expense_add()" name="" id="add_expense">&nbsp;<input type="button" class="btn btn-danger remove_expense" value="-" name="" id="remove_expense"></div></div>' ;
     // }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date'=>$date);
+    $tax_append = "";
+    foreach ($delivery_note_tax as $key => $value) 
+    {
+    $tax_append.= '<div class="col-md-2">
+              <label style="font-family: Times new roman;">'.$value->taxes->name.'</label>
+         <input type="text" class="form-control '.$value->taxes->id.'" readonly="" id="'.$value->taxes->id.'" name="'.$value->taxes->name.'" value="'.$value->value.'">
+         <input type="hidden" name="'.$value->taxes->name.'_id" value="'.$value->taxes->id.'">
+            </div>';
+    }
+
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date'=>$date,'tax_append' =>$tax_append);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

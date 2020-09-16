@@ -629,6 +629,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('purchase_entry/address_details/', 'PurchaseEntryController@address_details');
 Route::get('purchase_entry/getdata/{id}', 'PurchaseEntryController@getdata');
+Route::get('purchase_entry/remove_data/{id}', 'PurchaseEntryController@remove_data');
 Route::get('purchase_entry/change_items/{id}', 'PurchaseEntryController@change_items');
 Route::post('purchase_entry/brand_filter/', 'PurchaseEntryController@brand_filter');
 Route::get('purchase_entry/browse_item/{id}', 'PurchaseEntryController@browse_item');
@@ -674,6 +675,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('sale_order/address_details/', 'SalesOrderController@address_details');
 Route::get('sale_order/getdata/{id}', 'SalesOrderController@getdata');
+Route::get('sale_order/remove_data/{id}', 'SalesOrderController@remove_data');
 Route::get('sale_order/change_items/{id}', 'SalesOrderController@change_items');
 Route::post('sale_order/brand_filter/', 'SalesOrderController@brand_filter');
 Route::get('sale_order/browse_item/{id}', 'SalesOrderController@browse_item');
@@ -731,6 +733,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('receipt_note/address_details/', 'ReceiptNoteController@address_details');
 Route::get('receipt_note/getdata/{id}', 'ReceiptNoteController@getdata');
+Route::get('receipt_note/remove_data/{id}', 'ReceiptNoteController@remove_data');
 Route::get('receipt_note/change_items/{id}', 'ReceiptNoteController@change_items');
 Route::post('receipt_note/brand_filter/', 'ReceiptNoteController@brand_filter');
 Route::get('receipt_note/browse_item/{id}', 'ReceiptNoteController@browse_item');
@@ -778,6 +781,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('delivery_note/address_details/', 'DeliveryNoteController@address_details');
 Route::get('delivery_note/getdata/{id}', 'DeliveryNoteController@getdata');
+Route::get('delivery_note/remove_data/{id}', 'DeliveryNoteController@remove_data');
 Route::get('delivery_note/change_items/{id}', 'DeliveryNoteController@change_items');
 Route::post('delivery_note/brand_filter/', 'DeliveryNoteController@brand_filter');
 Route::get('delivery_note/browse_item/{id}', 'DeliveryNoteController@browse_item');
@@ -824,6 +828,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('rejection_in/address_details/', 'RejectionInController@address_details');
 Route::get('rejection_in/getdata/{id}', 'RejectionInController@getdata');
+Route::get('rejection_in/remove_data/{id}', 'RejectionInController@remove_data');
 Route::get('rejection_in/change_items/{id}', 'RejectionInController@change_items');
 Route::post('rejection_in/brand_filter/', 'RejectionInController@brand_filter');
 Route::get('rejection_in/browse_item/{id}', 'RejectionInController@browse_item');
@@ -848,6 +853,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::post('rejection_out/address_details/', 'RejectionOutController@address_details');
 Route::get('rejection_out/getdata/{id}', 'RejectionOutController@getdata');
+Route::get('rejection_out/remove_data/{id}', 'RejectionOutController@remove_data');
 Route::get('rejection_out/change_items/{id}', 'RejectionOutController@change_items');
 Route::post('rejection_out/brand_filter/', 'RejectionOutController@brand_filter');
 Route::get('rejection_out/browse_item/{id}', 'RejectionOutController@browse_item');

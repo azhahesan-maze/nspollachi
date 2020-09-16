@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SaleEstimationTax extends Model
+class SaleEntryTax extends Model
 {
     public function taxes()
     {
