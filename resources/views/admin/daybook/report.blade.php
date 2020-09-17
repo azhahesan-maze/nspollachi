@@ -29,46 +29,42 @@ table, th, td {
 
         <div class="form-row">
 
-          <div class="col-md-12 row">
 
-            <!-- <div class="col-md-2">
-            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
-            </div> -->
-
-            
-            <div class="col-md-2 analysis1" style="display: none;">
-              <div style="background-color: #E5E8E8;">
-              <label>0-30 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from0()" id="from1"><br>
-              <label>31-60 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from30()" id="from2"><br>
-              <label>61-90 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from60()" id="from3"><br>
-              <label>91-120 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from90()" id="from4"><br>
-              <label> >120 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from120()" id="from5"><br>
-              </div>
-              <br>
-              <!-- <input type="Number" readonly="" class="form-control" name="from2" value="31" id="from2"><br>
-              <input type="Number" readonly="" class="form-control" name="from3" value="61" id="from3"><br>
-              <input type="Number" readonly="" class="form-control" name="from4" value="91" id="from4"><br>
-              <input type="Number" readonly="" class="form-control" name="from5" value="121" id="from5"><br> -->
-              
+          <div class="col-md-12 form-row mb-3">
+            <div class="col-md-2">
+              <label>From</label>
+            <input type="date" class="form-control from" name="from" id="from">
             </div>
 
-            <!-- <div class="col-md-1 analysis2" style="display: none;">
+            <div class="col-md-2">
               <label>To</label>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-            </div> -->
+            <input type="date" class="form-control to" name="to" id="to">
+            </div>
 
-            
+              <div class="col-sm-2">
+                <label>Nature </label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
+                  <option value="">Choose Nature</option>
+                        </select>
+              </div>
+              <div class="col-md-2">
+              <label>Head</label>
+            <input type="text" class="form-control head" placeholder="Head" name="head" id="head">
+            </div>
+            <div class="col-md-2">
+              <label>Amount</label>
+            <input type="Number" class="form-control amount" placeholder="Amont" name="amount" id="amount">
+            </div>
+            <div class="col-sm-2">
+                <label>Choose Any One</label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
+                  <option value="">Choose Any One</option>
+                           <option value="">Greater Than</option>
+                           <option value="">Less Than</option>
+                           <option value="">Equal To</option>
+                        </select>
+              </div>
           </div>
-          <br><br>
           
           <table class="table" id="team-list">
                   <thead>

@@ -115,8 +115,6 @@ table, th, td {
                 <label>Nature </label>
                 <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
                   <option value="">Choose Nature</option>
-                           <option value="">Pending</option>
-                           <option value="">Advance</option>
                         </select>
               </div>
               <div class="col-md-2">
