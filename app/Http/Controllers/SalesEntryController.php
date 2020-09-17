@@ -456,6 +456,7 @@ class SalesEntryController extends Controller
         $sale_entry = SaleEntry::where('s_no',$id)->first();
         $sale_entry_items = SaleEntryItem::where('s_no',$id)->get();
         $sale_entry_expense = SaleEntryExpense::where('s_no',$id)->get();
+        $tax = SaleEntryTax::where('s_no',$id)->get();
 
         $item_row_count = count($sale_entry_items);
         $expense_row_count = count($sale_entry_expense);
@@ -553,7 +554,7 @@ class SalesEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_entry.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','estimation','saleorder','sale_estimation','delivery_note','sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.sales_entry.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','estimation','saleorder','sale_estimation','delivery_note','sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -568,6 +569,9 @@ class SalesEntryController extends Controller
         $sale_entry_data = SaleEntry::where('s_no',$id);
         $sale_entry_data->delete();
 
+        $sale_entry_tax_data = SaleEntryTax::where('s_no',$id);
+        $sale_entry_tax_data->delete();
+
         $sale_entry_item_data = SaleEntryItem::where('s_no',$id);
         $sale_entry_item_data->delete();
 
@@ -576,6 +580,8 @@ class SalesEntryController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+        $tax = Tax::all();
 
          $sale_entry = new SaleEntry();
 
@@ -658,6 +664,24 @@ class SalesEntryController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new SaleEntryTax;
+
+               $tax_details->s_no = $voucher_no;
+               $tax_details->s_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
+
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 
