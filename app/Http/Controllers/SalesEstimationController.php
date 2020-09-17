@@ -371,6 +371,7 @@ class SalesEstimationController extends Controller
         $sale_estimation = SaleEstimation::where('sale_estimation_no',$id)->first();
         $sale_estimation_item = SaleEstimationItem::where('sale_estimation_no',$id)->get();
         $sale_estimation_expense = SaleEstimationExpense::where('sale_estimation_no',$id)->get();
+        $tax = SaleEstimationTax::where('sale_estimation_no',$id)->get();
 
         $item_row_count = count($sale_estimation_item);
         $expense_row_count = count($sale_estimation_expense);
@@ -468,7 +469,7 @@ class SalesEstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -483,6 +484,9 @@ class SalesEstimationController extends Controller
         $sale_estimation_data = SaleEstimation::where('sale_estimation_no',$id);
         $sale_estimation_data->delete();
 
+        $sale_estimation_tax_data = SaleEstimationTax::where('sale_estimation_no',$id);
+        $sale_estimation_tax_data->delete();
+
         $sale_estimation_item_data = SaleEstimationItem::where('sale_estimation_no',$id);
         $sale_estimation_item_data->delete();
 
@@ -490,6 +494,7 @@ class SalesEstimationController extends Controller
         $sale_estimation_expense_data->delete();
 
         $voucher_date = $request->voucher_date;
+        $tax = Tax::all();
 
          $sale_estimation = new SaleEstimation();
 
@@ -553,6 +558,23 @@ class SalesEstimationController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+                {
+                    $str_json = json_encode($value->name); //array to json string conversion
+                    $tax_name = str_replace('"', '', $str_json);
+                    $value_name = $tax_name.'_id';
+
+                       $tax_details = new SaleEstimationTax;
+
+                       $tax_details->sale_estimation_no = $request->voucher_no;
+                       $tax_details->sale_estimation_date = $request->voucher_date;
+                       $tax_details->taxmaster_id = $request->$value_name;
+                       $tax_details->value = $request->$tax_name;
+
+                       $tax_details->save();
+
+                    }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 

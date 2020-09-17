@@ -458,6 +458,7 @@ class DeliveryNoteController extends Controller
         $delivery_note = DeliveryNote::where('d_no',$id)->first();
         $delivery_note_items = DeliveryNoteItem::where('d_no',$id)->get();
         $delivery_note_expense = DeliveryNoteExpense::where('d_no',$id)->get();
+        $tax = DeliveryNoteTax::where('d_no',$id)->get();
 
         $item_row_count = count($delivery_note_items);
         $expense_row_count = count($delivery_note_expense);
@@ -555,7 +556,7 @@ class DeliveryNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.delivery_note.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','rejection_in','estimation','saleorder','sale_orders','delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.delivery_note.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','rejection_in','estimation','saleorder','sale_orders','delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -570,6 +571,9 @@ class DeliveryNoteController extends Controller
         $delivery_note_data = DeliveryNote::where('d_no',$id);
         $delivery_note_data->delete();
 
+        $delivery_note_tax_data = DeliveryNoteTax::where('d_no',$id);
+        $delivery_note_tax_data->delete();
+
         $delivery_note_item_data = DeliveryNoteItem::where('d_no',$id);
         $delivery_note_item_data->delete();
 
@@ -578,6 +582,7 @@ class DeliveryNoteController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+        $tax = Tax::all();
 
         if($request->r_in_no != '')
         {
@@ -676,6 +681,24 @@ class DeliveryNoteController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new DeliveryNoteTax;
+
+               $tax_details->d_no = $voucher_no;
+               $tax_details->d_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
+
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 

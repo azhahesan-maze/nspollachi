@@ -759,6 +759,14 @@ table, th, td {
                        </div>
 
 
+                       <div class="col-md-12" style="float: right;">
+
+                        <font color="black" style="font-size: 150%; margin-left: 700px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$delivery_note->total_net_value}}</font> 
+                       </div>
+                    <!-- net value -->
+
+
+
                        <div class="row col-md-12">
 
                         <div class="col-md-2">
@@ -766,36 +774,40 @@ table, th, td {
                       <input type="text" class="form-control round_off" readonly="" value="{{ $delivery_note->round_off }}" id="round_off" name="round_off" >
                       </div>
                         
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                         <label style="font-family: Times new roman;">CGST</label>
-                      <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="{{$item_cgst}}">
+                      <input type="text" class="form-control cgst" readonly="" id="cgst" name="cgst" value="0">
                       </div>
 
                       <div class="col-md-2">
                         <label style="font-family: Times new roman;">SGST</label>
-                      <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="{{$item_sgst}}">
-                      </div>
-                      <div class="col-md-4" style="float: right;">
+                      <input type="text" class="form-control sgst" readonly="" id="sgst" name="sgst" value="0">
+                      </div> -->
 
-                        <font color="black" style="font-size: 150%; margin-left: 100px; font-weight: 900;">NET Value :</font>&nbsp;<font class="total_net_value" style="font-size: 150%; font-weight: 900;">{{$delivery_note->total_net_value}}</font> 
-                       </div>
                        
-                       <div class="row col-md-12">
+                       <div class="row col-md-12 taxes">
+                        @foreach($tax as $value)
                          <div class="col-md-2">
-                           <label style="font-family: Times new roman;">IGST</label>
-                      <input type="text" class="form-control igst" readonly="" id="igst" name="igst" value="{{$item_gst_rs_sum}}">
+                           <label style="font-family: Times new roman;">{{ $value->taxes->name }}</label>
+                      <input type="text" class="form-control {{ $value->taxes->id }}" readonly="" id="{{ $value->taxes->id }}" name="{{ $value->taxes->name }}" value="{{ $value->value }}">
+
+                      <input type="hidden" name="{{ $value->taxes->name }}_id" value="{{ $value->taxes->id }}">
+                      
                          </div>
+                         @endforeach
+                          
+
                        </div>
 
-                       
 
-                       <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Update">
-        </div>
+                       
+                       <div class="col-md-12 text-center mt-5 mb-5">
+                          <input type="submit" class="btn btn-success save" name="save" value="Update">
+                          </div>
       </form>
                        
         <script type="text/javascript">
-          var i=$('#counts').val();
+          var i=0;
           var discount_total = 0;
 
 function calculate_total_net_price(){
@@ -1180,6 +1192,7 @@ $(document).on("click",".remove_items",function(){
   
 
      var button_id = $(this).attr("id");
+     var data_val = $('.item_code'+button_id).val();
      var invoice_no=$('.invoice_no'+button_id).val();
 
      $('#row'+button_id).remove();
@@ -1215,6 +1228,37 @@ $(document).on("click",".remove_items",function(){
     total_expense_cal();
     overall_discounts();
     roundoff_cal();
+
+    $.ajax({
+           type: "GET",
+            url: "{{ url('delivery_note/remove_data/{id}') }}",
+            data: { data_val: data_val },
+           success: function(data) {
+             console.log(data);
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sub = parseFloat($('#'+tax_master_id).val()) - parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sub);
+              }
+              else
+              {
+
+              }
+
+             }
+
+
+             
+           }
+        });
     
     $('#cat').hide();
     $('.item_sno').val('');
@@ -1563,6 +1607,7 @@ function qty()
     calc_exclusive();
   }
 }
+
 
 function gst_calc()
 {
@@ -1923,6 +1968,26 @@ if(append_value == 1)
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
+
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               $('.uom_exclusive').append(first_data);
               $('.uom_inclusive').append(first_data);
@@ -2025,6 +2090,25 @@ else
              uom_name =data[0].uom_name;
              igst =data[1].igst;
              barcode = data[2].barcode;
+
+             for(var new_val = 0; new_val < data[1].cnt; new_val++)
+             {
+              var tax_master_id = data[1].tax_master[new_val];
+
+              var tax_master_input_val = $('#'+tax_master_id).attr('class').split(' ')[1];
+
+              if(tax_master_id == tax_master_input_val)
+              {
+                var sum = parseFloat($('#'+tax_master_id).val()) + parseFloat(data[1].tax_val[new_val]);
+
+                $('#'+tax_master_id).val(sum);
+              }
+              else
+              {
+
+              }
+
+             }
               
               var first_data='<option value="'+id+'">'+uom_name+'</option>';
               //console.log(first_data);
@@ -2471,6 +2555,8 @@ function se_details()
   var se_no=$('.sale_estimation_no').val();
   $('.so_no').val('');
   $('.so_date').val('');
+  $('.r_in_no').val('');
+  $('.r_in_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2499,6 +2585,7 @@ else
   $('.append_expense').html(result.expense_typess);
   $('#expense_count').val(result.expense_cnt);
 }
+$('.taxes').html(result.tax_append);
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);
@@ -2549,6 +2636,8 @@ function so_details()
   var so_no=$('.so_no').val();
   $('.sale_estimation_no').val('');
   $('.sale_estimation_date').val('');
+  $('.r_in_no').val('');
+  $('.r_in_date').val('');
   $('select').select2();
 
   $.ajax({
@@ -2587,6 +2676,7 @@ $('.sale_type').text('Credit Sale');
 $('.sale_date').text(result.date_saleorder);
 $('.estimation_date').text(result.date_estimation);
 $('.estimation_no').text(result.estimation_no);
+$('.taxes').html(result.tax_append);
 
 // $('.total_net_price').append(result.item_net_value_sum);
 // $('#igst').val(result.item_gst_rs_sum);
@@ -2664,6 +2754,7 @@ else
   $('.append_expense').html(result.expense_typess);
   $('#expense_count').val(result.expense_cnt);
 }
+$('.taxes').html(result.tax_append);
 $('#counts').val(result.status);
 $('.no_items').text(result.status);
 $('.invoice_val').text(result.item_net_value_sum);

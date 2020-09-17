@@ -452,6 +452,7 @@ class PurchaseEntryController extends Controller
         $purchase_entry = PurchaseEntry::where('p_no',$id)->first();
         $purchase_entry_items = PurchaseEntryItem::where('p_no',$id)->get();
         $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$id)->get();
+        $tax = ReceiptNoteTax::where('rn_no',$id)->get();
 
         $item_row_count = count($purchase_entry_items);
         $expense_row_count = count($purchase_entry_expense);
@@ -607,7 +608,7 @@ class PurchaseEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type','total_netvalue'));
+        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type','total_netvalue','tax'));
     }
 
     /**
@@ -633,6 +634,9 @@ class PurchaseEntryController extends Controller
         $purchase_entry_data = PurchaseEntry::where('p_no',$id);
         $purchase_entry_data->delete();
 
+        $purchase_entry_tax_data = PurchaseEntryTax::where('p_no',$id);
+        $purchase_entry_tax_data->delete();
+
         // $purchase_entry_item_details = PurchaseEntryItem::where('p_no',$id)->get();
         // $purchase_entry_item_count = count($purchase_entry_item_details);
         // foreach ($purchase_entry_item_details as $key => $value) {
@@ -647,6 +651,8 @@ class PurchaseEntryController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+        $tax = Tax::all();
 
 
         $debit_item = DebitNoteItem::where('p_no',$request->p_no)->get();
@@ -753,6 +759,23 @@ class PurchaseEntryController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new PurchaseEntryTax;
+
+               $tax_details->p_no = $voucher_no;
+               $tax_details->p_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 

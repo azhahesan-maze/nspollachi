@@ -387,6 +387,7 @@ class SalesOrderController extends Controller
         $saleorder = SaleOrder::where('so_no',$id)->first();
         $saleorder_items = SaleOrderItem::where('so_no',$id)->get();
         $saleorder_expense = SaleOrderExpense::where('so_no',$id)->get();
+        $tax = SaleOrderTax::where('so_no',$id)->get();
 
         $item_row_count = count($saleorder_items);
         $expense_row_count = count($saleorder_expense);
@@ -484,7 +485,7 @@ class SalesOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
     }
 
     /**
@@ -499,6 +500,9 @@ class SalesOrderController extends Controller
         $saleorder_data = SaleOrder::where('so_no',$id);
         $saleorder_data->delete();
 
+        $saleorder_tax_data = SaleOrderTax::where('so_no',$id);
+        $saleorder_tax_data->delete();
+
         $saleorder_item_data = SaleOrderItem::where('so_no',$id);
         $saleorder_item_data->delete();
 
@@ -507,6 +511,8 @@ class SalesOrderController extends Controller
 
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
+
+        $tax = Tax::all();
 
          $saleorder = new SaleOrder();
 
@@ -576,6 +582,23 @@ class SalesOrderController extends Controller
            
             
         }
+
+        foreach ($tax as $key => $value) 
+            {
+            $str_json = json_encode($value->name); //array to json string conversion
+            $tax_name = str_replace('"', '', $str_json);
+            $value_name = $tax_name.'_id';
+
+               $tax_details = new SaleOrderTax;
+
+               $tax_details->so_no = $voucher_no;
+               $tax_details->so_date = $voucher_date;
+               $tax_details->taxmaster_id = $request->$value_name;
+               $tax_details->value = $request->$tax_name;
+
+               $tax_details->save();
+
+            }
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 
