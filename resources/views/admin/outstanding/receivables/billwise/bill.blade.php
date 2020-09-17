@@ -69,6 +69,44 @@ table, th, td {
           </div>
           
           <br><br>
+
+          <div class="col-md-12 form-row mb-3">
+            <div class="col-md-2">
+              <label>From</label>
+            <input type="date" class="form-control from" name="from" id="from">
+            </div>
+
+            <div class="col-md-2">
+              <label>To</label>
+            <input type="date" class="form-control to" name="to" id="to">
+            </div>
+
+              <div class="col-sm-2">
+                <label>Nature </label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
+                  <option value="">Choose Nature</option>
+                           <option value="">Pending</option>
+                           <option value="">Advance</option>
+                        </select>
+              </div>
+              <div class="col-md-2">
+              <label>Head</label>
+            <input type="text" class="form-control head" placeholder="Head" name="head" id="head">
+            </div>
+            <div class="col-md-2">
+              <label>Amount</label>
+            <input type="Number" class="form-control amount" placeholder="Amont" name="amount" id="amount">
+            </div>
+            <div class="col-sm-2">
+                <label>Choose Any One</label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
+                  <option value="">Choose Any One</option>
+                           <option value="">Greater Than</option>
+                           <option value="">Less Than</option>
+                           <option value="">Equal To</option>
+                        </select>
+              </div>
+          </div>
           
           <div class="col-md-12">
             
