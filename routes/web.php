@@ -879,6 +879,12 @@ Route::resource('payable_partywise','PayablePartywiseController',['middleware' =
 
 /*Outstanding Report End Here*/
 
+/*Day Book Start Here*/
+
+Route::resource('daybook','DayBookController',['middleware' => ['auth']]);
+
+/*Day Book End Here*/
+
 
 /*POS Start Here*/
 
