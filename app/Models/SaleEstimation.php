@@ -15,4 +15,9 @@ class SaleEstimation extends Model
     {
         return $this->belongsTo(Agent::class, 'agent_id', 'id');
     }
+
+    public function salesman()
+    {
+        return $this->belongsTo(SalesMan::class, 'salesman_id', 'id');
+    }
 }

@@ -21,6 +21,7 @@ use App\Models\SaleEstimationTax;
 use App\Models\SaleEstimationItem;
 use App\Models\SaleEstimationExpense;
 use App\Models\Customer;
+use App\Models\SalesMan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\SaleOrder;
@@ -116,6 +117,7 @@ class SalesOrderController extends Controller
         $estimation = SaleEstimation::all();
         $customer = Customer::all();
         $tax = Tax::all();
+        $sales_man = SalesMan::all();
         
 
         $voucher_num=SaleOrder::orderBy('so_no','DESC')
@@ -137,7 +139,7 @@ class SalesOrderController extends Controller
          }
 
 
-        return view('admin.sales_order.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','customer','tax'));
+        return view('admin.sales_order.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','customer','tax','sales_man'));
     }
 
     /**
@@ -177,6 +179,7 @@ class SalesOrderController extends Controller
          $saleorder->estimation_no = $request->estimation_no;
          $saleorder->estimation_date = $request->estimation_date;
          $saleorder->customer_id = $request->customer_id;
+         $saleorder->salesman_id = $request->salesmen_id;
          $saleorder->sale_type = $request->sale_type;
          $saleorder->overall_discount = $request->overall_discount;
          $saleorder->total_net_value = $request->total_price;
@@ -383,6 +386,7 @@ class SalesOrderController extends Controller
         $expense_type = ExpenseType::all();
         $estimation = SaleEstimation::all();
         $customer = Customer::all();
+        $sales_man = SalesMan::all();
 
         $saleorder = SaleOrder::where('so_no',$id)->first();
         $saleorder_items = SaleOrderItem::where('so_no',$id)->get();
@@ -485,7 +489,7 @@ class SalesOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
+        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man'));
     }
 
     /**
@@ -521,6 +525,7 @@ class SalesOrderController extends Controller
          $saleorder->estimation_no = $request->estimation_no;
          $saleorder->estimation_date = $request->estimation_date;
          $saleorder->customer_id = $request->customer_id;
+         $saleorder->salesman_id = $request->salesmen_id;
          $saleorder->sale_type = $request->sale_type;
          $saleorder->overall_discount = $request->overall_discount;
          $saleorder->total_net_value = $request->total_price;

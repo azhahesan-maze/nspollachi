@@ -17,6 +17,7 @@ use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
 use App\Models\Customer;
+use App\Models\SalesMan;
 use App\Models\SaleEstimation;
 use App\Models\SaleEstimationItem;
 use App\Models\SaleEstimationExpense;
@@ -110,6 +111,7 @@ class SalesEstimationController extends Controller
         $expense_type = ExpenseType::all();
         $customer = Customer::all();
         $tax = Tax::all();
+        $sales_man = SalesMan::all();
         
 
         $voucher_num=SaleEstimation::orderBy('sale_estimation_no','DESC')
@@ -130,7 +132,7 @@ class SalesEstimationController extends Controller
          
          }
 
-        return view('admin.sales_estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','customer','tax'));
+        return view('admin.sales_estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','customer','tax','sales_man'));
     }
 
     /**
@@ -166,6 +168,7 @@ class SalesEstimationController extends Controller
          $sale_estimation->sale_estimation_no = $voucher_no;
          $sale_estimation->sale_estimation_date = $request->voucher_date;
          $sale_estimation->customer_id = $request->customer_id;
+         $sale_estimation->salesman_id = $request->salesmen_id;
          $sale_estimation->agent_id = $request->agent_id;
          $sale_estimation->overall_discount = $request->overall_discount;
          $sale_estimation->total_net_value = $request->total_price;
@@ -367,6 +370,7 @@ class SalesEstimationController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $customer = Customer::all();
+        $sales_man = SalesMan::all();
 
         $sale_estimation = SaleEstimation::where('sale_estimation_no',$id)->first();
         $sale_estimation_item = SaleEstimationItem::where('sale_estimation_no',$id)->get();
@@ -469,7 +473,7 @@ class SalesEstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
+        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man'));
     }
 
     /**
@@ -501,6 +505,7 @@ class SalesEstimationController extends Controller
          $sale_estimation->sale_estimation_no = $request->voucher_no;
          $sale_estimation->sale_estimation_date = $request->voucher_date;
          $sale_estimation->customer_id = $request->customer_id;
+         $sale_estimation->salesman_id = $request->salesmen_id;
          $sale_estimation->agent_id = $request->agent_id;
          $sale_estimation->overall_discount = $request->overall_discount;
          $sale_estimation->total_net_value = $request->total_price;

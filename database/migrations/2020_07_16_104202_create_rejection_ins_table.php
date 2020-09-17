@@ -20,6 +20,7 @@ class CreateRejectionInsTable extends Migration
             $table->string('s_no')->nullable();
             $table->date('s_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->bigInteger('salesman_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();
             $table->decimal('total_net_value', 10,2)->nullable();

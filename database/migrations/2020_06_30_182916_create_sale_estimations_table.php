@@ -18,6 +18,7 @@ class CreateSaleEstimationsTable extends Migration
             $table->string('sale_estimation_no')->nullable();
             $table->date('sale_estimation_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->bigInteger('salesman_id')->unsigned()->nullable();
             $table->bigInteger('agent_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();

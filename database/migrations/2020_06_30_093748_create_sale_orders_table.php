@@ -20,6 +20,7 @@ class CreateSaleOrdersTable extends Migration
             $table->string('estimation_no')->nullable();
             $table->date('estimation_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->bigInteger('salesman_id')->unsigned()->nullable();
             $table->boolean('sale_type')->comment = '1=>Cash Sale,0=>Credit Sale';
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();

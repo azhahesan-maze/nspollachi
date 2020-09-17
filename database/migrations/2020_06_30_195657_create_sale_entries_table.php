@@ -24,6 +24,7 @@ class CreateSaleEntriesTable extends Migration
             $table->string('d_no')->nullable();
             $table->date('d_date')->nullable();
             $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->bigInteger('salesman_id')->unsigned()->nullable();
             $table->decimal('overall_discount', 6,2)->nullable();
             $table->string('round_off')->nullable();
             $table->decimal('total_net_value', 10,2)->nullable();

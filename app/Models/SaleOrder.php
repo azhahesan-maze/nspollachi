@@ -10,4 +10,8 @@ class SaleOrder extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
+    public function salesman()
+    {
+        return $this->belongsTo(SalesMan::class, 'salesman_id', 'id');
+    }
 }

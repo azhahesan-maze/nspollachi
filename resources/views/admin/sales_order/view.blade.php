@@ -29,6 +29,7 @@
             <th>Estimation No </th>
             <th>Estimation Date </th>
             <th>Customer Name</th>
+            <th>Sales Man Name</th>
             <th>Sales Type</th>
             <th>overall Discount</th>
             <!-- <th>Round Off</th> -->
@@ -49,6 +50,11 @@
               <td>{{ $value->estimation_date }}</td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
+              @else
+              <td></td>
+              @endif
+              @if(isset($value->salesman->name) && !empty($value->salesman->name))
+              <td>{{ $value->salesman->name }}</td>
               @else
               <td></td>
               @endif
