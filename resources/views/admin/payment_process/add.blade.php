@@ -74,10 +74,10 @@
         <div class="form-row">
         <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Nature : </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Ledger : </label>
               <div class="col-sm-8">
                 <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
-                           <option value="">Choose Nature</option>
+                           <option value="">Ledger</option>
                            <option value="">Pending</option>
                            <option value="">Advance</option>
                         </select>
