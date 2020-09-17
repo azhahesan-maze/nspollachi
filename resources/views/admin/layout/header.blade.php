@@ -248,6 +248,7 @@
                           @can('supplier_list')
                             <li><a href="{{url('master/supplier')}}">Supplier</a></li>
                             @endcan
+                            <li><a href="{{route('sales_man.index')}}">Sales Man</a></li>
                          
                           </ul>
                     </li>

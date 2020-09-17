@@ -885,6 +885,13 @@ Route::resource('daybook','DayBookController',['middleware' => ['auth']]);
 
 /*Day Book End Here*/
 
+/*Sales Man Start Here*/
+
+Route::resource('sales_man','SalesManController',['middleware' => ['auth']]);
+Route::get('sales_man/delete/{id}', 'SalesManController@destroy');
+
+/*Day Book End Here*/
+
 
 /*POS Start Here*/
 
