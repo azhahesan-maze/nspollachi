@@ -82,6 +82,23 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                     
                                   </div>
                                 </div>
+
+                                <div class="col-md-3">
+                  <label style="font-family: Times new roman;">Sales Men Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select salesmen_id" name="salesmen_id" id="salesmen_id">
+                           <option value="">Choose Sales Men Name</option>
+                           @foreach($sales_man as $value)
+                           <option value="{{ $value->id }}">{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ route('sales_man.create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Sales Men"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_salesmen_id" title="Add Sales Men"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
                                 
 
                               </div>
