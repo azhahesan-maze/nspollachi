@@ -74,6 +74,19 @@
             </label>
           </div>
               </div>
+
+              <div class="col-md-6">
+              <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Man Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> 
+              @if(isset($sale_estimation->salesman->name) && !empty($sale_estimation->salesman->name))
+              {{ $sale_estimation->salesman->name }}
+              @else
+               N/A 
+              @endif
+            </label>
+          </div>
+              </div>
               
             </div>
                               

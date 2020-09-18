@@ -92,6 +92,19 @@
             </label>
           </div>
               </div>
+
+              <div class="col-md-6">
+              <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Man Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> 
+              @if(isset($saleorder->salesman->name) && !empty($saleorder->salesman->name))
+              {{ $saleorder->salesman->name }}
+              @else
+               N/A 
+              @endif
+            </label>
+          </div>
+              </div>
               
             </div>
                               

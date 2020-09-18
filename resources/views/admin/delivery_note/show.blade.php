@@ -78,6 +78,21 @@
               </div>
             </div>
 
+            <div class="row col-md-12">
+            <div class="col-md-6">
+              <div class="form-group row">
+            <label for="validationCustom01" class="col-sm-4 col-form-label">Sales Man Name :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> 
+              @if(isset($delivery_note->salesman->name) && !empty($delivery_note->salesman->name))
+              {{ $delivery_note->salesman->name }}
+              @else
+               N/A 
+              @endif
+            </label>
+          </div>
+        </div>
+      
+
             <!-- <div class="row col-md-12">
 
             <div class="col-md-6">
