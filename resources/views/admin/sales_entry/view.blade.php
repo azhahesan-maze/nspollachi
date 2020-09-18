@@ -31,6 +31,7 @@
             <th>Sale Order Date </th>
             <th>Delivery Note No </th>
             <th>Customer Name</th>
+            <th>Sales Man Name</th>
             <th>overall Discount</th>
             <!-- <th>Round Off</th> -->
             <th>Total Expense</th>
@@ -52,6 +53,11 @@
               <td>{{ $value->d_no }}</td>
               @if(isset($value->customer->name) && !empty($value->customer->name))
               <td>{{ $value->customer->name }}</td>
+              @else
+              <td></td>
+              @endif
+              @if(isset($value->salesman->name) && !empty($value->salesman->name))
+              <td>{{ $value->salesman->name }}</td>
               @else
               <td></td>
               @endif

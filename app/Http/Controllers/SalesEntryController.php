@@ -23,6 +23,7 @@ use App\Models\SaleOrderTax;
 use App\Models\SaleOrderItem;
 use App\Models\SaleOrderExpense;
 use App\Models\SaleEntry;
+use App\Models\SalesMan;
 use App\Models\SaleEntryTax;
 use App\Models\SaleEntryItem;
 use App\Models\SaleEntryExpense;
@@ -129,6 +130,7 @@ class SalesEntryController extends Controller
         $delivery_note = DeliveryNote::all();
         $customer = Customer::all();
         $tax = Tax::all();
+        $sales_man = SalesMan::all();
         
 
         // $voucher_num=SaleEntry::orderBy('s_no','DESC')
@@ -169,7 +171,7 @@ class SalesEntryController extends Controller
         // $voucher_no = str_random(6);
 
         return view('admin.sales_entry.add',compact('date','categories','sale_estimation',
-'delivery_note','voucher_no','supplier','item','agent','brand','expense_type','estimation','saleorder','customer','tax'));
+'delivery_note','voucher_no','supplier','item','agent','brand','expense_type','estimation','saleorder','customer','tax','sales_man'));
     }
 
     /**
@@ -232,6 +234,7 @@ class SalesEntryController extends Controller
          $sale_entry->d_no = $request->d_no;
          $sale_entry->d_date = $request->d_date;
          $sale_entry->customer_id = $request->customer_id;
+         $sale_entry->salesman_id = $request->salesmen_id;
          $sale_entry->overall_discount = $request->overall_discount;
          $sale_entry->total_net_value = $request->total_price;
          $sale_entry->round_off = $request->round_off;
@@ -452,6 +455,7 @@ class SalesEntryController extends Controller
         $sale_estimation = SaleEstimation::all();
         $delivery_note = DeliveryNote::all();
         $customer = Customer::all();
+        $sales_man = SalesMan::all();
 
         $sale_entry = SaleEntry::where('s_no',$id)->first();
         $sale_entry_items = SaleEntryItem::where('s_no',$id)->get();
@@ -554,7 +558,7 @@ class SalesEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_entry.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','estimation','saleorder','sale_estimation','delivery_note','sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
+        return view('admin.sales_entry.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','estimation','saleorder','sale_estimation','delivery_note','sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man'));
     }
 
     /**
@@ -594,6 +598,7 @@ class SalesEntryController extends Controller
          $sale_entry->d_no = $request->d_no;
          $sale_entry->d_date = $request->d_date;
          $sale_entry->customer_id = $request->customer_id;
+         $sale_entry->salesman_id = $request->salesmen_id;
          $sale_entry->overall_discount = $request->overall_discount;
          $sale_entry->total_net_value = $request->total_price;
          $sale_entry->round_off = $request->round_off;
