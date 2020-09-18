@@ -333,6 +333,7 @@ class SalesEntryController extends Controller
         $sale_entry = SaleEntry::where('s_no',$id)->first();
         $sale_entry_items = SaleEntryItem::where('s_no',$id)->get();
         $sale_entry_expense = SaleEntryExpense::where('s_no',$id)->get();
+        $tax = SaleEntryTax::where('s_no',$id)->get();
 
         //echo "<pre>"; print_r($purchase_entry_items);exit;
 
@@ -432,7 +433,7 @@ class SalesEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_entry.show',compact('sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.sales_entry.show',compact('sale_entry','sale_entry_items','sale_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
     }
 
     /**

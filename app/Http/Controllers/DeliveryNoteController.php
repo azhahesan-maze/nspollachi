@@ -335,6 +335,7 @@ class DeliveryNoteController extends Controller
         $delivery_note = DeliveryNote::where('d_no',$id)->first();
         $delivery_note_items = DeliveryNoteItem::where('d_no',$id)->get();
         $delivery_note_expense = DeliveryNoteExpense::where('d_no',$id)->get();
+        $tax = DeliveryNoteTax::where('d_no',$id)->get();
 
         //echo "<pre>"; print_r($purchase_entry_items);exit;
 
@@ -434,7 +435,7 @@ class DeliveryNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.delivery_note.show',compact('delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.delivery_note.show',compact('delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
     }
 
     /**

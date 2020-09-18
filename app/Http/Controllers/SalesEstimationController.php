@@ -255,6 +255,9 @@ class SalesEstimationController extends Controller
         $sale_estimation = SaleEstimation::where('sale_estimation_no',$id)->first();
         $sale_estimation_item = SaleEstimationItem::where('sale_estimation_no',$id)->get();
         $sale_estimation_expense = SaleEstimationExpense::where('sale_estimation_no',$id)->get();
+        $tax = SaleEstimationTax::where('sale_estimation_no',$id)->get();
+
+        $tax_names = Tax::all();
 
         $item_row_count = count($sale_estimation_item);
         $expense_row_count = count($sale_estimation_expense);
@@ -352,7 +355,7 @@ class SalesEstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_estimation.show',compact('sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.sales_estimation.show',compact('sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax','tax_names'));
     }
 
     /**

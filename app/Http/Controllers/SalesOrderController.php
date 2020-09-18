@@ -269,6 +269,7 @@ class SalesOrderController extends Controller
         $saleorder = SaleOrder::where('so_no',$id)->first();
         $saleorder_items = SaleOrderItem::where('so_no',$id)->get();
         $saleorder_expense = SaleOrderExpense::where('so_no',$id)->get();
+        $tax = SaleOrderTax::where('so_no',$id)->get();
 
         $item_row_count = count($saleorder_items);
         $expense_row_count = count($saleorder_expense);
@@ -366,7 +367,7 @@ class SalesOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_order.show',compact('saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.sales_order.show',compact('saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
     }
 
     /**
