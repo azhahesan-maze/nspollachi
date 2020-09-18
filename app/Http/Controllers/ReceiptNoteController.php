@@ -767,6 +767,7 @@ class ReceiptNoteController extends Controller
         $receipt_note_data = ReceiptNote::where('rn_no',$id);
         $receipt_note_item_data = ReceiptNoteItem::where('rn_no',$id);
         $receipt_note_expense_data = ReceiptNoteExpense::where('rn_no',$id);
+        $receipt_note_tax_data = ReceiptNoteTax::where('rn_no',$id);
         
         if($receipt_note_data)
         {
@@ -780,6 +781,10 @@ class ReceiptNoteController extends Controller
          if($receipt_note_expense_data)
          {
             $receipt_note_expense_data->delete();
+         }
+         if($receipt_note_tax_data)
+         {
+            $receipt_note_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

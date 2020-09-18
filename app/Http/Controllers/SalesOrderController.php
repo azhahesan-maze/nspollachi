@@ -619,6 +619,7 @@ class SalesOrderController extends Controller
         $saleorder_data = SaleOrder::where('so_no',$id);
         $saleorder_item_data = SaleOrderItem::where('so_no',$id);
         $saleorder_expense_data = SaleOrderExpense::where('so_no',$id);
+        $saleorder_tax_data = SaleOrderTax::where('so_no',$id);
         
         if($saleorder_data)
         {
@@ -632,6 +633,10 @@ class SalesOrderController extends Controller
          if($saleorder_expense_data)
          {
             $saleorder_expense_data->delete();
+         }
+         if($saleorder_tax_data)
+         {
+            $saleorder_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

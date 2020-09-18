@@ -610,6 +610,7 @@ class PurchaseOrderController extends Controller
         $purchaseorder_data = Purchase_Order::where('po_no',$id);
         $purchaseorder_item_data = PurchaseOrderItem::where('po_no',$id);
         $purchaseorder_expense_data = PurchaseOrderExpense::where('po_no',$id);
+        $purchaseorder_tax_data = PurchaseOrderTax::where('po_no',$id);
         
         if($purchaseorder_data)
         {
@@ -623,7 +624,12 @@ class PurchaseOrderController extends Controller
          if($purchaseorder_expense_data)
          {
             $purchaseorder_expense_data->delete();
+         }
+         if($purchaseorder_tax_data)
+         {
+            $purchaseorder_tax_data->delete();
          }   
+         
         
         return Redirect::back()->with('success', 'Deleted Successfully');
     }

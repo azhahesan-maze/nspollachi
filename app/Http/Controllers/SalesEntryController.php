@@ -702,6 +702,7 @@ class SalesEntryController extends Controller
         $sale_entry_data = SaleEntry::where('s_no',$id);
         $sale_entry_item_data = SaleEntryItem::where('s_no',$id);
         $sale_entry_expense_data = SaleEntryExpense::where('s_no',$id);
+        $sale_entry_tax_data = SaleEntryTax::where('s_no',$id);
 
         $rejection_in = RejectionIn::where('s_no',$id);
         $rejection_in_item = RejectionInItem::where('s_no',$id);
@@ -719,6 +720,10 @@ class SalesEntryController extends Controller
          if($sale_entry_expense_data)
          {
             $sale_entry_expense_data->delete();
+         }
+         if($sale_entry_tax_data)
+         {
+            $sale_entry_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

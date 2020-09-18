@@ -719,6 +719,7 @@ class DeliveryNoteController extends Controller
         $delivery_note_data = DeliveryNote::where('d_no',$id);
         $delivery_note_item_data = DeliveryNoteItem::where('d_no',$id);
         $delivery_note_expense_data = DeliveryNoteExpense::where('d_no',$id);
+        $delivery_note_tax_data = DeliveryNoteTax::where('d_no',$id);
         
         if($delivery_note_data)
         {
@@ -732,6 +733,10 @@ class DeliveryNoteController extends Controller
          if($delivery_note_expense_data)
          {
             $delivery_note_expense_data->delete();
+         }
+         if($delivery_note_tax_data)
+         {
+            $delivery_note_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

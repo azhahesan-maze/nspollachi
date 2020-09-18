@@ -597,6 +597,7 @@ class SalesEstimationController extends Controller
         $sale_estimation_data = SaleEstimation::where('sale_estimation_no',$id);
         $sale_estimation_item_data = SaleEstimationItem::where('sale_estimation_no',$id);
         $sale_estimation_expense_data = SaleEstimationExpense::where('sale_estimation_no',$id);
+        $sale_estimation_tax_data = SaleEstimationTax::where('sale_estimation_no',$id);
         
         if($sale_estimation_data)
         {
@@ -610,6 +611,10 @@ class SalesEstimationController extends Controller
          if($sale_estimation_expense_data)
          {
             $sale_estimation_expense_data->delete();
+         }
+         if($sale_estimation_tax_data)
+         {
+            $sale_estimation_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

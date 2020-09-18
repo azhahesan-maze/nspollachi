@@ -791,6 +791,7 @@ class PurchaseEntryController extends Controller
         $purchase_entry_data = PurchaseEntry::where('p_no',$id);
         $purchase_entry_item_data = PurchaseEntryItem::where('p_no',$id);
         $purchase_entry_expense_data = PurchaseEntryExpense::where('p_no',$id);
+        $purchase_entry_tax_data = PurchaseEntryTax::where('p_no',$id);
 
         $rejection_out = RejectionOut::where('p_no',$id);
         $rejection_out_item = RejectionOutItem::where('p_no',$id);
@@ -811,6 +812,10 @@ class PurchaseEntryController extends Controller
          {
             $purchase_entry_expense_data->delete();
             $rejection_out_expense->delete();
+         }
+         if($purchase_entry_tax_data)
+         {
+            $purchase_entry_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

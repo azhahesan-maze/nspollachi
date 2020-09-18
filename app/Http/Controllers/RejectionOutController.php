@@ -360,6 +360,11 @@ class RejectionOutController extends Controller
                $tax_details->taxmaster_id = $request->$value_name;
                $tax_details->value = $request->$tax_name;
 
+               $tax_details->p_no = $request->p_no;
+                $tax_details->p_date = $request->p_date;
+                $tax_details->rn_no = $request->receipt_no;
+                $tax_details->rn_date = $request->receipt_date;
+
                $tax_details->save();
 
             }
@@ -740,6 +745,7 @@ class RejectionOutController extends Controller
         $rejection_out_data = RejectionOut::where('p_no',$id)->orWhere('rn_no',$id);
         $rejection_out_item_data = RejectionOutItem::where('p_no',$id)->orWhere('rn_no',$id);
         $rejection_out_expense_data = RejectionOutExpense::where('p_no',$id)->orWhere('rn_no',$id);
+        $rejection_out_tax_data = RejectionOutTax::where('p_no',$id)->orWhere('rn_no',$id);
 
 
         $purchase_entry_item = PurchaseEntryItem::where('p_no',$id)->get();
@@ -772,6 +778,10 @@ class RejectionOutController extends Controller
          if($rejection_out_expense_data)
          {
             $rejection_out_expense_data->delete();
+         }
+         if($rejection_out_tax_data)
+         {
+            $rejection_out_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

@@ -625,11 +625,12 @@ class EstimationController extends Controller
         $estimation_data = Estimation::where('estimation_no',$id);
         $estimation_item_data = Estimation_Item::where('estimation_no',$id);
         $estimation_expense_data = Estimation_Expense::where('estimation_no',$id);
+        $estimation_tax_data = EstimationTax::where('estimation_no',$id);
         
-        if($estimation_data)
-        {
+         if($estimation_data)
+         {
             $estimation_data->delete();
-        }
+         }
          if($estimation_item_data)
          {
             $estimation_item_data->delete();
@@ -638,6 +639,10 @@ class EstimationController extends Controller
          if($estimation_expense_data)
          {
             $estimation_expense_data->delete();
+         }
+         if($estimation_tax_data)
+         {
+            $estimation_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');

@@ -363,6 +363,11 @@ class RejectionInController extends Controller
                $tax_details->taxmaster_id = $request->$value_name;
                $tax_details->value = $request->$tax_name;
 
+               $tax_details->s_no = $request->s_no;
+               $tax_details->s_date = $request->s_date;
+               $tax_details->d_no = $request->d_no;
+               $tax_details->d_date = $request->d_date;
+
                $tax_details->save();
 
             }
@@ -727,6 +732,7 @@ class RejectionInController extends Controller
         $rejection_in_data = RejectionIn::where('s_no',$id)->orWhere('d_no',$id);
         $rejection_in_item_data = RejectionInItem::where('s_no',$id)->orWhere('d_no',$id);
         $rejection_in_expense_data = RejectionInExpense::where('s_no',$id)->orWhere('d_no',$id);
+        $rejection_in_tax_data = RejectionInTax::where('s_no',$id)->orWhere('d_no',$id);
 
         $sale_entry_item = SaleEntryItem::where('s_no',$id)->get();
         foreach ($sale_entry_item as $key => $value) {
@@ -756,6 +762,10 @@ class RejectionInController extends Controller
          if($rejection_in_expense_data)
          {
             $rejection_in_expense_data->delete();
+         }
+         if($rejection_in_tax_data)
+         {
+            $rejection_in_tax_data->delete();
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');
