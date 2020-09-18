@@ -121,7 +121,25 @@ table, th, td {
               <label>Head</label>
             <input type="text" class="form-control head" placeholder="Head" name="head" id="head">
             </div>
-            <div class="col-md-2">
+
+            <div class="col-md-3">
+              <label>Amount</label>
+            <div class="input-group">
+              <input type="text" class="form-control col-md-9" aria-label="Text input with dropdown button" placeholder="Amount" name="amount">
+              <div class="input-group-append col-md-3 p-0">
+ 
+                  <select class=" form-control custom-select operator"  name="operator" id="operator">
+                  <option value="">Operator</option>
+                           <option value="1">></option>
+                           <option value="2"><</option>
+                           <option value="3">=</option>
+                        </select>
+
+              </div>
+            </div>
+          </div>
+
+            <!-- <div class="col-md-2">
               <label>Amount</label>
             <input type="Number" class="form-control amount" placeholder="Amont" name="amount" id="amount">
             </div>
@@ -133,7 +151,7 @@ table, th, td {
                            <option value="">Less Than</option>
                            <option value="">Equal To</option>
                         </select>
-              </div>
+              </div> -->
           </div>
 
         <div class="form-row">

@@ -535,3 +535,7 @@ th.tbl_wd {
 	font-size:12px;
 }
 
+.operator {
+        height: 32px !important;
+    border-radius: 0 !important;
+}
