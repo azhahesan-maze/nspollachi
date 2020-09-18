@@ -961,6 +961,13 @@ Route::get('account_head/delete/{id}', 'AccountHeadController@destroy');
 
 /*Account Head End Here*/
 
+/*Stock Report strat*/
+
+Route::resource('stock_summary','StockSummaryController',['middleware' => ['auth']]);
+Route::resource('stock_ageing','StockAgeingController',['middleware' => ['auth']]);
+
+/*Stock Report end*/
+
 
 /* Head Office Details Master Group Start Here  */
 Route::group(['prefix' => 'master/ho_details', 'middleware' => ['auth']], function () {

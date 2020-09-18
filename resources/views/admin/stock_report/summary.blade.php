@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Bill Wise(Payables)</h3>
+          <h3>Stock Summary</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('payable_billwise.index')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{route('stock_summary.index')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -125,26 +125,69 @@ table, th, td {
               </div> -->
           </div>
           
-          <table class="table" id="team-list">
+          <table class="table table-responsive" id="team-list">
                   <thead>
-                    <th> S.no </th>
-                    <th> Bill.no </th>
-                    <th> Bill Date</th>
-                    <th> Party Name</th>
-                    <th> Bill Amount</th>
-                    <th> Cleared Amount</th>
-                    <th> Pending Amount</th>
-                    <th id="0-30" style="display: none;">0-30 Days</th>
-                    <th id="31-60" style="display: none;">31-60 Days</th>
-                    <th id="61-90" style="display: none;">61-90 Days</th>
-                    <th id="91-120" style="display: none;">91-120 Days</th>
-                    <th id="120" style="display: none;">(>120 Days)</th>
-                    <th> No Of Days From Bill Date</th>
-                    <th> No Of Days From Due Date</th>
-                    <th> Sales Man Name</th>
-                    <th> Customer Contact Name</th>
-                    <th> Customer Contact Number</th>
-                    <th> Customer Contact Email Id</th>
+                    <tr>
+                    <th rowspan="2"> S.no </th>
+                    <th rowspan="2"> Date</th>
+                    <th rowspan="2"> Name Of Item </th>
+                    <th rowspan="2"> Group</th>
+                    <th rowspan="2"> Category</th>
+                    <th align="center" colspan="3"> Opening Stock</th>
+                    <th align="center" colspan="3"> Purchase Estimation</th>
+                    <th align="center" colspan="3"> Purchase Order</th>
+                    <th align="center" colspan="3"> Receipt Note</th>
+                    <th align="center" colspan="3"> Purchase Entry</th>
+                    <th align="center" colspan="3"> Rejection Out</th>
+                    <th align="center" colspan="3"> Debit Note</th>
+                    <th align="center" colspan="3"> Sales Estimation</th>
+                    <th align="center" colspan="3"> Sales Order</th>
+                    <th align="center" colspan="3"> Delivery Note</th>
+                    <th align="center" colspan="3"> Sales Entry</th>
+                    <th align="center" colspan="3"> Rejection In</th>
+                    <th align="center" colspan="3"> Credit Note</th>
+                    </tr>
+                    <tr>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th> 
+                    </tr>
                   </thead>
                   <tbody>
 

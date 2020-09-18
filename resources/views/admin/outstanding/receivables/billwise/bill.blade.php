@@ -33,10 +33,9 @@ table, th, td {
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
             </div>
-
             
-            <div class="col-md-2 analysis1" style="display: none;">
-              <div style="background-color: #E5E8E8;">
+            <div class="col-md-1 analysis1" style="display: none;">
+              <!-- <div style="background-color: #E5E8E8;">
               <label>0-30 Days</label>
               <input type="checkbox" name="from1" value="0" onclick="from0()" id="from1"><br>
               <label>31-60 Days</label>
@@ -48,22 +47,24 @@ table, th, td {
               <label> >120 Days</label>
               <input type="checkbox" name="from1" value="0" onclick="from120()" id="from5"><br>
               </div>
-              <br>
-              <!-- <input type="Number" readonly="" class="form-control" name="from2" value="31" id="from2"><br>
-              <input type="Number" readonly="" class="form-control" name="from3" value="61" id="from3"><br>
-              <input type="Number" readonly="" class="form-control" name="from4" value="91" id="from4"><br>
-              <input type="Number" readonly="" class="form-control" name="from5" value="121" id="from5"><br> -->
+              <br> -->
+              <label>From</label>
+              <input type="Number" class="form-control" oninput="from_value1()" style="display: none;" name="from1" value="0" id="from1"><br>
+              <input type="Number" class="form-control" oninput="from_value2()" style="display: none;" name="from2" value="0" id="from2"><br>
+              <input type="Number" class="form-control" oninput="from_value3()" style="display: none;" name="from3" value="0" id="from3"><br>
+              <input type="Number" class="form-control" oninput="from_value4()" style="display: none;" name="from4" value="0" id="from4"><br>
+              <input type="Number" class="form-control" oninput="from_value5()" style="display: none;" name="from5" value="0" id="from5"><br>
               
             </div>
 
-            <!-- <div class="col-md-1 analysis2" style="display: none;">
+            <div class="col-md-1 analysis2" style="display: none;">
               <label>To</label>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-              <input type="Number" class="form-control" name="to" id="to"><br>
-            </div> -->
+              <input type="Number" class="form-control" onchange="to_value1()" style="display: none;" name="to1" value="0" id="to1"><br>
+              <input type="Number" class="form-control" onchange="to_value2()" style="display: none;" name="to2" value="0" id="to2"><br>
+              <input type="Number" class="form-control" onchange="to_value3()" style="display: none;" name="to3" value="0" id="to3"><br>
+              <input type="Number" class="form-control" onchange="to_value4()" style="display: none;" name="to4" value="0" id="to4"><br>
+              <input type="Number" class="form-control" onchange="to_value5()" style="display: none;" name="to5" value="0" id="to5"><br>
+            </div>
 
             
           </div>
@@ -179,45 +180,7 @@ table, th, td {
       </form>
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
-    <script>
-      function ageing_analysis() 
-      {
-        $('.analysis1').show();
-        $('.analysis2').show();
-        $('#0-30').show();
-        $('#31-60').show();
-        $('#61-90').show();
-        $('#90-120').show();
-        $('#120').show();
-      }
-
-      function from0()
-      {
-        
-      }
-      function from30()
-      {
-        $('#from1').attr('checked','checked');
-      }
-      function from60()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-      }
-      function from90()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-        $('#from3').attr('checked','checked');
-      }
-      function from120()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-        $('#from3').attr('checked','checked');
-        $('#from4').attr('checked','checked');
-      }
-    </script>
+    <script src="{{asset('assets/js/ageing_analysis/ageing.js')}}"></script>
     <!-- card body end@ -->
   </div>
 </div>

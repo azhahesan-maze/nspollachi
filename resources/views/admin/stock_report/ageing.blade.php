@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Bill Wise(Payables)</h3>
+          <h3>Stock Ageing</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('payable_billwise.index')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{route('stock_ageing.index')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
@@ -24,7 +24,7 @@ table, th, td {
 </style>
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('payable_billwise.store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('stock_ageing.store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
         <div class="form-row">
@@ -128,23 +128,15 @@ table, th, td {
           <table class="table" id="team-list">
                   <thead>
                     <th> S.no </th>
-                    <th> Bill.no </th>
-                    <th> Bill Date</th>
-                    <th> Party Name</th>
-                    <th> Bill Amount</th>
-                    <th> Cleared Amount</th>
-                    <th> Pending Amount</th>
+                    <th> Name Of Item </th>
+                    <th>Quantity</th>
+                    <th> Rate</th>
+                    <th> Amount</th>
                     <th id="0-30" style="display: none;">0-30 Days</th>
                     <th id="31-60" style="display: none;">31-60 Days</th>
                     <th id="61-90" style="display: none;">61-90 Days</th>
                     <th id="91-120" style="display: none;">91-120 Days</th>
                     <th id="120" style="display: none;">(>120 Days)</th>
-                    <th> No Of Days From Bill Date</th>
-                    <th> No Of Days From Due Date</th>
-                    <th> Sales Man Name</th>
-                    <th> Customer Contact Name</th>
-                    <th> Customer Contact Number</th>
-                    <th> Customer Contact Email Id</th>
                   </thead>
                   <tbody>
 
@@ -160,6 +152,8 @@ table, th, td {
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
     <script src="{{asset('assets/js/ageing_analysis/ageing.js')}}"></script>
+
+    
     <!-- card body end@ -->
   </div>
 </div>

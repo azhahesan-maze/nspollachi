@@ -503,7 +503,7 @@
             
           </li>
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Day Book
             </a>
@@ -521,7 +521,62 @@
             </ul>        
             
             
+          </li> -->
+
+          <!-- <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Stock Reports
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">Stock Reports</li>
+                           <li><a href="{{ route('daybook.index') }}">Stock Summary</a></li>
+                           <li><a href="{{ route('daybook.index') }}">Stock Ageing</a></li>
+                            
+                        </ul>
+                    </li>
+                    
+            </ul>        
+            
+            
+          </li> -->
+
+          <li class="nav-item dropdown menu-large">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Reports
+            </a>
+            <ul class="dropdown-menu megamenu">
+                    <div class="row mx-0">
+
+                      <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">Day Book</li>
+                           <li><a href="{{ route('daybook.index') }}">Day Book</a></li>
+                            
+                        </ul>
+                    </li>
+
+                   <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">Stock Reports</li>
+                           <li><a href="{{ route('stock_summary.index') }}">Stock Summary</a></li>
+                           <li><a href="{{ route('stock_ageing.index') }}">Stock Ageing</a></li>
+                            
+                        </ul>
+                    </li>
+
+
+                    
+            </ul>        
+            
+            
           </li>
+
 
 
           <!-- <li class="nav-item dropdown menu-large">
