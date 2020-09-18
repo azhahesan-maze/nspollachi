@@ -284,6 +284,7 @@ class EstimationController extends Controller
         $estimation = Estimation::where('estimation_no',$id)->first();
         $estimation_item = Estimation_Item::where('estimation_no',$id)->get();
         $estimation_expense = Estimation_Expense::where('estimation_no',$id)->get();
+        $tax = EstimationTax::where('estimation_no',$id)->get();
 
         $item_row_count = count($estimation_item);
         $expense_row_count = count($estimation_expense);
@@ -381,7 +382,7 @@ class EstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.estimation.show',compact('estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.estimation.show',compact('estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
 
 
         //return view('admin.estimation.show');

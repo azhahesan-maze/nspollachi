@@ -328,6 +328,7 @@ class PurchaseEntryController extends Controller
         $purchase_entry = PurchaseEntry::where('p_no',$id)->first();
         $purchase_entry_items = PurchaseEntryItem::where('p_no',$id)->get();
         $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$id)->get();
+        $tax = ReceiptNoteTax::where('rn_no',$id)->get();
 
         //echo "<pre>"; print_r($purchase_entry_items);exit;
 
@@ -427,7 +428,7 @@ class PurchaseEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.show',compact('purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.purchase_entry.show',compact('purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
     }
 
     /**

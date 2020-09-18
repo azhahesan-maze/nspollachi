@@ -349,6 +349,8 @@ class ReceiptNoteController extends Controller
         $receipt_note = ReceiptNote::where('rn_no',$id)->first();
         $receipt_note_items = ReceiptNoteItem::where('rn_no',$id)->get();
         $receipt_note_expense = ReceiptNoteExpense::where('rn_no',$id)->get();
+        $tax = ReceiptNoteTax::where('rn_no',$id)->get();
+
 
         //echo "<pre>"; print_r($receipt_note_items);exit;
 
@@ -448,7 +450,7 @@ class ReceiptNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.receipt_note.show',compact('receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.receipt_note.show',compact('receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
     }
 
     /**

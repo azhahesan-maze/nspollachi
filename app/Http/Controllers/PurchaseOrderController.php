@@ -262,6 +262,7 @@ class PurchaseOrderController extends Controller
         $purchaseorder = Purchase_Order::where('po_no',$id)->first();
         $purchaseorder_items = PurchaseOrderItem::where('po_no',$id)->get();
         $purchaseorder_expense = PurchaseOrderExpense::where('po_no',$id)->get();
+        $tax = PurchaseOrderTax::where('po_no',$id)->get();
 
         $item_row_count = count($purchaseorder_items);
         $expense_row_count = count($purchaseorder_expense);
@@ -359,7 +360,7 @@ class PurchaseOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchaseorder.show',compact('purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst'));
+        return view('admin.purchaseorder.show',compact('purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax'));
 
     }
 

@@ -200,33 +200,16 @@
               </div>
                                  
 
+           @foreach($tax as $value)
           <div class="col-md-6">
             <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">IGST :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$item_gst_rs_sum}}</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label">{{$value->taxes->name}} :</label>
+            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$value->value}}</label>
           </div>
               </div>
+              @endforeach
             </div>
 
-
-
-            <div class="row col-md-12">
-
-            <div class="col-md-6">
-              <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">CGST :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$item_cgst}}</label>
-          </div>
-              </div>
-                                 
-
-          <div class="col-md-6">
-            <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-4 col-form-label">SGST :</label>
-            <label for="validationCustom01" class="col-sm-4 col-form-label"> {{$item_sgst}}</label>
-          </div>
-              </div>
-            </div>
 
             <div class="row col-md-12">
 
