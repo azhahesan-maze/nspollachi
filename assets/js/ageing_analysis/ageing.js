@@ -12,6 +12,7 @@
         
         $('#from1').show();
         $('#to1').show();
+        $('#go').show();
       }
 
       function to_value1()
@@ -28,7 +29,8 @@
           $('#to2').show();
           var val = parseInt(to_val) + 1;
           $('#from2').val(val);
-          $('#to2').val(0);
+          $('#from2').attr('readonly','readonly');
+          $('#to2').focus();
 
         }
       }
@@ -46,7 +48,8 @@
           $('#to3').show();
           var val = parseInt(to_val) + 1;
           $('#from3').val(val);
-          $('#to3').val(0);
+          $('#from3').attr('readonly','readonly');
+          $('#to3').focus();
 
         }
       }
@@ -64,7 +67,8 @@
           $('#to4').show();
           var val = parseInt(to_val) + 1;
           $('#from4').val(val);
-          $('#to4').val(0);
+          $('#from4').attr('readonly','readonly');
+          $('#to4').focus();
 
         }
       }
@@ -82,7 +86,8 @@
           $('#to5').show();
           var val = parseInt(to_val) + 1;
           $('#from5').val(val);
-          $('#to5').val(0);
+          $('#from5').attr('readonly','readonly');
+          $('#to5').focus();
 
         }
       }

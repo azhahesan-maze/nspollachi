@@ -318,7 +318,7 @@
  -->
           <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Purchase
+              Transactions
             </a>
             <ul class="dropdown-menu megamenu">
                     <div class="row mx-0">
@@ -337,6 +337,51 @@
                             
                         </ul>
                     </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                        <li class="dropdown-header">Sales</li>
+                        <li><a href="{{ url('sales_estimation/index/0') }}">Sales Estimation</a></li>
+                        <li><a href="{{ url('sale_order/index/0') }}">Sales Order</a></li>
+                        <li><a href="{{ url('delivery_note/index/0') }}">Delivery Note</a></li>
+                        <li><a href="{{ url('sales_entry/index/0') }}">Sales Entry</a></li>
+                        <li><a href="{{ url('rejection_in/index/0') }}">Rejection In</a></li>
+                        <li><a href="{{ url('sales_gatepass_entry/index/0') }}">Sales Gate Pass Entry</a></li>
+                        <li><a href="{{ url('credit_note/index/0') }}">Credit Note</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Payment</li>
+                           
+                           <li><a href="{{ route('payment_request.index') }}">Payment Request</a></li>
+                            <li><a href="{{ route('payment_process.index') }}">Payment Process</a></li>
+                            <li><a href="{{ route('payment_expense.index') }}">Payment Of Expenses</a></li>
+                            
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Receipt</li>
+                           
+                           <li><a href="{{ route('receipt_request.index') }}">Receipt Request</a></li>
+                            <li><a href="{{ route('receipt_process.index') }}">Receipt Process</a></li>
+                            <li><a href="{{ route('receipt_income.index') }}">Receipt Of Income</a></li>
+                            
+                        </ul>
+                    </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+                            <li class="dropdown-header">Advance Settlement</li>
+                           
+                           <li><a href="{{ route('advance_settlement_supplier.create') }}">Advance Settlement For Supplier</a></li>
+                            <li><a href="{{ route('advance_settlement_customer.create') }}">Advance Settlement For Customer</a></li>
+                            
+                        </ul>
+                    </li>
                     
                     
             </ul>        
@@ -344,7 +389,7 @@
             
           </li>
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sales
             </a>
@@ -368,9 +413,9 @@
             </ul>        
             
             
-          </li>
+          </li> -->
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Payment
             </a>
@@ -390,9 +435,9 @@
             </ul>        
             
             
-          </li>
+          </li> -->
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Receipt
             </a>
@@ -412,9 +457,9 @@
             </ul>        
             
             
-          </li>
+          </li> -->
 
-          <li class="nav-item dropdown menu-large">
+          <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Advance Settlement
             </a>
@@ -433,7 +478,7 @@
             </ul>        
             
             
-          </li>
+          </li> -->
 
           <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -503,7 +548,9 @@
             
           </li>
 
-          <!-- <li class="nav-item dropdown menu-large">
+
+
+          <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Day Book
             </a>
@@ -521,7 +568,7 @@
             </ul>        
             
             
-          </li> -->
+          </li>
 
           <!-- <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -546,19 +593,19 @@
 
           <li class="nav-item dropdown menu-large">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Reports
+             Stock Reports
             </a>
             <ul class="dropdown-menu megamenu">
                     <div class="row mx-0">
 
-                      <li class="col-md-3 dropdown-item">
+                      <!-- <li class="col-md-3 dropdown-item">
                         <ul>
 
                             <li class="dropdown-header">Day Book</li>
                            <li><a href="{{ route('daybook.index') }}">Day Book</a></li>
                             
                         </ul>
-                    </li>
+                    </li> -->
 
                    <li class="col-md-3 dropdown-item">
                         <ul>

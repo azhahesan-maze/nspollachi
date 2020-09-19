@@ -31,24 +31,11 @@ table, th, td {
 
           <div class="col-md-12 row">
 
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
-            </div>
+            </div> -->
             
-            <div class="col-md-1 analysis1" style="display: none;">
-              <!-- <div style="background-color: #E5E8E8;">
-              <label>0-30 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from0()" id="from1"><br>
-              <label>31-60 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from30()" id="from2"><br>
-              <label>61-90 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from60()" id="from3"><br>
-              <label>91-120 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from90()" id="from4"><br>
-              <label> >120 Days</label>
-              <input type="checkbox" name="from1" value="0" onclick="from120()" id="from5"><br>
-              </div>
-              <br> -->
+            <div class="col-md-2 analysis1" style="display: none;">
               <label>From</label>
               <input type="Number" class="form-control" oninput="from_value1()" style="display: none;" name="from1" value="0" id="from1"><br>
               <input type="Number" class="form-control" oninput="from_value2()" style="display: none;" name="from2" value="0" id="from2"><br>
@@ -58,13 +45,16 @@ table, th, td {
               
             </div>
 
-            <div class="col-md-1 analysis2" style="display: none;">
+
+            <div class="col-md-2 analysis2" style="display: none;">
               <label>To</label>
-              <input type="Number" class="form-control" onchange="to_value1()" style="display: none;" name="to1" value="0" id="to1"><br>
-              <input type="Number" class="form-control" onchange="to_value2()" style="display: none;" name="to2" value="0" id="to2"><br>
-              <input type="Number" class="form-control" onchange="to_value3()" style="display: none;" name="to3" value="0" id="to3"><br>
-              <input type="Number" class="form-control" onchange="to_value4()" style="display: none;" name="to4" value="0" id="to4"><br>
-              <input type="Number" class="form-control" onchange="to_value5()" style="display: none;" name="to5" value="0" id="to5"><br>
+              <div class="input-group-prepend">
+              <input type="Number" class="form-control" onchange="to_value1()" style="display: none;" name="to1" id="to1">&nbsp;&nbsp;<input type="button" class="btn btn-success go" id="go" value="Go" name="go">
+              </div><br>
+              <input type="Number" class="form-control" onchange="to_value2()" style="display: none;" name="to2" id="to2"><br>
+              <input type="Number" class="form-control" onchange="to_value3()" style="display: none;" name="to3" id="to3"><br>
+              <input type="Number" class="form-control" onchange="to_value4()" style="display: none;" name="to4" id="to4"><br>
+              <input type="Number" class="form-control" onchange="to_value5()" style="display: none;" name="to5" id="to5"><br>
             </div>
 
             
@@ -82,17 +72,35 @@ table, th, td {
             </div>
 
               <div class="col-sm-2">
-                <label>Nature </label>
-                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
-                  <option value="">Choose Nature</option>
+                <label>Category </label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select category"  name="category" id="category">
+                  <option value="">Choose Category</option>
+                  @foreach($category as $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endforeach
                         </select>
               </div>
-              <div class="col-md-2">
-              <label>Head</label>
-            <input type="text" class="form-control head" placeholder="Head" name="head" id="head">
-            </div>
+              <div class="col-sm-2">
+                <label>Item Name </label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select item"  name="item" id="item">
+                  <option value="">Choose Item Name</option>
+                  @foreach($item as $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endforeach
+                        </select>
+              </div>
 
-            <div class="col-md-3">
+              <div class="col-sm-2">
+                <label>Party Name </label>
+                <select class="js-example-basic-multiple col-12 form-control custom-select supplier"  name="supplier" id="supplier">
+                  <option value="">Choose Party Name</option>
+                  @foreach($supplier as $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endforeach
+                        </select>
+              </div>
+
+            <!-- <div class="col-md-3">
               <label>Amount</label>
             <div class="input-group">
               <input type="text" class="form-control col-md-9" aria-label="Text input with dropdown button" placeholder="Amount" name="amount">
@@ -107,7 +115,7 @@ table, th, td {
 
               </div>
             </div>
-          </div>
+          </div> -->
 
 
             <!-- <div class="col-md-2">

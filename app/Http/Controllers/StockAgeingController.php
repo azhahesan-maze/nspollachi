@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class StockAgeingController extends Controller
 {
@@ -13,7 +14,8 @@ class StockAgeingController extends Controller
      */
     public function index()
     {
-        return view('admin.stock_report.ageing');
+        $item = Item::all();
+        return view('admin.stock_report.ageing',compact('item'));
     }
 
     /**

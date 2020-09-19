@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Item;
+use App\Models\Supplier;
 
 class StockSummaryController extends Controller
 {
@@ -13,7 +16,10 @@ class StockSummaryController extends Controller
      */
     public function index()
     {
-        return view('admin.stock_report.summary');
+        $category = Category::all();
+        $item = Item::all();
+        $supplier = Supplier::all();
+        return view('admin.stock_report.summary',compact('category','item','supplier'));
     }
 
     /**
