@@ -29,10 +29,10 @@ table, th, td {
 
         <div class="form-row">
 
-          <div class="col-md-12 row">
+          <div class="col-md-12 row mb-3">
 
             <!-- <div class="col-md-2">
-            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="hide_column()" value="Hide Columns">
             </div> -->
             
             <div class="col-md-2 analysis1" style="display: none;">
@@ -58,6 +58,94 @@ table, th, td {
             </div>
 
             
+          </div>
+
+          <div class="col-md-12 row hiding">
+            <div class="col-md-2">
+              <label>Opening Stock</label>
+              <input type="checkbox" class="op_stock" name="opening_stock" value="1" id="opening_stock">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Closing Stock</label>
+              <input type="checkbox" class="cls_stock" name="closing_stock" value="1" id="closing_stock">
+            </div>
+
+            <div class="col-md-2">
+              <label>Purchase Estimation</label>
+              <input type="checkbox" class="p_e" name="purchase_estimation" value="1" id="purchase_estimation">
+            </div>
+
+            <div class="col-md-2">
+              <label>Purchase Order</label>
+              <input type="checkbox" class="p_o" name="purchase_order" value="1" id="purchase_order">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Receipt Note</label>
+              <input type="checkbox" class="r_note" name="receipt_note" value="1" id="receipt_note">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Purchase Entry</label>
+              <input type="checkbox" class="p_enrty" name="purchase_entry" value="1" id="purchase_entry">
+            </div>
+
+            </div>
+
+            <div class="col-md-12 row hiding">
+            <div class="col-md-2">
+              <label>Rejection Out</label>
+              <input type="checkbox" class="r_out" name="rejection_out" value="1" id="rejection_out">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Debit Note</label>
+              <input type="checkbox" class="d_n" name="debit_note" value="1" id="debit_note">
+            </div>
+
+            <div class="col-md-2">
+              <label>Sales Estimation</label>
+              <input type="checkbox" class="s_e" name="purchase_estimation" value="1" id="purchase_estimation">
+            </div>
+
+            <div class="col-md-2">
+              <label>Sales Order</label>
+              <input type="checkbox" class="s_o" name="purchase_order" value="1" id="purchase_order">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Delivery Note</label>
+              <input type="checkbox" class="d_note" name="delivery_note" value="1" id="delivery_note">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Sales Entry</label>
+              <input type="checkbox" class="s_entry" name="purchase_entry" value="1" id="purchase_entry">
+            </div>
+
+            </div>
+
+            <div class="col-md-12 mb-3 row hiding">
+            <div class="col-md-2">
+              <label>Rejection In</label>
+              <input type="checkbox" class="r_in" name="rejection_in" value="1" id="rejection_in">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Credit Note</label>
+              <input type="checkbox" class="c_note" name="credit_note" value="1" id="credit_note">
+            </div>
+
+            </div>
+
+            <div class="col-md-12 row mb-3">
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="hide_column()" value="Hide Columns">
+            </div>
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
+            </div>
           </div>
 
           <div class="col-md-12 form-row mb-3">
@@ -100,37 +188,7 @@ table, th, td {
                         </select>
               </div>
 
-            <!-- <div class="col-md-3">
-              <label>Amount</label>
-            <div class="input-group">
-              <input type="text" class="form-control col-md-9" aria-label="Text input with dropdown button" placeholder="Amount" name="amount">
-              <div class="input-group-append col-md-3 p-0">
- 
-                  <select class=" form-control custom-select operator"  name="operator" id="operator">
-                  <option value="">Operator</option>
-                           <option value="1">></option>
-                           <option value="2"><</option>
-                           <option value="3">=</option>
-                        </select>
-
-              </div>
-            </div>
-          </div> -->
-
-
-            <!-- <div class="col-md-2">
-              <label>Amount</label>
-            <input type="Number" class="form-control amount" placeholder="Amont" name="amount" id="amount">
-            </div>
-            <div class="col-sm-2">
-                <label>Choose Any One</label>
-                <select class="js-example-basic-multiple col-12 form-control custom-select nature"  name="nature" id="nature">
-                  <option value="">Choose Any One</option>
-                           <option value="">Greater Than</option>
-                           <option value="">Less Than</option>
-                           <option value="">Equal To</option>
-                        </select>
-              </div> -->
+            
           </div>
           
           <table class="table table-responsive" id="team-list">
@@ -141,64 +199,64 @@ table, th, td {
                     <th rowspan="2"> Name Of Item </th>
                     <th rowspan="2"> Group</th>
                     <th rowspan="2"> Category</th>
-                    <th align="center" colspan="3"> Opening Stock</th>
-                    <th align="center" colspan="3"> Closing Stock</th>
-                    <th align="center" colspan="3"> Purchase Estimation</th>
-                    <th align="center" colspan="3"> Purchase Order</th>
-                    <th align="center" colspan="3"> Receipt Note</th>
-                    <th align="center" colspan="3"> Purchase Entry</th>
-                    <th align="center" colspan="3"> Rejection Out</th>
-                    <th align="center" colspan="3"> Debit Note</th>
-                    <th align="center" colspan="3"> Sales Estimation</th>
-                    <th align="center" colspan="3"> Sales Order</th>
-                    <th align="center" colspan="3"> Delivery Note</th>
-                    <th align="center" colspan="3"> Sales Entry</th>
-                    <th align="center" colspan="3"> Rejection In</th>
-                    <th align="center" colspan="3"> Credit Note</th>
+                    <th align="center" colspan="3" id="op_stock"> Opening Stock</th>
+                    <th align="center" colspan="3" id="cls_stock"> Closing Stock</th>
+                    <th align="center" colspan="3" id="p_e"> Purchase Estimation</th>
+                    <th align="center" colspan="3" id="p_o"> Purchase Order</th>
+                    <th align="center" colspan="3" id="r_note"> Receipt Note</th>
+                    <th align="center" colspan="3" id="p_enrty"> Purchase Entry</th>
+                    <th align="center" colspan="3" id="r_out"> Rejection Out</th>
+                    <th align="center" colspan="3" id="d_n"> Debit Note</th>
+                    <th align="center" colspan="3" id="s_e"> Sales Estimation</th>
+                    <th align="center" colspan="3" id="s_o"> Sales Order</th>
+                    <th align="center" colspan="3" id="d_note"> Delivery Note</th>
+                    <th align="center" colspan="3" id="s_entry"> Sales Entry</th>
+                    <th align="center" colspan="3" id="r_in"> Rejection In</th>
+                    <th align="center" colspan="3" id="c_note"> Credit Note</th>
                     </tr>
                     <tr>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th>
-                      <th>Qty</th>
-                      <th>Rate</th>
-                      <th>Amount</th> 
+                      <th id="op_stock1">Qty</th>
+                      <th id="op_stock2">Rate</th>
+                      <th id="op_stock3">Amount</th>
+                      <th id="cls_stock1">Qty</th>
+                      <th id="cls_stock2">Rate</th>
+                      <th id="cls_stock3">Amount</th>
+                      <th id="p_e1">Qty</th>
+                      <th id="p_e2">Rate</th>
+                      <th id="p_e3">Amount</th>
+                      <th id="p_o1">Qty</th>
+                      <th id="p_o2">Rate</th>
+                      <th id="p_o3">Amount</th>
+                      <th id="r_note1">Qty</th>
+                      <th id="r_note2">Rate</th>
+                      <th id="r_note3"> Amount</th>
+                      <th id="p_enrty1">Qty</th>
+                      <th id="p_enrty2">Rate</th>
+                      <th id="p_enrty3">Amount</th>
+                      <th id="r_out1">Qty</th>
+                      <th id="r_out2">Rate</th>
+                      <th id="r_out3">Amount</th>
+                      <th id="d_n1">Qty</th>
+                      <th id="d_n2">Rate</th>
+                      <th id="d_n3">Amount</th>
+                      <th id="s_e1">Qty</th>
+                      <th id="s_e2">Rate</th>
+                      <th id="s_e3">Amount</th>
+                      <th id="s_o1">Qty</th>
+                      <th id="s_o2">Rate</th>
+                      <th id="s_o3">Amount</th>
+                      <th id="d_note1">Qty</th>
+                      <th id="d_note2">Rate</th>
+                      <th id="d_note3">Amount</th>
+                      <th id="s_entry1">Qty</th>
+                      <th id="s_entry2">Rate</th>
+                      <th id="s_entry3">Amount</th>
+                      <th id="r_in1">Qty</th>
+                      <th id="r_in2">Rate</th>
+                      <th id="r_in3">Amount</th>
+                      <th id="c_note1">Qty</th>
+                      <th id="c_note2">Rate</th>
+                      <th id="c_note3">Amount</th> 
                     </tr>
                   </thead>
                   <tbody>
@@ -215,6 +273,36 @@ table, th, td {
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
     <script src="{{asset('assets/js/ageing_analysis/ageing.js')}}"></script>
+    <script>
+      function hide_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                // console.log(name);
+                $('#'+name).hide(); 
+                $('.'+name).attr('checked','checked'); 
+                $('#'+name+'1').hide();
+                $('#'+name+'2').hide();
+                $('#'+name+'3').hide();
+                }
+              });
+      }
+
+      function show_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).show();  
+                $('#'+name+'1').show();
+                $('#'+name+'2').show();
+                $('#'+name+'3').show();
+                this.checked = false;
+                }
+              });
+      }
+    </script>
     <!-- card body end@ -->
   </div>
 </div>
