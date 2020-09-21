@@ -142,6 +142,7 @@ table, th, td {
                     <th rowspan="2"> Group</th>
                     <th rowspan="2"> Category</th>
                     <th align="center" colspan="3"> Opening Stock</th>
+                    <th align="center" colspan="3"> Closing Stock</th>
                     <th align="center" colspan="3"> Purchase Estimation</th>
                     <th align="center" colspan="3"> Purchase Order</th>
                     <th align="center" colspan="3"> Receipt Note</th>
@@ -156,6 +157,9 @@ table, th, td {
                     <th align="center" colspan="3"> Credit Note</th>
                     </tr>
                     <tr>
+                      <th>Qty</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
                       <th>Qty</th>
                       <th>Rate</th>
                       <th>Amount</th>
