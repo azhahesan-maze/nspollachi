@@ -64,13 +64,19 @@
               <td>{{ $tax_value[$key] }}</td>
               <td>{{ $total[$key] }}</td>
               <td> 
+                @if($value->status == 0)
                 <a href="{{ route('purchase_order.show',$value->po_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('purchase_order.edit',$value->po_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{{url('purchase_order/delete/'.$value->po_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
+                <a href="{{ url('purchase_order/cancel/'.$value->po_no) }}" class="px-2 py-1 bg-warning text-white rounded">Cancel</a>
+
                 <br><br>
                 <a href="{{url('purchase_order/item_details/'.$value->po_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
                 <a href="{{url('purchase_order/expense_details/'.$value->po_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a>
+                @else
+                <a href="{{ url('purchase_order/retrieve/'.$value->po_no) }}" class="px-2 py-1 bg-primary text-white rounded">Retrieve</a>
+                @endif
               </td>
             </tr>
             @endforeach

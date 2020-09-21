@@ -1605,5 +1605,26 @@ echo "<pre>"; print_r($data); exit;
     }
 
 
+    public function cancel($id)
+    {
+        $purchaseorder = Purchase_Order::where('po_no',$id)->first();
+
+        $purchaseorder->status = 1;
+        $purchaseorder->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $purchaseorder = Purchase_Order::where('po_no',$id)->first();
+
+        $purchaseorder->status = 0;
+        $purchaseorder->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
+
 
 }

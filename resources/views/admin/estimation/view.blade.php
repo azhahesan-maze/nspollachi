@@ -60,13 +60,20 @@
               <td>{{ $tax_value[$key] }}</td>
               <td>{{ $total[$key] }}</td>
               <td> 
+                @if($value->status == '0')
                 <a href="{{ route('estimation.show',$value->estimation_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('estimation.edit',$value->estimation_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{{url('estimation/delete/'.$value->estimation_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="{{ url('estimation/cancel/'.$value->estimation_no) }}" class="px-2 py-1 bg-warning text-white rounded">Cancel</a>
 
                 <br><br>
                 <a href="{{url('estimation/item_details/'.$value->estimation_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
                 <a href="{{url('estimation/expense_details/'.$value->estimation_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a>
+                @else
+                <a href="{{ url('estimation/retrieve/'.$value->estimation_no) }}" class="px-2 py-1 bg-primary text-white rounded">Retrieve</a>
+
+                @endif
+
               </td>
             </tr>
             @endforeach

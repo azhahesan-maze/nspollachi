@@ -1989,6 +1989,26 @@ echo "<pre>"; print_r($data); exit;
         }                                                                     
     }
 
+    public function cancel($id)
+    {
+        $r_out = RejectionOut::where('r_out_no',$id)->first();
+
+        $r_out->cancel_status = 1;
+        $r_out->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $r_out = RejectionOut::where('r_out_no',$id)->first();
+
+        $r_out->cancel_status = 0;
+        $r_out->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
     
 
 }

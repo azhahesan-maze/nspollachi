@@ -60,13 +60,19 @@
               <td></td>
               <td>{{ $value->total_net_value }}</td>
               <td> 
+                @if($value->cancel_status == 0)
                 <a href="{{ route('debit_note.show',$value->dn_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('debit_note.edit',$value->dn_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{{url('debit_note/delete/'.$value->dn_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
+                <a href="{{ url('debit_note/cancel/'.$value->dn_no) }}" class="px-2 py-1 bg-warning text-white rounded">Cancel</a>
+
                 <br><br>
                 <a href="{{url('debit_note/item_details/'.$value->dn_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
                 <a href="{{url('debit_note/expense_details/'.$value->dn_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a>
+                @else
+                <a href="{{ url('debit_note/retrieve/'.$value->dn_no) }}" class="px-2 py-1 bg-primary text-white rounded">Retrieve</a>
+                @endif
               </td>
             </tr>
             @endforeach

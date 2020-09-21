@@ -2000,4 +2000,25 @@ echo "<pre>"; print_r($data); exit;
     }
 
 
+    public function cancel($id)
+    {
+        $delivery_note = DeliveryNote::where('d_no',$id)->first();
+
+        $delivery_note->cancel_status = 1;
+        $delivery_note->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $delivery_note = DeliveryNote::where('d_no',$id)->first();
+
+        $delivery_note->cancel_status = 0;
+        $delivery_note->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
+
 }

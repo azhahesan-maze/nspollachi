@@ -60,13 +60,19 @@
               <td></td>
               <td>{{ $value->total_net_value }}</td>
               <td> 
+                @if($value->cancel_status == 0)
                 <a href="{{ route('credit_note.show',$value->cn_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('credit_note.edit',$value->cn_no) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <a href="{{url('credit_note/delete/'.$value->cn_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
+                <a href="{{ url('credit_note/cancel/'.$value->cn_no) }}" class="px-2 py-1 bg-warning text-white rounded">Cancel</a>
+
                 <br><br>
                 <a href="{{url('credit_note/item_details/'.$value->cn_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Item Details</a>
                 <a href="{{url('credit_note/expense_details/'.$value->cn_no )}}" class="px-1 py-0 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i>Expense Details</a>
+                @else
+                <a href="{{ url('credit_note/retrieve/'.$value->cn_no) }}" class="px-2 py-1 bg-primary text-white rounded">Retrieve</a>
+                @endif
               </td>
             </tr>
             @endforeach

@@ -1464,4 +1464,24 @@ $result=[];
         return $net_value;                          
     }
 
+    public function cancel($id)
+    {
+        $estimation = Estimation::where('estimation_no',$id)->first();
+
+        $estimation->status = 1;
+        $estimation->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $estimation = Estimation::where('estimation_no',$id)->first();
+
+        $estimation->status = 0;
+        $estimation->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
 }

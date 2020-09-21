@@ -1606,5 +1606,25 @@ echo "<pre>"; print_r($data); exit;
         return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
     }
 
+    public function cancel($id)
+    {
+        $saleorder = SaleOrder::where('so_no',$id)->first();
+
+        $saleorder->cancel_status = 1;
+        $saleorder->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $saleorder = SaleOrder::where('so_no',$id)->first();
+
+        $saleorder->cancel_status = 0;
+        $saleorder->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
 
 }

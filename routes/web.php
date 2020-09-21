@@ -585,6 +585,9 @@ Route::get('estimation/expense_details/{id}', 'EstimationController@expense_deta
 Route::post('estimation/last_purchase_rate/', 'EstimationController@last_purchase_rate');
 Route::get('estimation/delete/{id}', 'EstimationController@destroy');
 
+Route::get('estimation/cancel/{id}', 'EstimationController@cancel');
+Route::get('estimation/retrieve/{id}', 'EstimationController@retrieve');
+
 /* Estimation End Here  */
 
 /* Purchase Order Start Here  */
@@ -607,6 +610,9 @@ Route::get('purchase_order/expense_details/{id}', 'PurchaseOrderController@expen
 Route::post('purchase_order/last_purchase_rate/', 'PurchaseOrderController@last_purchase_rate');
 Route::get('purchase_order/delete/{id}', 'PurchaseOrderController@destroy');
 Route::post('purchase_order/estimation_details/', 'PurchaseOrderController@estimation_details');
+
+Route::get('purchase_order/cancel/{id}', 'PurchaseOrderController@cancel');
+Route::get('purchase_order/retrieve/{id}', 'PurchaseOrderController@retrieve');
 /* Purchase Order End Here  */
 
 /* Purchase Gate Pass entry Start Here  */
@@ -643,6 +649,9 @@ Route::post('purchase_entry/po_details/', 'PurchaseEntryController@po_details');
 Route::post('purchase_entry/estimation_details/', 'PurchaseEntryController@estimation_details');
 Route::post('purchase_entry/receipt_details/', 'PurchaseEntryController@receipt_details');
 
+Route::get('purchase_entry/cancel/{id}', 'PurchaseEntryController@cancel');
+Route::get('purchase_entry/retrieve/{id}', 'PurchaseEntryController@retrieve');
+
 
 /* Purchase entry End Here  */
 
@@ -664,6 +673,9 @@ Route::get('sales_estimation/item_details/{id}', 'SalesEstimationController@item
 Route::get('sales_estimation/expense_details/{id}', 'SalesEstimationController@expense_details');
 Route::post('sales_estimation/last_purchase_rate/', 'SalesEstimationController@last_purchase_rate');
 Route::get('sales_estimation/delete/{id}', 'SalesEstimationController@destroy');
+
+Route::get('sales_estimation/cancel/{id}', 'SalesEstimationController@cancel');
+Route::get('sales_estimation/retrieve/{id}', 'SalesEstimationController@retrieve');
 
 /* Sales Estimation End Here  */
 
@@ -687,6 +699,9 @@ Route::post('sale_order/last_purchase_rate/', 'SalesOrderController@last_purchas
 Route::get('sale_order/delete/{id}', 'SalesOrderController@destroy');
 Route::post('sales_order/estimation_details/', 'SalesOrderController@se_details');
 
+Route::get('sale_order/cancel/{id}', 'SalesOrderController@cancel');
+Route::get('sale_order/retrieve/{id}', 'SalesOrderController@retrieve');
+
 /* Sales Order End Here  */
 
 /* Sales entry Start Here  */
@@ -709,6 +724,9 @@ Route::get('sales_entry/delete/{id}', 'SalesEntryController@destroy');
 Route::post('sales_entry/se_details/', 'SalesEntryController@se_details');
 Route::post('sales_entry/so_details/', 'SalesEntryController@so_details');
 Route::post('sales_entry/delivery_details/', 'SalesEntryController@delivery_details');
+
+Route::get('sales_entry/cancel/{id}', 'SalesEntryController@cancel');
+Route::get('sales_entry/retrieve/{id}', 'SalesEntryController@retrieve');
 
 
 /* Sales entry End Here  */
@@ -747,6 +765,9 @@ Route::post('receipt_note/po_details/', 'ReceiptNoteController@po_details');
 Route::post('receipt_note/estimation_details/', 'ReceiptNoteController@estimation_details');
 Route::post('receipt_note/r_out_details/', 'ReceiptNoteController@r_out_details');
 
+Route::get('receipt_note/cancel/{id}', 'ReceiptNoteController@cancel');
+Route::get('receipt_note/retrieve/{id}', 'ReceiptNoteController@retrieve');
+
 
 /* Receipt Note End Here  */
 
@@ -769,6 +790,9 @@ Route::post('debit_note/last_purchase_rate/', 'DebitNoteController@last_purchase
 Route::get('debit_note/delete/{id}', 'DebitNoteController@destroy');
 Route::post('debit_note/p_details/', 'DebitNoteController@p_details');
 Route::post('debit_note/r_out_details/', 'DebitNoteController@r_out_details');
+
+Route::get('debit_note/cancel/{id}', 'DebitNoteController@cancel');
+Route::get('debit_note/retrieve/{id}', 'DebitNoteController@retrieve');
 
 
 /* Debit Note End Here  */
@@ -795,6 +819,9 @@ Route::post('delivery_note/se_details/', 'DeliveryNoteController@se_details');
 Route::post('delivery_note/so_details/', 'DeliveryNoteController@so_details');
 Route::post('delivery_note/rejection_in_details/', 'DeliveryNoteController@rejection_in_details');
 
+Route::get('delivery_note/cancel/{id}', 'DeliveryNoteController@cancel');
+Route::get('delivery_note/retrieve/{id}', 'DeliveryNoteController@retrieve');
+
 /* Delivery Note End Here  */
 
 /* Credit Note Start Here  */
@@ -816,6 +843,9 @@ Route::post('credit_note/last_purchase_rate/', 'CreditNoteController@last_purcha
 Route::get('credit_note/delete/{id}', 'CreditNoteController@destroy');
 Route::post('credit_note/s_details/', 'CreditNoteController@s_details');
 Route::post('credit_note/rejection_in_details/', 'CreditNoteController@rejection_in_details');
+
+Route::get('credit_note/cancel/{id}', 'CreditNoteController@cancel');
+Route::get('credit_note/retrieve/{id}', 'CreditNoteController@retrieve');
 
 /* Credit Note End Here  */
 
@@ -842,6 +872,9 @@ Route::post('rejection_in/s_details/', 'RejectionInController@s_details');
 Route::post('rejection_in/delivery_details/', 'RejectionInController@delivery_details');
 Route::post('rejection_in/check_qty/', 'RejectionInController@check_qty');
 
+Route::get('rejection_in/cancel/{id}', 'RejectionInController@cancel');
+Route::get('rejection_in/retrieve/{id}', 'RejectionInController@retrieve');
+
 /* Rejection In End Here  */
 
 
@@ -867,6 +900,10 @@ Route::post('rejection_out/change_qty/', 'RejectionOutController@change_qty');
 Route::get('rejection_out/delete/{id}', 'RejectionOutController@destroy');
 Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
 Route::post('rejection_out/receipt_details/', 'RejectionOutController@receipt_details');
+
+Route::get('rejection_out/cancel/{id}', 'RejectionOutController@cancel');
+Route::get('rejection_out/retrieve/{id}', 'RejectionOutController@retrieve');
+
 
 /* Rejection Out End Here  */
 

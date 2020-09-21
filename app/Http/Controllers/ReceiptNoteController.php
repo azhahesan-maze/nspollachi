@@ -2046,5 +2046,26 @@ echo "<pre>"; print_r($data); exit;
     }
 
 
+    public function cancel($id)
+    {
+        $receipt_note = ReceiptNote::where('rn_no',$id)->first();
+
+        $receipt_note->status = 1;
+        $receipt_note->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $receipt_note = ReceiptNote::where('rn_no',$id)->first();
+
+        $receipt_note->status = 0;
+        $receipt_note->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
+
 
 }

@@ -1954,4 +1954,25 @@ echo "<pre>"; print_r($data); exit;
     }
 
 
+    public function cancel($id)
+    {
+        $r_in = RejectionIn::where('r_in_no',$id)->first();
+
+        $r_in->cancel_status = 1;
+        $r_in->save();
+
+        return Redirect::back()->with('success', 'Cancelled');
+    }
+
+    public function retrieve($id)
+    {
+        $r_in = RejectionIn::where('r_in_no',$id)->first();
+
+        $r_in->cancel_status = 0;
+        $r_in->save();
+
+        return Redirect::back()->with('success', 'Retrieved');
+    }
+
+
 }
