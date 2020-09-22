@@ -29,6 +29,38 @@ table, th, td {
 
         <div class="form-row">
 
+          <div class="col-md-12 row hiding">
+            <div class="col-md-2">
+              <label>Particulars</label>
+              <input type="checkbox" class="particulars" name="opening_stock" value="1" id="item_name">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Nature</label>
+              <input type="checkbox" class="natures" name="closing_stock" value="1" id="item_qty">
+            </div>
+
+            <div class="col-md-2">
+              <label>Debit</label>
+              <input type="checkbox" class="debit" name="purchase_estimation" value="1" id="item_rate">
+            </div>
+
+            <div class="col-md-2">
+              <label>Credit</label>
+              <input type="checkbox" class="credit" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            </div>
+
+            <div class="col-md-12 row mb-3">
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="hide_column()" value="Hide Columns">
+            </div>
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
+            </div>
+          </div>
+
 
           <div class="col-md-12 form-row mb-3">
             <div class="col-md-2">
@@ -88,10 +120,10 @@ table, th, td {
                   <thead>
                     <th> S.no </th>
                     <th> Date </th>
-                    <th> Particulars</th>
-                    <th> Nature</th>
-                    <th> Debit Amount</th>
-                    <th> Credit Amount</th>
+                    <th id="particulars"> Particulars</th>
+                    <th id="natures"> Nature</th>
+                    <th id="debit"> Debit Amount</th>
+                    <th id="credit"> Credit Amount</th>
                   </thead>
                   <tbody>
 
@@ -108,44 +140,28 @@ table, th, td {
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 
     <script>
-      function ageing_analysis() 
+      function hide_column()
       {
-        $('.analysis1').show();
-        $('.analysis2').show();
-        $('#0-30').show();
-        $('#31-60').show();
-        $('#61-90').show();
-        $('#90-120').show();
-        $('#120').show();
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).hide();  
+                }
+              });
       }
 
-      function from0()
+      function show_column()
       {
-        
-      }
-      function from30()
-      {
-        $('#from1').attr('checked','checked');
-      }
-      function from60()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-      }
-      function from90()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-        $('#from3').attr('checked','checked');
-      }
-      function from120()
-      {
-        $('#from1').attr('checked','checked');
-        $('#from2').attr('checked','checked');
-        $('#from3').attr('checked','checked');
-        $('#from4').attr('checked','checked');
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).show();  
+                this.checked = false;
+                }
+              });
       }
     </script>
+
     <!-- card body end@ -->
   </div>
 </div>

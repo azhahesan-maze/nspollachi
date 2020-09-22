@@ -463,6 +463,58 @@
                      <button type="button"  class="px-2 btn btn-success mx-2 refresh_supplier_id" title="Refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                   </div>
                </div>
+
+</div>
+               <div class="row">
+
+                  <div class="col-md-1">
+                     <span>Opening:</span>
+                  </div>
+                  <div class="col-md-11">
+                  <div class="row">
+
+                  <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity</label>
+                     <div class="col-sm-8">
+                       <input type="text" placeholder="Quantity" name="quantity" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Rate</label>
+                     <div class="col-sm-8">
+                       <input type="text" placeholder="Rate" name="rate" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Amount</label>
+                     <div class="col-sm-8">
+                       <input type="text" name="amount" placeholder="Amount" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Applicable Date</label>
+                     <div class="col-sm-8">
+                       <input type="date" name="applicable_date" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+               </div>
                
 
 

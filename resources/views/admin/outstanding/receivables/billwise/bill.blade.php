@@ -28,7 +28,7 @@ table, th, td {
       {{csrf_field()}}
 
         <div class="form-row">
-          <div class="col-md-12 row">
+          <div class="col-md-12 row mb-3">
 
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
@@ -58,8 +58,81 @@ table, th, td {
 
             
           </div>
-          
-          <br><br>
+
+          <div class="col-md-12 row hiding">
+            <div class="col-md-2">
+              <label>Bill No</label>
+              <input type="checkbox" class="bill_no" name="opening_stock" value="1" id="item_name">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Bill Date</label>
+              <input type="checkbox" class="bill_date" name="closing_stock" value="1" id="item_qty">
+            </div>
+
+            <div class="col-md-2">
+              <label>Party Name</label>
+              <input type="checkbox" class="party" name="purchase_estimation" value="1" id="item_rate">
+            </div>
+
+            <div class="col-md-2">
+              <label>Bill Amount</label>
+              <input type="checkbox" class="bill_amount" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Cleared Amount</label>
+              <input type="checkbox" class="cleared_amount" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Pending Amount</label>
+              <input type="checkbox" class="pending_amount" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            </div>
+
+            <div class="col-md-12 row hiding mb-3">
+            <div class="col-md-2">
+              <label>Days From Bill Date</label>
+              <input type="checkbox" class="no_days" name="opening_stock" value="1" id="item_name">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Days From Due Date</label>
+              <input type="checkbox" class="due_date" name="closing_stock" value="1" id="item_qty">
+            </div>
+
+            <div class="col-md-2">
+              <label>Sales Man Name</label>
+              <input type="checkbox" class="salesman" name="purchase_estimation" value="1" id="item_rate">
+            </div>
+
+            <div class="col-md-2">
+              <label>Customer Name</label>
+              <input type="checkbox" class="customer" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Contact Number</label>
+              <input type="checkbox" class="contact" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Customer Email Id</label>
+              <input type="checkbox" class="email" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            </div>
+
+            <div class="col-md-12 row mb-3">
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="hide_column()" value="Hide Columns">
+            </div>
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
+            </div>
+          </div>
 
           <div class="col-md-12 form-row mb-3">
             <div class="col-md-2">
@@ -120,23 +193,23 @@ table, th, td {
           <table class="table table-responsive" id="team-list" style="width: 100%;">
                   <thead>
                     <th> S.no </th>
-                    <th> Bill.no </th>
-                    <th> Bill Date</th>
-                    <th> Party Name</th>
-                    <th> Bill Amount</th>
-                    <th> Cleared Amount</th>
-                    <th> Pending Amount</th>
+                    <th id="bill_no"> Bill.no </th>
+                    <th id="bill_date"> Bill Date</th>
+                    <th id="party"> Party Name</th>
+                    <th id="bill_amount"> Bill Amount</th>
+                    <th id="cleared_amount"> Cleared Amount</th>
+                    <th id="pending_amount"> Pending Amount</th>
                     <th id="0-30" style="display: none;">0-30 Days</th>
                     <th id="31-60" style="display: none;">31-60 Days</th>
                     <th id="61-90" style="display: none;">61-90 Days</th>
                     <th id="91-120" style="display: none;">91-120 Days</th>
                     <th id="120" style="display: none;">(>120 Days)</th>
-                    <th> No Of Days From Bill Date</th>
-                    <th> No Of Days From Due Date</th>
-                    <th> Sales Man Name</th>
-                    <th> Customer Contact Name</th>
-                    <th> Customer Contact Number</th>
-                    <th> Customer Contact Email Id</th>
+                    <th id="no_days"> No Of Days From Bill Date</th>
+                    <th id="due_date\"> No Of Days From Due Date</th>
+                    <th id="salesman"> Sales Man Name</th>
+                    <th id="customer"> Customer Contact Name</th>
+                    <th id="contact"> Customer Contact Number</th>
+                    <th id="email"> Customer Contact Email Id</th>
                   </thead>
                   <tbody>
                     <!-- <td></td>
@@ -171,6 +244,29 @@ table, th, td {
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
     <script src="{{asset('assets/js/ageing_analysis/ageing.js')}}"></script>
+
+    <script>
+      function hide_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).hide();  
+                }
+              });
+      }
+
+      function show_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).show();  
+                this.checked = false;
+                }
+              });
+      }
+    </script>
     <!-- card body end@ -->
   </div>
 </div>

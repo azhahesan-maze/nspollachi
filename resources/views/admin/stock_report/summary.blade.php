@@ -199,8 +199,8 @@ table, th, td {
                     <th rowspan="2"> Name Of Item </th>
                     <th rowspan="2"> Group</th>
                     <th rowspan="2"> Category</th>
-                    <th align="center" colspan="3" id="op_stock"> Opening Stock</th>
-                    <th align="center" colspan="3" id="cls_stock"> Closing Stock</th>
+                    <th align="center" rowspan="2" id="op_stock"> Opening Stock</th>
+                    <th align="center" rowspan="2" id="cls_stock"> Closing Stock</th>
                     <th align="center" colspan="3" id="p_e"> Purchase Estimation</th>
                     <th align="center" colspan="3" id="p_o"> Purchase Order</th>
                     <th align="center" colspan="3" id="r_note"> Receipt Note</th>
@@ -215,12 +215,12 @@ table, th, td {
                     <th align="center" colspan="3" id="c_note"> Credit Note</th>
                     </tr>
                     <tr>
-                      <th id="op_stock1">Qty</th>
+                      <!-- <th id="op_stock1">Qty</th>
                       <th id="op_stock2">Rate</th>
                       <th id="op_stock3">Amount</th>
                       <th id="cls_stock1">Qty</th>
                       <th id="cls_stock2">Rate</th>
-                      <th id="cls_stock3">Amount</th>
+                      <th id="cls_stock3">Amount</th> -->
                       <th id="p_e1">Qty</th>
                       <th id="p_e2">Rate</th>
                       <th id="p_e3">Amount</th>
@@ -279,12 +279,7 @@ table, th, td {
         $('input[type=checkbox]').each(function(){
             if($(this).prop("checked") == true){
                 var name = $(this).attr('class');
-                // console.log(name);
-                $('#'+name).hide(); 
-                $('.'+name).attr('checked','checked'); 
-                $('#'+name+'1').hide();
-                $('#'+name+'2').hide();
-                $('#'+name+'3').hide();
+                $('#'+name).hide();  
                 }
               });
       }
@@ -295,9 +290,6 @@ table, th, td {
             if($(this).prop("checked") == true){
                 var name = $(this).attr('class');
                 $('#'+name).show();  
-                $('#'+name+'1').show();
-                $('#'+name+'2').show();
-                $('#'+name+'3').show();
                 this.checked = false;
                 }
               });

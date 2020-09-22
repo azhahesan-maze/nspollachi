@@ -29,7 +29,7 @@ table, th, td {
 
         <div class="form-row">
 
-          <div class="col-md-12 row">
+          <div class="col-md-12 row mb-3">
 
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="ageing_analysis()" value="Ageing Analysis">
@@ -58,6 +58,38 @@ table, th, td {
             </div>
 
             
+          </div>
+
+          <div class="col-md-12 row hiding">
+            <div class="col-md-2">
+              <label>Name Of Item</label>
+              <input type="checkbox" class="items" name="opening_stock" value="1" id="item_name">
+            </div> 
+
+            <div class="col-md-2">
+              <label>Quantity</label>
+              <input type="checkbox" class="qty" name="closing_stock" value="1" id="item_qty">
+            </div>
+
+            <div class="col-md-2">
+              <label>Rate</label>
+              <input type="checkbox" class="rate" name="purchase_estimation" value="1" id="item_rate">
+            </div>
+
+            <div class="col-md-2">
+              <label>Amount</label>
+              <input type="checkbox" class="amnt" name="purchase_order" value="1" id="item_amnt">
+            </div> 
+
+            </div>
+
+            <div class="col-md-12 row mb-3">
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="hide_column()" value="Hide Columns">
+            </div>
+            <div class="col-md-2">
+            <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
+            </div>
           </div>
 
           <div class="col-md-12 form-row mb-3">
@@ -121,10 +153,10 @@ table, th, td {
           <table class="table" id="team-list">
                   <thead>
                     <th> S.no </th>
-                    <th> Name Of Item </th>
-                    <th>Quantity</th>
-                    <th> Rate</th>
-                    <th> Amount</th>
+                    <th id="items"> Name Of Item </th>
+                    <th id="qty">Quantity</th>
+                    <th id="rate"> Rate</th>
+                    <th id="amnt"> Amount</th>
                     <th id="0-30" style="display: none;">0-30 Days</th>
                     <th id="31-60" style="display: none;">31-60 Days</th>
                     <th id="61-90" style="display: none;">61-90 Days</th>
@@ -146,6 +178,28 @@ table, th, td {
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
     <script src="{{asset('assets/js/ageing_analysis/ageing.js')}}"></script>
 
+    <script>
+      function hide_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).hide();  
+                }
+              });
+      }
+
+      function show_column()
+      {
+        $('input[type=checkbox]').each(function(){
+            if($(this).prop("checked") == true){
+                var name = $(this).attr('class');
+                $('#'+name).show();  
+                this.checked = false;
+                }
+              });
+      }
+    </script>
     
     <!-- card body end@ -->
   </div>
