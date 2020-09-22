@@ -19,7 +19,7 @@
       <div class="card-body">
          <form  method="post" class="form-horizontal needs-validation submit_form" autocomplete="off" novalidate action="{{url('master/item/store')}}" enctype="multipart/form-data">
             {{csrf_field()}}
-            <div class="form-row">
+            <div class="form-row mb-6">
                <div class="col-md-6">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">Item Name <span class="mandatory">*</span></label>
@@ -443,7 +443,7 @@
                   </div>
                </div>
                
-               <div class="col-md-6">
+               <div class="col-md-6 mb-3">
                   <div class="form-group row">
                      <label for="validationCustom01" class="col-sm-4 col-form-label">Supplier</label>
                      <div class="col-sm-6">
@@ -475,9 +475,13 @@
 
                   <div class="col-md-3">
                   <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity</label>
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity<span class="mandatory">*</span></label>
                      <div class="col-sm-8">
-                       <input type="text" placeholder="Quantity" name="quantity" class="form-control" >
+                       <input type="text" required="" placeholder="Quantity" name="quantity" class="form-control mandatory" >
+                     </div>
+                     <span class="mandatory"> {{ $errors->first('quantity')}} </span>
+                     <div class="invalid-feedback">
+                           Enter valid Quantity
                      </div>
                      
                   </div>
@@ -539,6 +543,10 @@
                         <td>
                            <div class="col-sm-12">
                               <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{$value->name}}" id="{{ $value->name }}_id{{ $key }}" value="" required>
+                              <span class="mandatory"> </span>
+                              <div class="invalid-feedback">
+                                 Enter valid {{$value->name}}
+                              </div>
 
                               <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">
                               <span class="mandatory">  </span>

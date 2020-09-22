@@ -59,7 +59,22 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
       
                        <div class="row col-md-12">
 
-                        <div class="col-md-4">
+                        <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Voucher No</label><br>
+                                  <div class="">
+                                    <font size="2">{{ $voucher_no }}</font>
+                                  </div>
+                                
+                                 
+                                </div>
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
+                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
+                                 
+                                </div>
+
+                        <div class="col-md-3">
                   <label style="font-family: Times new roman;">Customer Name</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
@@ -76,20 +91,24 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                   </div>
                </div>
 
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Voucher No</label><br>
-                                  <div class="">
-                                    <font size="2">{{ $voucher_no }}</font>
-                                  </div>
-                                
-                                 
-                                </div>
+               <div class="col-md-3">
+                  <label style="font-family: Times new roman;">Sales Men Name</label><br>
+                  <div class="form-group row">
+                     <div class="col-sm-8">
+                      <select class="js-example-basic-multiple col-12 form-control custom-select salesmen_id" name="salesmen_id" id="salesmen_id">
+                           <option value="">Choose Sales Men Name</option>
+                           @foreach($sales_man as $value)
+                           <option value="{{ $value->id }}">{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                     <a href="{{ route('sales_man.create')}}" target="_blank">
+                     <button type="button"  class="px-2 btn btn-success ml-2" title="Add Sales Men"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                     <button type="button"  class="px-2 btn btn-success mx-2 refresh_salesmen_id" title="Add Sales Men"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                  </div>
+               </div>
 
-                                <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Voucher Date</label><br>
-                                <input type="date" class="form-control voucher_date  required_for_proof_valid" id="voucher_date" placeholder="Voucher Date" name="voucher_date" value="{{ $date }}">
-                                 
-                                </div>
+                        
 
                         <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Entry No</label><br>
@@ -103,11 +122,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
-                        <div class="col-md-2">
-                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
-                                <input type="date" class="form-control s_date  required_for_proof_valid" readonly="" id="s_date" placeholder="Voucher Date" name="s_date" value="">
-                                 
-                                </div>
+                        
                                 
                                 
                                 <!-- <div class="col-md-2">
@@ -128,7 +143,13 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 <br>
                                 <div class="row col-md-12">
 
-                                                                  <div class="col-md-2">
+                                  <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Sale Entry Date</label><br>
+                                <input type="date" class="form-control s_date  required_for_proof_valid" readonly="" id="s_date" placeholder="Voucher Date" name="s_date" value="">
+                                 
+                                </div>
+
+                                  <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Delivery Note No</label><br>
                                 <select class="js-example-basic-multiple form-control d_no" 
                                 data-placeholder="Choose Delivery Note No" onchange="delivery_details()" id="d_no" name="d_no" >

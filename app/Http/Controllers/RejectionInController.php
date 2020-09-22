@@ -30,6 +30,7 @@ use App\Models\DeliveryNoteTax;
 use App\Models\DeliveryNoteItem;
 use App\Models\DeliveryNoteExpense;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\SalesMan;
 use App\Models\RejectionIn;
 use App\Models\RejectionInTax;
 use App\Models\RejectionInItem;
@@ -142,6 +143,7 @@ class RejectionInController extends Controller
         $customer = Customer::all();
         $delivery_note = DeliveryNote::all();
         $tax = Tax::all();
+        $sales_man = SalesMan::all();
         
 
         // $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
@@ -182,7 +184,7 @@ class RejectionInController extends Controller
         // $voucher_no = str_random(6);
 
 
-        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer','tax'));
+        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer','tax','sales_man'));
     }
 
     /**
@@ -285,6 +287,7 @@ class RejectionInController extends Controller
          $rejection_in->d_no = $request->d_no;
          $rejection_in->d_date = $request->d_date;
          $rejection_in->customer_id = $request->customer_id;
+         $rejection_in->salesman_id = $request->salesmen_id;
          $rejection_in->overall_discount = $request->overall_discount;
          $rejection_in->total_net_value = $request->total_price;
          $rejection_in->round_off = $request->round_off;
@@ -633,20 +636,63 @@ class RejectionInController extends Controller
         $voucher_date = $request->voucher_date;
         $voucher_no = $request->voucher_no;
 
-        foreach ($request->item_code as $key => $value) 
+
+        if($request->d_no == '')
+         {
+            foreach ($request->item_code as $key => $value) 
         {
-        $sale_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
+            $sale_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
+
+            // $sale_entry_item->r_in_no = $voucher_no;
+            // $sale_entry_item->r_in_date = $voucher_date;
+            $sale_entry_item->remaining_qty = $request->quantity[$key];
+            $sale_entry_item->rejected_qty = $request->rejected_item_qty[$key];
+            $sale_entry_item->remarks = $request->remarks_val[$key];
+            $sale_entry_item->save();
+    
+        }
+
+         }
+         else
+         {
+            foreach ($request->item_code as $key => $value) 
+        {
+            $delivery_note_item = DeliveryNoteItem::where('d_no',$request->d_no)->where('item_id',$value)->first();
+
+            // $sale_entry_item->r_in_no = $voucher_no;
+            // $sale_entry_item->r_in_date = $voucher_date;
+            $delivery_note_item->remaining_qty = $request->quantity[$key];
+            $delivery_note_item->rejected_qty = $request->rejected_item_qty[$key];
+            $delivery_note_item->remarks = $request->remarks_val[$key];
+            $delivery_note_item->save();
+    
+        }
+         }
+
+         $sale_no = $request->s_no;
+         $delivery_no = $request->d_no;
+
+         $rejection_ins=RejectionIn::where('s_no',$sale_no)->where('d_no',$delivery_no)->count();
+
+         if($rejection_ins > 0)
+         {
+            $update = RejectionIn::where('s_no',$sale_no)->where('d_no',$delivery_no)->update(['status' => 1]);
+         }
+
+        // foreach ($request->item_code as $key => $value) 
+        // {
+        // $sale_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
         
-        $sale_entry_item->r_in_no = $voucher_no;
-        $sale_entry_item->r_in_date = $voucher_date;
-        $sale_entry_item->remaining_qty = $request->quantity[$key];
-        $sale_entry_item->rejected_qty = $request->rejected_item_qty[$key];
-        $sale_entry_item->remarks = $request->remarks_val[$key];
-        $sale_entry_item->save();
+        // $sale_entry_item->r_in_no = $voucher_no;
+        // $sale_entry_item->r_in_date = $voucher_date;
+        // $sale_entry_item->remaining_qty = $request->quantity[$key];
+        // $sale_entry_item->rejected_qty = $request->rejected_item_qty[$key];
+        // $sale_entry_item->remarks = $request->remarks_val[$key];
+        // $sale_entry_item->save();
         
             
     
-        }
+        // }
 
          $rejection_in = new RejectionIn();
 
@@ -655,6 +701,7 @@ class RejectionInController extends Controller
          $rejection_in->s_no = $request->s_no;
          $rejection_in->s_date = $request->s_date;
          $rejection_in->customer_id = $request->customer_id;
+         $rejection_in->salesman_id = $request->salesmen_id;
          $rejection_in->overall_discount = $request->overall_discount;
          $rejection_in->total_net_value = $request->total_price;
          $rejection_in->round_off = $request->round_off;

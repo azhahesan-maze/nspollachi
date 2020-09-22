@@ -40,7 +40,8 @@ class ItemRequest extends FormRequest
                 'item_type' => 'required',
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',
-                'is_minimum_sales_qty_applicable' => 'required',    
+                'is_minimum_sales_qty_applicable' => 'required', 
+                'quantity' => 'required',   
             ];
 
             if ($request->is_expiry_date == 1) {
@@ -127,6 +128,7 @@ class ItemRequest extends FormRequest
                 'uom_id' => 'required',
                 'is_expiry_date' => 'required',
                 'is_minimum_sales_qty_applicable' => 'required',
+                'quantity' => 'required',
             ];
 
             if ($request->is_expiry_date == 1) {

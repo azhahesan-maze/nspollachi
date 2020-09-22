@@ -471,6 +471,63 @@
                </div>
  </div>
 
+
+ <div class="row">
+
+                  <div class="col-md-1">
+                     <span>Opening:</span>
+                  </div>
+                  <div class="col-md-11">
+                  <div class="row">
+
+                  <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity<span class="mandatory">*</span></label>
+                     <div class="col-sm-8">
+                       <input type="text" required="" placeholder="Quantity" name="quantity" class="form-control mandatory" value="{{ old('opening_stock',$item->opening_stock) }}">
+                     </div>
+                     <span class="mandatory"> {{ $errors->first('quantity')}} </span>
+                     <div class="invalid-feedback">
+                           Enter valid Quantity
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Rate</label>
+                     <div class="col-sm-8">
+                       <input type="text" placeholder="Rate" value="{{ old('rate',$item->rate) }}" name="rate" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Amount</label>
+                     <div class="col-sm-8">
+                       <input type="text" name="amount" value="{{ old('amount',$item->amount) }}" placeholder="Amount" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+
+                                 <div class="col-md-3">
+                  <div class="form-group row">
+                     <label for="validationCustom01" class="col-sm-4 col-form-label">Applicable Date</label>
+                     <div class="col-sm-8">
+                       <input type="date" name="applicable_date" value="{{ old('applicable_date',$item->applicable_date) }}" class="form-control" >
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+               </div>
+
+
  <div class="form-row">
   <div class="col-md-8">
   <h4> Item Tax Details :</h4>

@@ -133,6 +133,11 @@ class ItemController extends Controller
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
 
+        $item->opening_stock = $request->quantity;
+        $item->rate = $request->rate;
+        $item->amount = $request->amount;
+        $item->applicable_date = $request->applicable_date;
+
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));
         }
@@ -274,24 +279,19 @@ class ItemController extends Controller
                                     ->select('item_id','valid_from')
                                     ->groupBy('item_id','valid_from')
                                     ->get();
-                                    // echo "<pre>"; print_r(count($tax_details));
-
                                     
-                                    //  exit();
          foreach ($tax_details as $key => $value) 
          {
                 $tax_value[] = ItemTaxDetails::where('item_id',$value->item_id)
                                             ->where('valid_from',$value->valid_from)
                                             ->get();
         }                               
-//         echo "<pre>"; print_r($tax_value[0][2]); 
 
                
                                        
         $tax_count = count($tax);
         $tax_detail_count = count($tax_details);
 
-        //$row_count = $tax_value_count/$tax_count;
 
 
         $brand = Brand::orderBy('name', 'asc')->get();
@@ -347,6 +347,11 @@ class ItemController extends Controller
         $item->is_expiry_date = $request->is_expiry_date;
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
+
+        $item->opening_stock = $request->quantity;
+        $item->rate = $request->rate;
+        $item->amount = $request->amount;
+        $item->applicable_date = $request->applicable_date;
 
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));

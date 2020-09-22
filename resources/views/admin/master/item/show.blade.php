@@ -142,6 +142,35 @@
                             </div>
                           </div>
                           @endif
+
+                          <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity :</label>
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->opening_stock }} </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Rate :</label>
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->rate }} </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Amount :</label>
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->amount }} </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">Applicable Date :</label>
+                        <label for="validationCustom01" class="col-sm-4 col-form-label">{{ $item->applicable_date }} </label>
+                      </div>
+                    </div>
+
                           <div class="col-md-6">
                               <div class="form-group row">
                                 <label for="validationCustom01" class="col-sm-4 col-form-label">Item Image :</label>
