@@ -21,6 +21,16 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
+#day_book_filter {
+    opacity: 0;
+    z-index: -1;
+}
+#day_book_length {
+  display: none;
+}
+#day_book_wrapper div.dt-buttons {
+  z-index: 10;
+}
 </style>
     <div class="card-body">
     
@@ -29,7 +39,7 @@ table, th, td {
 
         <div class="form-row">
 
-          <div class="col-md-12 row hiding">
+          <!-- <div class="col-md-12 row hiding">
             <div class="col-md-2">
               <label>Particulars</label>
               <input type="checkbox" class="particulars" name="opening_stock" value="1" id="item_name">
@@ -59,7 +69,7 @@ table, th, td {
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
             </div>
-          </div>
+          </div> -->
 
 
           <div class="col-md-12 form-row mb-3">
@@ -116,7 +126,7 @@ table, th, td {
               </div> -->
           </div>
           
-          <table class="table" id="team-list">
+          <table class="table table-striped table-bordered" id="day_book">
                   <thead>
                     <th> S.no </th>
                     <th> Date </th>

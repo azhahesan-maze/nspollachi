@@ -16,6 +16,90 @@ $(document).ready(function() {
             }
         } );
     } );
+    // $('#receivable_bill thead tr').clone(true).appendTo( '#receivable_bill thead' );
+    // $('#receivable_bill thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+    // $('#receivable_party thead tr').clone(true).appendTo( '#receivable_party thead' );
+    // $('#receivable_party thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+    // $('#payable_bill thead tr').clone(true).appendTo( '#payable_bill thead' );
+    // $('#payable_bill thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+    // $('#payable_party thead tr').clone(true).appendTo( '#payable_party thead' );
+    // $('#payable_party thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+    // $('#day_book thead tr').clone(true).appendTo( '#day_book thead' );
+    // $('#day_book thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
+    // $('#stock_summary thead tr').clone(true).appendTo( '#stock_summary thead' );
+    // $('#stock_summary thead tr:eq(1) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
     var table = $('#master').DataTable( {
         orderCellsTop: true,
         fixedHeader: true,
@@ -45,9 +129,89 @@ $(document).ready(function() {
           'colvis'
       ]
     } );
+
+    var table = $('#receivable_bill').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+    var table = $('#receivable_party').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+
+    var table = $('#payable_bill').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+
+
+
+   var table = $('#payable_party').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+
+
+    var table = $('#day_book').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+
+    var table = $('#stock_summary').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+    
+    var table = $('#ageing_report').DataTable( {
+        orderCellsTop: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        "scrollX": true,
+        "scrollY":300,
+        buttons: [
+          'colvis'
+      ]
+    } );
+
     table.buttons().container()
         .appendTo( '#master_wrapper .col-md-6:eq(0)' );
-} );
+
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
@@ -67,6 +231,7 @@ $(document).ready(function() {
       });
     }, false);
   })();
+});
 //   select 2
 $(document).ready(function() {
     $('.js-example-basic-multiple').select2();

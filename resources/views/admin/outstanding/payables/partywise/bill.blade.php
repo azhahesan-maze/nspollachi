@@ -21,6 +21,16 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
+#payable_party_filter {
+    opacity: 0;
+    z-index: -1;
+}
+#payable_party_length {
+  display: none;
+}
+#payable_party_wrapper div.dt-buttons {
+  z-index: 10;
+}
 </style>
     <div class="card-body">
     
@@ -91,7 +101,7 @@ table, th, td {
         
       </div>
 
-      <div class="col-md-12 row hiding">
+      <!-- <div class="col-md-12 row hiding">
             <div class="col-md-2">
               <label>Bill No</label>
               <input type="checkbox" class="bill_no" name="opening_stock" value="1" id="item_name">
@@ -164,7 +174,7 @@ table, th, td {
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
             </div>
-          </div>
+          </div> -->
 
       <div class="col-md-12 form-row mb-3">
             <div class="col-md-2">
@@ -222,7 +232,7 @@ table, th, td {
 
         <div class="form-row">
           
-          <table class="table" id="team-list">
+          <table class="table table-striped table-bordered" id="payable_party">
                   <thead>
                     <th> S.no </th>
                     <th id="bill_no"> Bill.no </th>

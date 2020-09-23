@@ -21,6 +21,17 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
+#stock_summary_filter {
+    opacity: 0;
+    z-index: -1;
+}
+#stock_summary_length {
+  display: none;
+}
+#stock_summary_wrapper div.dt-buttons {
+  z-index: 10;
+}
+
 </style>
     <div class="card-body">
     
@@ -60,7 +71,7 @@ table, th, td {
             
           </div>
 
-          <div class="col-md-12 row hiding">
+          <!-- <div class="col-md-12 row hiding">
             <div class="col-md-2">
               <label>Opening Stock</label>
               <input type="checkbox" class="op_stock" name="opening_stock" value="1" id="opening_stock">
@@ -146,7 +157,7 @@ table, th, td {
             <div class="col-md-2">
             <input type="button" class="btn btn-success" name="ageing" id="ageing" onclick="show_column()" value="Show All Columns">
             </div>
-          </div>
+          </div> -->
 
           <div class="col-md-12 form-row mb-3">
             <div class="col-md-2">
@@ -191,7 +202,7 @@ table, th, td {
             
           </div>
           
-          <table class="table table-responsive" id="team-list">
+          <table id="stock_summary" class="table table-striped table-bordered">
                   <thead>
                     <tr>
                     <th rowspan="2"> S.no </th>
