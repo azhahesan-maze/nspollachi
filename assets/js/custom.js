@@ -16,6 +16,171 @@ $(document).ready(function() {
             }
         } );
     } );
+
+    $('#receivable_bill thead tr').clone(true).appendTo( '#receivable_bill thead' );
+    $('#receivable_bill thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#receivable_party thead tr').clone(true).appendTo( '#receivable_party thead' );
+    $('#receivable_party thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#payable_bill thead tr').clone(true).appendTo( '#payable_bill thead' );
+    $('#payable_bill thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#payable_party thead tr').clone(true).appendTo( '#payable_party thead' );
+    $('#payable_party thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#day_book thead tr').clone(true).appendTo( '#day_book thead' );
+    $('#day_book thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#stock_summary thead tr').clone(true).appendTo( '#stock_summary thead' );
+    $('#stock_summary thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#ageing_report thead tr').clone(true).appendTo( '#ageing_report thead' );
+    $('#ageing_report thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#b2b thead tr').clone(true).appendTo( '#b2b thead' );
+    $('#b2b thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#b2c thead tr').clone(true).appendTo( '#b2c thead' );
+    $('#b2c thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#registered thead tr').clone(true).appendTo( '#registered thead' ); 
+    $('#registered thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+    $('#unregistered thead tr').clone(true).appendTo( '#unregistered thead' );
+    $('#unregistered thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
     
     var table = $('#master').DataTable( {
         orderCellsTop: true,
@@ -49,32 +214,89 @@ $(document).ready(function() {
 
     var table = $('#receivable_bill').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
     var table = $('#receivable_party').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#payable_bill').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
@@ -83,11 +305,30 @@ $(document).ready(function() {
 
    var table = $('#payable_party').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
@@ -95,77 +336,210 @@ $(document).ready(function() {
 
     var table = $('#day_book').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#stock_summary').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
     
     var table = $('#ageing_report').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#b2b').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#b2c').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#registered').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
 
     var table = $('#unregistered').DataTable( {
         orderCellsTop: true,
+        fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
         buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
           'colvis'
       ]
     } );
