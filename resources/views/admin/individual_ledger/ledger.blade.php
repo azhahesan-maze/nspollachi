@@ -54,11 +54,11 @@ table, th, td {
           <div class="col-md-12 form-row mb-3">
 
             <div class="col-md-4">
-                  <label style="font-family: Times new roman;">Name</label><br>
+                  <label style="font-family: Times new roman;">Head</label><br>
                   <div class="form-group row">
                      <div class="col-sm-8">
                       <select class="js-example-basic-multiple col-12 form-control custom-select supplier_id" name="supplier_id" id="supplier_id">
-                           <option value="">Choose Name</option>
+                           <option value="">Choose Head Name</option>
                            @foreach($head as $value)
                            <option value="{{ $value->id }}">{{ $value->name }}</option>
                            @endforeach
