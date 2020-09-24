@@ -922,6 +922,12 @@ Route::resource('daybook','DayBookController',['middleware' => ['auth']]);
 
 /*Day Book End Here*/
 
+/*Individual Ledger Start Here*/
+
+Route::resource('individual_ledger','IndividualLedgerController',['middleware' => ['auth']]);
+
+/*Individual Ledger End Here*/
+
 /*Sales Man Start Here*/
 
 Route::resource('sales_man','SalesManController',['middleware' => ['auth']]);
