@@ -6,11 +6,11 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>Stock Ageing</h3>
+          <h3>Individual Ledger</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
-            <li><button type="button" class="btn btn-success"><a href="{{route('stock_ageing.index')}}">Back</a></button></li>
+            <li><button type="button" class="btn btn-success"><a href="{{route('individual_ledger.index')}}">Back</a></button></li>
           </ul>
         </div>
       </div>
