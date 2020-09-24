@@ -21,7 +21,7 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
-#stock_summary_filter {
+/*#stock_summary_filter {
     opacity: 0;
     z-index: -1;
 }
@@ -30,7 +30,7 @@ table, th, td {
 }
 #stock_summary_wrapper div.dt-buttons {
   z-index: 10;
-}
+}*/
 
 </style>
     <div class="card-body">
@@ -202,7 +202,7 @@ table, th, td {
             
           </div>
           
-          <table id="stock_summary" class="table table-striped table-bordered">
+          <table class="table table-striped table-bordered table-responsive" id="stock_summary">
                   <thead>
                     <tr>
                     <th rowspan="2"> S.no </th>

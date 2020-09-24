@@ -169,7 +169,7 @@ table, th, td {
                   
                 </table>
 
-                <table class="table table-striped table-bordered" id="stock_summary">
+                <table class="table table-striped table-bordered" id="out_b2b">
             <label style="font-size: 110%; margin-left: 30px;">B2C</label>
                   <thead>
                     <th> S.no </th>

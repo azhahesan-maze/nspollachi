@@ -92,20 +92,20 @@ $(document).ready(function() {
         } );
     } );
 
-    $('#stock_summary thead tr').clone(true).appendTo( '#stock_summary thead' );
-    $('#stock_summary thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search" />' );
+    // $('#stock_summary thead tr').clone(true).appendTo( '#stock_summary thead' );
+    // $('#stock_summary thead tr:eq(2) th').each( function (i) {
+    //     var title = $(this).text();
+    //     $(this).html( '<input type="text" placeholder="Search" />' );
  
-        $( 'input', this ).on( 'keyup change', function () {
-            if ( table.column(i).search() !== this.value ) {
-                table
-                    .column(i)
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
+    //     $( 'input', this ).on( 'keyup change', function () {
+    //         if ( table.column(i).search() !== this.value ) {
+    //             table
+    //                 .column(i)
+    //                 .search( this.value )
+    //                 .draw();
+    //         }
+    //     } );
+    // } );
 
     $('#ageing_report thead tr').clone(true).appendTo( '#ageing_report thead' );
     $('#ageing_report thead tr:eq(1) th').each( function (i) {
@@ -181,6 +181,24 @@ $(document).ready(function() {
             }
         } );
     } );
+
+    $('#out_b2b thead tr').clone(true).appendTo( '#out_b2b thead' );
+    $('#out_b2b thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+
+    /*test*/
     
     var table = $('#master').DataTable( {
         orderCellsTop: true,
@@ -364,13 +382,44 @@ $(document).ready(function() {
       ]
     } );
 
-    var table = $('#stock_summary').DataTable( {
+    var table = $('#out_b2b').DataTable( {
         orderCellsTop: true,
         fixedHeader: true,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         dom: 'lBfrtip',
         "scrollX": true,
         "scrollY":300,
+        buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                  columns: [ 0, ':visible' ]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 5 ]
+              }
+          },
+          'colvis'
+      ]
+    } );
+    
+
+    var table = $('#stock_summary').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'lBfrtip',
+        // "scrollX": true,
+        // "scrollY":300,
         buttons: [
           {
               extend: 'copyHtml5',
