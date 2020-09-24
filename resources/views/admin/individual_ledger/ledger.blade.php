@@ -21,7 +21,7 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
-#ageing_report_filter {
+/*#ageing_report_filter {
     opacity: 0;
     z-index: -1;
 }
@@ -37,10 +37,10 @@ table, th, td {
 }
 #stock_summary_length {
   display: none;
-}
-#stock_summary_wrapper div.dt-buttons {
+}*/
+/*#master_wrapper div.dt-buttons {
   z-index: 10;
-}
+}*/
 </style>
     <div class="card-body">
     
@@ -107,7 +107,7 @@ table, th, td {
           </div>
 
           <div class="col-md-12 mb-3">
-          <table class="table table-striped table-bordered" id="stock_summary">
+          <table class="table table-striped table-bordered" id="master">
                   <thead>
                     <th> S.no </th>
                     <th id="items">Opening Balance</th>

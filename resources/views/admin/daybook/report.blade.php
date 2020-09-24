@@ -21,7 +21,7 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
-#day_book_filter {
+/*#day_book_filter {
     opacity: 0;
     z-index: -1;
 }
@@ -30,7 +30,7 @@ table, th, td {
 }
 #day_book_wrapper div.dt-buttons {
   z-index: 10;
-}
+}*/
 </style>
     <div class="card-body">
     

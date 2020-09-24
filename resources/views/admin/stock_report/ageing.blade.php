@@ -21,7 +21,7 @@
 table, th, td {
   border: 1px solid #E1E1E1;
 }
-#ageing_report_filter {
+/*#ageing_report_filter {
     opacity: 0;
     z-index: -1;
 }
@@ -30,7 +30,7 @@ table, th, td {
 }
 #ageing_report_wrapper div.dt-buttons {
   z-index: 10;
-}
+}*/
 </style>
     <div class="card-body">
     
