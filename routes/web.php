@@ -928,6 +928,12 @@ Route::resource('individual_ledger','IndividualLedgerController',['middleware' =
 
 /*Individual Ledger End Here*/
 
+/*GST Report Start Here*/
+
+Route::resource('gst_report','GstReportController',['middleware' => ['auth']]);
+
+/*GST Report End Here*/
+
 /*Sales Man Start Here*/
 
 Route::resource('sales_man','SalesManController',['middleware' => ['auth']]);

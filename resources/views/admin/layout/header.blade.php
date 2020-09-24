@@ -583,6 +583,15 @@
                             
                         </ul>
                     </li>
+
+                    <li class="col-md-3 dropdown-item">
+                        <ul>
+
+                            <li class="dropdown-header">GST Report</li>
+                           <li><a href="{{ route('gst_report.index') }}">GST Report</a></li>
+                            
+                        </ul>
+                    </li>
                     
             </ul>        
             
