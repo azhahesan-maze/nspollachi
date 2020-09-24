@@ -191,7 +191,7 @@ table, th, td {
                   
                 </table>
 
-                <table class="table table-striped table-bordered" id="day_book">
+                <!-- <table class="table table-striped table-bordered" id="day_book">
             <label style="font-size: 110%; margin-left: 30px;">Registered Customer</label>
                   <thead>
                     <th> S.no </th>
@@ -212,7 +212,7 @@ table, th, td {
 
                   </tbody>
                   
-                </table>
+                </table> -->
 
                 <table class="table table-striped table-bordered" id="payable_bill">
             <label style="font-size: 110%; margin-left: 30px;">Unregistered Customer</label>
@@ -284,7 +284,7 @@ table, th, td {
                   
                 </table>
 
-                <table class="table table-striped table-bordered" id="registered">
+                <!-- <table class="table table-striped table-bordered" id="registered">
             <label style="font-size: 110%; margin-left: 30px;">Registered Supplier</label>
                   <thead>
                     <th> S.no </th>
@@ -304,7 +304,7 @@ table, th, td {
 
                   </tbody>
                   
-                </table>
+                </table> -->
 
                 <table class="table table-striped table-bordered" id="unregistered">
             <label style="font-size: 110%; margin-left: 30px;">Unregistered Supplier</label>
