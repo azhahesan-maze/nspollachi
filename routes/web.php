@@ -931,6 +931,9 @@ Route::resource('individual_ledger','IndividualLedgerController',['middleware' =
 /*GST Report Start Here*/
 
 Route::resource('gst_report','GstReportController',['middleware' => ['auth']]);
+Route::group(['middleware' => 'auth'], function () {
+     Route::any('date_wise/gst_report/', 'GstReportController@gst_report');
+});
 
 /*GST Report End Here*/
 

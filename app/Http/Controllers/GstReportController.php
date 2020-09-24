@@ -13,7 +13,8 @@ class GstReportController extends Controller
      */
     public function index()
     {
-        return view('admin.gst_report.report');
+        return view('admin.gst_report.consolidated');
+        
     }
 
     /**
@@ -80,5 +81,10 @@ class GstReportController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function gst_report(Request $request)
+    {
+        return view('admin.gst_report.report');
     }
 }

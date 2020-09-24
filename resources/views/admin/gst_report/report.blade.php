@@ -6,7 +6,7 @@
     <div class="card-header px-2">
       <div class="row">
         <div class="col-4">
-          <h3>GST Report</h3>
+          <h3>GST Date Wise Report</h3>
         </div>
         <div class="col-8 mr-auto">
           <ul class="h-right-btn mb-0 pl-0">
@@ -157,7 +157,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
@@ -179,7 +179,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
@@ -224,7 +224,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
@@ -250,7 +250,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
@@ -272,7 +272,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
@@ -316,7 +316,7 @@ table, th, td {
                     <th> Taxable Value</th>
                     <th> IGST</th>
                     <th>CGST</th>
-                    <th>IGST</th>
+                    <th>SGST</th>
                     <th>Total Tax</th>
                     <th>Total Invoice Value</th>
                     <th>Action</th>
