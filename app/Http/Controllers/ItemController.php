@@ -18,6 +18,7 @@ use App\Models\Language;
 use App\Models\Uom;
 use App\Models\UomFactorConvertionForItem;
 use Carbon\Carbon;
+use App\Models\OpeningStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -133,10 +134,10 @@ class ItemController extends Controller
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
 
-        $item->opening_stock = $request->quantity;
-        $item->rate = $request->rate;
-        $item->amount = $request->amount;
-        $item->applicable_date = $request->applicable_date;
+        // $item->opening_stock = $request->quantity;
+        // $item->rate = $request->rate;
+        // $item->amount = $request->amount;
+        // $item->applicable_date = $request->applicable_date;
 
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));
@@ -200,6 +201,24 @@ class ItemController extends Controller
                     //break;
                 }
 
+                $opening_count = $request->opening_cnt;
+
+                for ($j=0; $j < $opening_count; $j++) 
+                { 
+                    $openings = new OpeningStock();
+
+                    $openings->item_id = $item_id;
+                    $openings->batch_no = $request->batch_no[$j];
+                    $openings->opening_qty = $request->quantity[$j];
+                    $openings->rate = $request->rate[$j];
+                    $openings->amount = $request->amount[$j];
+                    $openings->applicable_date = $request->applicable_date[$j];
+                    $openings->black_or_white = $request->black_or_white[$j];
+
+                    $openings->save();
+
+                }
+
                 /*Tax Details End Here*/
             
             // if ($request->has('igst')) {
@@ -225,6 +244,8 @@ class ItemController extends Controller
             // if (count($batch_insert) > 0) {
             //     ItemTaxDetails::insert($batch_insert);
             // }
+
+
 
             if (count($batch_barcode_insert) > 0) {
                 ItemBracodeDetails::insert($batch_barcode_insert);

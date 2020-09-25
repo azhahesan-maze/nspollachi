@@ -464,62 +464,89 @@
                   </div>
                </div>
 
-</div>
-               <div class="row">
+</div> 
 
-                  <div class="col-md-1">
+                  <div class="col-md-1 mb-3">
                      <span>Opening:</span>
                   </div>
-                  <div class="col-md-11">
-                  <div class="row">
+                  <div class="col-md-12 openings">
+                  <div class="row mb-3 opening_row">
 
-                  <div class="col-md-3">
-                  <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Quantity<span class="mandatory">*</span></label>
-                     <div class="col-sm-8">
-                       <input type="text" required="" placeholder="Quantity" name="quantity" class="form-control mandatory" >
-                     </div>
+                     <div class="col-md-2">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">Batch No</label>
+                     <!-- <div class="col-sm-8"> -->
+                       <input type="text" placeholder="Batch No" name="batch_no[]" class="form-control" >
+                     <!-- /div>
+                     
+                  </div> -->
+               </div>
+
+                  <div class="col-md-2">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">Opening Quantity<span class="mandatory">*</span></label>
+                     <!-- <div class="col-sm-8"> -->
+                       <input type="text" required="" placeholder="Opening Quantity" name="quantity[]" class="form-control mandatory" >
+                     <!-- </div> -->
                      <span class="mandatory"> {{ $errors->first('quantity')}} </span>
                      <div class="invalid-feedback">
                            Enter valid Quantity
                      </div>
                      
-                  </div>
+                  <!-- </div> -->
                </div>
 
-                                 <div class="col-md-3">
-                  <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Rate</label>
-                     <div class="col-sm-8">
-                       <input type="text" placeholder="Rate" name="rate" class="form-control" >
-                     </div>
+                                 <div class="col-md-1">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">Rate</label>
+                     <!-- <div class="col-sm-8"> -->
+                       <input type="text" placeholder="Rate" name="rate[]" class="form-control" >
+                     <!-- /div>
                      
-                  </div>
+                  </div> -->
                </div>
 
-                                 <div class="col-md-3">
-                  <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Amount</label>
-                     <div class="col-sm-8">
-                       <input type="text" name="amount" placeholder="Amount" class="form-control" >
-                     </div>
+                                 <div class="col-md-2">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">Amount</label>
+                     <!-- <div class="col-sm-8"> -->
+                       <input type="text" name="amount[]" placeholder="Amount" class="form-control" >
+                     <!-- </div>
                      
-                  </div>
+                  </div> -->
                </div>
 
-                                 <div class="col-md-3">
-                  <div class="form-group row">
-                     <label for="validationCustom01" class="col-sm-4 col-form-label">Applicable Date</label>
-                     <div class="col-sm-8">
-                       <input type="date" name="applicable_date" class="form-control" >
-                     </div>
+                                 <div class="col-md-2">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">Applicable Date</label>
+                     <!-- <div class="col-sm-8"> -->
+                       <input type="date" name="applicable_date[]" class="form-control" >
+                     <!-- /div>
                      
-                  </div>
+                  </div> -->
                </div>
+
+               <div class="col-md-1">
+                  <!-- <div class="form-group row"> -->
+                     <label for="validationCustom01" class="">W/B</label>
+                     <!-- <div class="col-sm-8"> -->
+                       <select class="form-control" name="black_or_white[]">
+                          <option value="1">W</option>
+                          <option value="0">B</option>
+                       </select>
+                     <!-- /div>
+                     
+                  </div> -->
+               </div>
+
+               <div class="col-md-2 mt-4">
+                  <input type="button" id="add_opening" onclick="openings_add()" class="btn btn-success mb-3" name="" value="+">
+                  <input type="button" id="remove_opening" class="btn btn-danger mb-3" name="" value="-">
+               </div>
+
             </div>
-         </div>
-               </div>
-               
+         </div> 
+         <input type="hidden" name="opening_cnt" id="opening_cnt" value="0">
 
 
             </div>
@@ -693,6 +720,7 @@
 </div>
 <!-- <script src="{{asset('assets/js/master/add_more_item_tax_details.js')}}"></script> -->
 <script src="{{asset('assets/js/master/add_more_barcode_details.js')}}"></script>
+<script src="{{asset('assets/js/master/add_more_opening_details.js')}}"></script>
 <script>
 
 $(document).on("submit",".submit_form2",function(){
@@ -925,7 +953,7 @@ function testing(val)
      
     
 
-	 $("select").select2();
+    $("select").select2();
 
 
    
@@ -1024,7 +1052,7 @@ function testing(val)
       $(".uom_for_minimum_sales_item").removeAttr("required");
        $(".minimum_sales_div").css("display","none");
      }
-	 $("select").select2();
+    $("select").select2();
    });
    
    
