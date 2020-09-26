@@ -484,7 +484,21 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <label style="font-family: Times new roman;">Remarks</label>
                         <input type="text" class="form-control remarks" placeholder="Remarks" id="remarks" pattern="[0-9][0-9 . 0-9]{0,100}" name="remarks" value="" >
                       </div>
+
+                      <div class="col-md-2">
+                          <label style="font-family: Times new roman;">Batch No</label>
+                        <input type="number" class="form-control batch_no required_for_proof_valid" placeholder="Batch No" id="batch_no" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" name="batch_no" value="" >
+                        </div>
+
+                      <div class="col-md-2">
+                          <label style="font-family: Times new roman;">Balck OR White</label>
+                        <select class="form-control" name="black_or_white[]">
+                          <option value="1">W</option>
+                          <option value="0">B</option>
+                       </select>
+                        </div>
                     </div>
+
                       <br>
                                                           
                      <div class="" align="center">

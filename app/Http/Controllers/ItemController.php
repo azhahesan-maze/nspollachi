@@ -133,6 +133,7 @@ class ItemController extends Controller
         $item->is_expiry_date = $request->is_expiry_date;
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
+        $item->opening_count = $request->opening_cnt;
 
         // $item->opening_stock = $request->quantity;
         // $item->rate = $request->rate;
@@ -203,7 +204,7 @@ class ItemController extends Controller
 
                 $opening_count = $request->opening_cnt;
 
-                for ($j=0; $j < $opening_count; $j++) 
+                for ($j=0; $j <= $opening_count; $j++) 
                 { 
                     $openings = new OpeningStock();
 
@@ -295,6 +296,7 @@ class ItemController extends Controller
         $category_three = Category_three::all();
         $uom = Uom::all();
         $tax = Tax::all();
+        $opening_stock = OpeningStock::all();
 
         $tax_details = ItemTaxDetails::where('item_id',$id)
                                     ->select('item_id','valid_from')
@@ -313,6 +315,21 @@ class ItemController extends Controller
         $tax_count = count($tax);
         $tax_detail_count = count($tax_details);
 
+        $opening = OpeningStock::where('item_id',$id)->get();
+
+        foreach ($opening as $key => $value) 
+        {
+
+            $opening_data[] = OpeningStock::where('item_id',$id)
+                                            ->where('batch_no',$value->batch_no)
+                                            ->get();
+            
+            
+        }
+
+        // 
+        $opening_count = count($opening_data);
+        // echo $opening_count-1; exit();
 
 
         $brand = Brand::orderBy('name', 'asc')->get();
@@ -320,7 +337,7 @@ class ItemController extends Controller
         $bulk_item = Item::where('item_type', 'Bulk')->get();
         $child_item = Item::all();
         $supplier = Supplier::orderBy('name', 'asc')->get();
-        return view('admin.master.item.edit', compact('supplier', 'brand', 'bulk_item', 'category', 'item', 'child_item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three','tax','tax_details', 'tax_value','uom','tax_count','tax_detail_count'));
+        return view('admin.master.item.edit', compact('supplier', 'brand', 'bulk_item', 'category', 'item', 'child_item', 'language_1', 'language_2', 'language_3', 'category_1', 'category_2', 'category_3', 'category_one', 'category_two', 'category_three','tax','tax_details', 'tax_value','uom','tax_count','tax_detail_count','opening','opening_stock','opening_data','opening_count'));
     }
 
     /**
@@ -332,6 +349,28 @@ class ItemController extends Controller
      */
     public function update(ItemRequest $request, Item $item, $id)
     {
+
+        // $opening_count = $request->opening_cnt;
+        // // 
+
+        // for ($j=0; $j <= $opening_count; $j++) 
+        // { 
+        //     $openings = new OpeningStock();
+            
+        //     $openings->item_id = $id;
+
+        //     $openings->batch_no = $request->batch_no[$j];
+        //     $openings->opening_qty = $request->quantity[$j];
+        //     $openings->rate = $request->rate[$j];
+        //     $openings->amount = $request->amount[$j];
+        //     $openings->applicable_date = $request->applicable_date[$j];
+        //     $openings->black_or_white = $request->black_or_white[$j];
+
+        //     // $openings->save();
+
+        // }
+        // echo $opening_count ;exit();
+
         $item = Item::find($id);
         $item->name = $request->name;
         $item->item_type = $request->item_type;
@@ -424,7 +463,6 @@ class ItemController extends Controller
             }
 
             $tax_detail = ItemTaxDetails::where('item_id',$id);
-
             $tax_detail->delete();
 
             $count = $request->count;
@@ -451,40 +489,6 @@ class ItemController extends Controller
                     }
                     //break;
                 }
-
-            // if ($request->has('igst')) {
-            //     foreach ($request->igst as $tax_key => $tax_value) {
-            //         if ($tax_value != "") {
-            //             $data = [
-            //                 'item_id' => $item->id,
-            //                 'cgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-            //                 'igst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] : "",
-            //                 'sgst' => isset($request->igst[$tax_key]) ? $request->igst[$tax_key] / 2 : "",
-            //                 'valid_from' => isset($request->valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->valid_from[$tax_key])) : "",
-            //                 'created_by' => 0,
-            //                 'created_at' => $now,
-            //                 'updated_at' => $now,
-            //             ];
-            //             $batch_insert[] = $data;
-            //         }
-            //     }
-            // }
-
-            /* Update Exsiting Item Tax Details Start Here */
-            // if ($request->has('old_igst')) {
-            //     $now = Carbon::now()->toDateTimeString();
-            //     foreach ($request->old_igst as $tax_key => $tax_value) {
-            //         $old_item_tax_details = ItemTaxDetails::find($request->item_tax_details_id);
-            //         $old_item_tax_details->item_id = $item->id;
-            //         $old_item_tax_details->cgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
-            //         $old_item_tax_details->igst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] : "";
-            //         $old_item_tax_details->sgst = isset($request->old_igst[$tax_key]) ? $request->old_igst[$tax_key] / 2 : "";
-            //         $old_item_tax_details->valid_from = isset($request->old_valid_from[$tax_key]) ? date('Y-m-d', strtotime($request->old_valid_from[$tax_key])) : "";
-            //         $old_item_tax_details->updated_by = 0;
-            //         $old_item_tax_details->save();
-            //     }
-            // }
-            /* Update Exsiting Item Tax Details End Here */
 
 
             if (count($batch_insert) > 0) {

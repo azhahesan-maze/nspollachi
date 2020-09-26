@@ -1,9 +1,18 @@
-var i =1;
-function openings_add()
-{
+var i =$('#opening_cnt').val();
+
+$(document).on('click','#add_opening',function(){
+
+	var rate_val = $(this).closest($('.opening_row')).find('.rate').val();
+	if(rate_val == '')
+	{
+
+	}
+	else
+	{
+
 	var opening_details = "";
 
-opening_details+= '<div class="row mb-3 opening_row">\
+	opening_details+= '<div class="row mb-3 opening_row">\
                      <div class="col-md-2">\
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Batch No</label>\
@@ -16,7 +25,7 @@ opening_details+= '<div class="row mb-3 opening_row">\
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Opening Quantity<span class="mandatory">*</span></label>\
                      <!-- <div class="col-sm-8"> -->\
-                       <input type="text" required="" placeholder="Opening Quantity" name="quantity[]" class="form-control mandatory" >\
+                       <input type="text" required="" placeholder="Opening Quantity" name="quantity[]" class="form-control quantity mandatory" >\
                      <!-- </div> -->\
                      <span class="mandatory"> </span>\
                      <div class="invalid-feedback">\
@@ -28,7 +37,7 @@ opening_details+= '<div class="row mb-3 opening_row">\
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Rate</label>\
                      <!-- <div class="col-sm-8"> -->\
-                       <input type="text" placeholder="Rate" name="rate[]" class="form-control" >\
+                       <input type="text" placeholder="Rate" name="rate[]" class="form-control rate" >\
                      <!-- /div>\
                   </div> -->\
                </div>\
@@ -36,7 +45,7 @@ opening_details+= '<div class="row mb-3 opening_row">\
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Amount</label>\
                      <!-- <div class="col-sm-8"> -->\
-                       <input type="text" name="amount[]" placeholder="Amount" class="form-control" >\
+                       <input type="text" name="amount[]" readonly placeholder="Amount" class="form-control amount" >\
                      <!-- </div>\
                      \
                   </div> -->\
@@ -61,7 +70,7 @@ opening_details+= '<div class="row mb-3 opening_row">\
                   </div> -->\
                </div>\
                <div class="col-md-2 mt-4">\
-                  <input type="button" id="add_opening" onclick="openings_add()" class="btn btn-success mb-3" name="" value="+">\
+                  <input type="button" id="add_opening" class="btn btn-success mb-3" name="" value="+">\
                   <input type="button" id="remove_opening" class="btn btn-danger mb-3" name="" value="-">\
                </div>\
             </div>';
@@ -70,10 +79,12 @@ $('.openings').append(opening_details);
 i++;
 $('#opening_cnt').val(i);
 }
+});
+
 
 $(document).on('click','#remove_opening',function (){
 
-	var count = $('.opening_row').length;
+	var count = $('.opening_cnt').val();
 	if(count == 1)
 	{
 		alert('Atleast One Row Present!');
@@ -87,9 +98,32 @@ $(document).on('click','#remove_opening',function (){
 
 });
 
-function openings_remove() 
+$(document).on('input','.rate',function(){
+var quantity = $(this).closest($('.opening_row')).find('.quantity').val();
+var rate = $(this).closest($('.opening_row')).find('.rate').val();
+if(quantity == '')
 {
-	
-	
+	alert('Enter Quantity First');
+	$(this).closest($('.opening_row')).find('.rate').val('');
 }
+else
+{
+	var amount = parseInt(quantity)*parseFloat(rate);
+	$(this).closest($('.opening_row')).find('.amount').val(parseFloat(amount).toFixed(2));
+}
+
+});
+
+$(document).on('input','.quantity',function(){
+	var quantity = $(this).closest($('.opening_row')).find('.quantity').val();
+    var rate = $(this).closest($('.opening_row')).find('.rate').val();
+
+	if(rate != '')
+	{
+		$(this).closest($('.opening_row')).find('.rate').val('');
+		$(this).closest($('.opening_row')).find('.amount').val('');
+	}
+});
+
+
             

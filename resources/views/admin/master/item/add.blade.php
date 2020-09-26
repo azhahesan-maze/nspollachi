@@ -486,7 +486,7 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Opening Quantity<span class="mandatory">*</span></label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="text" required="" placeholder="Opening Quantity" name="quantity[]" class="form-control mandatory" >
+                       <input type="number" required="" id="quantity" placeholder="Opening Quantity" name="quantity[]" class="form-control quantity mandatory" >
                      <!-- </div> -->
                      <span class="mandatory"> {{ $errors->first('quantity')}} </span>
                      <div class="invalid-feedback">
@@ -500,7 +500,7 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Rate</label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="text" placeholder="Rate" name="rate[]" class="form-control" >
+                       <input type="text" placeholder="Rate" id="rate" name="rate[]" class="form-control rate" >
                      <!-- /div>
                      
                   </div> -->
@@ -510,7 +510,7 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Amount</label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="text" name="amount[]" placeholder="Amount" class="form-control" >
+                       <input type="text" name="amount[]" readonly="" id="amount" placeholder="Amount" class="form-control amount" >
                      <!-- </div>
                      
                   </div> -->
@@ -540,13 +540,13 @@
                </div>
 
                <div class="col-md-2 mt-4">
-                  <input type="button" id="add_opening" onclick="openings_add()" class="btn btn-success mb-3" name="" value="+">
+                  <input type="button" id="add_opening" class="btn btn-success mb-3" name="" value="+">
                   <input type="button" id="remove_opening" class="btn btn-danger mb-3" name="" value="-">
                </div>
 
             </div>
          </div> 
-         <input type="hidden" name="opening_cnt" id="opening_cnt" value="0">
+         <input type="text" name="opening_cnt" id="opening_cnt" value="0">
 
 
             </div>
@@ -731,6 +731,8 @@ $(document).on("submit",".submit_form2",function(){
     return false;
   }
 });
+
+
 var i = 0;
 function add_item_tax_details() {
    i++;
