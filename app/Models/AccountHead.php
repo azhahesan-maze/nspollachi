@@ -10,4 +10,8 @@ class AccountHead extends Model
     {
     	return $this->belongsTo(AccountGroup::class,'under','id');
     }
+    public function taxes()
+    {
+    	return $this->belongsTo(Tax::class,'name_of_tax','id');
+    }
 }

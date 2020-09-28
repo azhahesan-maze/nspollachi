@@ -18,7 +18,7 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('account_group.update',$account_group->id)}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" action="{{route('account_group.update',$account_group->id)}}" enctype="multipart/form-data">
       {{csrf_field()}}
       @method('PATCH')
 
@@ -27,7 +27,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Name:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name" placeholder="Name" name="name" value="{{ $account_group->name }}">
+                <input type="text" class="form-control name" placeholder="Name" required="" name="name" value="{{ $account_group->name }}">
                 
               </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Under : </label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under">
+                <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" required="">
                   @if($account_group->under == 'Primary')
                   <option value="Primary">Primary</option>
                   @else
@@ -78,7 +78,17 @@
         <div class="form-row col-md-12 tax_details">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
-            <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value="{{ $account_group->name_of_tax }}">
+            <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="tax_name" id="tax_name">
+              @if($account_group->name_of_tax != '')
+                  <option value="{{ $account_group->taxes->id }}">{{ $account_group->taxes->name }}</option>
+                  @else
+                  <option value="">Choose Any</option>
+                  @endif
+                  @foreach($tax as $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endforeach
+            </select>
+            <!-- <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value="{{ $account_group->name_of_tax }}"> -->
           </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
@@ -89,11 +99,13 @@
           <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="type" id="type">
                   @if($account_group->type == 1)
                   <option value="1">Goods</option>
+                  @elseif($account_group->type == 2)
+                  <option value="2">Service</option>
                   @else
-                  <option value="0">Service</option>
+                  <option value="">Choose Any</option>
                   @endif
                   <option value="1">Goods</option>
-                  <option value="0">Service</option>
+                  <option value="2">Service</option>
                         </select>
           
         </div>
@@ -113,11 +125,13 @@
           <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="type" id="type">
                   @if($account_group->type == 1)
                   <option value="1">Goods</option>
+                  @elseif($account_group->type == 2)
+                  <option value="2">Service</option>
                   @else
-                  <option value="0">Service</option>
+                  <option value="">Choose Any</option>
                   @endif
                   <option value="1">Goods</option>
-                  <option value="0">Service</option>
+                  <option value="2">Service</option>
                         </select>
           
         </div>

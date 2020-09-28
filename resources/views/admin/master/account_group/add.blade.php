@@ -18,25 +18,24 @@
     <!-- card header end@ -->
     <div class="card-body">
     
-      <form  method="post" class="form-horizontal needs-validation" novalidate action="{{route('account_group.store')}}" enctype="multipart/form-data">
+      <form  method="post" class="form-horizontal needs-validation" action="{{route('account_group.store')}}" enctype="multipart/form-data">
       {{csrf_field()}}
 
         <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Name:</label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Name<span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control name" placeholder="Name" name="name" value="">
-                
+                <input type="text" class="form-control name" placeholder="Name" required="" name="name" value="">
               </div>
             </div>
           </div>
 
         <div class="col-md-6">
             <div class="form-group row">
-              <label for="validationCustom01" class="col-sm-4 col-form-label">Under : </label>
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Under <span class="mandatory">*</span> </label>
               <div class="col-sm-8">
-                <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under">
+                <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" required="">
                   <option value="">Choose Any</option>
                   <option value="Primary">Primary</option>
                   @foreach($account_group as $value)
@@ -70,7 +69,13 @@
         <div class="form-row col-md-12 tax_details">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
-            <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value="">
+            <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="tax_name" id="tax_name">
+                  <option value="">Choose Any</option>
+                  @foreach($tax as $value)
+                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endforeach
+            </select>
+            <!-- <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value=""> -->
           </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
@@ -81,7 +86,7 @@
           <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="type" id="type">
                   <option value="">Choose Any</option>
                   <option value="1">Goods</option>
-                  <option value="0">Service</option>
+                  <option value="2">Service</option>
                         </select>
           
         </div>
@@ -106,6 +111,7 @@
 </div>
 
 <script type="text/javascript">
+  
   function yes()
   {
     $('.tax_details').show();

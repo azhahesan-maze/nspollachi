@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AccountGroup;
+use App\Models\Tax;
 use Illuminate\Support\Facades\Redirect;
 
 class AccountGroupController extends Controller
@@ -25,9 +26,10 @@ class AccountGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $tax = Tax::all();
         $account_group = AccountGroup::all();
-        return view('admin.master.account_group.add',compact('account_group'));
+        return view('admin.master.account_group.add',compact('account_group','tax'));
     }
 
     /**
@@ -88,8 +90,9 @@ class AccountGroupController extends Controller
     {
         $account_group = AccountGroup::find($id);
         $group = AccountGroup::all();
+        $tax = Tax::all();
 
-        return view('admin.master.account_group.edit',compact('account_group','group'));
+        return view('admin.master.account_group.edit',compact('account_group','group','tax'));
     }
 
     /**

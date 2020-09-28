@@ -43,11 +43,11 @@
               <td>{{ $value->under_data->name }}</td>
               @endif
               @endif
-              <td>{{ $value->name_of_tax }}</td>
+              <td>{{ @$value->taxes->name }}</td>
               <td>{{ $value->rate_of_tax }}</td>
               @if($value->type == 1)
               <td>Goods</td>
-              @elseif($value->type == '0')
+              @elseif($value->type == 2)
               <td>Service</td>
               @else
               <td></td>
