@@ -41,7 +41,7 @@
                   @if($account_group->under == 'Primary')
                   <option value="Primary">Primary</option>
                   @else
-                  <option value="{{$account_group->id}}">{{$account_group->name}}</option>
+                  <option value="{{$account_group->under_data->id}}">{{$account_group->under_data->name}}</option>
                   @endif
                   <option value="Primary">Primary</option>
                   @foreach($group as $value)
