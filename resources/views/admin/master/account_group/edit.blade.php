@@ -162,6 +162,27 @@
   {
     $('.tax_details').hide();
   } 
+
+  $(document).on('input','.name',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.tax_rate',function(){
+
+    $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
+    if ($(this).val().replace(/[^.]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
 </script>
 
 @endsection

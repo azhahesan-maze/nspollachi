@@ -141,6 +141,40 @@
   {
     $('.tax_details').hide();
   } 
+  $(document).on('input','.name',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.tax_rate',function(){
+
+    $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
+    if ($(this).val().replace(/[^.]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
+  $(document).on('input','.balance',function(){
+    
+    $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
+    if ($(this).val().replace(/[^.]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+     
+    }
+
+  });
+
   $(document).on('click','.cancel', function(){
     $('input').val('');
     $('select').val('');

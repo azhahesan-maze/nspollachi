@@ -329,7 +329,7 @@ class ItemController extends Controller
 
         // 
         $opening_count = count($opening_data);
-        // echo $opening_count-1; exit();
+
 
 
         $brand = Brand::orderBy('name', 'asc')->get();
@@ -350,26 +350,27 @@ class ItemController extends Controller
     public function update(ItemRequest $request, Item $item, $id)
     {
 
-        // $opening_count = $request->opening_cnt;
-        // // 
+       //  $opening_count = $request->opening_cnt;
+       // // echo $opening_count; exit();
 
-        // for ($j=0; $j <= $opening_count; $j++) 
-        // { 
-        //     $openings = new OpeningStock();
+       //  for ($j=0; $j < $opening_count; $j++) 
+       //  { 
+       //      $openings = new OpeningStock();
             
-        //     $openings->item_id = $id;
+       //      $openings->item_id = $id;
+       //      $openings->batch_no = $request->batch_no[$j];
+       //      $openings->opening_qty = $request->quantity[$j];
+       //      $openings->rate = $request->rate[$j];
+       //      $openings->amount = $request->amount[$j];
+       //      $openings->applicable_date = $request->applicable_date[$j];
+       //      $openings->black_or_white = $request->black_or_white[$j];
 
-        //     $openings->batch_no = $request->batch_no[$j];
-        //     $openings->opening_qty = $request->quantity[$j];
-        //     $openings->rate = $request->rate[$j];
-        //     $openings->amount = $request->amount[$j];
-        //     $openings->applicable_date = $request->applicable_date[$j];
-        //     $openings->black_or_white = $request->black_or_white[$j];
+       //      // $openings->save();
 
-        //     // $openings->save();
+       //  }
 
-        // }
-        // echo $opening_count ;exit();
+        // echo $item; exit();
+        
 
         $item = Item::find($id);
         $item->name = $request->name;
@@ -428,7 +429,7 @@ class ItemController extends Controller
         $item->created_by = 0;
         if ($item->save()) {
             $now = Carbon::now()->toDateTimeString();
-            $batch_insert = [];
+            // $batch_insert = [];
 
 
             /* Store Barcode Details Start Here  */
@@ -472,7 +473,7 @@ class ItemController extends Controller
             {
                 foreach ($tax as $key => $value) 
                 {
-                    $str_json = json_encode($value->name); //array to json string conversion
+                    $str_json = json_encode($value->name); 
                     $tax_name = str_replace('"', '', $str_json);
                     $value_name = $tax_name.'_id';
                     
@@ -491,9 +492,9 @@ class ItemController extends Controller
                 }
 
 
-            if (count($batch_insert) > 0) {
-                ItemTaxDetails::insert($batch_insert);
-            }
+            // if (count($batch_insert) > 0) {
+            //     ItemTaxDetails::insert($batch_insert);
+            // }
 
             if (count($batch_barcode_insert) > 0) {
                 $batch_barcode_insert = array_unique($batch_barcode_insert, SORT_REGULAR);

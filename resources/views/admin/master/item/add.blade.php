@@ -546,7 +546,7 @@
 
             </div>
          </div> 
-         <input type="text" name="opening_cnt" id="opening_cnt" value="0">
+         <input type="hidden" name="opening_cnt" id="opening_cnt" value="0">
 
 
             </div>

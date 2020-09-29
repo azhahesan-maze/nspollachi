@@ -529,9 +529,10 @@
 
             </div>
             @endfor
-         </div> 
+            <input type="hidden" name="opening_cnt" id="opening_cnt" value="{{ $opening_count }}">
+         </div>  -->
          
-         <input type="text" name="opening_cnt" id="opening_cnt" value="{{ $opening_count-1 }}"> -->
+         
 
 
  <div class="form-row">
