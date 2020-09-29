@@ -110,6 +110,12 @@
 
 <script type="text/javascript">
 
+  $(document).on('input','.name',function(){
+
+  $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
 
 $(document).on("click",".refresh_state_id",function(){
    var state_dets=refresh_state_master_details();

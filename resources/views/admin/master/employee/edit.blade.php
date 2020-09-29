@@ -602,6 +602,47 @@
 
 <script>
 
+  $(document).on("keyup",".name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+});
+
+  $(document).on("keyup",".proof_name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+  });
+
+  $(document).on("keyup",".father_name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+  });
+
+  $(document).on('input','.blood_group ',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z+]/gi, ''));
+    if ($(this).val().replace(/[^+]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
+  $(document).on('input','.proof_name ',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
 $(document).on("click",".refresh_state_id",function(){
    var state_dets=refresh_state_master_details();
    $(this).closest(".address_div").find(".state_id").html(state_dets);

@@ -80,6 +80,13 @@
   </div>
 </div>
 <script>
+
+  $(document).on('input','.name',function(){
+
+  $(this).val($(this).val().replace(/[^a-zA-Z0-9 ]/gi, ''));
+
+  });
+
   $(document).on("click",".refresh_bank_id",function(){
      var bank_dets=refresh_bank_master_details();
     $(".bank_id").html(bank_dets);

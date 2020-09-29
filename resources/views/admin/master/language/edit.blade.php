@@ -68,6 +68,100 @@
       </form>
     </div>
     <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
+    <script>
+
+      $(document).on("click",".submit",function(){
+   
+    address_details_validation();
+  });
+
+  $(document).on('input','.language_1',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.language_2',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.language_3',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+ 
+  function address_details_validation(){
+    var error_count=0;
+      $(".language").each(function(){
+        $(this).removeClass("is-invalid");
+           if($(this).val() !=""){
+             var name=$(this).attr('name');
+             var value=$(this).val();
+
+
+            $(this).removeClass("is-invalid");
+            $(this).addClass("is-valid");
+
+
+$(".language").each(function(){
+  if($(this).attr('name') != name){
+
+    if($(this).val() != value)
+    {
+     
+      $(this).removeClass("is-invalid");
+      $(this).addClass("is-valid");
+
+    }else{
+      $(this).closest("div").find(".mandatory").html("This Value is already Exist In current Input ");
+      $(this).removeClass("is-valid");
+      $(this).addClass("is-invalid");
+    }
+  }
+
+});
+
+
+
+
+
+
+
+            if($(this).attr('input-type') == "phone_no"){
+               var phone_no=$(this).val();
+                if(phone_no_validation(phone_no) == 0){
+                  error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+                 $(this).closest("div").find(".mandatory").html("this field is required");
+                }
+                 }
+
+                 if($(this).attr('input-type') == "email"){
+               var email=$(this).val();
+               if(!email_validation(email)){
+                error_count++;
+                $(this).removeClass("is-valid");
+                 $(this).addClass("is-invalid");
+               }
+               
+                 }
+         }else{
+           error_count++;
+           $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+        }
+       });
+       return error_count;
+  }
+
+ 
+
+
+  </script>
     <!-- card body end@ -->
   </div>
 </div>

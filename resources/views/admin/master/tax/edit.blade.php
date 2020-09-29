@@ -48,6 +48,14 @@
         </div>
       </form>
     </div>
+    
+    <script>
+      $(document).on('input','.name',function(){
+
+      $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+      });
+    </script>
     <!-- card body end@ -->
   </div>
 </div>

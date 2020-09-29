@@ -732,6 +732,20 @@ $(document).on("submit",".submit_form2",function(){
   }
 });
 
+      $(document).on('input','.hsn ',function(e){
+         e.preventDefault();
+        $(this).val($(this).val().replace(/[^0-9]/gi, ''));
+        if($(this).val().replace(/[^0-9]/gi, '').length > 6)
+        {
+         return false
+        }
+        else
+        {
+          
+        }
+
+      });
+
 
 var i = 0;
 function add_item_tax_details() {

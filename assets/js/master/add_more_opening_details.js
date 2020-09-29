@@ -76,7 +76,7 @@ $(document).on('click','#add_opening',function(){
             </div>';
 
 $('.openings').append(opening_details);
-i++;
+++i;
 $('#opening_cnt').val(i);
 }
 });

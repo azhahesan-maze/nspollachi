@@ -92,7 +92,7 @@ $(document).on("keypress",".only_allow_alp_num_dot_com_amp",function(e)
 
 $(document).on("keypress",".only_allow_alp_numeric",function(e)
 {
-    var regex = new RegExp("^[a-zA-Z0-9]+$");
+    var regex = new RegExp("^[a-zA-Z0-9 ]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
     if (regex.test(str)) {
         return true;

@@ -26,7 +26,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Amount <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control Amount only_allow_alp_numeric" placeholder="Amount" name="amount" value="{{old('amount',$denomination->amount)}}" required>
+                <input type="text" class="form-control amount only_allow_alp_numeric" placeholder="Amount" name="amount" value="{{old('amount',$denomination->amount)}}" required>
                 <span class="mandatory"> {{ $errors->first('amount')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Amount
@@ -53,6 +53,30 @@
         </div>
       </form>
     </div>
+
+    <script>
+      
+      // $(document).on('input','#amount',function(){
+
+      // $(this).val($(this).val().replace(/[^0-9]/gi, ''));
+
+      // });
+  $(document).on('input','.amount',function(){
+
+    $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
+    if ($(this).val().replace(/[^.]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
+    </script>
+
     <!-- card body end@ -->
   </div>
 </div>

@@ -197,7 +197,7 @@
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Access No <span class="mandatory">*</span></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control access_no required_for_valid" error-data="Enter valid Access No" placeholder="Access No" name="access_no" value="{{old('access_no')}}" >
+                <input type="text" class="form-control access_no only_allow_alp_numeric required_for_valid" error-data="Enter valid Access No" placeholder="Access No" name="access_no" value="{{old('access_no')}}" >
                 <span class="mandatory"> {{ $errors->first('access_no')  }} </span>
                 <div class="invalid-feedback">
                   Enter valid Access No
@@ -516,13 +516,54 @@
         </div>
       </form>
     </div>
-    <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/master/capitalize.js')}}"></script> -->
     <!-- card body end@ -->
   </div>
 </div>
 <div style="clear:both;"></div>
 
 <script type="text/javascript">
+
+  $(document).on("keyup",".name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+});
+
+  $(document).on("keyup",".proof_name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+  });
+
+  $(document).on("keyup",".father_name",function() {
+  var string = $( this).val();
+  var Capitalized = string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  $(this).val(Capitalized);
+
+  });
+
+  $(document).on('input','.blood_group ',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z+]/gi, ''));
+    if ($(this).val().replace(/[^+]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
+  $(document).on('input','.proof_name ',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
 
 $(document).on("click",".refresh_state_id",function(){
    var state_dets=refresh_state_master_details();

@@ -53,7 +53,21 @@
         </div>
       </form>
     </div>
-    <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/master/capitalize.js')}}"></script> -->
+    <script type="text/javascript">
+      $(document).on('input','.name',function(){
+
+      $(this).val($(this).val().replace(/[^a-zA-Z0-9 ]/gi, ''));
+
+      });
+
+      $(document).on('input','.code',function(){
+
+      $(this).val($(this).val().replace(/[^a-zA-Z0-9 ]/gi, ''));
+
+      });
+
+    </script>
     <!-- card body end@ -->
   </div>
 </div>

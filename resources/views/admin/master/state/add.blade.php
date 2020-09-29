@@ -85,6 +85,27 @@
 </div>
 <script src="{{asset('assets/js/master/capitalize.js')}}"></script>
 <script>
+
+  $(document).on('input','.name',function(){
+
+    $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.code',function(){
+
+    $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
+    if ($(this).val().replace(/[^.]/g, "").length > 1)
+    {
+    $(this).val(''); 
+    }
+    else
+    {
+
+    }
+
+  });
+
  /*  $(document).on("click",".add_row",function()
   {
    $('.table tr').each(function(key,value)

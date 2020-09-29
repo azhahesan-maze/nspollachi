@@ -316,6 +316,8 @@ class ItemController extends Controller
         $tax_detail_count = count($tax_details);
 
         $opening = OpeningStock::where('item_id',$id)->get();
+        // 
+        // $opening_data = [];
 
         foreach ($opening as $key => $value) 
         {
@@ -326,11 +328,9 @@ class ItemController extends Controller
             
             
         }
-
-        // 
+        // ; print_r($opening_data);exit();
+        
         $opening_count = count($opening_data);
-
-
 
         $brand = Brand::orderBy('name', 'asc')->get();
         $category = Category::orderBy('name', 'asc')->get();
@@ -350,26 +350,27 @@ class ItemController extends Controller
     public function update(ItemRequest $request, Item $item, $id)
     {
 
-       //  $opening_count = $request->opening_cnt;
-       // // echo $opening_count; exit();
 
-       //  for ($j=0; $j < $opening_count; $j++) 
-       //  { 
-       //      $openings = new OpeningStock();
+        $test_opening = OpeningStock::where('item_id',$id);
+        $test_opening->delete();
+
+        $opening_count = $request->opening_cnt;
+
+        for ($j=0; $j < $opening_count; $j++) 
+        { 
+            $openings = new OpeningStock();
             
-       //      $openings->item_id = $id;
-       //      $openings->batch_no = $request->batch_no[$j];
-       //      $openings->opening_qty = $request->quantity[$j];
-       //      $openings->rate = $request->rate[$j];
-       //      $openings->amount = $request->amount[$j];
-       //      $openings->applicable_date = $request->applicable_date[$j];
-       //      $openings->black_or_white = $request->black_or_white[$j];
+            $openings->item_id = $id;
+            $openings->batch_no = $request->batch_no[$j];
+            $openings->opening_qty = $request->quantity[$j];
+            $openings->rate = $request->rate[$j];
+            $openings->amount = $request->amount[$j];
+            $openings->applicable_date = $request->applicable_date[$j];
+            $openings->black_or_white = $request->black_or_white[$j];
 
-       //      // $openings->save();
+            $openings->save();
 
-       //  }
-
-        // echo $item; exit();
+        }
         
 
         $item = Item::find($id);
@@ -409,10 +410,7 @@ class ItemController extends Controller
         $item->is_machine_weight_applicable = $request->is_machine_weight_applicable;
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
 
-        $item->opening_stock = $request->quantity;
-        $item->rate = $request->rate;
-        $item->amount = $request->amount;
-        $item->applicable_date = $request->applicable_date;
+        
 
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));

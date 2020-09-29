@@ -108,6 +108,20 @@
 
             return true;
        }
+
+       $(document).on('input','.hsn ',function(){
+
+        $(this).val($(this).val().replace(/[^0-9]/gi, ''));
+        if($(this).val().replace(/[^0-9]/gi, '').length > 6)
+        {
+          $(this).val('');
+        }
+        else
+        {
+          
+        }
+
+      });
        
     </SCRIPT>
     </div>

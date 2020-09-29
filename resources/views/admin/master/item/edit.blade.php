@@ -472,7 +472,7 @@
  </div>
 
 
-              <!-- <div class="col-md-2 mb-3">
+              <div class="col-md-2 mb-3">
                      <span>Opening:</span>
                   </div>
                   
@@ -530,7 +530,7 @@
             </div>
             @endfor
             <input type="hidden" name="opening_cnt" id="opening_cnt" value="{{ $opening_count }}">
-         </div>  -->
+         </div> 
          
          
 
