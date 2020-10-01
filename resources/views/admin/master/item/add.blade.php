@@ -476,7 +476,7 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Batch No</label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="text" placeholder="Batch No" name="batch_no[]" class="form-control" >
+                       <input type="text" placeholder="Batch No" name="batch_no[]" class="form-control batch_no" >
                      <!-- /div>
                      
                   </div> -->

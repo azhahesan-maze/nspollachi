@@ -49,7 +49,7 @@
         </div>
         <br>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Tax:</label>
@@ -75,9 +75,9 @@
                   @foreach($tax as $value)
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
-            </select>
+            </select> -->
             <!-- <input type="text" class="form-control tax_name" placeholder="Tax Name" name="tax_name" value=""> -->
-          </div>
+          <!-- </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
             <input type="text" class="form-control tax_rate" placeholder="Rate Of Tax" name="tax_rate" value="">
@@ -115,7 +115,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="col-md-7 text-right">

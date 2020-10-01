@@ -48,7 +48,7 @@
         </div>
         <br>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Tax:</label>
@@ -63,10 +63,10 @@
                 
             </div>
           </div>
-        </div>
-        <br>
+        </div> -->
+        <!-- <br> -->
 
-        <div class="form-row col-md-12 tax_details">
+        <!-- <div class="form-row col-md-12 tax_details">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
             <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="tax_name" id="tax_name">
@@ -74,9 +74,9 @@
                   @foreach($tax as $value)
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
-            </select>
+            </select> -->
             <!-- <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value=""> -->
-          </div>
+          <!-- </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
             <input type="text" class="form-control tax_rate" placeholder="Rate Of Tax" name="tax_rate" value="">
@@ -90,8 +90,8 @@
                         </select>
           
         </div>
-      </div>
-      <br>
+      </div> -->
+      <!-- <br> -->
 
 
         <div class="col-md-7 text-right">

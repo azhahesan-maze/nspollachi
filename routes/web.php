@@ -1006,6 +1006,13 @@ Route::get('account_group/delete/{id}', 'AccountGroupController@destroy');
 
 /*Account Group End Here*/
 
+/*Tax Account Group Start Here*/
+
+Route::resource('account_group_tax','AccountGroupTaxController',['middleware' => ['auth']]);
+Route::get('account_group_tax/delete/{id}', 'AccountGroupTaxController@destroy');
+
+/*Tax Account Group End Here*/
+
 /*Account Head Start Here*/
 
 Route::resource('account_head','AccountHeadController',['middleware' => ['auth']]);
