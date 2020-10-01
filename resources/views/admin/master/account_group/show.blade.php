@@ -20,7 +20,7 @@
       <div class="form-row">
         <div class="col-md-6">
           <div class="form-group row">
-            <label for="validationCustom01" class="col-sm-3 col-form-label">Name :</label>
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Account Group Name :</label>
             <label for="validationCustom01" class="col-sm-3 col-form-label"> {{ $account_group->name }}</label>
           </div>
         </div>
@@ -29,12 +29,24 @@
             <label for="validationCustom01" class="col-sm-3 col-form-label">Under :</label>
             @if($account_group->under == 'Primary')
             <label for="validationCustom01" class="col-sm-3 col-form-label">Primary </label>
+            @elseif($account_group->under == 'Cash')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Cash </label>
+            @elseif($account_group->under == 'Bank')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Bank </label>
+            @elseif($account_group->under == 'Incomes')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Incomes </label>
+            @elseif($account_group->under == 'Expense')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Expense </label>
+            @elseif($account_group->under == 'Asset')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Asset </label>
+            @elseif($account_group->under == 'Liabilities')
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Liabilities </label>
             @else
-            <label for="validationCustom01" class="col-sm-3 col-form-label">{{ $account_group->under }} </label>
+            <label for="validationCustom01" class="col-sm-3 col-form-label">{{ $account_group->under_data->name }} </label>
             @endif
           </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-3 col-form-label">Tax Name :</label>
             <label for="validationCustom01" class="col-sm-3 col-form-label">{{ $account_group->name_of_tax }} </label>
@@ -46,17 +58,17 @@
             <label for="validationCustom01" class="col-sm-3 col-form-label">Rate Of Tax :</label>
             <label for="validationCustom01" class="col-sm-3 col-form-label">{{ $account_group->rate_of_tax }} </label>
           </div>
-        </div>
-        <div class="col-md-6">
+        </div> -->
+        <!-- <div class="col-md-6">
           <div class="form-group row">
             <label for="validationCustom01" class="col-sm-3 col-form-label">Type :</label>
             @if($account_group->type == 1)
-            <label for="validationCustom01" class="col-sm-3 col-form-label">Goods </label>
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Credit </label>
             @else
-            <label for="validationCustom01" class="col-sm-3 col-form-label">Service </label>
+            <label for="validationCustom01" class="col-sm-3 col-form-label">Debit </label>
             @endif
           </div>
-        </div>
+        </div> -->
         
       </div>
     </div>

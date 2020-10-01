@@ -38,6 +38,12 @@
                 <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" required="">
                   <option value="">Choose Any</option>
                   <option value="Primary">Primary</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Incomes">Incomes</option>
+                  <option value="Expense">Expense</option>
+                  <option value="Asset">Asset</option>
+                  <option value="Liabilities">Liabilities</option>
                   @foreach($account_group as $value)
                   <option value="{{$value->id}}">{{$value->name}}</option>
                   @endforeach

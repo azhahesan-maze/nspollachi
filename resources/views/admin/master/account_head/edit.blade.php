@@ -40,7 +40,28 @@
                 <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" required="">
                   @if(isset($account_head->under_data->id) && !empty($account_head->under_data->id))
                   <option value="{{$account_head->under_data->id}}">{{$account_head->under_data->name}}</option>
+                  @elseif($account_head->under == 'Primary')
+                  <option value="Primary">Primary</option>
+                  @elseif($account_head->under == 'Cash')
+                  <option value="Cash">Cash</option>
+                  @elseif($account_head->under == 'Bank')
+                  <option value="Bank">Bank</option>
+                  @elseif($account_head->under == 'Incomes')
+                  <option value="Incomes">Incomes</option>
+                  @elseif($account_head->under == 'Expense')
+                  <option value="Expense">Expense</option>
+                  @elseif($account_head->under == 'Assets')
+                  <option value="Assets">Assets</option>
+                  @elseif($account_head->under == 'Liabilities')
+                  <option value="Liabilities">Liabilities</option>
                   @endif
+                  <option value="Primary">Primary</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Incomes">Incomes</option>
+                  <option value="Expense">Expense</option>
+                  <option value="Assets">Assets</option>
+                  <option value="Liabilities">Liabilities</option>
                   @foreach($group as $value)
                   <option value="{{$value->id}}">{{$value->name}}</option>
                   @endforeach
@@ -49,9 +70,8 @@
             </div>
           </div>
         </div>
-        <br>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Tax:</label>
@@ -70,9 +90,8 @@
             </div>
           </div>
         </div>
-        <br>
-        @if($account_head->tax == 1)
-        <div class="form-row col-md-12 tax_details">
+        <br> -->
+        <!-- <div class="form-row col-md-12 tax_details">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
             <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="tax_name" id="tax_name">
@@ -84,9 +103,9 @@
                   @foreach($tax as $value)
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
-            </select>
+            </select> -->
             <!-- <input type="text" class="form-control tax_name" placeholder="Name" name="tax_name" value="{{ $account_head->name_of_tax }}"> -->
-          </div>
+          <!-- </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Rate Of Tax</label><br>
             <input type="text" class="form-control tax_rate" placeholder="Rate Of Tax" name="tax_rate" value="{{ $account_head->rate_of_tax }}">
@@ -106,9 +125,8 @@
                         </select>
           
         </div>
-      </div>
-      <br>
-      <div class="form-row">
+      </div> -->
+      <!-- <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance:</label>
@@ -124,20 +142,20 @@
               <div class="col-sm-3">
                 <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
                   @if($account_head->dr_or_cr == 1)
-                  <option value="1">DR</option>
+                  <option value="1">CR</option>
                   @elseif($account_head->dr_or_cr == 2)
-                  <option value="0">CR</option>
+                  <option value="2">DR</option>
                   @else
                   <option value="">Choose Any</option>
                   @endif
-                  <option value="1">DR</option>
-                  <option value="2">CR</option>
+                  <option value="1">CR</option>
+                  <option value="2">DR</option>
                         </select>
               </div>
             </div>
           </div>
-        </div>
-      @else
+        </div> -->
+      <!-- 
       <div class="form-row col-md-12 tax_details" style="display: none;">
           <div class="col-md-4">
             <label for="validationCustom01" class="col-sm-4 col-form-label">Name</label><br>
@@ -163,7 +181,7 @@
           
         </div>
       </div>
-      <br>
+      <br> -->
       <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
@@ -180,20 +198,19 @@
               <div class="col-sm-3">
                 <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
                   @if($account_head->dr_or_cr == 1)
-                  <option value="1">DR</option>
+                  <option value="1">CR</option>
                   @elseif($account_head->dr_or_cr == 2)
-                  <option value="2">CR</option>
+                  <option value="2">DR</option>
                   @else
                   <option value="">Choose Any</option>
                   @endif
-                  <option value="1">DR</option>
-                  <option value="2">CR</option>
+                  <option value="1">CR</option>
+                  <option value="2">DR</option>
                         </select>
               </div>
             </div>
           </div>
         </div>
-      @endif
       <br>
 
 

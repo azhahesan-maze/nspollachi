@@ -24,10 +24,8 @@
             <th>S.No</th>
             <th>Name</th>
             <th>Under</th>
-            <th>Name Of Tax</th>
-            <th>Rate Of Tax</th>
-            <th>Type</th>
             <th>Opening Balance</th>
+            <th>Type</th>
            <th>Action </th>
           </tr>
         </thead>
@@ -39,21 +37,31 @@
               <td>{{ $value->name }}</td>
               @if($value->under == 'Primary')
               <td>Primary</td>
+              @elseif($value->under == 'Cash')
+              <td>Cash</td>
+              @elseif($value->under == 'Bank')
+              <td>Bank</td>
+              @elseif($value->under == 'Incomes')
+              <td>Incomes</td>
+              @elseif($value->under == 'Expense')
+              <td>Expense</td>
+              @elseif($value->under == 'Assets')
+              <td>Assets</td>
+              @elseif($value->under == 'Liabilities')
+              <td>Liabilities</td>
               @else
               @if(isset($value->under_data->name) && !empty($value->under_data->name))
               <td>{{ $value->under_data->name }}</td>
               @endif
               @endif
-              <td>{{ @$value->taxes->name }}</td>
-              <td>{{ $value->rate_of_tax }}</td>
-              @if($value->type == 1)
-              <td>Goods</td>
-              @elseif($value->type == 2)
-              <td>Service</td>
-              @elseif($value->type == '')
+              <td>{{ $value->opening_balance }}</td>
+              @if($value->dr_or_cr == 1)
+              <td>Credit</td>
+              @elseif($value->dr_or_cr == 2)
+              <td>Debit</td>
+              @elseif($value->dr_or_cr == '')
               <td></td>
               @endif
-              <td>{{ $value->opening_balance }}</td>
               <td> 
                 <a href="{{ route('account_head.show',$value->id) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 <a href="{{ route('account_head.edit',$value->id) }}" class="px-2 py-1 bg-success text-white rounded"><i class="fa fa-pencil" aria-hidden="true"></i></a>

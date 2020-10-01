@@ -39,6 +39,12 @@
                 <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" data-placeholder="Choose Any" required="">
                   <option value="">Choose Any</option>
                   <option value="Primary">Primary</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Incomes">Incomes</option>
+                  <option value="Expense">Expense</option>
+                  <option value="Assets">Assets</option>
+                  <option value="Liabilities">Liabilities</option>
                   @foreach($account_group as $value)
                   <option value="{{$value->id}}">{{$value->name}}</option>
                   @endforeach
@@ -91,14 +97,14 @@
                         </select>
           
         </div>
-      </div>
-      <br>
+      </div> -->
+      <!-- <br> -->
       <div class="form-row">
           <div class="col-md-6">
             <div class="form-group row">
               <label for="validationCustom01" class="col-sm-4 col-form-label">Opening Balance:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control balance" placeholder="Opening Balance" name="balance" value="">
+                <input type="text" class="form-control balance" placeholder="Opening Balance" name="balance" value="0">
                 
               </div>
             </div>
@@ -109,13 +115,13 @@
               <div class="col-sm-3">
                 <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
                   <option value="">Choose Any</option>
-                  <option value="1">DR</option>
-                  <option value="2">CR</option>
+                  <option value="1">Credit</option>
+                  <option value="2">Debit</option>
                         </select>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
 
 
         <div class="col-md-7 text-right">

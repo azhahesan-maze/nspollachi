@@ -41,32 +41,13 @@ class AccountHeadController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->tax == 1)
-        {
+
             $account_head = new AccountHead;
             $account_head->name = $request->name;
             $account_head->under = $request->under;
-            $account_head->tax = $request->tax;
-            $account_head->name_of_tax = $request->tax_name;
-            $account_head->rate_of_tax = $request->tax_rate;
-            $account_head->type = $request->type;
             $account_head->opening_balance = $request->balance;
             $account_head->dr_or_cr = $request->dr_or_cr;
             $account_head->save();
-        }
-        else
-        {
-            $account_head = new AccountHead;
-            $account_head->name = $request->name;
-            $account_head->under = $request->under;
-            $account_head->tax = $request->tax;
-            $account_head->name_of_tax = NULL;
-            $account_head->rate_of_tax = NULL;
-            $account_head->type = NULL;
-            $account_head->opening_balance = $request->balance;
-            $account_head->dr_or_cr = $request->dr_or_cr;
-            $account_head->save();
-        }
         
 
         return Redirect::back()->with('success','Saved Successfully');
@@ -108,32 +89,13 @@ class AccountHeadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->tax == 1)
-        {
+
             $account_head = AccountHead::find($id);
             $account_head->name = $request->name;
             $account_head->under = $request->under;
-            $account_head->tax = $request->tax;
-            $account_head->name_of_tax = $request->tax_name;
-            $account_head->rate_of_tax = $request->tax_rate;
-            $account_head->type = $request->type;
             $account_head->opening_balance = $request->balance;
             $account_head->dr_or_cr = $request->dr_or_cr;
             $account_head->save();
-        }
-        else
-        {
-            $account_head = AccountHead::find($id);
-            $account_head->name = $request->name;
-            $account_head->under = $request->under;
-            $account_head->tax = $request->tax;
-            $account_head->name_of_tax = NULL;
-            $account_head->rate_of_tax = NULL;
-            $account_head->type = NULL;
-            $account_head->opening_balance = $request->balance;
-            $account_head->dr_or_cr = $request->dr_or_cr;
-            $account_head->save();
-        }
         
 
         return Redirect::back()->with('success','Updated Successfully');

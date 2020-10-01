@@ -40,10 +40,28 @@
                 <select class="js-example-basic-multiple col-12 form-control custom-select under"  name="under" id="under" required="">
                   @if($account_group->under == 'Primary')
                   <option value="Primary">Primary</option>
+                  @elseif($account_group->under == 'Cash')
+                  <option value="Cash">Cash</option>
+                  @elseif($account_group->under == 'Bank')
+                  <option value="Bank">Bank</option>
+                  @elseif($account_group->under == 'Incomes')
+                  <option value="Incomes">Incomes</option>
+                  @elseif($account_group->under == 'Expense')
+                  <option value="Expense">Expense</option>
+                  @elseif($account_group->under == 'Assets')
+                  <option value="Assets">Assets</option>
+                  @elseif($account_group->under == 'Liabilities')
+                  <option value="Liabilities">Liabilities</option>
                   @else
                   <option value="{{$account_group->under_data->id}}">{{$account_group->under_data->name}}</option>
                   @endif
                   <option value="Primary">Primary</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                  <option value="Incomes">Incomes</option>
+                  <option value="Expense">Expense</option>
+                  <option value="Assets">Assets</option>
+                  <option value="Liabilities">Liabilities</option>
                   @foreach($group as $value)
                   <option value="{{$value->id}}">{{$value->name}}</option>
                   @endforeach
