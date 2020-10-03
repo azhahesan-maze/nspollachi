@@ -43,7 +43,7 @@ class AccountHeadController extends Controller
     {
 
             // echo $request->check; die();
-            if($request->check == 1)
+            if($request->has('check'))
             {
                 $account_head = new AccountHead;
                 $account_head->name = $request->name;
