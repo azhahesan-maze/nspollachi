@@ -54,12 +54,12 @@
             <label for="validationCustom01" class="col-sm-4 col-form-label">Type</label><br>
           <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="type" id="type" required="">
             @if($account_group_tax->type == 1)
-            <option value="1">CR</option>
+            <option value="1">Credit</option>
             @else
-            <option value="2">DR</option>
+            <option value="2">Debit</option>
             @endif
-            <option value="1">CR</option>
-            <option value="2">DR</option>
+            <option value="1">Credit</option>
+            <option value="2">Debit</option>
                   </select>
           
         </div>

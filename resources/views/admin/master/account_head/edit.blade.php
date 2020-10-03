@@ -204,9 +204,10 @@
                   @else
                   <option value="">Choose Any</option>
                   @endif
+                  <option value="">Choose Any</option>
                   <option value="1">Credit</option>
                   <option value="2">Debit</option>
-                        </select>
+                </select>
               </div>
             </div>
           </div>
@@ -256,6 +257,19 @@
   $(document).on('input','.name',function(){
 
     $(this).val($(this).val().replace(/[^a-zA-Z ]/gi, ''));
+
+  });
+
+  $(document).on('input','.balance',function(){
+
+    if($(this).val())
+    {
+      $('.dr_or_cr').attr('required','required');
+    }
+    else
+    {
+      $('.dr_or_cr').removeAttr('required');
+    }
 
   });
 

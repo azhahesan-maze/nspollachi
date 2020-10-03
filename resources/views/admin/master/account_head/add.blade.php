@@ -165,6 +165,19 @@
 
   });
 
+  $(document).on('input','.balance',function(){
+
+    if($(this).val())
+    {
+      $('.dr_or_cr').attr('required','required');
+    }
+    else
+    {
+      $('.dr_or_cr').removeAttr('required');
+    }
+
+  });
+
   $(document).on('input','.tax_rate',function(){
 
     $(this).val($(this).val().replace(/[^0-9.0-9]/gi, ''));
