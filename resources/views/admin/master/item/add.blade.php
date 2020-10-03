@@ -476,7 +476,12 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Batch No</label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="text" placeholder="Batch No" name="batch_no[]" class="form-control batch_no" >
+                       <input type="text" placeholder="Batch No" required="" name="batch_no[]" class="form-control batch_no mandatory" >
+                       <span class="mandatory"> {{ $errors->first('batch_no')}} </span>
+                     <div class="invalid-feedback">
+                           Enter valid Batch No
+                     </div>
+
                      <!-- /div>
                      
                   </div> -->
@@ -520,7 +525,7 @@
                   <!-- <div class="form-group row"> -->
                      <label for="validationCustom01" class="">Applicable Date</label>
                      <!-- <div class="col-sm-8"> -->
-                       <input type="date" name="applicable_date[]" class="form-control" >
+                       <input type="date" name="applicable_date[]" class="form-control applicable_date" >
                      <!-- /div>
                      
                   </div> -->
@@ -569,7 +574,7 @@
                         @foreach($tax as $key => $value)
                         <td>
                            <div class="col-sm-12">
-                              <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{$value->name}}" id="{{ $value->name }}_id{{ $key }}" value="" required>
+                              <input type="text" class="form-control {{ $value->name }}_id only_allow_digit_and_dot common" name="{{ $value->name }}_id[]"  placeholder="{{$value->name}}" id="{{ $value->name }}_id{{ $key }}" value="0" required>
                               <span class="mandatory"> </span>
                               <div class="invalid-feedback">
                                  Enter valid {{$value->name}}
@@ -756,7 +761,7 @@ function add_item_tax_details() {
                         @foreach($tax as $key => $value)\
                         <td>\
                            <div class="col-sm-12">\
-                              <input type="text" class="form-control {{$value->name}}_id only_allow_digit_and_dot common" name="{{$value->name}}_id[]"  placeholder="{{$value->name}}" id="{{$value->name}}_id'+i+'"  required>\
+                              <input type="text" class="form-control {{$value->name}}_id only_allow_digit_and_dot common" name="{{$value->name}}_id[]"  placeholder="{{$value->name}}" value="0" id="{{$value->name}}_id'+i+'"  required>\
                               <input type="hidden" name="{{$value->name}}[]" id="{{$value->name}}[]" value="{{ $value->id }}">\
                               <span class="mandatory">  </span>\
                               <div class="invalid-feedback">\
@@ -801,6 +806,47 @@ function add_item_tax_details() {
     s_no();
     //common_igst_calculation();
 }
+ 
+$(document).on('change','.valid_from',function(){
+var valid_from = Array();
+
+console.log($(this).val());
+
+  $('.valid_from').each(function(key){
+
+    valid_from.push($(this).val());
+  });
+
+  for(var m=0;m<valid_from.length;m++)
+  {
+    var first = valid_from[m];
+
+    for(var n=m+1;n<=valid_from.length;n++)
+    {
+      var second = valid_from[n];
+
+      if(typeof second == 'undefined')
+      {
+
+      }
+      else
+      {
+        if(first == second)
+        {
+          alert('uesd');
+          $(this).val('');
+          $(this).focus();
+        } 
+        else
+        {
+
+        }
+      }
+    }
+  }
+
+});   
+
 function confirm_barcode()
 {
    barcode_validation();

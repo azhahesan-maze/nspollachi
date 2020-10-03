@@ -135,11 +135,6 @@ class ItemController extends Controller
         $item->is_minimum_sales_qty_applicable = $request->is_minimum_sales_qty_applicable;
         $item->opening_count = $request->opening_cnt;
 
-        // $item->opening_stock = $request->quantity;
-        // $item->rate = $request->rate;
-        // $item->amount = $request->amount;
-        // $item->applicable_date = $request->applicable_date;
-
         if (!empty($request->expiry_date)) {
             $item->expiry_date = date('Y-m-d', strtotime($request->expiry_date));
         }
@@ -308,7 +303,9 @@ class ItemController extends Controller
                 $tax_value[] = ItemTaxDetails::where('item_id',$value->item_id)
                                             ->where('valid_from',$value->valid_from)
                                             ->get();
-        }                               
+        }      
+
+        // echo "<pre>"; print_r($tax_value); exit();                         
 
                
                                        

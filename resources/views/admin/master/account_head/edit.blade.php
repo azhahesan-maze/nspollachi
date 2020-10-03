@@ -197,9 +197,9 @@
             <div class="form-group row">
               <div class="col-sm-3">
                 <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
-                  @if($account_head->dr_or_cr == 1)
+                  @if($account_head->dr_or_cr == '1')
                   <option value="1">CR</option>
-                  @elseif($account_head->dr_or_cr == 2)
+                  @elseif($account_head->dr_or_cr == '2')
                   <option value="2">DR</option>
                   @else
                   <option value="">Choose Any</option>
@@ -207,6 +207,21 @@
                   <option value="1">CR</option>
                   <option value="2">DR</option>
                         </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Tax Included:</label>
+              <div class="col-sm-8">
+                @if($account_head->status == '1')
+                <input type="checkbox" class="check" checked="" name="check" value="1">
+                @else
+                <input type="checkbox" class="check" name="check" value="0">
+                @endif
               </div>
             </div>
           </div>

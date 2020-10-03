@@ -123,6 +123,18 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="validationCustom01" class="col-sm-4 col-form-label">Tax Included:</label>
+              <div class="col-sm-8">
+                <input type="checkbox" class="check" checked="" name="check" value="1">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="col-md-7 text-right">
           <button class="btn btn-success add" name="add" type="submit">Submit</button>

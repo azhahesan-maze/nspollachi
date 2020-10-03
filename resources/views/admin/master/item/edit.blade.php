@@ -482,7 +482,11 @@
 
                      <div class="col-md-2">
                      <label for="validationCustom01" class="">Batch No</label>
-                       <input type="text" placeholder="Batch No" name="batch_no[]" value="{{ @$opening_data[$k][0]['batch_no'] }}" class="form-control" >
+                       <input type="text" placeholder="Batch No" required="" name="batch_no[]" value="{{ @$opening_data[$k][0]['batch_no'] }}" class="form-control mandatory" >
+                       <span class="mandatory"> </span>
+                     <div class="invalid-feedback">
+                           Enter valid Batch No
+                     </div>
                </div>
 
                   <div class="col-md-2">
@@ -802,7 +806,7 @@ function add_item_tax_details() {
     $('#count').val(count);
     var currentDate = new Date();
     $('.valid_from').datepicker({
-        format: "dd-mm-yyyy",
+        format: "yyyy-mm-dd",
         todayHighlight: true,
         startDate: currentDate,
         endDate: '',
@@ -812,6 +816,46 @@ function add_item_tax_details() {
     s_no();
     //common_igst_calculation();
 }
+
+$(document).on('change','.valid_from',function(){
+var valid_from = Array();
+
+console.log($(this).val());
+
+  $('.valid_from').each(function(key){
+
+    valid_from.push($(this).val());
+  });
+
+  for(var m=0;m<valid_from.length;m++)
+  {
+    var first = valid_from[m];
+
+    for(var n=m+1;n<=valid_from.length;n++)
+    {
+      var second = valid_from[n];
+
+      if(typeof second == 'undefined')
+      {
+
+      }
+      else
+      {
+        if(first == second)
+        {
+          alert('uesd');
+          $(this).val('');
+          $(this).focus();
+        } 
+        else
+        {
+
+        }
+      }
+    }
+  }
+
+});
 
 function s_no() {
     $(".s_no").each(function(key) {

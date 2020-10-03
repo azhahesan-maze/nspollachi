@@ -42,12 +42,28 @@ class AccountHeadController extends Controller
     public function store(Request $request)
     {
 
-            $account_head = new AccountHead;
-            $account_head->name = $request->name;
-            $account_head->under = $request->under;
-            $account_head->opening_balance = $request->balance;
-            $account_head->dr_or_cr = $request->dr_or_cr;
-            $account_head->save();
+            // echo $request->check; die();
+            if($request->check == 1)
+            {
+                $account_head = new AccountHead;
+                $account_head->name = $request->name;
+                $account_head->under = $request->under;
+                $account_head->opening_balance = $request->balance;
+                $account_head->dr_or_cr = $request->dr_or_cr;
+                $account_head->status = 1;
+                $account_head->save();
+            } 
+            else
+            {
+                $account_head = new AccountHead;
+                $account_head->name = $request->name;
+                $account_head->under = $request->under;
+                $account_head->opening_balance = $request->balance;
+                $account_head->dr_or_cr = $request->dr_or_cr;
+                $account_head->status = 0;
+                $account_head->save();
+            }  
+            
         
 
         return Redirect::back()->with('success','Saved Successfully');
@@ -90,12 +106,26 @@ class AccountHeadController extends Controller
     public function update(Request $request, $id)
     {
 
-            $account_head = AccountHead::find($id);
-            $account_head->name = $request->name;
-            $account_head->under = $request->under;
-            $account_head->opening_balance = $request->balance;
-            $account_head->dr_or_cr = $request->dr_or_cr;
-            $account_head->save();
+            if($request->has('check'))
+            {
+                $account_head = AccountHead::find($id);
+                $account_head->name = $request->name;
+                $account_head->under = $request->under;
+                $account_head->opening_balance = $request->balance;
+                $account_head->dr_or_cr = $request->dr_or_cr;
+                $account_head->status = 1;
+                $account_head->save();
+            } 
+            else
+            {
+                $account_head = AccountHead::find($id); 
+                $account_head->name = $request->name;
+                $account_head->under = $request->under;
+                $account_head->opening_balance = $request->balance;
+                $account_head->dr_or_cr = $request->dr_or_cr;
+                $account_head->status = 0;
+                $account_head->save();
+            }
         
 
         return Redirect::back()->with('success','Updated Successfully');

@@ -1,4 +1,5 @@
 var i =$('#opening_cnt').val();
+var cnt = 0;
 
 $(document).on('change','.batch_no',function(){
 var batch = Array();
@@ -37,27 +38,80 @@ var batch = Array();
 
 });
 
+$(document).on('change','.applicable_date',function(){
+var applicable_date = Array();
+
+	$('.applicable_date').each(function(key){
+
+		applicable_date.push($(this).val());
+	});
+
+	for(var m=0;m<applicable_date.length;m++)
+	{
+		var first = applicable_date[m];
+
+		for(var n=m+1;n<=applicable_date.length;n++)
+		{
+			var second = applicable_date[n];
+
+			if(typeof second == 'undefined')
+			{
+
+			}
+			else
+			{
+				if(first == second)
+				{
+					alert('uesd');
+					$(this).val('');
+					$(this).focus();
+				}	
+				else
+				{
+
+				}
+			}
+		}
+	}
+
+});
+
 $(document).on('click','#add_opening',function(){
 
-	// var rate_val = $(this).closest($('.opening_row')).find('.rate').val();
-	// var batch_number = $(this).closest($('.opening_row')).find('.batch_no').val();
-	// var found = false;
+	$('.batch_no').each(function(key){
 
-	// $('.batch_no,.').each(function(){
+		if($(this).val() == '')
+		{
+			alert('Enter Batch No');
+			key.preventDefault();
+			$(this).closest($('.opening_row')).remove();
+			
+		}
 
-	// 	if($(this).val())
-	// 	{
- //            found = true;
- //            return false;
- //        }
+	});
 
-	// });
+	$('.quantity').each(function(key){
 
-	// if (found == true)  {
- //        alert("at least one field has value");
- //    } else {
- //        alert("all fields are empty");
- //    }
+		if($(this).val() == '')
+		{
+			alert('Enter Quantity No');
+			key.preventDefault();
+			
+		}
+
+	});
+
+	$('.rate').each(function(key){
+
+		if($(this).val() == '')
+		{
+			alert('Enter Rate No');
+			key.preventDefault();
+			
+
+		}
+
+	});
 
 	var opening_details = "";
 
@@ -66,7 +120,11 @@ $(document).on('click','#add_opening',function(){
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Batch No</label>\
                      <!-- <div class="col-sm-8"> -->\
-                       <input type="text" placeholder="Batch No" name="batch_no[]" class="form-control batch_no" >\
+                       <input type="text" placeholder="Batch No" required="" name="batch_no[]" class="form-control batch_no" >\
+                     <span class="mandatory"> </span>\
+                     <div class="invalid-feedback">\
+                           Enter valid Batch No\
+                     </div>\
                      <!-- /div>\
                   </div> -->\
                </div>\
@@ -103,7 +161,7 @@ $(document).on('click','#add_opening',function(){
                   <!-- <div class="form-group row"> -->\
                      <label for="validationCustom01" class="">Applicable Date</label>\
                      <!-- <div class="col-sm-8"> -->\
-                       <input type="date" name="applicable_date[]" class="form-control" >\
+                       <input type="date" name="applicable_date[]" class="form-control applicable_date" >\
                      <!-- /div>\
                   </div> -->\
                </div>\
