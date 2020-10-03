@@ -198,14 +198,14 @@
               <div class="col-sm-3">
                 <select class=" col-12 form-control custom-select dr_or_cr"  name="dr_or_cr" id="dr_or_cr">
                   @if($account_head->dr_or_cr == '1')
-                  <option value="1">CR</option>
+                  <option value="1">Credit</option>
                   @elseif($account_head->dr_or_cr == '2')
-                  <option value="2">DR</option>
+                  <option value="2">Debit</option>
                   @else
                   <option value="">Choose Any</option>
                   @endif
-                  <option value="1">CR</option>
-                  <option value="2">DR</option>
+                  <option value="1">Credit</option>
+                  <option value="2">Debit</option>
                         </select>
               </div>
             </div>
