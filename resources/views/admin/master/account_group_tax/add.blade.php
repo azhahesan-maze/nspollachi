@@ -40,7 +40,10 @@
             <select class="js-example-basic-multiple col-12 form-control custom-select type"  name="tax_name" id="tax_name" required="">
                   <option value="">Choose Tax Name</option>
                   @foreach($tax as $value)
+                  @if($value->name == 'SGST' || $value->name == 'CGST' || $value->name == 'sgst' || $value->name == 'cgst' || $value->name == 'Sgst' || $value->name == 'Cgst')
+                  @else
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
+                  @endif
                   @endforeach
             </select>
           </div>

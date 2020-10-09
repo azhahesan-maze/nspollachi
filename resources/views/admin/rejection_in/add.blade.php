@@ -424,7 +424,9 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                         <label style="font-family: Times new roman;">Quantity</label>
                       <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" onchange="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
+
                       <input type="hidden" class="form-control actual_qty" id="actual_qty" name="actual_qty" value="">
+                      
                       </div>
                       
 
@@ -486,6 +488,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                           <label style="font-family: Times new roman;">Discount Rs</label>
                         <input type="number" class="form-control discount_rs  required_for_proof_valid" placeholder="Discount Rs" id="discount" pattern="[0-9][0-9 . 0-9]{0,100}" title="Numbers Only" oninput="discount_calc()" name="discount" value="" >
                         </div>
+
                         <div class="col-md-2 display_rejected" style="display: none;">
                         <label style="font-family: Times new roman;">Qty To Be Rejected</label>
                       <input type="number" class="form-control rejected" id="rejected"  placeholder="Qty To Be Rejected" name="rejected" onchange="rejected_qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
@@ -516,12 +519,12 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                        </select>
                         </div>
                     </div>
-                    </div>
+
                       <br>
                                                           
                      <div class="" align="center">
                                    
-                    <input type="button" class="btn btn-success add_items" value="Add More" name="" id="add_items0">  
+                    <input type="button" class="btn btn-success add_items" style="display: none" value="Add More" name="" id="add_items0">  
 
                     <input type="button" style="display: none" class="btn btn-success update_items" value="Update" name="" id="update_items"> 
 
@@ -546,7 +549,7 @@ table, th, td {
                     <th> HSN</th>
                     <th> MRP</th>
                     <th> Unit Price</th>
-                    <th> Sale Quantity</th>
+                    <th> Purchase Quantity</th>
                     <th> Rejected Quantity</th>
                     <th> Remaining Quantity</th>
                     <th> UOM</th>
@@ -588,7 +591,7 @@ table, th, td {
                         <label style="font-family: Times New Roman;">Unit Price: <font class="show_unit_price" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
-                        <label style="font-family: Times New Roman;">Sale Qty: <font class="show_purchased_qty" style="font-weight: bold;"></font></label>
+                        <label style="font-family: Times New Roman;">Purchased Qty: <font class="show_purchased_qty" style="font-weight: bold;"></font></label>
                       </div>
                       <div class="col-md-3">
                         <label style="font-family: Times New Roman;">Remaining Quantity: <font class="show_quantity" style="font-weight: bold;"></font></label>
@@ -1319,11 +1322,11 @@ $(document).on("click",".edit_items",function(){
 
 });
 
-$(document).on("click",".edit_d_items",function(){
+$(document).on("click",".edit_items",function(){
 
   $('.update_items').show();
   $('.add_items').hide();
-  if($('.d_no').val() != '')
+  if($('.s_no').val() != '' || $('.d_no').val() != '')
   {
   $('#quantity').attr('readonly','readonly');
   $('.display_rejected').show();
@@ -1382,7 +1385,6 @@ $(document).on("click",".edit_d_items",function(){
     $('.discount_percentage').val('');
   $('.discount_rs').val('');
   }
-   item_codes(item_code_id);
 
 });
 
