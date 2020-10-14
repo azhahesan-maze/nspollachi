@@ -547,7 +547,7 @@ table, th, td {
                     <th> Rejected Quantity</th>
                     <th> Remaining Quantity</th>
                     <th> Credited Quantity</th>
-                    <th> Remaining Quantity After Credit</th>
+                    <!-- <th> Remaining Quantity After Credit</th> -->
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
@@ -568,7 +568,7 @@ table, th, td {
                   @foreach($credit_note_items as $key => $value)
                   
 
-                  <tr id="row{{ $key }}" class="{{ $key }} tables"><td><span class="item_s_no"> {{ $key+1 }} </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no{{ $key }}" type="hidden" id="invoice{{ $key }}" value="{{ $value->item_sno }}" name="invoice_sno[]"><font class="item_no{{ $key }}">{{ $value->item_sno }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code{{ $key }}" value="{{ $value->item_id }}" name="item_code[]"><font class="items{{ $key }}">{{ $value->item->code }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name{{ $key }}" type="hidden" value="{{ $value->item->name }}" name="item_name[]"><font class="font_item_name{{ $key }}">{{ $value->item->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn{{ $key }}" type="hidden" value="{{ $value->item->hsn }}" name="hsn[]"><font class="font_hsn{{ $key }}">{{ $value->item->hsn }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp{{ $key }}" value="{{ $value->mrp }}" name="mrp[]"><font class="font_mrp{{ $key }}">{{ $value->mrp }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive{{ $key }}" value="{{ $value->rate_exclusive_tax }}" name="exclusive[]"><font class="font_exclusive{{ $key }}">{{ $value->rate_exclusive_tax }}</font><input type="hidden" class="inclusive{{ $key }}" value="{{ $value->rate_inclusive_tax }}" name="inclusive[]"></div></div></td><td><font class="font_purchase_quantity{{$key}}">{{$value->actual_purchase_qty}}</font></td><td><font class="font_rejected_qty{{$key}}">{{$value->rejected_qty}}</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity{{$key}}" value="{{$value->rejected_qty}}"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity{{$key}}" value="{{$value->remaining_qty}}" name="quantity[]"><font class="font_quantity{{$key}}">{{$value->remaining_qty}}</font><input type="hidden" class="actual_quantity" id="actual_quantity{{$key}}" value="{{$value->qty}}" name="actual_quantity[]"><input type="hidden" class="actual_purchase_quantity" id="actual_purchase_quantity'.$i.'" value="{{$value->remaining_qty}}" name="actual_purchase_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty{{$key}}" value="{{$value->remaining_qty}}" name="remaining_qty[]"></div></div></td><td><font class="font_debited_qty{{$key}}">{{$value->credited_qty}}</font><input type="hidden" class="debited_qty" value="{{$value->credited_qty}}" name="debited_qty[]" id="debited_qty{{$key}}"><input type="hidden" name="debited_qty_before_edit[]" value="{{$value->credited_qty}}" id="debited_qty_before_edit{{$key}}"></td><td><font class="font_remaining_after_debit{{$key}}">{{$value->remaining_after_credit}}</font><input type="hidden" value="{{$value->remaining_after_credit}}" name="remaining_after_debit[]" id="remaining_after_debit{{$key}}"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom{{ $key }}" value="{{ $value->uom->id }}" name="uom[]"><font class="font_uom{{ $key }}">{{ $value->uom->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt{{ $key }}" value="{{ $item_amount[$key] }}" name="amount[]"><font class="font_amount{{ $key }}"> {{$item_amount[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts {{ $key }}" value="{{ $value->discount }}" id="input_discount{{ $key }}" ><input class="discount_val{{ $key }}" type="hidden" value="{{ $value->discount }}" name="discount[]"><font class="font_discount" id="font_discount{{ $key }}">{{ $value->discount }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax{{ $key }}" value="{{$item_gst_rs[$key]}}" name="gst[]"><input type="hidden" class="tax_gst{{ $key }}"  value="{{ $value->gst }}" name="tax_rate[]"><font class="font_gst{{ $key }}"> {{$item_gst_rs[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price{{ $key }}" value="{{ $item_net_value[$key] }}" name="net_price[]"><font class="font_net_price{{ $key }}">{{ $item_net_value[$key] }}</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase{{ $key }}">{{ $net_value[$key] }}</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="{{ $key }}" aria-hidden="true"></i></td></tr>
+                  <tr id="row{{ $key }}" class="{{ $key }} tables"><td><span class="item_s_no"> {{ $key+1 }} </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no{{ $key }}" type="hidden" id="invoice{{ $key }}" value="{{ $value->item_sno }}" name="invoice_sno[]"><font class="item_no{{ $key }}">{{ $value->item_sno }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code{{ $key }}" value="{{ $value->item_id }}" name="item_code[]"><font class="items{{ $key }}">{{ $value->item->code }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name{{ $key }}" type="hidden" value="{{ $value->item->name }}" name="item_name[]"><font class="font_item_name{{ $key }}">{{ $value->item->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn{{ $key }}" type="hidden" value="{{ $value->item->hsn }}" name="hsn[]"><font class="font_hsn{{ $key }}">{{ $value->item->hsn }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp{{ $key }}" value="{{ $value->mrp }}" name="mrp[]"><font class="font_mrp{{ $key }}">{{ $value->mrp }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive{{ $key }}" value="{{ $value->rate_exclusive_tax }}" name="exclusive[]"><font class="font_exclusive{{ $key }}">{{ $value->rate_exclusive_tax }}</font><input type="hidden" class="inclusive{{ $key }}" value="{{ $value->rate_inclusive_tax }}" name="inclusive[]"></div></div></td><td><font class="font_purchase_quantity{{$key}}">{{$value->actual_purchase_qty}}</font></td><td><font class="font_rejected_qty{{$key}}">{{$value->rejected_qty}}</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity{{$key}}" value="{{$value->rejected_qty}}"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity{{$key}}" value="{{$value->remaining_qty}}" name="quantity[]"><font class="font_quantity{{$key}}">{{$value->remaining_qty}}</font><input type="hidden" class="actual_quantity" id="actual_quantity{{$key}}" value="{{$value->qty}}" name="actual_quantity[]"><input type="hidden" class="actual_purchase_quantity" id="actual_purchase_quantity{{$key}}" value="{{$value->actual_purchase_qty}}" name="actual_purchase_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty{{$key}}" value="{{$value->remaining_qty}}" name="remaining_qty[]"></div></div></td><td><font class="font_debited_qty{{$key}}">{{$value->credited_qty}}</font><input type="hidden" class="debited_qty" value="{{$value->credited_qty}}" name="debited_qty[]" id="debited_qty{{$key}}"><input type="hidden" name="debited_qty_before_edit[]" value="{{$value->credited_qty}}" id="debited_qty_before_edit{{$key}}"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom{{ $key }}" value="{{ $value->uom->id }}" name="uom[]"><font class="font_uom{{ $key }}">{{ $value->uom->name }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt{{ $key }}" value="{{ $item_amount[$key] }}" name="amount[]"><font class="font_amount{{ $key }}"> {{$item_amount[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts {{ $key }}" value="{{ $value->discount }}" id="input_discount{{ $key }}" ><input class="discount_val{{ $key }}" type="hidden" value="{{ $value->discount }}" name="discount[]"><font class="font_discount" id="font_discount{{ $key }}">{{ $value->discount }}</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax{{ $key }}" value="{{$item_gst_rs[$key]}}" name="gst[]"><input type="hidden" class="tax_gst{{ $key }}"  value="{{ $value->gst }}" name="tax_rate[]"><font class="font_gst{{ $key }}"> {{$item_gst_rs[$key]}} </font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price{{ $key }}" value="{{ $item_net_value[$key] }}" name="net_price[]"><font class="font_net_price{{ $key }}">{{ $item_net_value[$key] }}</font></div></div></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase{{ $key }}">{{ $net_value[$key] }}</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="{{ $key }}" aria-hidden="true"></i><i class="fa fa-trash px-2 py-1 bg-danger  text-white rounded remove_items" id="{{ $key }}" aria-hidden="true"></i></td></tr>
 
                   @endforeach
 
@@ -633,7 +633,7 @@ table, th, td {
                       <th></th>
                       <th></th>
                       <th></th>
-                      <th></th>
+                      <!-- <th></th> -->
                       <th></th>
                       <th><label class="total_amount">{{$item_amount_sum}}</label></th>
                       <th></th>
@@ -1299,11 +1299,11 @@ $(document).on("click",".edit_items",function(){
   var discount_val = $('.discount_val'+id).val(); 
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
-  // var quantity = $('.quantity'+id).val();
-  var quantity = $('.font_remaining_after_debit'+id).text();
+  var quantity = $('.quantity'+id).val();
+  // var quantity = $('.font_remaining_after_debit'+id).text();
   var actual_qty = $('#actual_quantity'+id).val();
   // var rejected_qty = $('#rejected_quantity'+id).val();
-  var rejected_qty = $('.font_debited_qty'+id).text();
+  var rejected_qty = 0;
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1360,11 +1360,11 @@ $(document).on("click",".edit_items",function(){
   var discount_val = $('.discount_val'+id).val(); 
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
-  var quantity = $('#remaining_after_debit'+id).val();
+  // var quantity = $('#remaining_qty'+id).val();
   // var quantity = $('.font_remaining_after_debit'+id).text();
   var actual_qty = $('#actual_quantity'+id).val();
-  // var rejected_qty = $('#rejected_quantity'+id).val();
-  var rejected_qty = $('.font_debited_qty'+id).text();
+  var quantity = $('#rejected_quantity'+id).val();
+  var rejected_qty = 0;
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1372,6 +1372,7 @@ $(document).on("click",".edit_items",function(){
   var tax_gst = $('.tax_gst'+id).val();
   var net_price = $('#net_price'+id).val(); 
   var last_purchase_rate = $('.last_purchase'+id).text();
+  alert(actual_qty);
 
   $('.exclusive_rate').val(exclusive);
   $('.inclusive_rate').val(inclusive);
@@ -1468,10 +1469,10 @@ $(document).on("click",".update_items",function(){
               $('.exclusive'+td_id).val($('.exclusive_rate').val());
               $('.font_exclusive'+td_id).text($('.exclusive_rate').val());
               $('.inclusive'+td_id).val($('.inclusive_rate').val());
-              // $('.quantity'+td_id).val($('.quantity').val());
-              // $('.font_quantity'+td_id).text($('.quantity').val());
-              $('#remaining_after_debit'+td_id).val($('.quantity').val());
-              $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
+              $('.quantity'+td_id).val($('.quantity').val());
+              $('.font_quantity'+td_id).text($('.quantity').val());
+              // $('#remaining_after_debit'+td_id).val($('.quantity').val());
+              // $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
               // $('#rejected_quantity'+td_id).val($('.rejected').val());
               // $('.font_rejected_qty'+td_id).text($('.rejected').val());
               $('#debited_qty'+td_id).val($('.rejected').val());
@@ -1530,8 +1531,6 @@ $(document).on("click",".update_items",function(){
               total_expense_cal();
               overall_discounts();
               roundoff_cal();
-
-              
 
               
               $('.item_sno').val('');
@@ -1581,8 +1580,8 @@ else if($('.r_in_no').val() != '')
               $('.inclusive'+td_id).val($('.inclusive_rate').val());
               // $('.quantity'+td_id).val($('.quantity').val());
               // $('.font_quantity'+td_id).text($('.quantity').val());
-              // $('#rejected_quantity'+td_id).val($('.rejected').val());
-              // $('.font_rejected_qty'+td_id).text($('.rejected').val());
+              $('#rejected_quantity'+td_id).val($('.quantity').val());
+              $('.font_rejected_qty'+td_id).text($('.quantity').val());
               $('#remaining_after_debit'+td_id).val($('.quantity').val());
               $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
               $('#debited_qty'+td_id).val($('.rejected').val());
@@ -1642,7 +1641,6 @@ else if($('.r_in_no').val() != '')
               overall_discounts();
               roundoff_cal();
 
-              
 
               
               $('.item_sno').val('');
@@ -1760,15 +1758,22 @@ function item_details_sno(){
 
 
   $("form").submit(function(e){
-  if($('#total_price').val() == 0 || $('#total_price').val() == '')
+  var count = $('.tables').length;
+    var total_rejected = calculate_total_rejected();
+  if(count == 0)
   {
     alert('There Is No Row To Submit');
     e.preventDefault();
   }
+  else if(total_rejected == 0)
+  {
+    alert('You Are Not Allowed To Submit!');
+    e.preventDefault();
+  } 
   else
   {
 
-  }    
+  }   
     });
 
   

@@ -798,22 +798,29 @@ class PurchaseEntryController extends Controller
         $rejection_out = RejectionOut::where('p_no',$id);
         $rejection_out_item = RejectionOutItem::where('p_no',$id);
         $rejection_out_expense = RejectionOutExpense::where('p_no',$id);
+
+        $debit_note = DebitNote::where('p_no',$id);
+        $debit_note_item = DebitNoteItem::where('p_no',$id);
+        $debit_note_expense = DebitNoteExpense::where('p_no',$id);
         
         if($purchase_entry_data)
         {
             $purchase_entry_data->delete();
             $rejection_out->delete();
+            $debit_note->delete();
         }
          if($purchase_entry_item_data)
          {
             $purchase_entry_item_data->delete();
             $rejection_out_item->delete();
+            $debit_note_item->delete();
          }
 
          if($purchase_entry_expense_data)
          {
             $purchase_entry_expense_data->delete();
             $rejection_out_expense->delete();
+            $debit_note_expense->delete();
          }
          if($purchase_entry_tax_data)
          {

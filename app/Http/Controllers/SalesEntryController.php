@@ -539,7 +539,7 @@ class SalesEntryController extends Controller
         $item_discount_sum = 0;
         foreach($sale_entry_items as $key => $value)  
         {
-            $item_amount[] = $value->qty * $value->rate_exclusive_tax;
+            $item_amount[] = $value->remaining_after_credit * $value->rate_exclusive_tax;
             $item_gst_rs[] = $item_amount[$key] * $value->gst / 100;
             $item_net_value[] = $item_amount[$key] + $item_gst_rs[$key] - $value->discount;
 
@@ -553,7 +553,7 @@ class SalesEntryController extends Controller
                                     ->orderBy('s_date','DESC')
                                     ->first();
 
-            $amount = $item_data->qty * $item_data->rate_exclusive_tax;
+            $amount = $item_data->remaining_after_credit * $item_data->rate_exclusive_tax;
             $gst_rs = $amount * $item_data->gst / 100;
             $net_value[] = $amount + $gst_rs - $item_data->discount;
 
@@ -710,19 +710,29 @@ class SalesEntryController extends Controller
         $rejection_in = RejectionIn::where('s_no',$id);
         $rejection_in_item = RejectionInItem::where('s_no',$id);
         $rejection_in_expense = RejectionInExpense::where('s_no',$id);
+
+        $credit_note = CreditNote::where('s_no',$id);
+        $credit_note_item = CreditNoteItem::where('s_no',$id);
+        $credit_note_expense = CreditNoteExpense::where('s_no',$id);
         
         if($sale_entry_data)
         {
             $sale_entry_data->delete();
+            $rejection_in->delete();
+            $credit_note->delete();
         }
          if($sale_entry_item_data)
          {
             $sale_entry_item_data->delete();
+            $rejection_in_item->delete();
+            $credit_note_item->delete();
          }
 
          if($sale_entry_expense_data)
          {
             $sale_entry_expense_data->delete();
+            $rejection_in_expense->delete();
+            $credit_note_expense->delete();
          }
          if($sale_entry_tax_data)
          {

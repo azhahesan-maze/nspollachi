@@ -518,7 +518,7 @@ table, th, td {
                     <th> Rejected Quantity</th>
                     <th> Remaining Quantity</th>
                     <th> Credited Quantity</th>
-                    <th> Remaining Quantity After Credit</th>
+                    <!-- <th> Remaining Quantity After Credit</th> -->
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
@@ -597,7 +597,7 @@ table, th, td {
                       <th></th>
                       <th></th>
                       <th></th>
-                      <th></th>
+                      <!-- <th></th> -->
                       <th></th>
                       <th><label class="total_amount">0</label></th>
                       <th></th>
@@ -1194,11 +1194,11 @@ $(document).on("click",".edit_items",function(){
   var discount_val = $('.discount_val'+id).val(); 
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
-  // var quantity = $('.quantity'+id).val();
-  var quantity = $('.font_remaining_after_debit'+id).text();
+  var quantity = $('.quantity'+id).val();
+  // var quantity = $('.font_remaining_after_debit'+id).text();
   var actual_qty = $('#actual_quantity'+id).val();
   // var rejected_qty = $('#rejected_quantity'+id).val();
-  var rejected_qty = $('.font_debited_qty'+id).text();
+  var rejected_qty = 0;
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1255,11 +1255,11 @@ $(document).on("click",".edit_items",function(){
   var discount_val = $('.discount_val'+id).val(); 
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
-  var quantity = $('#remaining_after_debit'+id).val();
+  // var quantity = $('#remaining_qty'+id).val();
   // var quantity = $('.font_remaining_after_debit'+id).text();
   var actual_qty = $('#actual_quantity'+id).val();
-  // var rejected_qty = $('#rejected_quantity'+id).val();
-  var rejected_qty = $('.font_debited_qty'+id).text();
+  var quantity = $('#rejected_quantity'+id).val();
+  var rejected_qty = 0;
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1267,6 +1267,7 @@ $(document).on("click",".edit_items",function(){
   var tax_gst = $('.tax_gst'+id).val();
   var net_price = $('#net_price'+id).val(); 
   var last_purchase_rate = $('.last_purchase'+id).text();
+  alert(actual_qty);
 
   $('.exclusive_rate').val(exclusive);
   $('.inclusive_rate').val(inclusive);
@@ -1363,10 +1364,10 @@ $(document).on("click",".update_items",function(){
               $('.exclusive'+td_id).val($('.exclusive_rate').val());
               $('.font_exclusive'+td_id).text($('.exclusive_rate').val());
               $('.inclusive'+td_id).val($('.inclusive_rate').val());
-              // $('.quantity'+td_id).val($('.quantity').val());
-              // $('.font_quantity'+td_id).text($('.quantity').val());
-              $('#remaining_after_debit'+td_id).val($('.quantity').val());
-              $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
+              $('.quantity'+td_id).val($('.quantity').val());
+              $('.font_quantity'+td_id).text($('.quantity').val());
+              // $('#remaining_after_debit'+td_id).val($('.quantity').val());
+              // $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
               // $('#rejected_quantity'+td_id).val($('.rejected').val());
               // $('.font_rejected_qty'+td_id).text($('.rejected').val());
               $('#debited_qty'+td_id).val($('.rejected').val());
@@ -1425,8 +1426,6 @@ $(document).on("click",".update_items",function(){
               total_expense_cal();
               overall_discounts();
               roundoff_cal();
-
-              
 
               
               $('.item_sno').val('');
@@ -1476,8 +1475,8 @@ else if($('.r_in_no').val() != '')
               $('.inclusive'+td_id).val($('.inclusive_rate').val());
               // $('.quantity'+td_id).val($('.quantity').val());
               // $('.font_quantity'+td_id).text($('.quantity').val());
-              // $('#rejected_quantity'+td_id).val($('.rejected').val());
-              // $('.font_rejected_qty'+td_id).text($('.rejected').val());
+              $('#rejected_quantity'+td_id).val($('.quantity').val());
+              $('.font_rejected_qty'+td_id).text($('.quantity').val());
               $('#remaining_after_debit'+td_id).val($('.quantity').val());
               $('.font_remaining_after_debit'+td_id).text($('.quantity').val());
               $('#debited_qty'+td_id).val($('.rejected').val());
@@ -1537,7 +1536,6 @@ else if($('.r_in_no').val() != '')
               overall_discounts();
               roundoff_cal();
 
-              
 
               
               $('.item_sno').val('');
@@ -1655,15 +1653,22 @@ function item_details_sno(){
 
 
   $("form").submit(function(e){
-  if($('#total_price').val() == 0 || $('#total_price').val() == '')
+  var count = $('.tables').length;
+    var total_rejected = calculate_total_rejected();
+  if(count == 0)
   {
     alert('There Is No Row To Submit');
     e.preventDefault();
   }
+  else if(total_rejected == 0)
+  {
+    alert('You Are Not Allowed To Submit!');
+    e.preventDefault();
+  } 
   else
   {
 
-  }    
+  }   
     });
 
   

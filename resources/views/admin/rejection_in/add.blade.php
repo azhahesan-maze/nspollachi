@@ -549,9 +549,10 @@ table, th, td {
                     <th> HSN</th>
                     <th> MRP</th>
                     <th> Unit Price</th>
-                    <th> Purchase Quantity</th>
+                    <th> Total Quantity</th>
                     <th> Rejected Quantity</th>
                     <th> Remaining Quantity</th>
+                    <th> Credited Quantity</th>
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
@@ -630,6 +631,7 @@ table, th, td {
                   <tfoot>
                     <tr>
                       
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th></th>

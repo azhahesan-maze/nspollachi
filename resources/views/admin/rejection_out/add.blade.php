@@ -528,9 +528,10 @@ table, th, td {
                     <th> HSN</th>
                     <th> MRP</th>
                     <th> Unit Price</th>
-                    <th> Purchase Quantity</th>
+                    <th> Total Quantity</th>
                     <th> Rejected Quantity</th>
                     <th> Remaining Quantity</th>
+                    <th> Debited Quantity</th>
                     <th> UOM</th>
                     <th> Amount</th>
                     <th> Discount</th>
@@ -609,6 +610,7 @@ table, th, td {
                   <tfoot>
                     <tr>
                       
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th></th>
@@ -1232,6 +1234,73 @@ $(document).on("click",".remove_items",function(){
 
 
   
+});
+
+$(document).on("click",".edit_items",function(){
+
+  $('.update_items').show();
+  $('.add_items').hide();
+  if($('.p_no').val() != '')
+  {
+  $('#quantity').attr('readonly','readonly');
+  $('.display_rejected').show();
+  $('.display_remarks').show();
+  }
+
+  var id = $(this).attr("id");
+  $('#dummy_table_id').val(id);
+  var invoice_no = $('.invoice_no'+id).val(); 
+  var item_code_id = $('.item_code'+id).val();
+  var item_code_name = $('.items'+id).text(); 
+  var item_name = $('.item_name'+id).val();
+  var hsn = $('.hsn'+id).val(); 
+  var mrp = $('.mrp'+id).val();
+  var discount_val = $('.discount_val'+id).val(); 
+  var exclusive = $('.exclusive'+id).val();
+  var inclusive = $('.inclusive'+id).val(); 
+  var quantity = $('.quantity'+id).val();
+  var rejected_qty = $('#rejected_quantity'+id).val();
+  var actual_qty = $('#actual_quantity'+id).val();
+  var uom = $('.uom'+id).val(); 
+  var uom_name = $('.font_uom'+id).text();
+  var amnt = $('#amnt'+id).val();
+  var tax = $('#tax'+id).val(); 
+  var tax_gst = $('.tax_gst'+id).val();
+  var net_price = $('#net_price'+id).val(); 
+  var last_purchase_rate = $('.last_purchase'+id).text();
+  var remarks = $('.font_remarks'+id).text(); 
+
+  $('.exclusive_rate').val(exclusive);
+  $('.inclusive_rate').val(inclusive);
+  $('.item_sno').val(invoice_no);
+  $('.items_codes').val(item_code_id);
+  $('.item_name').val(item_name);
+  $('.item_code').val(item_code_name);
+  $('.mrp').val(mrp);
+  $('.hsn').val(hsn);
+  $('.quantity').val(quantity);
+  $('.rejected').val(rejected_qty);
+  $('.actual_qty').val(actual_qty);
+  $('.tax_rate').val(tax_gst);
+  $('.amount').val(amnt);
+  $('.net_price').val(net_price);
+  $('.gst').val(tax);
+  $('.uom').val(uom);
+  $('.uom_name').val(uom_name);
+  $('#last_purchase_rate').val(last_purchase_rate);
+  $('.remarks').val(remarks);
+
+  var disc_value = parseFloat(discount_val)/parseFloat(quantity);
+   $('.discount_rs').val(disc_value.toFixed(2));
+   discount_calc();
+   
+  if(discount_val == 0)
+  {
+    $('.discount_percentage').val('');
+  $('.discount_rs').val('');
+  }
+   // item_codes(item_code_id);
+
 });
 
 $(document).on("click",".edit_items",function(){
