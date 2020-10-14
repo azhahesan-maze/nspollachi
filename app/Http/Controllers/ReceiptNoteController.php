@@ -281,7 +281,7 @@ class ReceiptNoteController extends Controller
             $receipt_note_items->qty = $request->quantity[$i];
             $receipt_note_items->remaining_qty = $request->quantity[$i];
             $receipt_note_items->rejected_qty = 0;
-            $receipt_note_items->credited_qty = 0;
+            $receipt_note_items->debited_qty = 0;
             $receipt_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
             $receipt_note_items->uom_id = $request->uom[$i];
             $receipt_note_items->discount = $request->discount[$i];
