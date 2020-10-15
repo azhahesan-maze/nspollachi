@@ -1270,7 +1270,6 @@ $(document).on("click",".edit_items",function(){
   var tax_gst = $('.tax_gst'+id).val();
   var net_price = $('#net_price'+id).val(); 
   var last_purchase_rate = $('.last_purchase'+id).text();
-  alert(actual_qty);
 
   $('.exclusive_rate').val(exclusive);
   $('.inclusive_rate').val(inclusive);
