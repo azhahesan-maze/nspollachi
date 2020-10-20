@@ -52,7 +52,7 @@ class RejectionInController extends Controller
         // $count = count($s_no);
         // if($count == 0)
         // {
-            $rejection_in = RejectionIn::where('status',0)->get();
+            $rejection_in = RejectionIn::where('status',0)->where('active',1)->get();
             $check_id = $id;
 
             if(count($rejection_in) == 0)
@@ -241,10 +241,6 @@ class RejectionInController extends Controller
             {
                 $sale_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
 
-                // $purchase_entry_item->r_out_no = $voucher_no;
-                // $purchase_entry_item->r_out_date = $voucher_date;
-                // $sale_entry_item->remaining_after_credit = $request->quantity[$key];
-                $sale_entry_item->credited_qty = $request->debited_qty[$key];
                 $sale_entry_item->remaining_qty = $request->quantity[$key];
                 $sale_entry_item->rejected_qty = $request->rejected_item_qty[$key];
                 $sale_entry_item->remarks = $request->remarks_val[$key];
@@ -258,12 +254,9 @@ class RejectionInController extends Controller
             {
                 $delivery_note_item = DeliveryNoteItem::where('d_no',$request->d_no)->where('item_id',$value)->first();
 
-                // $receipt_note_item->r_out_no = $voucher_no;
-                // $receipt_note_item->r_out_date = $voucher_date;
                 $delivery_note_item->remaining_qty = $request->quantity[$key];
                 $delivery_note_item->rejected_qty = $request->rejected_item_qty[$key];
                 $delivery_note_item->remarks = $request->remarks_val[$key];
-                $delivery_note_item->credited_qty = $request->debited_qty[$key];
                 $delivery_note_item->save();
         
             }
@@ -323,7 +316,8 @@ class RejectionInController extends Controller
             $rejection_in_items->rejected_qty = $request->rejected_item_qty[$i];
             $rejection_in_items->actual_rejected_qty = $request->rejected_item_qty[$i];
             $rejection_in_items->credited_qty = $request->debited_qty[$i];
-            $rejection_in_items->remaining_after_credit = $request->rejected_item_qty[$i];
+            $rejection_in_items->r_in_credited_qty = @$request->r_out_debited_qty[$i];
+            // $rejection_in_items->remaining_after_credit = $request->rejected_item_qty[$i];
             $rejection_in_items->remarks = $request->remarks_val[$i];
             $rejection_in_items->uom_id = $request->uom[$i];
             $rejection_in_items->discount = $request->discount[$i];
@@ -782,22 +776,22 @@ class RejectionInController extends Controller
      */
     public function destroy($id)
     {
-        $rejection_in_data = RejectionIn::where('s_no',$id)->orWhere('d_no',$id);
-        $rejection_in_item_data = RejectionInItem::where('s_no',$id)->orWhere('d_no',$id);
-        $rejection_in_expense_data = RejectionInExpense::where('s_no',$id)->orWhere('d_no',$id);
-        $rejection_in_tax_data = RejectionInTax::where('s_no',$id)->orWhere('d_no',$id);
+        $rejection_in_data = RejectionIn::where('s_no',$id)->orWhere('d_no',$id)->where('active',1);
+        $rejection_in_item_data = RejectionInItem::where('s_no',$id)->orWhere('d_no',$id)->where('active',1);
+        $rejection_in_expense_data = RejectionInExpense::where('s_no',$id)->orWhere('d_no',$id)->where('active',1);
+        $rejection_in_tax_data = RejectionInTax::where('s_no',$id)->orWhere('d_no',$id)->where('active',1);
 
         $sale_entry_item = SaleEntryItem::where('s_no',$id)->get();
         foreach ($sale_entry_item as $key => $value) {
-            $qty = $value->actual_qty;
+            $qty = $value->rejected_qty + $value->remaining_qty;
             $item_id = $value->item_id;
-            SaleEntryItem::where('s_no',$id)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'qty'=>$qty, 'rejected_qty' => 0]);
+            SaleEntryItem::where('s_no',$id)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'rejected_qty' => 0]);
 
         }
 
         $delivery_note_item = DeliveryNoteItem::where('d_no',$id)->get();
         foreach ($delivery_note_item as $key => $value) {
-            $qty = $value->qty;
+            $qty = $value->rejected_qty + $value->remaining_qty;
             $item_id = $value->item_id;
             DeliveryNoteItem::where('d_no',$id)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'rejected_qty' => 0]);
 
@@ -805,20 +799,20 @@ class RejectionInController extends Controller
         
         if($rejection_in_data)
         {
-            $rejection_in_data->delete();
+            $rejection_in_data->update(['active' => 0]);
         }
          if($rejection_in_item_data)
          {
-            $rejection_in_item_data->delete();
+            $rejection_in_item_data->update(['active' => 0]);
          }
 
          if($rejection_in_expense_data)
          {
-            $rejection_in_expense_data->delete();
+            $rejection_in_expense_data->update(['active' => 0]);
          }
          if($rejection_in_tax_data)
          {
-            $rejection_in_tax_data->delete();
+            $rejection_in_tax_data->update(['active' => 0]);
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');
@@ -1724,15 +1718,16 @@ $result=[];
             //     $remaining_qty = $value->qty - $value->rejected_qty;
             // }
 
-            $sum = $value->rejected_qty + $value->credited_qty;
-            $remaining_qty = $value->actual_qty - $sum;
+            // $sum = $value->rejected_qty + $value->credited_qty;
+            // $remaining_qty = $value->actual_qty - $sum;
 
-            $actual_quantity = $value->rejected_qty + $remaining_qty;
+            $actual_quantity = $value->rejected_qty + $value->remaining_qty;
+            $debited_qty = $value->credited_qty + $value->r_in_credited_qty;
 
             $status++;
             $i++;
             
-            $item_amount = $remaining_qty * $value->rate_exclusive_tax;
+            $item_amount = $value->remaining_qty * $value->rate_exclusive_tax;
             $item_gst_rs = $item_amount * $value->gst / 100;
             $item_net_value = $item_amount + $item_gst_rs - $value->discount;
 
@@ -1741,14 +1736,14 @@ $result=[];
                                     ->orderBy('s_date','DESC')
                                     ->first();
 
-            $amount = $remaining_qty * $item_data->rate_exclusive_tax;
+            $amount = $item_data->remaining_qty * $item_data->rate_exclusive_tax;
             $gst_rs = $amount * $item_data->gst / 100;
             $net_value = $amount + $gst_rs - $item_data->discount;
 
 
-            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> '.$i.' </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><font class="font_purchase_quantity'.$i.'">'.$value['actual_qty'].'</font><input type="hidden" value="'.$value['actual_qty'].'" class="actual_qty" name="actual_qty[]"></td><td><font class="font_rejected_qty'.$i.'">'.$value['rejected_qty'].'</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity'.$i.'" value="'.$value['rejected_qty'].'"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$remaining_qty.'" name="quantity[]"><font class="font_quantity'.$i.'">'.$remaining_qty.'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$actual_quantity.'" name="actual_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty'.$i.'" value="'.$remaining_qty.'" name="remaining_qty[]"></div></div></td><td><font class="font_debited_qty'.$i.'">'.$value['credited_qty'].'</font><input type="hidden" class="debited_qty" value="'.$value['credited_qty'].'" name="debited_qty[]" id="debited_qty'.$i.'"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td><font class="font_remarks'.$i.'">'.$value['remarks'].'</font><input type="hidden" class="remarks_val" name="remarks_val[]" id="remarks_val'.$i.'" value="'.$value['remarks'].'"></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
+            $table_tbody.='<tr id="row'.$i.'" class="'.$i.' tables"><td><span class="item_s_no"> '.$i.' </span></td><td><div class="form-group row"><div class="col-sm-12"><input class="invoice_no'.$i.'" type="hidden" id="invoice'.$i.'" value="'.$value['item_sno'].'" name="invoice_sno[]"><font class="item_no'.$i.'">'.$value['item_sno'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="item_code'.$i.'" value="'.$value['item_id'].'" name="item_code[]"><font class="items'.$i.'">'.$value->item['code'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="item_name'.$i.'" type="hidden" value="'.$value->item['name'].'" name="item_name[]"><font class="font_item_name'.$i.'">'.$value->item['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input class="hsn'.$i.'" type="hidden" value="'.$value->item['hsn'].'" name="hsn[]"><font class="font_hsn'.$i.'">'.$value->item['hsn'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="mrp'.$i.'" value="'.$value['mrp'].'" name="mrp[]"><font class="font_mrp'.$i.'">'.$value['mrp'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12" id="unit_price"><input type="hidden" class="exclusive'.$i.'" value="'.$value['rate_exclusive_tax'].'" name="exclusive[]"><font class="font_exclusive'.$i.'">'.$value['rate_exclusive_tax'].'</font><input type="hidden" class="inclusive'.$i.'" value="'.$value['rate_inclusive_tax'].'" name="inclusive[]"></div></div></td><td><font class="font_purchase_quantity'.$i.'">'.$value['actual_qty'].'</font><input type="hidden" value="'.$value['actual_qty'].'" class="actual_qty" name="actual_qty[]"></td><td><font class="font_rejected_qty'.$i.'">'.$value['rejected_qty'].'</font><input type="hidden" class="rejected_quantity" name="rejected_item_qty[]" id="rejected_quantity'.$i.'" value="'.$value['rejected_qty'].'"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="quantity'.$i.'" value="'.$value['remaining_qty'].'" name="quantity[]"><font class="font_quantity'.$i.'">'.$value['remaining_qty'].'</font><input type="hidden" class="actual_quantity" id="actual_quantity'.$i.'" value="'.$actual_quantity.'" name="actual_quantity[]"><input type="hidden" class="remaining_qty" id="remaining_qty'.$i.'" value="'.$value['remaining_qty'].'" name="remaining_qty[]"></div></div></td><td><font class="font_debited_qty'.$i.'">'.$debited_qty.'</font><input type="hidden" class="debited_qty" value="'.$value['credited_qty'].'" name="debited_qty[]" id="debited_qty'.$i.'"><input type="hidden" class="r_out_debited_qty" value="'.$value['r_in_credited_qty'].'" name="r_out_debited_qty[]" id="r_out_debited_qty'.$i.'"></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="uom'.$i.'" value="'.$value['uom_id'].'" name="uom[]"><font class="font_uom'.$i.'">'.$value->uom['name'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_amount" id="amnt'.$i.'" value="'.$item_amount.'" name="amount[]"><font class="font_amount'.$i.'">'.$item_amount.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="input_discounts" value="'.$value['discount'].'" id="input_discount'.$i.'" ><input class="discount_val'.$i.'" type="hidden" value="'.$value['discount'].'" name="discount[]"><font class="font_discount" id="font_discount'.$i.'">'.$value['discount'].'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_gst" id="tax'.$i.'" value="'.$item_gst_rs.'" name="gst[]"><input type="hidden" class="tax_gst'.$i.'"  value="'.$value['gst'].'" name="tax_rate[]"><font class="font_gst'.$i.'">'.$item_gst_rs.'</font></div></div></td><td><div class="form-group row"><div class="col-sm-12"><input type="hidden" class="table_net_price" id="net_price'.$i.'" value="'.$item_net_value.'" name="net_price[]"><font class="font_net_price'.$i.'">'.$item_net_value.'</font></div></div></td><td><font class="font_remarks'.$i.'">'.$value['remarks'].'</font><input type="hidden" class="remarks_val" name="remarks_val[]" id="remarks_val'.$i.'" value="'.$value['remarks'].'"></td><td style="background-color: #FAF860;"><div class="form-group row"><div class="col-sm-12"><center><font class="last_purchase'.$i.'">'.$net_value.'</font></center></div></div></td><td><i class="fa fa-eye px-2 py-1 bg-info  text-white rounded show_items" id="'.$i.'" aria-hidden="true"></i><i class="fa fa-pencil px-2 py-1 bg-success  text-white rounded edit_items" id="'.$i.'" aria-hidden="true"></i></td></tr>';
 
-            $item_amounts[] = $remaining_qty * $value->rate_exclusive_tax;
+            $item_amounts[] = $value->remaining_qty * $value->rate_exclusive_tax;
             $item_gst_rss[] = $item_amounts[$key] * $value->gst / 100;
             $item_net_values[] = $item_amounts[$key] + $item_gst_rss[$key] - $value->discount;
 
@@ -1826,13 +1821,13 @@ echo "<pre>"; print_r($data); exit;
         else
         {
             $date = date('Y-m-d');
-        $categories = Category::all();
-        $supplier = Supplier::all();
-        $item = Item::all();
-        $agent = Agent::all();
-        $brand = Brand::all();
-        $expense_type = ExpenseType::all();
-        $estimation =Estimation::all();
+            $categories = Category::all();
+            $supplier = Supplier::all();
+            $item = Item::all();
+            $agent = Agent::all();
+            $brand = Brand::all();
+            $expense_type = ExpenseType::all();
+            $estimation =Estimation::all();
 
         // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
         //                    ->select('p_no')
@@ -1909,7 +1904,7 @@ echo "<pre>"; print_r($data); exit;
                                     ->orderBy('d_date','DESC')
                                     ->first();
 
-            $amount = $remaining_qty * $item_data->rate_exclusive_tax;
+            $amount = $item_data->remaining_qty * $item_data->rate_exclusive_tax;
             $gst_rs = $amount * $item_data->gst / 100;
             $net_value = $amount + $gst_rs - $item_data->discount;
 

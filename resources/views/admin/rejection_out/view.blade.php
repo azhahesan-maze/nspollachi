@@ -69,9 +69,9 @@
                 <!-- <a href="{{ route('rejection_out.show',$value->r_out_no) }}" class="px-2 py-1 bg-info text-white rounded"><i class="fa fa-eye" aria-hidden="true"></i></a> -->
                 @if($value->cancel_status == 0)
                 @if($value->rn_no == '')
-                <a href="{{url('rejection_out/delete/'.$value->p_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="{{url('rejection_out/delete/'.$value->p_no,$value->r_out_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 @else
-                <a href="{{url('rejection_out/delete/'.$value->rn_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="{{url('rejection_out/delete/'.$value->rn_no,$value->r_out_no )}}" onclick="return confirm('Are you sure ?')" class="px-2 py-1 bg-danger text-white rounded"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 
                 @endif
                 

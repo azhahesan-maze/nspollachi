@@ -269,6 +269,7 @@ class SalesEntryController extends Controller
             $sale_entry_items->remaining_after_credit = $request->quantity[$i];
             $sale_entry_items->rejected_qty = 0;
             $sale_entry_items->credited_qty = 0;
+            $sale_entry_items->r_in_credited_qty = 0;
             $sale_entry_items->uom_id = $request->uom[$i];
             $sale_entry_items->discount = $request->discount[$i];
 

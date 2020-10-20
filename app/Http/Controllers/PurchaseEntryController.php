@@ -262,6 +262,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->remaining_after_debit = $request->quantity[$i];
             $purchase_entry_items->rejected_qty = 0;
             $purchase_entry_items->debited_qty = 0;
+            $purchase_entry_items->r_out_debited_qty = 0;
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 
