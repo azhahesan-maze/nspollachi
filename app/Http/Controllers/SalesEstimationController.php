@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\AccountHead;
 use App\Models\Customer;
 use App\Models\SalesMan;
 use App\Models\SaleEstimation;
@@ -112,6 +113,7 @@ class SalesEstimationController extends Controller
         $customer = Customer::all();
         $tax = Tax::all();
         $sales_man = SalesMan::all();
+        $account_head = AccountHead::all();
         
 
         $voucher_num=SaleEstimation::orderBy('sale_estimation_no','DESC')
@@ -132,7 +134,7 @@ class SalesEstimationController extends Controller
          
          }
 
-        return view('admin.sales_estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','customer','tax','sales_man'));
+        return view('admin.sales_estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','customer','tax','sales_man','account_head'));
     }
 
     /**
@@ -374,6 +376,7 @@ class SalesEstimationController extends Controller
         $expense_type = ExpenseType::all();
         $customer = Customer::all();
         $sales_man = SalesMan::all();
+        $account_head = AccountHead::all();
 
         $sale_estimation = SaleEstimation::where('sale_estimation_no',$id)->first();
         $sale_estimation_item = SaleEstimationItem::where('sale_estimation_no',$id)->get();
@@ -476,7 +479,7 @@ class SalesEstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man'));
+        return view('admin.sales_estimation.edit',compact('categories','supplier','agent','brand','customer','expense_type','item','sale_estimation','sale_estimation_item','sale_estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man','account_head'));
     }
 
     /**
