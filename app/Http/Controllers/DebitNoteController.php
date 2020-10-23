@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
 use App\Models\PurchaseOrderItem;
@@ -66,6 +67,7 @@ class DebitNoteController extends Controller
         $rejection_out = RejectionOut::where('status',0)->get();
         $purchase_entry = PurchaseEntry::all();
         $tax = Tax::all();
+        $account_head = AccountHead::all();
         
 
         // $voucher_num=DebitNote::orderBy('dn_no','DESC')
@@ -104,7 +106,7 @@ class DebitNoteController extends Controller
          
          }
 
-        return view('admin.debit_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','rejection_out','purchase_entry','tax'));
+        return view('admin.debit_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','rejection_out','purchase_entry','tax','account_head'));
     }
 
     /**
@@ -431,11 +433,12 @@ class DebitNoteController extends Controller
         $estimation = Estimation::all();
         $rejection_out = RejectionOut::where('status',0)->get();
         $purchase_entry = PurchaseEntry::all();
+        $account_head = AccountHead::all();
 
-        $debit_note = DebitNote::where('dn_no',$id)->first();
-        $debit_note_items = DebitNoteItem::where('dn_no',$id)->get();
-        $debit_note_expense = DebitNoteExpense::where('dn_no',$id)->get();
-        $tax = DebitNoteTax::where('dn_no',$id)->get();
+        $debit_note = DebitNote::where('dn_no',$id)->where('active',1)->first();
+        $debit_note_items = DebitNoteItem::where('dn_no',$id)->where('active',1)->get();
+        $debit_note_expense = DebitNoteExpense::where('dn_no',$id)->where('active',1)->get();
+        $tax = DebitNoteTax::where('dn_no',$id)->where('active',1)->get();
 
         $item_row_count = count($debit_note_items);
         $expense_row_count = count($debit_note_expense);
@@ -533,7 +536,7 @@ class DebitNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.debit_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','debit_note','debit_note_items','debit_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax','expense_row_count','item_row_count'));
+        return view('admin.debit_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','debit_note','debit_note_items','debit_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax','expense_row_count','item_row_count','account_head'));
     }
 
     /**
@@ -827,22 +830,52 @@ class DebitNoteController extends Controller
      */
     public function destroy($id)
     {
-        $debit_note_data = DebitNote::where('dn_no',$id);
-        $debit_note_item_data = DebitNoteItem::where('dn_no',$id);
-        $debit_note_expense_data = DebitNoteExpense::where('dn_no',$id);
+        $debit_note_data = DebitNote::where('dn_no',$id)->where('active',1);
+        $debit_note_item_data = DebitNoteItem::where('dn_no',$id)->where('active',1);
+        $debit_note_expense_data = DebitNoteExpense::where('dn_no',$id)->where('active',1);
+        $debit_note_tax = DebitNoteTax::where('dn_no',$id)->where('active',1);
+
+        $debit_note = DebitNote::where('dn_no',$id)->where('active',1)->first();
+
+        $p_no = $debit_note->p_no;
+        $r_out_no = $debit_note->r_out_no;
+
+
+        $purchase_entry_item = PurchaseEntryItem::where('p_no',$p_no)->get();
+        foreach ($purchase_entry_item as $key => $value) 
+        {
+            $qty = $value->debited_qty + $value->remaining_qty;
+            $item_id = $value->item_id;
+            PurchaseEntryItem::where('p_no',$p_no)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'debited_qty' => 0]);
+
+        }
+
+        $r_out_item = RejectionOutItem::where('r_out_no',$r_out_no)->get();
+        foreach ($r_out_item as $key => $value) 
+        {
+            $qty = $value->r_out_debited_qty + $value->remaining_qty;
+            $item_id = $value->item_id;
+            RejectionOutItem::where('r_out_no',$r_out_no)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'r_out_debited_qty' => 0]);
+
+        }
         
         if($debit_note_data)
         {
-            $debit_note_data->delete();
+            $debit_note_data->update(['active' => 0]);
         }
          if($debit_note_item_data)
          {
-            $debit_note_item_data->delete();
+            $debit_note_item_data->update(['active' => 0]);
          }
 
          if($debit_note_expense_data)
          {
-            $debit_note_expense_data->delete();
+            $debit_note_expense_data->update(['active' => 0]);
+         }
+
+         if($debit_note_tax)
+         {
+            $debit_note_tax->update(['active' => 0]);
          }   
         
         return Redirect::back()->with('success', 'Deleted Successfully');
@@ -1576,7 +1609,7 @@ $result=[];
         $item = Item::all();
         $agent = Agent::all();
         $brand = Brand::all();
-        $expense_type = ExpenseType::all();
+        $expense_type = AccountHead::all();
         $estimation =Estimation::all();
 
         // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
@@ -1668,11 +1701,11 @@ $result=[];
         foreach($purchase_entry_expense as $key => $value)  
         {
             $expense_cnt++;
-        $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]">@if(isset($value->expense_types->type) && !empty($value->expense_types->type))<option value="'.$value->expense_types->id.'">'.$value->expense_types->type.'</option>';
+        $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]">@if(isset($value->expense_types->name) && !empty($value->expense_types->name))<option value="'.$value->expense_types->id.'">'.$value->expense_types->name.'</option>';
                 foreach($expense_type as $expense_types){
-                    $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->type.'</option>';
+                    $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->name.'</option>';
                 }
-                    $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" readonly pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br></div></div>' ;
+                    $expense_typess.='</select></div><a href="{{ route("account_head.create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" readonly pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br></div></div>' ;
     }
 
     // if($expense_cnt == 0)
@@ -1726,7 +1759,7 @@ echo "<pre>"; print_r($data); exit;
         $item = Item::all();
         $agent = Agent::all();
         $brand = Brand::all();
-        $expense_type = ExpenseType::all();
+        $expense_type = AccountHead::all();
         $estimation =Estimation::all();
 
         // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
@@ -1831,11 +1864,11 @@ echo "<pre>"; print_r($data); exit;
         foreach($rejection_out_expense as $key => $value)  
         {
             $expense_cnt++;
-        $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]">@if(isset($value->expense_types->type) && !empty($value->expense_types->type))<option value="'.$value->expense_types->id.'">'.$value->expense_types->type.'</option>';
+        $expense_typess.= '<div class="row col-md-12 expense"><div class="col-md-3"><label style="font-family: Times new roman;">Expense Type</label><br><div class="form-group row"><div class="col-sm-8"><select class="js-example-basic-multiple col-12 form-control custom-select expense_type" readonly name="expense_type[]">@if(isset($value->expense_types->name) && !empty($value->expense_types->name))<option value="'.$value->expense_types->id.'">'.$value->expense_types->name.'</option>';
                 foreach($expense_type as $expense_types){
-                    $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->type.'</option>';
+                    $expense_typess.='<option value="'.$expense_types->id.'">'.$expense_types->name.'</option>';
                 }
-                    $expense_typess.='</select></div><a href="{{ url("master/expense-type/create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" readonly pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br></div></div>' ;
+                    $expense_typess.='</select></div><a href="{{ route("account_head.create")}}" target="_blank"><button type="button"  class="px-2 btn btn-success ml-2" title="Add Expense type"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a><button type="button"  class="px-2 btn btn-success mx-2 refresh_expense_type_id" title="Add Expense Type"><i class="fa fa-refresh" aria-hidden="true"></i></button></div></div><div class="col-md-2"><label style="font-family: Times new roman;">Expense Amount</label><input type="number" class="form-control expense_amount"  placeholder="Expense Amount" name="expense_amount[]" readonly pattern="[0-9]{0,100}" title="Numbers Only" value="'.$value->expense_amount.'"></div><div class="col-md-2"><label><font color="white" style="font-family: Times new roman;">Add Expense</font></label><br></div></div>' ;
     }
 
     // if($expense_cnt == 0)

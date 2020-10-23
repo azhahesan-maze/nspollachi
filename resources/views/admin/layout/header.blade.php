@@ -157,12 +157,12 @@
                         <ul>
                            
                             <li class="dropdown-header">Accounts</li>
-                            @can('expense_list')
+                            <!-- @can('expense_list')
                             <li><a href="{{url('master/expense-type')}}">Expense</a></li>
                             @endcan
                             @can('income_list')
                             <li><a href="{{url('master/income-type')}}">Income</a></li>
-                            @endcan
+                            @endcan -->
                            <!-- @can('gst_master_list')
                             <li><a href="{{url('master/gst-type')}}">Gst</a></li>
                             @endcan -->

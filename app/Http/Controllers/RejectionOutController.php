@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
 use App\Models\PurchaseOrderItem;
@@ -141,6 +142,7 @@ class RejectionOutController extends Controller
         $purchase_entry = PurchaseEntry::all();
         $receipt_note = ReceiptNote::all();
         $tax = Tax::all();
+        $account_head = AccountHead::all();
         
 
         // $voucher_num=RejectionOut::orderBy('r_out_no','DESC')
@@ -180,7 +182,7 @@ class RejectionOutController extends Controller
          }
         // $voucher_no = str_random(6);
 
-        return view('admin.rejection_out.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','receipt_note','estimation','purchase_entry','tax'));
+        return view('admin.rejection_out.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','receipt_note','estimation','purchase_entry','tax','account_head'));
     }
 
     /**

@@ -436,10 +436,10 @@ class CreditNoteController extends Controller
         $rejection_in = RejectionIn::where('status',0)->get();
         $customer = Customer::all();
 
-        $credit_note = CreditNote::where('cn_no',$id)->first();
-        $credit_note_items = CreditNoteItem::where('cn_no',$id)->get();
-        $credit_note_expense = CreditNoteExpense::where('cn_no',$id)->get();
-        $tax = CreditNoteTax::where('cn_no',$id)->get();
+        $credit_note = CreditNote::where('cn_no',$id)->where('active',1)->first();
+        $credit_note_items = CreditNoteItem::where('cn_no',$id)->where('active',1)->get();
+        $credit_note_expense = CreditNoteExpense::where('cn_no',$id)->where('active',1)->get();
+        $tax = CreditNoteTax::where('cn_no',$id)->where('active',1)->get();
 
         $item_row_count = count($credit_note_items);
         $expense_row_count = count($credit_note_expense);
@@ -566,58 +566,47 @@ class CreditNoteController extends Controller
 
     if($request->s_no != '')
     {
+
+        // CreditNote::where('s_no',$request->s_no)->update(['active' => 0]);
+        // CreditNoteItem::where('s_no',$request->s_no)->update(['active' => 0]);
+        // CreditNoteExpense::where('s_no',$request->s_no)->update(['active' => 0]);
+        // CreditNoteTax::where('s_no',$request->s_no)->update(['active' => 0]);
+
         foreach ($request->item_code as $key => $value) 
         {
-            $sales_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
+            $sale_entry_item = SaleEntryItem::where('s_no',$request->s_no)->where('item_id',$value)->first();
 
-            // $sub_val = $sales_entry_item->credited_qty - $request->debited_qty_before_edit[$key];
+            $sale_entry_item->remaining_qty = $request->quantity[$key];
+            $sale_entry_item->credited_qty = $request->debited_qty[$key];
 
-            // $total_debited = $sub_val + $request->debited_qty[$key];
-
-            // if($total_debited > $sales_entry_item->actual_qty)
-            // {
-
-            // }
-
-            // else
-            // {
-
-            // $qty = $sales_entry_item->qty - $request->debited_qty[$key];
-            
-            // $sales_entry_item->qty = $qty;
-            // $sales_entry_item->remaining_after_credit = $request->remaining_after_debit[$key];
-            $sales_entry_item->credited_qty = $request->debited_qty[$key];
-            $sales_entry_item->save();
-
-            // }     
+            $sale_entry_item->save();
+   
         
         }
     }
 
     else if($request->r_in_no != '')
     {
+
+        // CreditNote::where('r_in_no',$request->r_in_no)->update(['active' => 0]);
+        // CreditNoteItem::where('r_in_no',$request->r_in_no)->update(['active' => 0]);
+        // CreditNoteExpense::where('r_in_no',$request->r_in_no)->update(['active' => 0]);
+        // CreditNoteTax::where('r_in_no',$request->r_in_no)->update(['active' => 0]);
+
         foreach ($request->item_code as $key => $value) 
         {
             $r_in_items = RejectionInItem::where('r_in_no',$request->r_in_no)->where('item_id',$value)->first();
 
-            // $sub_val = $r_in_items->credited_qty - $request->debited_qty_before_edit[$key];
+            $sale_entry_item = SaleEntryItem::where('s_no',$r_in_items->s_no)->where('item_id',$value)->first();
 
-            // $total_debited = $sub_val + $request->debited_qty[$key];
-
-            // if($total_debited > $r_in_items->actual_rejected_qty)
-            // {
-
-            // }
-
-            // else
-            // {
-                // $r_in_items->remaining_after_credit = $request->remaining_after_debit[$key];
-                $r_in_items->credited_qty = $request->debited_qty[$key];
+                $r_in_items->r_in_credited_qty = $request->debited_qty[$key];
+                $r_in_items->rejected_qty = $request->rejected_item_qty[$key];
                 $r_in_items->save();
 
-            // }
-                    
-                
+                $sale_entry_item->r_in_credited_qty = $request->debited_qty[$key];
+                $sale_entry_item->rejected_qty = $request->rejected_item_qty[$key];
+                $sale_entry_item->save();
+  
         
         }
     }
@@ -735,23 +724,52 @@ class CreditNoteController extends Controller
      */
     public function destroy($id)
     {
-        $credit_note_data = CreditNote::where('cn_no',$id);
-        $credit_note_item_data = CreditNoteItem::where('cn_no',$id);
-        $credit_note_expense_data = CreditNoteExpense::where('cn_no',$id);
+        $credit_note_data = CreditNote::where('cn_no',$id)->where('active',1);
+        $credit_note_item_data = CreditNoteItem::where('cn_no',$id)->where('active',1);
+        $credit_note_expense_data = CreditNoteExpense::where('cn_no',$id)->where('active',1);
+        $credit_note_tax = CreditNoteTax::where('cn_no',$id)->where('active',1);
+
+        $credit_note = CreditNote::where('cn_no',$id)->where('active',1)->first();
+
+        $s_no = $credit_note->s_no;
+        $r_in_no = $credit_note->r_in_no;
+
+
+        $sales_entry_item = SaleEntryItem::where('s_no',$s_no)->get();
+        foreach ($sales_entry_item as $key => $value) 
+        {
+            $qty = $value->credited_qty + $value->remaining_qty;
+            $item_id = $value->item_id;
+            SaleEntryItem::where('s_no',$s_no)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'credited_qty' => 0]);
+
+        }
+
+        $r_in_item = RejectionInItem::where('r_in_no',$r_in_no)->get();
+        foreach ($r_in_item as $key => $value) 
+        {
+            $qty = $value->r_in_credited_qty + $value->remaining_qty;
+            $item_id = $value->item_id;
+            RejectionInItem::where('r_in_no',$r_in_no)->where('item_id',$item_id)->update(['remaining_qty' => $qty, 'r_in_credited_qty' => 0]);
+
+        }
         
         if($credit_note_data)
         {
-            $credit_note_data->delete();
+            $credit_note_data->update(['active' => 0]);
         }
-         if($credit_note_item_data)
-         {
-            $credit_note_item_data->delete();
-         }
+        if($credit_note_item_data)
+        {
+        $credit_note_item_data->update(['active' => 0]);
+        }
 
-         if($credit_note_expense_data)
-         {
-            $credit_note_expense_data->delete();
-         }   
+        if($credit_note_expense_data)
+        {
+        $credit_note_expense_data->update(['active' => 0]);
+        } 
+        if($credit_note_tax)
+        {
+            $credit_note_tax->update(['active' => 0]);
+        }    
         
         return Redirect::back()->with('success', 'Deleted Successfully');
     }

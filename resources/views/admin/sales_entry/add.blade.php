@@ -410,7 +410,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                       <input type="number" class="form-control quantity" id="quantity"  placeholder="Quantity" name="quantity" onchange="qty()" pattern="[0-9]{0,100}" title="Numbers Only" value="">
                       </div>
                       </div>
-                      
+                      <input type="hidden" name="actual_qty" value="" id="actual_qty">
 
 
                       <div class="row col-md-12">
@@ -1212,6 +1212,7 @@ $(document).on("click",".edit_items",function(){
   var exclusive = $('.exclusive'+id).val();
   var inclusive = $('.inclusive'+id).val(); 
   var quantity = $('.quantity'+id).val();
+  var actual_qty = $('.quantity'+id).val();
   var uom = $('.uom'+id).val(); 
   var uom_name = $('.font_uom'+id).text();
   var amnt = $('#amnt'+id).val();
@@ -1229,6 +1230,7 @@ $(document).on("click",".edit_items",function(){
   $('.mrp').val(mrp);
   $('.hsn').val(hsn);
   $('.quantity').val(quantity);
+  $('#actual_qty').val(actual_qty);
   $('.tax_rate').val(tax_gst);
   $('.amount').val(amnt);
   $('.net_price').val(net_price);
@@ -1380,6 +1382,7 @@ $(document).on("click",".update_items",function(){
   $('.mrp').val('');
   $('.hsn').val('');
   $('.quantity').val('');
+  $('#actual_qty').val('');
   $('.tax_rate').val('');
   $('#exclusive').val('');
   $('#inclusive').val('');
@@ -1482,6 +1485,15 @@ function item_details_sno(){
   
 function qty()
 {
+
+  var actual_qty= $('#actual_qty').val();
+  var qty = $('.quantity').val();
+  if(parseInt(qty) > parseInt(actual_qty))
+  {
+    alert('Quantity Exceeds!');
+    $('.quantity').val('')
+  }
+
   var rate_exclusive = $('#exclusive').val();
   var rate_inclusive = $('#inclusive').val();
 

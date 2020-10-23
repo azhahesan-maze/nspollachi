@@ -317,7 +317,6 @@ class RejectionInController extends Controller
             $rejection_in_items->actual_rejected_qty = $request->rejected_item_qty[$i];
             $rejection_in_items->credited_qty = $request->debited_qty[$i];
             $rejection_in_items->r_in_credited_qty = @$request->r_out_debited_qty[$i];
-            // $rejection_in_items->remaining_after_credit = $request->rejected_item_qty[$i];
             $rejection_in_items->remarks = $request->remarks_val[$i];
             $rejection_in_items->uom_id = $request->uom[$i];
             $rejection_in_items->discount = $request->discount[$i];

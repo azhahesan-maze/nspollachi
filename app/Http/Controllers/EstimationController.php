@@ -17,6 +17,7 @@ use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\EstimationTax;
 use App\Models\Tax;
+use App\Models\AccountHead;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
@@ -116,6 +117,7 @@ class EstimationController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $tax = Tax::all();
+        $account_head = AccountHead::all();
         
 
         $voucher_num=Estimation::orderBy('estimation_no','DESC')
@@ -158,7 +160,7 @@ class EstimationController extends Controller
 
         //                    exit;
 
-        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','tax'));
+        return view('admin.estimation.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','tax','account_head'));
     }
 
     /**
@@ -402,6 +404,7 @@ class EstimationController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
+        $account_head = AccountHead::all();
         $estimation = Estimation::where('estimation_no',$id)->first();
         $estimation_item = Estimation_Item::where('estimation_no',$id)->get();
         $estimation_expense = Estimation_Expense::where('estimation_no',$id)->get();
@@ -503,7 +506,7 @@ class EstimationController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.estimation.edit',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax'));
+        return view('admin.estimation.edit',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimation_item','estimation_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','account_head'));
     }
 
     /**
