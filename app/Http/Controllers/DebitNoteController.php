@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
@@ -68,6 +69,7 @@ class DebitNoteController extends Controller
         $purchase_entry = PurchaseEntry::all();
         $tax = Tax::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
         
 
         // $voucher_num=DebitNote::orderBy('dn_no','DESC')
@@ -106,7 +108,7 @@ class DebitNoteController extends Controller
          
          }
 
-        return view('admin.debit_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','rejection_out','purchase_entry','tax','account_head'));
+        return view('admin.debit_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','rejection_out','purchase_entry','tax','account_head','location'));
     }
 
     /**
@@ -213,6 +215,7 @@ class DebitNoteController extends Controller
          $debit_note->overall_discount = $request->overall_discount;
          $debit_note->total_net_value = $request->total_price;
          $debit_note->round_off = $request->round_off;
+         $debit_note->location = $request->location;
 
          $debit_note->save();
 
@@ -434,6 +437,7 @@ class DebitNoteController extends Controller
         $rejection_out = RejectionOut::where('status',0)->get();
         $purchase_entry = PurchaseEntry::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $debit_note = DebitNote::where('dn_no',$id)->where('active',1)->first();
         $debit_note_items = DebitNoteItem::where('dn_no',$id)->where('active',1)->get();
@@ -536,7 +540,7 @@ class DebitNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.debit_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','debit_note','debit_note_items','debit_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax','expense_row_count','item_row_count','account_head'));
+        return view('admin.debit_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','debit_note','debit_note_items','debit_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','tax','expense_row_count','item_row_count','account_head','location'));
     }
 
     /**
@@ -733,6 +737,7 @@ class DebitNoteController extends Controller
          $debit_note->overall_discount = $request->overall_discount;
          $debit_note->total_net_value = $request->total_price;
          $debit_note->round_off = $request->round_off;
+         $debit_note->location = $request->location;
 
          $debit_note->save();
 

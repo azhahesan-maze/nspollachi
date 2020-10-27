@@ -18,6 +18,7 @@ use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
 use App\Models\AccountHead;
+use App\Models\location;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
 use App\Models\PurchaseOrderItem;
@@ -114,6 +115,7 @@ class PurchaseOrderController extends Controller
         $estimation = Estimation::all();
         $tax = Tax::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
         
 
         $voucher_num=Purchase_Order::orderBy('po_no','DESC')
@@ -123,8 +125,7 @@ class PurchaseOrderController extends Controller
          if ($voucher_num == null) 
          {
              $voucher_no=1;
-
-                             
+              
          }                  
          else
          {
@@ -134,7 +135,7 @@ class PurchaseOrderController extends Controller
          
          }
 
-        return view('admin.purchaseorder.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','tax','account_head'));
+        return view('admin.purchaseorder.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','tax','account_head','location'));
         
     }
 
@@ -179,6 +180,7 @@ class PurchaseOrderController extends Controller
          $purchaseorder->overall_discount = $request->overall_discount;
          $purchaseorder->total_net_value = $request->total_price;
          $purchaseorder->round_off = $request->round_off;
+         $purchaseorder->location = $request->location;
 
          $purchaseorder->save();
 
@@ -383,6 +385,7 @@ class PurchaseOrderController extends Controller
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $purchaseorder = Purchase_Order::where('po_no',$id)->first();
         $purchaseorder_items = PurchaseOrderItem::where('po_no',$id)->get();
@@ -485,7 +488,7 @@ class PurchaseOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchaseorder.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','account_head'));
+        return view('admin.purchaseorder.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchaseorder_items','purchaseorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','account_head','location'));
     }
 
     /**
@@ -525,11 +528,13 @@ class PurchaseOrderController extends Controller
          $purchaseorder->overall_discount = $request->overall_discount;
          $purchaseorder->total_net_value = $request->total_price;
          $purchaseorder->round_off = $request->round_off;
+         $purchaseorder->location = $request->location;
 
          $purchaseorder->save();
 
          $items_count = $request->counts;
          $expense_count = $request->expense_count;
+         
          if($expense_count == 0)
          {
             $expense_count =1;

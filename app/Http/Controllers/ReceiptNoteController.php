@@ -17,6 +17,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\ReceiptNote; 
@@ -126,8 +127,8 @@ class ReceiptNoteController extends Controller
         $rejection_out = RejectionOut::where('status',0)->get();
         $tax = Tax::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
         
-
         // $voucher_num=ReceiptNote::orderBy('rn_no','DESC')
         //                    ->select('rn_no')
         //                    ->first();
@@ -165,7 +166,7 @@ class ReceiptNoteController extends Controller
          }
         // $voucher_no = str_random(6);
 
-        return view('admin.receipt_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','purchaseorder','rejection_out','tax','account_head'));
+        return view('admin.receipt_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','purchaseorder','rejection_out','tax','account_head','location'));
     }
 
     /**
@@ -255,6 +256,7 @@ class ReceiptNoteController extends Controller
          $receipt_note->overall_discount = $request->overall_discount;
          $receipt_note->total_net_value = $request->total_price;
          $receipt_note->round_off = $request->round_off;
+         $receipt_note->location = $request->location;
 
          $receipt_note->save();
 
@@ -475,6 +477,7 @@ class ReceiptNoteController extends Controller
         $purchaseorders = Purchase_Order::all();
         $rejection_out = RejectionOut::where('status',0)->get();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $receipt_note = ReceiptNote::where('rn_no',$id)->first();
         $receipt_note_items = ReceiptNoteItem::where('rn_no',$id)->get();
@@ -608,7 +611,7 @@ class ReceiptNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','rejection_out','purchaseorder','purchaseorders','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','account_head'));
+        return view('admin.receipt_note.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','rejection_out','purchaseorder','purchaseorders','receipt_note','receipt_note_items','receipt_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','estimation_no','estimation_date','type','purchaseorder_date','no_items','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','account_head','location'));
     }
 
     /**
@@ -673,6 +676,7 @@ class ReceiptNoteController extends Controller
          $receipt_note->overall_discount = $request->overall_discount;
          $receipt_note->total_net_value = $request->total_price;
          $receipt_note->round_off = $request->round_off;
+         $receipt_note->location = $request->location;
 
          $receipt_note->save();
 

@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
@@ -143,6 +144,7 @@ class RejectionOutController extends Controller
         $receipt_note = ReceiptNote::all();
         $tax = Tax::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
         
 
         // $voucher_num=RejectionOut::orderBy('r_out_no','DESC')
@@ -182,7 +184,7 @@ class RejectionOutController extends Controller
          }
         // $voucher_no = str_random(6);
 
-        return view('admin.rejection_out.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','receipt_note','estimation','purchase_entry','tax','account_head'));
+        return view('admin.rejection_out.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','receipt_note','estimation','purchase_entry','tax','account_head','location'));
     }
 
     /**
@@ -284,6 +286,7 @@ class RejectionOutController extends Controller
          $rejection_out->overall_discount = $request->overall_discount;
          $rejection_out->total_net_value = $request->total_price;
          $rejection_out->round_off = $request->round_off;
+         $rejection_out->location = $request->location;
 
          $rejection_out->save();
 
@@ -503,6 +506,7 @@ class RejectionOutController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
+        $location = Location::all();
         // $purchase_entry = PurchaseEntry::all();
 
         $purchase_entry=PurchaseEntry::join('purchase_entry_items','purchase_entries.p_no','=','purchase_entry_items.p_no')->select('purchase_entries.p_no')->groupBy('purchase_entries.p_no')->havingRaw('sum(purchase_entry_items.remaining_qty)> 0')->get();
@@ -607,7 +611,7 @@ class RejectionOutController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.rejection_out.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','rejection_out_items','rejection_out_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count'));
+        return view('admin.rejection_out.edit',compact('date','categories','supplier','agent','brand','expense_type','item','estimation','purchase_entry','rejection_out','rejection_out_items','rejection_out_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','location'));
     }
 
     /**
@@ -1640,6 +1644,9 @@ $result=[];
         $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$p_no)->get();
         $purchase_entry_Tax = PurchaseEntryTax::where('p_no',$p_no)->get();
 
+        $location = @$purchase_entry->locations->name;
+        $location_id = @$purchase_entry->location;
+
         $round_off = $purchase_entry->round_off;
          $total_net_value = $purchase_entry->total_net_value;
          $date_purchaseorder = $purchase_entry->po_date;
@@ -1749,7 +1756,7 @@ $result=[];
             </div>';
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'purchase_entry_date'=>$purchase_entry_date,'tax_append' => $tax_append);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'purchase_entry_date'=>$purchase_entry_date,'tax_append' => $tax_append,'location' => $location,'location_id' => $location_id);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

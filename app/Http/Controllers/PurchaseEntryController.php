@@ -17,6 +17,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
@@ -128,7 +129,8 @@ class PurchaseEntryController extends Controller
         $purchaseorder = Purchase_Order::all();
         $purchase_entry = PurchaseEntry::all();
         $tax = Tax::all();
-        $account_head = AccountHead::all();        
+        $account_head = AccountHead::all();  
+        $location = Location::all();      
 
         // $voucher_num=PurchaseEntry::orderBy('p_no','DESC')
         //                    ->select('p_no')
@@ -167,7 +169,7 @@ class PurchaseEntryController extends Controller
          }
         // $voucher_no = str_random(6);
 
-        return view('admin.purchase_entry.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','receipt_note','purchaseorder','tax','account_head'));
+        return view('admin.purchase_entry.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','receipt_note','purchaseorder','tax','account_head','location'));
     }
 
     /**
@@ -232,6 +234,7 @@ class PurchaseEntryController extends Controller
          $purchase_entry->overall_discount = $request->overall_discount;
          $purchase_entry->total_net_value = $request->total_price;
          $purchase_entry->round_off = $request->round_off;
+         $purchase_entry->location = $request->location;
 
          $purchase_entry->save();
 
@@ -454,11 +457,12 @@ class PurchaseEntryController extends Controller
         $receipt_notes = ReceiptNote::all();
         $purchaseorder = Purchase_Order::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $purchase_entry = PurchaseEntry::where('p_no',$id)->first();
         $purchase_entry_items = PurchaseEntryItem::where('p_no',$id)->get();
         $purchase_entry_expense = PurchaseEntryExpense::where('p_no',$id)->get();
-        $tax = ReceiptNoteTax::where('rn_no',$id)->get();
+        $tax = PurchaseEntryTax::where('p_no',$id)->get();
 
         $item_row_count = count($purchase_entry_items);
         $expense_row_count = count($purchase_entry_expense);
@@ -614,7 +618,7 @@ class PurchaseEntryController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type','total_netvalue','tax','account_head'));
+        return view('admin.purchase_entry.edit',compact('date','receipt_notes','categories','supplier','agent','brand','expense_type','item','estimation','purchaseorder','purchase_entry','purchase_entry_items','purchase_entry_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','purchase_type','total_netvalue','tax','account_head','location'));
     }
 
     /**
@@ -692,6 +696,8 @@ class PurchaseEntryController extends Controller
          $purchase_entry->overall_discount = $request->overall_discount;
          $purchase_entry->total_net_value = $request->total_price;
          $purchase_entry->round_off = $request->round_off;
+         $purchase_entry->location = $request->location;
+
 
          $purchase_entry->save();
 
@@ -729,7 +735,9 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->qty = $request->quantity[$i];
             $purchase_entry_items->actual_qty = $request->quantity[$i];
             $purchase_entry_items->remaining_qty = @$request->remaining_qty[$i];
-            $purchase_entry_items->rejected_qty = @$request->rejected_item_qty[$i];
+            $purchase_entry_items->rejected_qty = 0;
+            $purchase_entry_items->debited_qty = 0;
+            $purchase_entry_items->r_out_debited_qty = 0;
             $purchase_entry_items->uom_id = $request->uom[$i];
             $purchase_entry_items->discount = $request->discount[$i];
 

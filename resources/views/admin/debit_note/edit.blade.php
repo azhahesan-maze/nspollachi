@@ -122,7 +122,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div> -->
                                 </div>
                                 <br>
-                                <div class="row col-md-12">
+                                <div class="row col-md-12 mb-3">
 
                                   <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Rejection Out No</label><br>
@@ -213,7 +213,23 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div> -->
 
                               </div>
-                              <br>
+
+                              <div class="row col-md-12 mb-3">
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Company Location</label><br>
+                                <select class="js-example-basic-multiple form-control location" 
+                                data-placeholder="Choose Location" id="location" name="location" >
+                                <option value="{{ $debit_note->location }}">{{ $debit_note->locations->name }}</option>
+                                  @foreach($location as $key => $value)
+                                  <option value="{{ $value->id}}">{{ $value->name }}</option>
+                                  @endforeach
+                                 </select>
+                                 
+                                </div>
+                                
+                              </div>
+
                               <!-- div class="row col-md-12">
                                 <div class="col-md-4">
                   <label style="font-family: Times new roman;">Party Name</label><br>

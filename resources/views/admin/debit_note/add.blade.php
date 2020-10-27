@@ -118,7 +118,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div> -->
                                 </div>
                                 <br>
-                                <div class="row col-md-12">
+                                <div class="row col-md-12 mb-3">
 
                                   <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Rejection Out No</label><br>
@@ -176,7 +176,7 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div> -->
 
                                 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                   <label style="font-family: Times new roman;">Party Address</label><br>
                                   <input type="hidden" name="address_line_1" id="address_line_1">
                                   
@@ -208,7 +208,23 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div> -->
 
                               </div>
-                              <br>
+
+                              <div class="row col-md-12 mb-3">
+
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Company Location</label><br>
+                                <select class="js-example-basic-multiple form-control location" 
+                                data-placeholder="Choose Location" id="location" name="location" >
+                                <option></option>
+                                  @foreach($location as $key => $value)
+                                  <option value="{{ $value->id}}">{{ $value->name }}</option>
+                                  @endforeach
+                                 </select>
+                                 
+                                </div>
+                                
+                              </div>
+
                               <!-- <div class="row col-md-12">
                                 <div class="col-md-4">
                   <label style="font-family: Times new roman;">Party Name</label><br>
@@ -236,7 +252,6 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                 </div>
 
                               </div> -->
-                              <br>
     
       <div class="col-md-8">
                        <div class="form-group row">
