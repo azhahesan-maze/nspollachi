@@ -149,6 +149,18 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                     <input type="radio" name="sale_type" value="0">
                     <label style="font-family: Times new roman;">Credit Sale</label>
                   </div>
+
+                  <div class="col-md-2">
+                    <label style="font-family: Times new roman;">Company Location</label><br>
+                  <select class="js-example-basic-multiple col-12 form-control custom-select location" name="location" id="location">
+                           <option value="">Choose Location</option>
+                           @foreach($location as $value)
+                           <option value="{{ $value->id }}">{{ $value->name }}</option>
+                           @endforeach
+                        </select>
+                   
+                  </div>
+
                 </div>
                 <br>
     

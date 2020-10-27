@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use App\Models\SaleEstimation;
 use App\Models\SaleEstimationTax;
@@ -120,6 +121,7 @@ class SalesOrderController extends Controller
         $tax = Tax::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
         
 
         $voucher_num=SaleOrder::orderBy('so_no','DESC')
@@ -141,7 +143,7 @@ class SalesOrderController extends Controller
          }
 
 
-        return view('admin.sales_order.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','customer','tax','sales_man','account_head'));
+        return view('admin.sales_order.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','estimation','customer','tax','sales_man','account_head','location'));
     }
 
     /**
@@ -186,6 +188,7 @@ class SalesOrderController extends Controller
          $saleorder->overall_discount = $request->overall_discount;
          $saleorder->total_net_value = $request->total_price;
          $saleorder->round_off = $request->round_off;
+         $saleorder->location = $request->location;
 
          $saleorder->save();
 
@@ -391,6 +394,7 @@ class SalesOrderController extends Controller
         $customer = Customer::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $saleorder = SaleOrder::where('so_no',$id)->first();
         $saleorder_items = SaleOrderItem::where('so_no',$id)->get();
@@ -493,7 +497,7 @@ class SalesOrderController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man','account_head'));
+        return view('admin.sales_order.edit',compact('date','categories','supplier','customer','agent','brand','expense_type','item','estimation','saleorder','saleorder_items','saleorder_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man','account_head','location'));
     }
 
     /**
@@ -534,6 +538,7 @@ class SalesOrderController extends Controller
          $saleorder->overall_discount = $request->overall_discount;
          $saleorder->total_net_value = $request->total_price;
          $saleorder->round_off = $request->round_off;
+         $saleorder->location = $request->location;
 
          $saleorder->save();
 
