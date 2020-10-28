@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use App\Models\Customer;
 use App\Models\SalesMan;
@@ -133,6 +134,7 @@ class DeliveryNoteController extends Controller
         $tax = Tax::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $voucher_num=DeliveryNote::orderBy('created_at','DESC')->select('id')->first();
         $append = "DN";
@@ -154,7 +156,7 @@ class DeliveryNoteController extends Controller
          // $voucher_no = str_random(6);
 
 
-        return view('admin.delivery_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','rejection_in','estimation','saleorder','sale_estimation','customer','tax','sales_man','account_head'));
+        return view('admin.delivery_note.add',compact('date','categories','voucher_no','supplier','item','agent','brand','expense_type','rejection_in','estimation','saleorder','sale_estimation','customer','tax','sales_man','account_head','location'));
     }
 
     /**
@@ -241,6 +243,7 @@ class DeliveryNoteController extends Controller
          $delivery_note->overall_discount = $request->overall_discount;
          $delivery_note->total_net_value = $request->total_price;
          $delivery_note->round_off = $request->round_off;
+         $delivery_note->location = $request->location;
 
          $delivery_note->save();
 
@@ -463,6 +466,7 @@ class DeliveryNoteController extends Controller
         $sales_man = SalesMan::all();
         $rejection_in = RejectionIn::where('status',0)->get();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         $delivery_note = DeliveryNote::where('d_no',$id)->first();
         $delivery_note_items = DeliveryNoteItem::where('d_no',$id)->get();
@@ -565,7 +569,7 @@ class DeliveryNoteController extends Controller
         $item_sgst = $item_gst_rs_sum/2;
         $item_cgst = $item_gst_rs_sum/2;    
 
-        return view('admin.delivery_note.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','rejection_in','estimation','saleorder','sale_orders','delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man','account_head'));
+        return view('admin.delivery_note.edit',compact('date','customer','categories','supplier','agent','brand','expense_type','item','rejection_in','estimation','saleorder','sale_orders','delivery_note','delivery_note_items','delivery_note_expense','address','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','tax','sales_man','account_head','location'));
     }
 
     /**
@@ -628,6 +632,7 @@ class DeliveryNoteController extends Controller
          $delivery_note->overall_discount = $request->overall_discount;
          $delivery_note->total_net_value = $request->total_price;
          $delivery_note->round_off = $request->round_off;
+         $delivery_note->location = $request->location;
 
          $delivery_note->save();
 

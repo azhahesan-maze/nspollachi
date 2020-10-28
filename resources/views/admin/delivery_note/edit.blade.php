@@ -210,6 +210,18 @@ tbody#team-list tr:nth-child(n+1) td:first-child::before {
                                  
                                 </div>
 
+                                <div class="col-md-2">
+                                  <label style="font-family: Times new roman;">Company Location</label><br>
+                                <select class="js-example-basic-multiple form-control location" 
+                                data-placeholder="Choose Location" id="location" name="location" >
+                                <option value="{{ $delivery_note->location }}">{{$delivery_note->locations->name}}</option>
+                                  @foreach($location as $value)
+                                  <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                  @endforeach
+                                 </select>
+                                 
+                                </div>
+
                                 <!-- <div class="col-md-2">
                                   <label style="font-family: Times new roman;">Sales Type</label><br>
                                   <input type="hidden" name="purchase_type" id="purchase_type">
