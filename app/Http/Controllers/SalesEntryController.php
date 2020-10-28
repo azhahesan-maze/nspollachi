@@ -644,6 +644,7 @@ class SalesEntryController extends Controller
             $sale_entry_items->rate_exclusive_tax = $request->exclusive[$i];
             $sale_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $sale_entry_items->qty = $request->quantity[$i];
+            $sale_entry_items->actual_qty = $request->quantity[$i];
             $sale_entry_items->remaining_qty = @$request->remaining_qty[$i];
             $sale_entry_items->rejected_qty = @$request->rejected_item_qty[$i];
             $sale_entry_items->uom_id = $request->uom[$i];

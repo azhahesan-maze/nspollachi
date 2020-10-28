@@ -734,7 +734,7 @@ class PurchaseEntryController extends Controller
             $purchase_entry_items->rate_inclusive_tax = $request->inclusive[$i];
             $purchase_entry_items->qty = $request->quantity[$i];
             $purchase_entry_items->actual_qty = $request->quantity[$i];
-            $purchase_entry_items->remaining_qty = @$request->remaining_qty[$i];
+            $purchase_entry_items->remaining_qty = $request->quantity[$i];
             $purchase_entry_items->rejected_qty = 0;
             $purchase_entry_items->debited_qty = 0;
             $purchase_entry_items->r_out_debited_qty = 0;
