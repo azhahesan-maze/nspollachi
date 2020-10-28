@@ -16,6 +16,7 @@ use App\Models\ItemTaxDetails;
 use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
+use App\Models\Location;
 use App\Models\AccountHead;
 use App\Models\Customer;
 use Carbon\Carbon;
@@ -146,6 +147,7 @@ class RejectionInController extends Controller
         $tax = Tax::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();
+        $location = Location::all();
 
         // $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
         //                    ->select('r_in_no')
@@ -185,7 +187,7 @@ class RejectionInController extends Controller
         // $voucher_no = str_random(6);
 
 
-        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer','tax','sales_man','account_head'));
+        return view('admin.rejection_in.add',compact('date','categories','voucher_no','supplier','item','agent','brand','delivery_note','expense_type','estimation','sale_entry','customer','tax','sales_man','account_head','location'));
     }
 
     /**
@@ -288,6 +290,7 @@ class RejectionInController extends Controller
          $rejection_in->overall_discount = $request->overall_discount;
          $rejection_in->total_net_value = $request->total_price;
          $rejection_in->round_off = $request->round_off;
+         $rejection_in->location = $request->location;
 
          $rejection_in->save();
 
