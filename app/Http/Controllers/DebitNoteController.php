@@ -65,7 +65,7 @@ class DebitNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::where('status',0)->get();
-        $rejection_out = RejectionOut::where('cancel_status',0)->where('active',1)->get();
+        $rejection_out = RejectionOut::where('cancel_status',0)->where('status',0)->where('active',1)->get();
         $purchase_entry = PurchaseEntry::where('cancel_status',0)->get();
         $tax = Tax::all();
         $account_head = AccountHead::all();
@@ -434,7 +434,7 @@ class DebitNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::where('status',0)->get();
-        $rejection_out = RejectionOut::where('cancel_status',0)->where('active',1)->get();
+        $rejection_out = RejectionOut::where('cancel_status',0)->where('status',0)->where('active',1)->get();
         $purchase_entry = PurchaseEntry::where('cancel_status',0)->get();
         $account_head = AccountHead::all();
         $location = Location::all();
