@@ -61,7 +61,7 @@ class RejectionOutController extends Controller
         // }
 
         $check_id = $id;
-        $rejection_out = RejectionOut::where('cancel_status',0)->where('active',1)->get();
+        $rejection_out = RejectionOut::where('status',0)->where('active',1)->get();
 
         if(count($rejection_out) == 0)
         {
