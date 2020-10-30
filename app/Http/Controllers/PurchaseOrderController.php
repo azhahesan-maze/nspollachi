@@ -18,7 +18,7 @@ use App\Models\ItemBracodeDetails;
 use App\Models\ExpenseType;
 use App\Models\Tax;
 use App\Models\AccountHead;
-use App\Models\location;
+use App\Models\Location;
 use Carbon\Carbon;
 use App\Models\Purchase_Order;
 use App\Models\PurchaseOrderItem;
