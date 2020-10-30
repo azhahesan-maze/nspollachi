@@ -124,9 +124,9 @@ class PurchaseEntryController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
-        $receipt_note = ReceiptNote::all();
-        $purchaseorder = Purchase_Order::all();
+        $estimation = Estimation::where('status',0)->get();
+        $receipt_note = ReceiptNote::where('status',0)->get();
+        $purchaseorder = Purchase_Order::where('status',0)->get();
         $purchase_entry = PurchaseEntry::all();
         $tax = Tax::all();
         $account_head = AccountHead::all();  
@@ -453,9 +453,9 @@ class PurchaseEntryController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
-        $receipt_notes = ReceiptNote::all();
-        $purchaseorder = Purchase_Order::all();
+        $estimation = Estimation::where('status',0)->get();
+        $receipt_notes = ReceiptNote::where('status',0)->get();
+        $purchaseorder = Purchase_Order::where('status',0)->get();
         $account_head = AccountHead::all();
         $location = Location::all();
 

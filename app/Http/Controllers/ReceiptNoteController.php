@@ -122,9 +122,9 @@ class ReceiptNoteController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
-        $purchaseorder = Purchase_Order::all();
-        $rejection_out = RejectionOut::where('status',0)->get();
+        $estimation = Estimation::where('status',0)->get();
+        $purchaseorder = Purchase_Order::where('status',0)->get();
+        $rejection_out = RejectionOut::where('cancel_status',0)->get();
         $tax = Tax::all();
         $account_head = AccountHead::all();
         $location = Location::all();
@@ -473,9 +473,9 @@ class ReceiptNoteController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
-        $purchaseorders = Purchase_Order::all();
-        $rejection_out = RejectionOut::where('status',0)->get();
+        $estimation = Estimation::where('status',0)->get();
+        $purchaseorders = Purchase_Order::where('status',0)->get();
+        $rejection_out = RejectionOut::where('cancel_status',0)->get();
         $account_head = AccountHead::all();
         $location = Location::all();
 

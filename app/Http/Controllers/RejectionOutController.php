@@ -139,9 +139,9 @@ class RejectionOutController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
-        $purchase_entry = PurchaseEntry::all();
-        $receipt_note = ReceiptNote::all();
+        $estimation = Estimation::where('status',0)->get();
+        $purchase_entry = PurchaseEntry::where('cancel_status',0)->get();
+        $receipt_note = ReceiptNote::where('status',0)->get();
         $tax = Tax::all();
         $account_head = AccountHead::all();
         $location = Location::all();

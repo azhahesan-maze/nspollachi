@@ -112,7 +112,7 @@ class PurchaseOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
+        $estimation = Estimation::where('status',0)->get();
         $tax = Tax::all();
         $account_head = AccountHead::all();
         $location = Location::all();
@@ -383,7 +383,7 @@ class PurchaseOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = Estimation::all();
+        $estimation = Estimation::where('status',0)->get();
         $account_head = AccountHead::all();
         $location = Location::all();
 
@@ -534,7 +534,7 @@ class PurchaseOrderController extends Controller
 
          $items_count = $request->counts;
          $expense_count = $request->expense_count;
-         
+
          if($expense_count == 0)
          {
             $expense_count =1;
