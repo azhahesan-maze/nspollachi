@@ -127,9 +127,9 @@ class SalesEntryController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $saleorder = SaleOrder::all();
-        $sale_estimation = SaleEstimation::all();
-        $delivery_note = DeliveryNote::all();
+        $saleorder = SaleOrder::where('cancel_status',0)->get();
+        $sale_estimation = SaleEstimation::where('cancel_status',0)->get();
+        $delivery_note = DeliveryNote::where('cancel_status',0)->get();
         $customer = Customer::all();
         $tax = Tax::all();
         $sales_man = SalesMan::all();
@@ -460,9 +460,9 @@ class SalesEntryController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $saleorder = SaleOrder::all();
-        $sale_estimation = SaleEstimation::all();
-        $delivery_note = DeliveryNote::all();
+        $saleorder = SaleOrder::where('cancel_status',0)->get();
+        $sale_estimation = SaleEstimation::where('cancel_status',0)->get();
+        $delivery_note = DeliveryNote::where('cancel_status',0)->get();
         $customer = Customer::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();

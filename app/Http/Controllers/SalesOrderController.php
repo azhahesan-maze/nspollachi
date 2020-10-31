@@ -116,7 +116,7 @@ class SalesOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = SaleEstimation::all();
+        $estimation = SaleEstimation::where('cancel_status',0)->get();
         $customer = Customer::all();
         $tax = Tax::all();
         $sales_man = SalesMan::all();
@@ -390,7 +390,7 @@ class SalesOrderController extends Controller
         $agent = Agent::all();
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
-        $estimation = SaleEstimation::all();
+        $estimation = SaleEstimation::where('cancel_status',0)->get();
         $customer = Customer::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();

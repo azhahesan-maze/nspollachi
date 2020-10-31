@@ -127,10 +127,10 @@ class DeliveryNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $sale_estimation = SaleEstimation::all();
-        $saleorder = SaleOrder::all();
+        $sale_estimation = SaleEstimation::where('cancel_status',0)->get();
+        $saleorder = SaleOrder::where('cancel_status',0)->get();
         $customer = Customer::all();
-        $rejection_in = RejectionIn::where('status',0)->get();
+        $rejection_in = RejectionIn::where('cancel_status',0)->where('status',0)->get();
         $tax = Tax::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();

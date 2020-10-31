@@ -66,30 +66,13 @@ class CreditNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $sale_entry = SaleEntry::all();
-        $rejection_in = RejectionIn::where('status',0)->get();
+        $sale_entry = SaleEntry::where('cancel_status',0)->get();
+        $rejection_in = RejectionIn::where('cancel_status',0)->where('status',0)->get();
         $customer = Customer::all();
         $tax = Tax::all();
         $account_head = AccountHead::all();
         $location = Location::all();
-
-        // $voucher_num=CreditNote::orderBy('cn_no','DESC')
-        //                    ->select('cn_no')
-        //                    ->first();
-
-        //  if ($voucher_num == null) 
-        //  {
-        //      $voucher_no=1;
-
-                             
-        //  }                  
-        //  else
-        //  {
-        //      $current_voucher_num=$voucher_num->cn_no;
-        //      $voucher_no=$current_voucher_num+1;
-        
          
-        //  }
 
         $voucher_num=CreditNote::orderBy('created_at','DESC')->select('id')->first();
         $append = "CN";
@@ -437,8 +420,8 @@ class CreditNoteController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $sale_entry = SaleEntry::all();
-        $rejection_in = RejectionIn::where('status',0)->get();
+        $sale_entry = SaleEntry::where('cancel_status',0)->get();
+        $rejection_in = RejectionIn::where('cancel_status',0)->where('status',0)->get();
         $customer = Customer::all();
         $account_head = AccountHead::all();
         $location = Location::all();
@@ -670,7 +653,7 @@ class CreditNoteController extends Controller
             $credit_note_items->save();
         }
          
-        
+
 
          for($j=0;$j<$expense_count;$j++)
 

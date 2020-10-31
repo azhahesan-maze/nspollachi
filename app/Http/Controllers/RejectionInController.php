@@ -141,32 +141,14 @@ class RejectionInController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $sale_entry = SaleEntry::all();
+        $sale_entry = SaleEntry::where('cancel_status',0)->get();
         $customer = Customer::all();
-        $delivery_note = DeliveryNote::all();
+        $delivery_note = DeliveryNote::where('cancel_status',0)->get();
         $tax = Tax::all();
         $sales_man = SalesMan::all();
         $account_head = AccountHead::all();
         $location = Location::all();
-
-        // $voucher_num=RejectionIn::orderBy('r_in_no','DESC')
-        //                    ->select('r_in_no')
-        //                    ->first();
-
-        //  if ($voucher_num == null) 
-        //  {
-        //      $voucher_no=1;
-
-                             
-        //  }                  
-        //  else
-        //  {
-        //      $current_voucher_num=$voucher_num->r_in_no;
-        //      $voucher_no=$current_voucher_num+1;
         
-         
-        //  }
-
         $voucher_num=RejectionIn::orderBy('created_at','DESC')->select('id')->first();
         $append = "RI";
         if ($voucher_num == null) 
@@ -510,7 +492,7 @@ class RejectionInController extends Controller
         $brand = Brand::all();
         $expense_type = ExpenseType::all();
         $estimation = Estimation::all();
-        $sale_entry = SaleEntry::all();
+        $sale_entry = SaleEntry::where('cancel_status',0)->get();
         $customer = Customer::all();
 
         // $sale_entry=SaleEntryItem::join('sale_entry_items','sale_entries.s_no','=','sale_entry_items.s_no')->select('sale_entries.s_no')->groupBy('sale_entries.s_no')->havingRaw('sum(sale_entry_items.remaining_qty)> 0')->get();
