@@ -273,7 +273,7 @@ class DeliveryNoteController extends Controller
             $delivery_note_items->remaining_qty = $request->quantity[$i];
             $delivery_note_items->rejected_qty = 0;
             $delivery_note_items->credited_qty = 0;
-            $delivery_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
+            // $delivery_note_items->actual_rejected_qty = $request->actual_rejected_qty[$i];
             $delivery_note_items->uom_id = $request->uom[$i];
             $delivery_note_items->discount = $request->discount[$i];
 
@@ -663,6 +663,7 @@ class DeliveryNoteController extends Controller
             $delivery_note_items->qty = $request->quantity[$i];
             $delivery_note_items->remaining_qty = $request->quantity[$i];
             $delivery_note_items->rejected_qty = 0;
+            $delivery_note_items->credited_qty = 0;
             $delivery_note_items->uom_id = $request->uom[$i];
             $delivery_note_items->discount = $request->discount[$i];
 
