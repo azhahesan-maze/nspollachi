@@ -1641,6 +1641,7 @@ $result=[];
         $purchase_entry_tax = PurchaseEntryTax::where('p_no',$p_no)->get();
 
         $round_off = $purchase_entry->round_off;
+        $overall_discount = $purchase_entry->overall_discount;
          $total_net_value = $purchase_entry->total_net_value;
          $date_purchaseorder = $purchase_entry->po_date;
          $date_purchase_entry = $purchase_entry->p_date;
@@ -1732,7 +1733,7 @@ $result=[];
             </div>';
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'date_purchase_entry'=>$date_purchase_entry,'tax_append'=>$tax_append);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'date_purchase_entry'=>$date_purchase_entry,'tax_append'=>$tax_append,'overall_discount' => $overall_discount);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 
@@ -1791,6 +1792,7 @@ echo "<pre>"; print_r($data); exit;
         $rejection_out_tax = RejectionOutTax::where('r_out_no',$r_out_no)->get();
 
         $round_off = $rejection_out->round_off;
+        $overall_discount = $rejection_out->overall_discount;
          $total_net_value = $rejection_out->total_net_value;
          $date_rejection_out = $rejection_out->r_out_date;
 
@@ -1895,7 +1897,7 @@ echo "<pre>"; print_r($data); exit;
             </div>';
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date_rejection_out'=>$date_rejection_out,'tax_append'=>$tax_append);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'expense_cnt'=>$expense_cnt,'date_rejection_out'=>$date_rejection_out,'tax_append'=>$tax_append,'overall_discount' => $overall_discount);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

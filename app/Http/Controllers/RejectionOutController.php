@@ -1648,6 +1648,7 @@ $result=[];
         $location_id = @$purchase_entry->location;
 
         $round_off = $purchase_entry->round_off;
+        $overall_discount = $purchase_entry->overall_discount;
          $total_net_value = $purchase_entry->total_net_value;
          $date_purchaseorder = $purchase_entry->po_date;
          $purchase_entry_date = $purchase_entry->p_date;
@@ -1756,7 +1757,7 @@ $result=[];
             </div>';
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'purchase_entry_date'=>$purchase_entry_date,'tax_append' => $tax_append,'location' => $location,'location_id' => $location_id);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_purchaseorder'=>$date_purchaseorder,'expense_cnt'=>$expense_cnt,'purchase_entry_date'=>$purchase_entry_date,'tax_append' => $tax_append,'location' => $location,'location_id' => $location_id,'overall_discount' => $overall_discount);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 
@@ -1776,6 +1777,21 @@ echo "<pre>"; print_r($data); exit;
 
 
         return view('admin.purchaseorder.add',compact('categories','supplier','agent','brand','expense_type','item','estimation','estimations','estimation_item','estimation_expense','net_value','item_gst_rs','item_amount','item_net_value','item_amount_sum','item_net_value_sum','item_gst_rs_sum','item_discount_sum','item_sgst','item_cgst','expense_row_count','item_row_count','voucher_no','date'));
+    }
+
+    public function Get_Location_Details(Request $request)
+    {
+        $purchase_no = $request->p_no;
+        $purchase_entry = PurchaseEntry::where('p_no',$purchase_no)->first();
+        $location_master = Location::all();
+        $option="<option value=''>Select Location</option>";
+        foreach ($location_master as $key => $value) {
+            $selected = @$value['id'] == @$purchase_entry->location ? "selected" : "";
+            $option.="<option value='".$value['id']."'  '".$selected."'>".$value['name']."</option>";
+
+        }
+
+        echo json_encode(array('option'=>$option));exit;
     }
 
     public function receipt_details(Request $request)
@@ -1838,6 +1854,7 @@ echo "<pre>"; print_r($data); exit;
         $receipt_note_tax = ReceiptNoteTax::where('rn_no',$receipt_no)->get();
 
         $round_off = $receipt_note->round_off;
+        $overall_discount = $receipt_note->overall_discount;
          $total_net_value = $receipt_note->total_net_value;
          $po_date = $receipt_note->po_date;
          $po_no = $receipt_note->po_no;
@@ -1957,7 +1974,7 @@ echo "<pre>"; print_r($data); exit;
             </div>';
     }
 
-        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$estimation_date,'estimation_no'=>$estimation_no,'po_no'=>$po_no,'po_date'=>$po_date,'expense_cnt'=>$expense_cnt,'purchase_type'=>$purchase_type,'receipt_note_date'=>$receipt_note_date,'tax_append' =>$tax_append);
+        $result_array=array('status'=>$status,'data'=>$table_tbody,'item_amount_sum'=>$item_amount_sum,'item_net_value_sum'=>$item_net_value_sum,'item_gst_rs_sum'=>$item_gst_rs_sum,'item_discount_sum'=>$item_discount_sum,'round_off'=>$round_off,'total_net_value'=>$total_net_value,'expense_typess'=>$expense_typess,'date_estimation'=>$estimation_date,'estimation_no'=>$estimation_no,'po_no'=>$po_no,'po_date'=>$po_date,'expense_cnt'=>$expense_cnt,'purchase_type'=>$purchase_type,'receipt_note_date'=>$receipt_note_date,'tax_append' =>$tax_append,'overall_discount' => $overall_discount);
         echo json_encode($result_array);exit;
     echo $table_tbody;exit;  
 

@@ -899,6 +899,7 @@ Route::post('rejection_out/check_qty/', 'RejectionOutController@check_qty');
 Route::post('rejection_out/change_qty/', 'RejectionOutController@change_qty');
 Route::get('rejection_out/delete/{id}/{r_out}', 'RejectionOutController@destroy');
 Route::post('rejection_out/p_details/', 'RejectionOutController@p_details');
+Route::post('rejection_out/Get_Location_Details/', 'RejectionOutController@Get_Location_Details');
 Route::post('rejection_out/receipt_details/', 'RejectionOutController@receipt_details');
 
 Route::get('rejection_out/cancel/{id}', 'RejectionOutController@cancel');

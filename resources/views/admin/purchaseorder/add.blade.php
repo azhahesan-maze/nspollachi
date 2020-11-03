@@ -2356,16 +2356,14 @@ else
 }
 
 $('.taxes').html(result.tax_append);
-// $('.total_net_price').append(result.item_net_value_sum);
-// $('#igst').val(result.item_gst_rs_sum);
-// $('#cgst').val($('#igst').val()/2);
-// $('#sgst').val($('#igst').val()/2);
+
 $('#total_discount').val(result.item_discount_sum);
+$('.overall_discount').val(result.overall_discount);
 $('#round_off').val(result.round_off);
 $('.total_net_value').text(result.total_net_value);
- $('#total_price').val(result.total_net_value);
- $('#estimation_date').val(result.date_estimation);
- $('#counts').val(result.status);
+$('#total_price').val(result.total_net_value);
+$('#estimation_date').val(result.date_estimation);
+$('#counts').val(result.status);
  
 
 var total_net_price=calculate_total_net_price();
