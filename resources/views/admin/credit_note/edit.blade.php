@@ -792,9 +792,18 @@ table, th, td {
 
                        
 
-                       <div class="col-md-7 text-right">
-          <input type="submit" class="btn btn-success save" style="margin-bottom: 150px;" name="save" value="Update">
-        </div>
+                       <div class="row col-md-12 text-center">
+                          <div class="col-md-12">
+                            
+                          <p>
+                             <input class="swd-button btn btn-success" type="submit" value="Update">
+                             <a href="register.html"><button type="button" class="swd-button btn btn-primary">Update & Print</button></a>
+
+                          </p>
+                          
+                        </div>
+
+                      </div>
       </form>
                        
         <script type="text/javascript">
