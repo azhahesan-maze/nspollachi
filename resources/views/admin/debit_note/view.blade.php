@@ -12,6 +12,8 @@
           <ul class="h-right-btn mb-0 pl-0">
             @if($check_id != 1)
             <li><button type="button" class="btn btn-success"><a href="{{ route('debit_note.create') }}">Debit Note</a></button></li>
+
+            <li><button type="button" class="btn btn-primary"><a href="">Print</a></button></li>
             @else
             @endif
           </ul>
