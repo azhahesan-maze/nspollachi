@@ -584,9 +584,12 @@ Route::get('estimation/item_details/{id}', 'EstimationController@item_details');
 Route::get('estimation/expense_details/{id}', 'EstimationController@expense_details');
 Route::post('estimation/last_purchase_rate/', 'EstimationController@last_purchase_rate');
 Route::get('estimation/delete/{id}', 'EstimationController@destroy');
+Route::post('estimation/print/', 'EstimationController@print_details');
 
 Route::get('estimation/cancel/{id}', 'EstimationController@cancel');
 Route::get('estimation/retrieve/{id}', 'EstimationController@retrieve');
+
+// Route::post('estimation/print/', 'EstimationPrintController@create_page_print');
 
 /* Estimation End Here  */
 

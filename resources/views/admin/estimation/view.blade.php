@@ -12,8 +12,6 @@
           <ul class="h-right-btn mb-0 pl-0">
             @if($check_id != 1)
             <li><button type="button" class="btn btn-success"><a href="{{ route('estimation.create') }}">Estimation</a></button></li>
-
-            <li><button type="button" class="btn btn-primary"><a href="">Print</a></button></li>
             @else
             @endif
           </ul>
@@ -21,7 +19,7 @@
       </div>
     </div>
     <!-- card header end@ -->
-    <div class="card-body">
+    <div class="card-body" id="DivIdToPrint">
       <table id="master" class="table table-striped table-bordered" style="width:100%">
         <thead>
           <tr>
@@ -84,6 +82,7 @@
       </table>
 
     </div>
+    
     <!-- card body end@ -->
   </div>
 </div>

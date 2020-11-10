@@ -726,8 +726,8 @@ table, th, td {
                           <div class="col-md-12">
                             
                           <p>
-                             <input class="swd-button btn btn-success" type="submit" value="Save">
-                             <a href="register.html"><button type="button" class="swd-button btn btn-primary">Save & Print</button></a>
+                             <button class="btn btn-success save" name="save" value="0" type="submit">Save</button>
+                              <button class="btn btn-warning print" name="save" value="1" type="submit">Save & Print</button>
 
                           </p>
                           

@@ -696,8 +696,8 @@ table, th, td {
                           <div class="col-md-12">
                             
                           <p>
-                             <input class="swd-button btn btn-success" type="submit" value="Update">
-                             <a href="register.html"><button type="button" class="swd-button btn btn-primary">Update & Print</button></a>
+                             <button class="btn btn-success save" name="save" value="0" type="submit">Update</button>
+                              <button class="btn btn-warning print" name="save" value="1" type="submit">Update & Print</button>
 
                           </p>
                           

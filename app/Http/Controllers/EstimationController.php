@@ -169,8 +169,13 @@ class EstimationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
+
+        
+
         $estimation_no=Estimation::orderBy('estimation_no','DESC')
                            ->select('estimation_no')
                            ->first();
@@ -203,7 +208,7 @@ class EstimationController extends Controller
          $estimation->total_net_value = $request->total_price;
          $estimation->round_off = $request->round_off;
 
-         $estimation->save();
+         // $estimation->save();
 
          $items_count = $request->counts;
          $expense_count = $request->expense_count;
@@ -225,7 +230,7 @@ class EstimationController extends Controller
             $estimation_items->uom_id = $request->uom[$i];
             $estimation_items->discount = $request->discount[$i];
 
-            $estimation_items->save();
+            // $estimation_items->save();
         }
          
 
@@ -246,7 +251,7 @@ class EstimationController extends Controller
                 $estimation_expense->expense_type = $request->expense_type[$j];
                 $estimation_expense->expense_amount = $request->expense_amount[$j];
 
-                $estimation_expense->save();
+                // $estimation_expense->save();
             }
            
             
@@ -265,15 +270,75 @@ class EstimationController extends Controller
                        $tax_details->taxmaster_id = $request->$value_name;
                        $tax_details->value = $request->$tax_name;
 
-                       $tax_details->save();
+                       // $tax_details->save();
 
                     }
+        $estimation_num = $estimation->estimation_no;
+        
+        $estimation_print_data = Estimation::where('estimation_no',$estimation_num)->first();
+        $address = AddressDetails::where('address_ref_id',$estimation_print_data->supplier_id)
+                                 ->where('address_table','=','Supplier')
+                                 ->first();
 
+        $estimation_item_print_data = Estimation_Item::where('estimation_no',$estimation_num)
+                                                    ->get();
 
+        $estimation_expense_print_data = Estimation_Expense::where('estimation_no',$estimation_num)->get(); 
 
+        $amnt = $estimation_print_data->total_net_value;
+
+        //amount in words
+          $number = $amnt;
+          $no = floor($number);
+          $point = round($number - $no, 2) * 100;
+          $hundred = null;
+          $digits_1 = strlen($no);
+          $i = 0;
+          $str = array();
+          $words = array('0' => '', '1' => 'One', '2' => 'Two',
+        '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six',
+        '7' => 'Seven', '8' => 'Eight', '9' => 'Nine',
+        '10' => 'Ten', '11' => 'Eleven', '12' => 'Twelve',
+        '13' => 'Thirteen', '14' => 'Fourteen',
+        '15' => 'Fifteen', '16' => 'Sixteen', '17' => 'Seventeen',
+        '18' => 'Eighteen', '19' =>'Nineteen', '20' => 'Twenty',
+        '30' => 'Thirty', '40' => 'Forty', '50' => 'Fifty',
+        '60' => 'Sixty', '70' => 'Seventy',
+        '80' => 'Eighty', '90' => 'Ninety');
+        $digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
+        while ($i < $digits_1) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += ($divider == 10) ? 1 : 2;
+        if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number] .
+        " " . $digits[$counter] . $plural . " " . $hundred
+        :
+        $words[floor($number / 10) * 10]
+        . " " . $words[$number % 10] . " "
+        . $digits[$counter] . $plural . " " . $hundred;
+        } else $str[] = null;
+        }
+        $str = array_reverse($str);
+        $result = implode('', $str);
+        $points = ($point) ?
+        "." . $words[$point / 10] . " " .
+        $words[$point = $point % 10] : '';
+
+        //amount in words ends here
+                         
+
+        if($request->save == 1)
+        {
+            return view('admin.estimation.print',compact('estimation_print_data','address','estimation_item_print_data','estimation_expense_print_data','result','points'));
+        }
 
         return Redirect::back()->with('success', 'Saved Successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -614,6 +679,71 @@ class EstimationController extends Controller
                        $tax_details->save();
 
                     }
+
+        $estimation_no = $estimation->estimation_no;
+        
+        $estimation_print_data = Estimation::where('estimation_no',$estimation_no)->first();
+        $address = AddressDetails::where('address_ref_id',$estimation_print_data->supplier_id)
+                                 ->where('address_table','=','Supplier')
+                                 ->first();
+
+        $estimation_item_print_data = Estimation_Item::where('estimation_no',$estimation_no)
+                                                    ->get();
+
+        $estimation_expense_print_data = Estimation_Expense::where('estimation_no',$estimation_no)->get(); 
+
+        $amnt = $estimation_print_data->total_net_value;
+
+        //amount in words
+
+          $number = $amnt;
+          $no = floor($number);
+          $point = round($number - $no, 2) * 100;
+          $hundred = null;
+          $digits_1 = strlen($no);
+          $i = 0;
+          $str = array();
+          $words = array('0' => '', '1' => 'One', '2' => 'Two',
+        '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six',
+        '7' => 'Seven', '8' => 'Eight', '9' => 'Nine',
+        '10' => 'Ten', '11' => 'Eleven', '12' => 'Twelve',
+        '13' => 'Thirteen', '14' => 'Fourteen',
+        '15' => 'Fifteen', '16' => 'Sixteen', '17' => 'Seventeen',
+        '18' => 'Eighteen', '19' =>'Nineteen', '20' => 'Twenty',
+        '30' => 'Thirty', '40' => 'Forty', '50' => 'Fifty',
+        '60' => 'Sixty', '70' => 'Seventy',
+        '80' => 'Eighty', '90' => 'Ninety');
+        $digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
+        while ($i < $digits_1) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += ($divider == 10) ? 1 : 2;
+        if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number] .
+        " " . $digits[$counter] . $plural . " " . $hundred
+        :
+        $words[floor($number / 10) * 10]
+        . " " . $words[$number % 10] . " "
+        . $digits[$counter] . $plural . " " . $hundred;
+        } else $str[] = null;
+        }
+        $str = array_reverse($str);
+        $result = implode('', $str);
+        $points = ($point) ?
+        "." . $words[$point / 10] . " " .
+        $words[$point = $point % 10] : '';
+
+        //amount in words ends here
+                         
+
+        if($request->save == 1)
+        {
+            return view('admin.estimation.print',compact('estimation_print_data','address','estimation_item_print_data','estimation_expense_print_data','result','points'));
+        }
+
         return Redirect::back()->with('success', 'Updated Successfully');
     }
 
@@ -650,6 +780,46 @@ class EstimationController extends Controller
         
         return Redirect::back()->with('success', 'Deleted Successfully');
         
+    }
+
+    public function print_details(Request $request)
+    {
+        
+         $estimation = new Estimation();
+
+         $estimation->estimation_no = @$request->estimation_info[0];
+         $estimation->estimation_date = @$request->estimation_info[1];
+         $estimation->supplier_id = @$request->estimation_info[2];
+         $estimation->agent_id = @$request->estimation_info[3];
+         $estimation->overall_discount = @$request->estimation_info[4];
+         $estimation->total_net_value = @$request->estimation_info[5];
+         $estimation->round_off = @$request->estimation_info[6];
+
+         // $estimation->save();
+            $data[] = @$request->estimation_info[$i];
+        
+        for($j=0;$j<$request->length;$j++)
+        {
+            $invoice_no[] = @$request->invoice_no[$j];
+            $item_code[] = @$request->item_code[$j];
+            $mrp[] = @$request->mrp[$j];
+            $exclusive[] = @$request->exclusive[$j];
+            $inclusive[] = @$request->inclusive[$j];
+            $quantity[] = @$request->quantity[$j];
+            $amnt[] = @$request->amnt[$j];
+            $input_discount[] = @$request->input_discount[$j];
+            $tax_gst[] = @$request->tax_gst[$j];
+            $uom[] = @$request->uom[$j];
+            
+        }
+
+        for($k=0;$k<$request->expense_length;$k++)
+        {
+            $expense_type[] = @$request->expense_type[$k];
+            $expense_amount[] = @$request->expense_amount[$k];
+        }
+
+        return $expense_amount;
     }
 
     public function address_details(Request $request)

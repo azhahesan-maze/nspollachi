@@ -288,6 +288,72 @@ class CreditNoteController extends Controller
 
             }
 
+
+        $credit_note_no = $credit_note->cn_no;
+        
+        $credit_note_print_data = CreditNote::where('cn_no',$credit_note_no)->first();
+        $address = AddressDetails::where('address_ref_id',$credit_note_print_data->customer_id)
+                                 ->where('address_table','=','Supplier')
+                                 ->first();
+
+        $credit_note_item_print_data = CreditNoteItem::where('cn_no',$credit_note_no)
+                                                    ->get();
+
+        $credit_note_expense_print_data = CreditNoteExpense::where('cn_no',$credit_note_no)->get(); 
+
+        $amnt = $credit_note_print_data->total_net_value;
+
+        //amount in words
+
+          $number = $amnt;
+          $no = floor($number);
+          $point = round($number - $no, 2) * 100;
+          $hundred = null;
+          $digits_1 = strlen($no);
+          $i = 0;
+          $str = array();
+          $words = array('0' => '', '1' => 'One', '2' => 'Two',
+        '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six',
+        '7' => 'Seven', '8' => 'Eight', '9' => 'Nine',
+        '10' => 'Ten', '11' => 'Eleven', '12' => 'Twelve',
+        '13' => 'Thirteen', '14' => 'Fourteen',
+        '15' => 'Fifteen', '16' => 'Sixteen', '17' => 'Seventeen',
+        '18' => 'Eighteen', '19' =>'Nineteen', '20' => 'Twenty',
+        '30' => 'Thirty', '40' => 'Forty', '50' => 'Fifty',
+        '60' => 'Sixty', '70' => 'Seventy',
+        '80' => 'Eighty', '90' => 'Ninety');
+        $digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
+        while ($i < $digits_1) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += ($divider == 10) ? 1 : 2;
+        if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number] .
+        " " . $digits[$counter] . $plural . " " . $hundred
+        :
+        $words[floor($number / 10) * 10]
+        . " " . $words[$number % 10] . " "
+        . $digits[$counter] . $plural . " " . $hundred;
+        } else $str[] = null;
+        }
+        $str = array_reverse($str);
+        $result = implode('', $str);
+        $points = ($point) ?
+        "." . $words[$point / 10] . " " .
+        $words[$point = $point % 10] : '';
+
+        //amount in words ends here
+                         
+
+        if($request->save == 1)
+        {
+            return view('admin.credit_note.print',compact('credit_note_print_data','address','credit_note_item_print_data','credit_note_expense_print_data','result','points'));
+        }
+
+
         return Redirect::back()->with('success', 'Saved Successfully');
     }
 
@@ -703,6 +769,72 @@ class CreditNoteController extends Controller
                $tax_details->save();
 
             }
+
+
+        $credit_note_no = $credit_note->cn_no;
+        
+        $credit_note_print_data = CreditNote::where('cn_no',$credit_note_no)->first();
+        $address = AddressDetails::where('address_ref_id',$credit_note_print_data->customer_id)
+                                 ->where('address_table','=','Supplier')
+                                 ->first();
+
+        $credit_note_item_print_data = CreditNoteItem::where('cn_no',$credit_note_no)
+                                                    ->get();
+
+        $credit_note_expense_print_data = CreditNoteExpense::where('cn_no',$credit_note_no)->get(); 
+
+        $amnt = $credit_note_print_data->total_net_value;
+
+        //amount in words
+
+          $number = $amnt;
+          $no = floor($number);
+          $point = round($number - $no, 2) * 100;
+          $hundred = null;
+          $digits_1 = strlen($no);
+          $i = 0;
+          $str = array();
+          $words = array('0' => '', '1' => 'One', '2' => 'Two',
+        '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six',
+        '7' => 'Seven', '8' => 'Eight', '9' => 'Nine',
+        '10' => 'Ten', '11' => 'Eleven', '12' => 'Twelve',
+        '13' => 'Thirteen', '14' => 'Fourteen',
+        '15' => 'Fifteen', '16' => 'Sixteen', '17' => 'Seventeen',
+        '18' => 'Eighteen', '19' =>'Nineteen', '20' => 'Twenty',
+        '30' => 'Thirty', '40' => 'Forty', '50' => 'Fifty',
+        '60' => 'Sixty', '70' => 'Seventy',
+        '80' => 'Eighty', '90' => 'Ninety');
+        $digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
+        while ($i < $digits_1) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += ($divider == 10) ? 1 : 2;
+        if ($number) {
+        $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+        $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+        $str [] = ($number < 21) ? $words[$number] .
+        " " . $digits[$counter] . $plural . " " . $hundred
+        :
+        $words[floor($number / 10) * 10]
+        . " " . $words[$number % 10] . " "
+        . $digits[$counter] . $plural . " " . $hundred;
+        } else $str[] = null;
+        }
+        $str = array_reverse($str);
+        $result = implode('', $str);
+        $points = ($point) ?
+        "." . $words[$point / 10] . " " .
+        $words[$point = $point % 10] : '';
+
+        //amount in words ends here
+                         
+
+        if($request->save == 1)
+        {
+            return view('admin.credit_note.print',compact('credit_note_print_data','address','credit_note_item_print_data','credit_note_expense_print_data','result','points'));
+        }
+
 
         return Redirect::back()->with('success', 'Updated Successfully');
     }
