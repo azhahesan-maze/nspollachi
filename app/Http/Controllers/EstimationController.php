@@ -208,7 +208,7 @@ class EstimationController extends Controller
          $estimation->total_net_value = $request->total_price;
          $estimation->round_off = $request->round_off;
 
-         // $estimation->save();
+         $estimation->save();
 
          $items_count = $request->counts;
          $expense_count = $request->expense_count;
@@ -230,7 +230,7 @@ class EstimationController extends Controller
             $estimation_items->uom_id = $request->uom[$i];
             $estimation_items->discount = $request->discount[$i];
 
-            // $estimation_items->save();
+            $estimation_items->save();
         }
          
 
@@ -251,7 +251,7 @@ class EstimationController extends Controller
                 $estimation_expense->expense_type = $request->expense_type[$j];
                 $estimation_expense->expense_amount = $request->expense_amount[$j];
 
-                // $estimation_expense->save();
+                $estimation_expense->save();
             }
            
             
@@ -270,9 +270,10 @@ class EstimationController extends Controller
                        $tax_details->taxmaster_id = $request->$value_name;
                        $tax_details->value = $request->$tax_name;
 
-                       // $tax_details->save();
+                       $tax_details->save();
 
                     }
+                    
         $estimation_num = $estimation->estimation_no;
         
         $estimation_print_data = Estimation::where('estimation_no',$estimation_num)->first();
