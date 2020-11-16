@@ -566,6 +566,15 @@ Route::get('purchase/get_items/{id}', 'PurchaseController@get_items');
    
 /* Purchase End Here  */
 
+/*Price Updation Satrt Here*/
+
+Route::resource('price_updation', 'PriceUpdationController',['middleware' => ['auth']]);
+Route::get('price_updation/change_items/{id}', 'PriceUpdationController@change_items');
+Route::get('price_updation/brand_filter/{id}', 'PriceUpdationController@brand_filter');
+Route::get('price_updation/browse_item/{id}', 'PriceUpdationController@browse_item');
+
+/*Price Updation End Here*/
+
 /* Estimation Start Here  */
 
 Route::resource('estimation', 'EstimationController',['middleware' => ['auth']]);
